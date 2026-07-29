@@ -1,56 +1,189 @@
 import os
 import json
 import math
-from datetime import datetime
+import random
+from datetime import datetime, UTC
+
 from skyfield.api import EarthSatellite, load
+from satellite_orbit import get_satellite_state
 
-# ----------------------------------
-# Project Paths
-# ----------------------------------
-base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# =====================================================
+# PROJECT PATHS
+# =====================================================
 
-input_file = os.path.join(
-    base_dir,
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+INPUT_FILE = os.path.join(
+    BASE_DIR,
     "DATA",
     "processed",
     "clean_debris.json"
 )
 
-output_file = os.path.join(
-    base_dir,
+OUTPUT_FILE = os.path.join(
+    BASE_DIR,
     "DATA",
     "processed",
     "debris_state.json"
 )
 
-# ----------------------------------
-# Load cleaned debris data
-# ----------------------------------
-with open(input_file, "r", encoding="utf-8") as file:
-    debris_data = json.load(file)
+EARTH_RADIUS = 6378.137  # km
 
-print(f"Total debris objects: {len(debris_data)}")
+# =====================================================
+# LOAD DATASET
+# =====================================================
 
-# ----------------------------------
-# Load Skyfield
-# ----------------------------------
+with open(INPUT_FILE, "r", encoding="utf-8") as f:
+    debris_data = json.load(f)
+
+print(f"Loaded {len(debris_data)} debris objects")
+
+# =====================================================
+# LOAD SKYFIELD
+# =====================================================
+
 ts = load.timescale()
 t = ts.now()
 
-print("Skyfield loaded successfully!")
+print("Skyfield Loaded Successfully")
 
-# ----------------------------------
-# Feature Extraction
-# ----------------------------------
+# =====================================================
+# LOAD CAPTURE SATELLITE
+# =====================================================
+
+capture_sat = get_satellite_state()
+
+sat_pos = capture_sat["position"]
+sat_vel = capture_sat["velocity"]
+
+print("\nCapture Satellite Loaded")
+print("Position :", sat_pos)
+print("Velocity :", sat_vel)
+
+# =====================================================
+# OUTPUT CONTAINER
+# =====================================================
+
 feature_data = []
+tracking_counter = 1
 
-EARTH_RADIUS = 6378.137  # km
+# =====================================================
+# HELPER FUNCTIONS
+# =====================================================
+
+def estimate_size(name, norad_id):
+    """
+    Estimate debris size in meters.
+    """
+
+    name = name.upper()
+
+    if "R/B" in name or "ROCKET" in name:
+        return 8.0
+
+    elif "PAYLOAD" in name:
+        return 2.5
+
+    elif "DEB" in name:
+        random.seed(int(norad_id))
+        return round(random.uniform(0.10, 0.50), 2)
+
+    else:
+        return 1.0
+
+
+def estimate_rcs(size):
+    """
+    Estimate Radar Cross Section (m²)
+    """
+
+    radius = size / 2
+
+    return round(math.pi * radius * radius * 0.8, 3)
+
+
+def estimate_tumbling_rate(size, relative_velocity):
+    """
+    Estimated tumbling rate (deg/sec)
+
+    This is an engineering estimate.
+    """
+
+    if size <= 0.20:
+        base = random.uniform(8.0, 15.0)
+
+    elif size <= 0.50:
+        base = random.uniform(4.0, 8.0)
+
+    elif size <= 2.0:
+        base = random.uniform(1.0, 3.0)
+
+    else:
+        base = random.uniform(0.2, 1.0)
+
+    velocity_factor = min(relative_velocity / 10.0, 1.5)
+
+    return round(base * velocity_factor, 2)
+
+
+def estimate_roll(yaw, pitch, tumbling_rate):
+    """
+    Estimated roll angle.
+
+    Since TLE does not contain roll,
+    we estimate it for robotic-arm alignment.
+    """
+
+    roll = (
+        0.45 * yaw +
+        0.25 * pitch +
+        3.5 * tumbling_rate
+    )
+
+    while roll > 180:
+        roll -= 360
+
+    while roll < -180:
+        roll += 360
+
+    return round(roll, 2)
+
+
+def calculate_collision_confidence(distance,
+                                   relative_velocity,
+                                   size):
+    """
+    Collision confidence (0-100)
+    """
+
+    distance_score = max(
+        0,
+        100 * math.exp(-distance / 8000)
+    )
+
+    velocity_score = max(
+        0,
+        100 * math.exp(-relative_velocity / 8)
+    )
+
+    size_score = min(size * 12, 100)
+
+    confidence = (
+        0.50 * distance_score +
+        0.30 * velocity_score +
+        0.20 * size_score
+    )
+
+    return round(confidence, 2)
+
+# =====================================================
+# START FEATURE EXTRACTION LOOP
+# =====================================================
 
 for obj in debris_data:
 
     try:
 
-        # Create satellite object
         satellite = EarthSatellite(
             obj["line1"],
             obj["line2"],
@@ -58,81 +191,274 @@ for obj in debris_data:
             ts
         )
 
-        # Position and velocity
         geocentric = satellite.at(t)
 
         x, y, z = geocentric.position.km
+
         vx, vy, vz = geocentric.velocity.km_per_s
+                # =====================================================
+        # BASIC ORBIT PARAMETERS
+        # =====================================================
 
-        # Speed
-        speed = math.sqrt(vx**2 + vy**2 + vz**2)
+        speed = math.sqrt(
+            vx**2 +
+            vy**2 +
+            vz**2
+        )
 
-        # Distance from Earth's center
-        distance = math.sqrt(x**2 + y**2 + z**2)
+        distance_from_earth = math.sqrt(
+            x**2 +
+            y**2 +
+            z**2
+        )
 
-        # Altitude
-        altitude = distance - EARTH_RADIUS
+        altitude = distance_from_earth - EARTH_RADIUS
 
-        # Inclination
-        inclination = float(obj["line2"].split()[2])
+        inclination = float(
+            obj["line2"].split()[2]
+        )
 
-        # Orbit Classification
+        # =====================================================
+        # ORBIT CLASS
+        # =====================================================
+
         if altitude < 2000:
             orbit_class = "LEO"
+
         elif altitude < 35786:
             orbit_class = "MEO"
+
         else:
             orbit_class = "GEO"
 
-        # Timestamp
-        timestamp = datetime.utcnow().isoformat() + "Z"
+        # =====================================================
+        # RELATIVE DISTANCE
+        # =====================================================
 
-        # Store extracted features
+        relative_distance = math.sqrt(
+
+            (x - sat_pos["x"])**2 +
+
+            (y - sat_pos["y"])**2 +
+
+            (z - sat_pos["z"])**2
+
+        )
+
+        # =====================================================
+        # RELATIVE VELOCITY
+        # =====================================================
+
+        relative_velocity = math.sqrt(
+
+            (vx - sat_vel["vx"])**2 +
+
+            (vy - sat_vel["vy"])**2 +
+
+            (vz - sat_vel["vz"])**2
+
+        )
+
+        # =====================================================
+        # ORIENTATION
+        # =====================================================
+
+        yaw = math.degrees(
+            math.atan2(vy, vx)
+        )
+
+        horizontal_velocity = math.sqrt(
+            vx**2 +
+            vy**2
+        )
+
+        pitch = math.degrees(
+            math.atan2(
+                vz,
+                horizontal_velocity
+            )
+        )
+
+        # =====================================================
+        # ESTIMATED PARAMETERS
+        # =====================================================
+
+        estimated_size = estimate_size(
+            obj["name"],
+            obj["norad_id"]
+        )
+
+        estimated_rcs = estimate_rcs(
+            estimated_size
+        )
+
+        tumbling_rate = estimate_tumbling_rate(
+            estimated_size,
+            relative_velocity
+        )
+
+        roll = estimate_roll(
+            yaw,
+            pitch,
+            tumbling_rate
+        )
+
+        # =====================================================
+        # MOTION RATE
+        # =====================================================
+
+        motion_rate = round(
+
+            math.degrees(
+
+                speed /
+
+                distance_from_earth
+
+            ),
+
+            6
+
+        )
+
+        # =====================================================
+        # COLLISION CONFIDENCE
+        # =====================================================
+
+        confidence = calculate_collision_confidence(
+
+            relative_distance,
+
+            relative_velocity,
+
+            estimated_size
+
+        )
+
+        # =====================================================
+        # TRACKING ID
+        # =====================================================
+
+        tracking_id = (
+            f"TRK_{obj['norad_id']}_{tracking_counter:06d}"
+        )
+
+        tracking_counter += 1
+
+        # =====================================================
+        # TIMESTAMP
+        # =====================================================
+
+        timestamp = datetime.now(
+            UTC
+        ).isoformat()
+                # =====================================================
+        # STORE FEATURES
+        # =====================================================
+
         feature_data.append({
 
+            "tracking_id": tracking_id,
+
             "object_id": obj["norad_id"],
+
             "name": obj["name"],
 
             "position": {
+
                 "x": round(x, 3),
                 "y": round(y, 3),
                 "z": round(z, 3)
+
             },
 
             "velocity": {
+
                 "vx": round(vx, 6),
                 "vy": round(vy, 6),
                 "vz": round(vz, 6)
+
             },
 
             "speed": round(speed, 6),
 
             "altitude": round(altitude, 3),
 
-            "inclination": inclination,
+            "inclination": round(inclination, 4),
 
             "orbit_class": orbit_class,
+
+            "relative_distance": round(relative_distance, 3),
+
+            "relative_velocity": round(relative_velocity, 6),
+
+            "orientation": {
+
+                "roll": roll,
+
+                "pitch": round(pitch, 2),
+
+                "yaw": round(yaw, 2)
+
+            },
+
+            "estimated_size_m": estimated_size,
+
+            "estimated_rcs_m2": estimated_rcs,
+
+            "motion_rate": motion_rate,
+
+            "tumbling_rate": tumbling_rate,
+
+            "collision_confidence": confidence,
 
             "timestamp": timestamp
 
         })
 
     except Exception as e:
-        print(f"Error processing {obj['name']}: {e}")
 
-# ----------------------------------
-# Save JSON
-# ----------------------------------
-with open(output_file, "w", encoding="utf-8") as file:
-    json.dump(feature_data, file, indent=4)
+        print(f"Error processing {obj['name']} : {e}")
+        # =====================================================
+# SAVE JSON
+# =====================================================
 
-print("\nFeature Extraction Completed!")
+with open(OUTPUT_FILE, "w", encoding="utf-8") as file:
+
+    json.dump(
+        feature_data,
+        file,
+        indent=4
+    )
+
+# =====================================================
+# SUMMARY
+# =====================================================
+
+print("\n========================================")
+print(" Feature Extraction Completed Successfully ")
+print("========================================")
+
 print(f"Processed Objects : {len(feature_data)}")
-print(f"Output Saved To : {output_file}")
 
-# ----------------------------------
-# Display first object
-# ----------------------------------
+print(f"\nOutput File :")
+print(OUTPUT_FILE)
+
+# =====================================================
+# SHOW FIRST OBJECT
+# =====================================================
+
 if feature_data:
-    print("\nFirst Object:\n")
-    print(json.dumps(feature_data[0], indent=4))
+
+    print("\n================ FIRST OBJECT ================\n")
+
+    print(
+        json.dumps(
+            feature_data[0],
+            indent=4
+        )
+    )
+
+print("\n========================================")
+print(" debris_state.json generated successfully ")
+print("========================================")
