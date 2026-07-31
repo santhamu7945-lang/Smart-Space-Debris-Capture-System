@@ -1,13 +1,9 @@
 {
   "mission_id": "MIS-2026-001",
-  "target_id": 34427,
   "target_name": "COSMOS 2251",
+  "risk_level": "LOW",
   "capture_method": "robotic_net",
-  "capture_score": 0,
-  "risk_level": "UNKNOWN",
-  "legal_status": "UNVERIFIED",
-  "storage_impact": "UNKNOWN",
-  "propellant_impact": "UNKNOWN",
-  "decision": "PENDING",
-  "reason": "Awaiting mission analysis"
+  "capture_score": 50.0,
+  "decision": "HOLD",
+  "reason": "Capture score below operational threshold"
 }

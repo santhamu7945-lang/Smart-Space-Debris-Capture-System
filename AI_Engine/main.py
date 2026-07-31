@@ -1,3 +1,6 @@
+
+from pathlib import Path
+
 from AI_Engine.config.settings import TLE_FILE
 from AI_Engine.orbit_dynamics.tle_loader import load_tle
 from AI_Engine.orbit_dynamics.propagator import propagate_tle
@@ -6,6 +9,12 @@ from AI_Engine.collision_avoidance.probability import collision_probability
 from AI_Engine.guidance_decision.risk_engine import compute_risk_score
 from AI_Engine.guidance_decision.capture_feasibility import (
     evaluate_capture_feasibility,
+)
+from AI_Engine.guidance_decision.mission_manager import (
+    generate_mission_decision,
+)
+from AI_Engine.guidance_decision.decision_exporter import (
+    export_decision,
 )
 
 
@@ -46,13 +55,22 @@ def main():
     size_cm = 25.0
     tumbling_rate_dps = 2.0
 
+    # Capture feasibility analysis
     capture = evaluate_capture_feasibility(
         size_cm=size_cm,
         relative_velocity_kms=result['relative_velocity_kms'],
         tumbling_rate_dps=tumbling_rate_dps
     )
 
-    print('\n===== MISSION RISK ANALYSIS =====')
+    # Mission decision generation
+    decision = generate_mission_decision(
+        risk_level=risk['risk_level'],
+        capture_feasible=capture['capture_feasible'],
+        capture_score=capture['capture_score']
+    )
+
+    # Print mission analysis
+    print('\\n===== MISSION RISK ANALYSIS =====')
     print('Target:', name)
 
     print(
@@ -95,6 +113,33 @@ def main():
         f"Difficulty Level : {capture['difficulty_level']}"
     )
 
+    print(
+        f"Mission Decision : {decision['decision']}"
+    )
+
+    print(
+        f"Decision Reason : {decision['reason']}"
+    )
+
+    # Export decision to telemetry JSON
+    mission_json = {
+        'mission_id': 'MIS-2026-001',
+        'target_name': name,
+        'risk_level': risk['risk_level'],
+        'capture_method': capture['capture_method'],
+        'capture_score': capture['capture_score'],
+        'decision': decision['decision'],
+        'reason': decision['reason']
+    }
+
+    export_decision(
+        Path('AI_Engine/telemetry/mission_decision.json'),
+        mission_json
+    )
+
+    print('\\nMission decision exported successfully.')
+
 
 if __name__ == '__main__':
     main()
+
