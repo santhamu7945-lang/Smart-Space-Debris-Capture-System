@@ -1,0 +1,43 @@
+{
+  "current_state": "ALIGN",
+  "allowed_transitions": {
+    "SEARCH": [
+      "TRACK",
+      "ABORT"
+    ],
+    "TRACK": [
+      "APPROACH",
+      "ABORT"
+    ],
+    "APPROACH": [
+      "ALIGN",
+      "ABORT"
+    ],
+    "ALIGN": [
+      "CAPTURE",
+      "ABORT"
+    ],
+    "CAPTURE": [
+      "VERIFY",
+      "ABORT"
+    ],
+    "VERIFY": [
+      "STORE",
+      "ABORT"
+    ],
+    "STORE": [
+      "STABILIZE",
+      "ABORT"
+    ],
+    "STABILIZE": [
+      "DISPOSE",
+      "ABORT"
+    ],
+    "DISPOSE": [
+      "SEARCH"
+    ],
+    "ABORT": [
+      "SEARCH"
+    ]
+  }
+}
