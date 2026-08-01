@@ -1,9 +1,17 @@
 {
   "mission_id": "MIS-2026-001",
+  "tracking_id": "TRK_22675_000001",
   "target_name": "COSMOS 2251",
+  "orbit_class": "LEO",
+  "altitude_km": 778.029,
+  "inclination_deg": 74.0395,
   "risk_level": "LOW",
-  "capture_method": "robotic_net",
-  "capture_score": 50.0,
-  "decision": "HOLD",
-  "reason": "Capture score below operational threshold"
+  "risk_score": 24.52,
+  "capture_method": "robotic_net_large",
+  "capture_score": 30.0,
+  "capture_feasible": false,
+  "difficulty_level": "HIGH",
+  "decision": "ABORT",
+  "reason": "Capture not feasible",
+  "timestamp": "2026-07-24T10:58:27.969394+00:00"
 }
