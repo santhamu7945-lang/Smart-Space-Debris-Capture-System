@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from AI_Engine.data.data_loader import load_first_debris
+from AI_Engine.data.data_loader import load_debris_by_name
 from AI_Engine.collision_avoidance.closest_approach import closest_approach
 from AI_Engine.collision_avoidance.probability import collision_probability
 from AI_Engine.guidance_decision.risk_engine import compute_risk_score
@@ -14,11 +14,14 @@ from AI_Engine.guidance_decision.decision_exporter import (
     export_decision,
 )
 
+# Select the debris object to analyze
+TARGET_NAME = 'COSMOS 2251'
+
 
 def main():
 
-    # Load target debris from Member 2 dataset
-    debris = load_first_debris()
+    # Load selected target debris
+    debris = load_debris_by_name(TARGET_NAME)
 
     name = debris['name']
 

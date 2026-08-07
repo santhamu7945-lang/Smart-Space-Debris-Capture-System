@@ -1,27 +1,25 @@
-"""
-Debris State Data Loader
-Loads processed debris catalog from Member 2 dataset.
-"""
-
 import json
 from pathlib import Path
-from typing import Dict, List
 
-
+# Path to processed debris dataset
 DATA_FILE = Path('DATA/processed/debris_state.json')
 
 
-def load_debris_catalog() -> List[Dict]:
+def load_first_debris():
+    """Load the first debris object from the dataset."""
+    with open(DATA_FILE, 'r') as f:
+        data = json.load(f)
 
-    with open(DATA_FILE, 'r', encoding='utf-8') as file:
-        return json.load(file)
+    return data[0]
 
 
-def load_first_debris() -> Dict:
+def load_debris_by_name(target_name: str):
+    """Load a debris object by its name."""
+    with open(DATA_FILE, 'r') as f:
+        data = json.load(f)
 
-    catalog = load_debris_catalog()
+    for obj in data:
+        if obj['name'] == target_name:
+            return obj
 
-    if not catalog:
-        raise ValueError('Debris catalog is empty')
-
-    return catalog[0]
+    raise ValueError(f'Debris object {target_name} not found in dataset.')
