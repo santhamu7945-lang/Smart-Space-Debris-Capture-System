@@ -3,15 +3,15 @@
   "tracking_id": "TRK_22675_000001",
   "target_name": "COSMOS 2251",
   "orbit_class": "LEO",
-  "altitude_km": 778.029,
-  "inclination_deg": 74.0395,
+  "altitude_km": 792.72,
+  "inclination_deg": 74.0379,
   "risk_level": "LOW",
-  "risk_score": 24.52,
+  "risk_score": 9.33,
   "capture_method": "robotic_net_large",
   "capture_score": 30.0,
   "capture_feasible": false,
   "difficulty_level": "HIGH",
   "decision": "ABORT",
   "reason": "Capture not feasible",
-  "timestamp": "2026-07-24T10:58:27.969394+00:00"
+  "timestamp": "2026-07-31T09:16:22.629541+00:00"
 }
