@@ -87,6 +87,7 @@ class SimulationEngine:
 
         self.sm.transition(MissionState.TRACKING, "startup_scan_complete")
         self.last_tracked = []
+        self.mission_complete = False
 
     def step(self, dt_s=1.0):
         """Advance the whole system by one cycle."""
@@ -129,10 +130,17 @@ class SimulationEngine:
         if self.sm.state == MissionState.ABORT:
             self.sm.replan()
 
-        if self.sm.state == MissionState.TRACKING:
+        if self.sm.state == MissionState.TRACKING and not self.mission_complete:
             best = self.mgr.select_target(tracked)
             if best and best["score"] > -np.inf:
                 self.sm.check_tracking_to_approaching(target_locked=True, sensor_confidence_ok=True)
+            elif self.mgr.last_selection_blocked_by_capacity:
+                # nothing left will EVER fit in the remaining storage
+                # capacity -- this isn't "try again next cycle", the
+                # mission is effectively done. Park it instead of
+                # silently re-checking the same failing candidates forever.
+                self.mission_complete = True
+                self.sm.transition(MissionState.IDLE, "storage_capacity_exhausted_mission_complete")
 
         elif self.sm.state == MissionState.APPROACHING and self.mgr.locked_target_id:
             target = next(x for x in tracked if x["id"] == self.mgr.locked_target_id)
@@ -168,7 +176,7 @@ class SimulationEngine:
                     self._capture_attempts = 0
 
         self.sm.force_idle_on_low_fuel(self.fuel)
-        if self.sm.state == MissionState.IDLE:
+        if self.sm.state == MissionState.IDLE and not self.mission_complete:
             self.sm.transition(MissionState.TRACKING, "resume_scanning")
 
         self.last_tracked = tracked
@@ -210,14 +218,23 @@ def run_forever(interval_s=1.0, n_debris=6, seed=42):
     """
     engine = SimulationEngine(n_debris=n_debris, seed=seed)
     print(f"Simulation running. Writing {engine.out_path} every {interval_s}s. Ctrl+C to stop.")
+    announced_complete = False
     try:
         while True:
             engine.step(dt_s=interval_s)
             engine.write_state()
+            if engine.mission_complete and not announced_complete:
+                announced_complete = True
+                print(f"\n*** MISSION COMPLETE at t={engine.t_s:.0f}s — storage full "
+                      f"({engine.drum.current_capacity_used:.2f}), no remaining debris "
+                      f"can fit. Fuel remaining: {engine.fuel.remaining_delta_v_km_s:.4f} km/s. ***\n"
+                      f"(still writing debris_state.json every {interval_s}s so the "
+                      f"dashboard keeps showing the final state)\n")
             print(f"t={engine.t_s:.0f}s  state={engine.sm.state.name}  "
                   f"locked={engine.mgr.locked_target_id}  "
                   f"fuel_left={engine.fuel.remaining_delta_v_km_s:.4f}  "
-                  f"storage={engine.drum.current_capacity_used:.2f}")
+                  f"storage={engine.drum.current_capacity_used:.2f}"
+                  + ("  [MISSION COMPLETE]" if engine.mission_complete else ""))
             time.sleep(interval_s)
     except KeyboardInterrupt:
         print("\nStopped.")
