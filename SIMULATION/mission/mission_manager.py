@@ -39,6 +39,7 @@ class MissionManager:
         self.safety_radius_km = safety_radius_km
         self.fuel_weight = fuel_weight
         self.locked_target_id = None
+        self.last_selection_blocked_by_capacity = False
 
     # --- Challenge 4: fuel-aware target scoring ------------------------
 
@@ -74,13 +75,26 @@ class MissionManager:
 
     def select_target(self, candidates, n_mean_motion=None):
         """Score every candidate, return the best-scoring one (or None if
-        storage is full or nothing is affordable)."""
+        storage is full or nothing is affordable). Also sets
+        self.last_selection_blocked_by_capacity so callers can tell
+        'temporarily nothing affordable' apart from 'storage can never
+        fit anything remaining, mission is effectively done'."""
+        self.last_selection_blocked_by_capacity = False
+
         if self.storage_drum.storage_full:
+            self.last_selection_blocked_by_capacity = True
             return None
 
-        scored = [self.score_target(c, n_mean_motion=n_mean_motion) for c in candidates]
-        scored = [s for s in scored if s["score"] > -np.inf]
+        scored_raw = [self.score_target(c, n_mean_motion=n_mean_motion) for c in candidates]
+        scored = [s for s in scored_raw if s["score"] > -np.inf]
         if not scored:
+            # nothing viable this cycle -- figure out why. If EVERY
+            # candidate failed specifically because it wouldn't fit
+            # (not because of fuel), nothing remaining will ever be
+            # capturable until the drum is emptied, so this isn't a
+            # transient "try again next cycle" state.
+            if scored_raw and all(s.get("reason") == "would_exceed_storage_capacity" for s in scored_raw):
+                self.last_selection_blocked_by_capacity = True
             return None
 
         best = max(scored, key=lambda s: s["score"])
