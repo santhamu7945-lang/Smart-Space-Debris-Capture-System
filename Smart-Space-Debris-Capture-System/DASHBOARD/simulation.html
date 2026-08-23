@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Autonomous Space Debris Monitoring &amp; Capture System — Live Simulation</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #000; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; }
+  #scene-container { position: fixed; inset: 0; }
+
+  #hud-top {
+    position: fixed; top: 0; left: 0; right: 0; height: 56px; z-index: 15;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 22px; background: linear-gradient(to bottom, rgba(3,4,7,0.92), rgba(3,4,7,0));
+  }
+  #hud-left { display: flex; align-items: center; gap: 16px; }
+  #hud-left a { color: #7fc4ff; text-decoration: none; font-size: 12px; letter-spacing: 0.3px; }
+  #hud-title { color: #eaf3ff; font-size: 12.5px; letter-spacing: 1.2px; font-weight: 500; }
+  #hud-right { display: flex; align-items: center; gap: 20px; font-size: 11px; color: #6b7f97; }
+  #live-dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; display: inline-block;
+    margin-right: 6px; animation: pulse 1.6s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+  #phase-strip {
+    position: fixed; top: 56px; left: 0; right: 0; z-index: 14;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 8px 0; background: rgba(6,9,15,0.55); backdrop-filter: blur(5px);
+    font-size: 12.5px; letter-spacing: 0.5px; color: #d8e6f5;
+    border-bottom: 1px solid rgba(120,180,255,0.1); transition: border-color 0.4s ease;
+  }
+  #phase-strip .dot { width: 6px; height: 6px; border-radius: 50%; background: #7fc4ff; }
+  #phase-strip.state-success .dot { background: #4ade80; }
+  #phase-strip.state-hold .dot { background: #ffaa33; }
+  #phase-strip.state-abort .dot { background: #f87171; }
+  #phase-strip.state-success { border-bottom-color: rgba(74,222,128,0.3); }
+  #phase-strip.state-hold { border-bottom-color: rgba(255,170,51,0.3); }
+  #phase-strip.state-abort { border-bottom-color: rgba(248,113,113,0.3); }
+  #phase-name { font-weight: 600; }
+  #phase-detail { color: #7f92a8; }
+
+  #panel {
+    position: fixed; top: 100px; right: 16px; width: 300px;
+    background: rgba(6, 9, 15, 0.8); border: 1px solid rgba(120, 180, 255, 0.18);
+    border-radius: 10px; padding: 16px; color: #d8e6f5; backdrop-filter: blur(8px);
+    max-height: calc(100vh - 200px); overflow-y: auto;
+  }
+  #panel h2 { font-size: 11.5px; letter-spacing: 1.4px; color: #7fc4ff; text-transform: uppercase;
+    margin-bottom: 10px; border-bottom: 1px solid rgba(120,180,255,0.15); padding-bottom: 8px; }
+  .row { display: flex; justify-content: space-between; font-size: 12.5px; margin: 5px 0; gap: 10px; }
+  .label { color: #7f92a8; white-space: nowrap; } .value { color: #eaf3ff; font-weight: 600; text-align: right; }
+  .decision-proceed { color: #4ade80; } .decision-abort { color: #f87171; } .decision-hold { color: #ffaa33; }
+  #mechanism-box {
+    margin-top: 12px; padding: 11px; border-radius: 8px; background: rgba(120,180,255,0.05);
+    border: 1px solid rgba(120,180,255,0.12); font-size: 11.5px; color: #a8bdd2; line-height: 1.55;
+  }
+
+  #storage-panel {
+    position: fixed; bottom: 16px; right: 16px; background: rgba(6,9,15,0.8);
+    border: 1px solid rgba(120,180,255,0.18); border-radius: 10px; padding: 11px 15px;
+    color: #d8e6f5; font-size: 12px;
+  }
+
+  #outcome-toast {
+    position: fixed; top: 98px; left: 50%; transform: translateX(-50%) translateY(-14px);
+    padding: 10px 22px; border-radius: 9px; font-size: 12.5px; letter-spacing: 0.3px;
+    z-index: 16; opacity: 0; pointer-events: none; transition: opacity 0.5s ease, transform 0.5s ease;
+    backdrop-filter: blur(6px);
+  }
+  #outcome-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  #outcome-toast.toast-success { background: rgba(74,222,128,0.15); border: 1px solid rgba(74,222,128,0.5); color: #4ade80; }
+  #outcome-toast.toast-hold { background: rgba(255,170,51,0.15); border: 1px solid rgba(255,170,51,0.5); color: #ffaa33; }
+  #outcome-toast.toast-abort { background: rgba(248,113,113,0.15); border: 1px solid rgba(248,113,113,0.5); color: #f87171; }
+  #outcome-toast.toast-info { background: rgba(127,196,255,0.15); border: 1px solid rgba(127,196,255,0.5); color: #7fc4ff; }
+
+  #demo-controls {
+    position: fixed; bottom: 16px; left: 16px; display: flex; gap: 8px; align-items: flex-end;
+    background: rgba(6,9,15,0.8); border: 1px solid rgba(120,180,255,0.18);
+    border-radius: 10px; padding: 10px; z-index: 10;
+  }
+  #demo-controls .label { color: #4a5a70; font-size: 10px; letter-spacing: 1px;
+    display: block; margin-bottom: 6px; text-transform: uppercase; }
+  #demo-controls button {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(120,180,255,0.22);
+    color: #d8e6f5; font-size: 11px; padding: 6px 10px; border-radius: 6px; cursor: pointer;
+  }
+  #demo-controls button:hover { background: rgba(120,180,255,0.15); }
+  #demo-controls button.active-proceed { border-color: #4ade80; color: #4ade80; }
+  #demo-controls button.active-hold { border-color: #ffaa33; color: #ffaa33; }
+  #demo-controls button.active-abort { border-color: #f87171; color: #f87171; }
+
+  #loading { position: fixed; inset: 0; background: #030407; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; color: #7fc4ff; font-size: 14px; z-index: 100;
+    letter-spacing: 1px; gap: 10px; }
+  #loading .sub { color: #4a5a70; font-size: 11px; }
+
+  #copyright { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+    font-size: 9.5px; color: #2e3a4a; letter-spacing: 0.5px; z-index: 5; }
+
+  #field-panel {
+    position: fixed; left: 16px; top: 100px; width: 286px; z-index: 12;
+    background: rgba(4,7,12,0.78); border: 1px solid rgba(120,180,255,0.16);
+    border-radius: 11px; padding: 13px; backdrop-filter: blur(9px);
+    box-shadow: 0 18px 50px rgba(0,0,0,0.25);
+  }
+  .field-head { display:flex; justify-content:space-between; font-size:9.5px; letter-spacing:1.5px;
+    color:#71849a; padding-bottom:9px; border-bottom:1px solid rgba(120,180,255,0.1); }
+  #field-status { color:#4ade80; }
+  .field-metrics { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; padding:11px 0; }
+  .field-metrics div { background:rgba(255,255,255,0.025); border:1px solid rgba(120,180,255,0.08);
+    border-radius:7px; padding:7px 4px; text-align:center; }
+  .field-metrics b { display:block; color:#eaf3ff; font-size:15px; font-weight:600; }
+  .field-metrics small { display:block; color:#56677b; font-size:7.5px; letter-spacing:.8px; margin-top:3px; }
+  #target-list { max-height:190px; overflow:auto; }
+  .target-row { display:grid; grid-template-columns:20px 1fr auto; gap:7px; align-items:center;
+    padding:7px 3px; border-top:1px solid rgba(120,180,255,0.055); font-size:9.5px; }
+  .target-row .idx { color:#53677d; }
+  .target-row .name { color:#b8c8d9; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .target-row .meta { color:#73879c; text-align:right; }
+  .target-row.selected { background:rgba(74,222,128,0.06); border-radius:5px; }
+  .target-row.selected .name { color:#4ade80; }
+  .target-row.near { color:#7fc4ff; }
+  @media (max-width: 900px) {
+    #field-panel { width:235px; }
+    #panel { width:260px; }
+  }
+
+</style>
+</head>
+<body>
+
+<div id="loading">INITIALIZING LIVE SIMULATION<div class="sub">Loading orbital assets and mission telemetry...</div></div>
+<div id="scene-container"></div>
+
+<div id="hud-top">
+  <div id="hud-left">
+    <a href="index.html">← Home</a>
+    <a href="dashboard.html">Dashboard →</a>
+    <span id="hud-title">AUTONOMOUS SPACE DEBRIS MONITORING &amp; CAPTURE SYSTEM</span>
+  </div>
+  <div id="hud-right">
+    <span><span id="live-dot"></span>LIVE</span>
+    <span id="hud-clock">--:--:--</span>
+    <span id="hud-cycle">CYCLE 1</span>
+  </div>
+</div>
+
+<div id="phase-strip">
+  <span class="dot"></span>
+  <span id="phase-name">Initializing</span>
+  <span id="phase-detail">Establishing sensor lock...</span>
+</div>
+
+<div id="outcome-toast"></div>
+
+<div id="panel">
+  <h2>Active Mission Target</h2>
+  <div id="target-info"><div class="row"><span class="label">Loading...</span></div></div>
+  <div id="mechanism-box">Loading capture mechanism assessment...</div>
+</div>
+
+<div id="field-panel">
+  <div class="field-head">
+    <span>LOCAL DEBRIS FIELD</span>
+    <span id="field-status">SCANNING</span>
+  </div>
+  <div class="field-metrics">
+    <div><b id="field-total">0</b><small>VISIBLE</small></div>
+    <div><b id="field-tracked">0</b><small>TRACKED</small></div>
+    <div><b id="field-candidates">0</b><small>CANDIDATES</small></div>
+    <div><b id="field-selected">—</b><small>SELECTED</small></div>
+  </div>
+  <div id="target-list"></div>
+</div>
+
+<div id="storage-panel">Storage Canister: <span id="storage-count">0</span> / 3 stowed</div>
+
+<div id="demo-controls">
+  <div>
+    <span class="label">Demo: Force Outcome</span>
+    <button id="btn-proceed" onclick="forceOutcome('PROCEED')">Capture</button>
+    <button id="btn-hold" onclick="forceOutcome('HOLD')">Hold</button>
+    <button id="btn-abort" onclick="forceOutcome('ABORT')">Abort</button>
+  </div>
+</div>
+
+<div id="copyright">© 2026 SDCS — Technology demonstrator visualization; verify asset licenses before public redistribution</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+
+const EARTH_RADIUS_SCENE = 25;
+const EARTH_RADIUS_KM_TRUE = 6378.137;
+const KM_TO_SCENE = EARTH_RADIUS_SCENE / EARTH_RADIUS_KM_TRUE;
+const TEXTURE_PATH = "assets/textures/";
+const CYCLE_LENGTH_SEC = 56;
+const SATELLITE_SCALE = 4.6;
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(50, innerWidth / innerHeight, 0.1, 8000);
+camera.position.set(14, 42, 100);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2.5));
+renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+document.getElementById("scene-container").appendChild(renderer.domElement);
+
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; controls.dampingFactor = 0.06;
+controls.minDistance = 20; controls.maxDistance = 500;
+
+const SUN_DIR = new THREE.Vector3(0.62, 0.24, 0.75).normalize();
+const sunLight = new THREE.DirectionalLight(0xfff3dc, 3.0);
+sunLight.position.copy(SUN_DIR.clone().multiplyScalar(600));
+sunLight.castShadow = false;
+scene.add(sunLight);
+scene.add(new THREE.HemisphereLight(0x9db7d8, 0x07090d, 0.12));
+
+const EARTH_MU_KM = 398600.4418;
+const SIM_TIME_SCALE = 150;
+
+function stateToElements(rx, ry, rz, vx, vy, vz) {
+  const r = new THREE.Vector3(rx, ry, rz);
+  const v = new THREE.Vector3(vx, vy, vz);
+  const rMag = r.length(), vMag = v.length();
+  const h = new THREE.Vector3().crossVectors(r, v);
+  const hMag = h.length();
+  const nVec = new THREE.Vector3(-h.y, h.x, 0);
+  const nMag = nVec.length();
+  const rv = r.dot(v);
+  const eVec = r.clone().multiplyScalar(vMag*vMag - EARTH_MU_KM/rMag).sub(v.clone().multiplyScalar(rv)).divideScalar(EARTH_MU_KM);
+  const e = eVec.length();
+  const energy = (vMag*vMag)/2 - EARTH_MU_KM/rMag;
+  const a = -EARTH_MU_KM / (2*energy);
+  const i = Math.acos(THREE.MathUtils.clamp(h.z / hMag, -1, 1));
+  let raan = nMag > 1e-8 ? Math.acos(THREE.MathUtils.clamp(nVec.x / nMag, -1, 1)) : 0;
+  if (nVec.y < 0) raan = 2*Math.PI - raan;
+  let argp;
+  if (nMag > 1e-8 && e > 1e-8) {
+    argp = Math.acos(THREE.MathUtils.clamp(nVec.dot(eVec) / (nMag*e), -1, 1));
+    if (eVec.z < 0) argp = 2*Math.PI - argp;
+  } else { argp = 0; }
+  let nu0;
+  if (e > 1e-8) {
+    nu0 = Math.acos(THREE.MathUtils.clamp(eVec.dot(r) / (e*rMag), -1, 1));
+    if (rv < 0) nu0 = 2*Math.PI - nu0;
+  } else { nu0 = 0; }
+  const meanMotion = Math.sqrt(EARTH_MU_KM / Math.abs(a*a*a));
+  const E0 = 2*Math.atan2(Math.sqrt(1-e)*Math.sin(nu0/2), Math.sqrt(1+e)*Math.cos(nu0/2));
+  const M0 = E0 - e*Math.sin(E0);
+  return { a, e, i, raan, argp, M0, n: meanMotion };
+}
+
+function propagateECI(elements, dtSec) {
+  const { a, e, i, raan, argp, M0, n } = elements;
+  let M = M0 + n * dtSec;
+  M = ((M % (2*Math.PI)) + 2*Math.PI) % (2*Math.PI);
+  let E = M;
+  for (let iter = 0; iter < 8; iter++) E = E - (E - e*Math.sin(E) - M) / (1 - e*Math.cos(E));
+  const nu = 2*Math.atan2(Math.sqrt(1+e)*Math.sin(E/2), Math.sqrt(1-e)*Math.cos(E/2));
+  const rMag = a * (1 - e*Math.cos(E));
+  const xPf = rMag * Math.cos(nu), yPf = rMag * Math.sin(nu);
+  const cosO = Math.cos(raan), sinO = Math.sin(raan);
+  const cosI = Math.cos(i), sinI = Math.sin(i);
+  const cosW = Math.cos(argp), sinW = Math.sin(argp);
+  const x = (cosO*cosW - sinO*sinW*cosI)*xPf + (-cosO*sinW - sinO*cosW*cosI)*yPf;
+  const y = (sinO*cosW + cosO*sinW*cosI)*xPf + (-sinO*sinW + cosO*cosW*cosI)*yPf;
+  const z = (sinW*sinI)*xPf + (cosW*sinI)*yPf;
+  return [x, y, z];
+}
+
+const loader = new THREE.TextureLoader();
+function loadTextureOrNull(filename) {
+  return new Promise((resolve) => {
+    loader.load(TEXTURE_PATH + filename, (tex) => { tex.encoding = THREE.sRGBEncoding; resolve(tex); }, undefined, () => resolve(null));
+  });
+}
+
+async function buildSky() {
+  const milkyway = await loadTextureOrNull("stars_milky_way.jpg");
+  if (milkyway) {
+    scene.add(new THREE.Mesh(new THREE.SphereGeometry(3000, 60, 40), new THREE.MeshBasicMaterial({ map: milkyway, side: THREE.BackSide })));
+    return;
+  }
+  const geo = new THREE.BufferGeometry();
+  const count = 9000;
+  const pos = new Float32Array(count * 3);
+  for (let i = 0; i < count; i++) {
+    const r = 1200 + Math.random() * 600, th = Math.random() * Math.PI * 2, ph = Math.acos(Math.random() * 2 - 1);
+    pos[i*3] = r * Math.sin(ph) * Math.cos(th); pos[i*3+1] = r * Math.sin(ph) * Math.sin(th); pos[i*3+2] = r * Math.cos(ph);
+  }
+  geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+  scene.add(new THREE.Points(geo, new THREE.PointsMaterial({ color: 0xffffff, size: 1.15 })));
+}
+
+async function buildSun() {
+  const sunTex = await loadTextureOrNull("sun.jpg");
+  const sunMat = sunTex ? new THREE.MeshBasicMaterial({ map: sunTex }) : new THREE.MeshBasicMaterial({ color: 0xfff2c8 });
+  const sunPos = SUN_DIR.clone().multiplyScalar(900);
+  const sun = new THREE.Mesh(new THREE.SphereGeometry(18, 32, 32), sunMat);
+  sun.position.copy(sunPos);
+  scene.add(sun);
+  const c = document.createElement("canvas"); c.width = c.height = 256;
+  const ctx = c.getContext("2d");
+  const grad = ctx.createRadialGradient(128,128,0,128,128,128);
+  grad.addColorStop(0, "rgba(255,248,224,0.95)"); grad.addColorStop(0.35, "rgba(255,226,160,0.4)"); grad.addColorStop(1, "rgba(255,220,150,0)");
+  ctx.fillStyle = grad; ctx.fillRect(0,0,256,256);
+  const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(c), transparent: true, blending: THREE.AdditiveBlending }));
+  glow.scale.set(240, 240, 1); glow.position.copy(sunPos);
+  scene.add(glow);
+}
+
+let moonRef;
+async function buildMoon() {
+  const moonTex = await loadTextureOrNull("moon.jpg");
+  const mat = moonTex ? new THREE.MeshStandardMaterial({ map: moonTex, roughness: 0.95 }) : new THREE.MeshStandardMaterial({ color: 0xaaaaaa, roughness: 0.95 });
+  moonRef = new THREE.Mesh(new THREE.SphereGeometry(4, 32, 32), mat);
+  scene.add(moonRef);
+}
+
+let earthRef;
+async function buildEarth() {
+  const [dayTex, nightTex, cloudTex] = await Promise.all([
+    loadTextureOrNull("earth_day.jpg"),
+    loadTextureOrNull("earth_night.jpg"),
+    loadTextureOrNull("earth_clouds.jpg")
+  ]);
+
+  const geo = new THREE.SphereGeometry(EARTH_RADIUS_SCENE, 192, 192);
+
+  if (dayTex && nightTex) {
+    const mat = new THREE.ShaderMaterial({
+      uniforms: {
+        dayMap: { value: dayTex },
+        nightMap: { value: nightTex },
+        sunDirection: { value: SUN_DIR.clone().normalize() }
+      },
+      vertexShader: `
+        varying vec2 vUv;
+        varying vec3 vWorldNormal;
+        void main() {
+          vUv = uv;
+          vWorldNormal = normalize(mat3(modelMatrix) * normal);
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform sampler2D dayMap;
+        uniform sampler2D nightMap;
+        uniform vec3 sunDirection;
+        varying vec2 vUv;
+        varying vec3 vWorldNormal;
+        void main() {
+          float illumination = dot(normalize(vWorldNormal), normalize(sunDirection));
+          float dayFactor = smoothstep(-0.12, 0.16, illumination);
+          vec3 dayColor = texture2D(dayMap, vUv).rgb;
+          vec3 nightColor = texture2D(nightMap, vUv).rgb;
+          vec3 color = mix(nightColor * 0.95, dayColor, dayFactor);
+          float rim = pow(max(0.0, 1.0 - abs(illumination)), 3.0);
+          color += vec3(0.025,0.035,0.055) * rim;
+          gl_FragColor = vec4(color,1.0);
+        }
+      `
+    });
+    earthRef = new THREE.Mesh(geo, mat);
+  } else {
+    const mat = new THREE.MeshStandardMaterial({
+      map: dayTex || null, roughness: 0.86, metalness: 0.0
+    });
+    earthRef = new THREE.Mesh(geo, mat);
+  }
+
+  scene.add(earthRef);
+
+  if (cloudTex) {
+    const clouds = new THREE.Mesh(
+      new THREE.SphereGeometry(EARTH_RADIUS_SCENE * 1.006, 192, 192),
+      new THREE.MeshLambertMaterial({
+        map: cloudTex, transparent:true, opacity:0.32, depthWrite:false
+      })
+    );
+    scene.add(clouds);
+    earthRef.userData.clouds = clouds;
+  }
+
+  return earthRef;
+}
+
+function makeDebrisMesh(sizeM, riskColor, decorative) {
+  const scale = Math.max(sizeM, 0.15) * (decorative ? 1.6 : 2.2);
+  const roll = Math.random();
+  let geo;
+  if (roll < 0.3) geo = new THREE.IcosahedronGeometry(scale * 0.5, 0);
+  else if (roll < 0.55) geo = new THREE.BoxGeometry(scale * 1.4, scale * 0.08, scale * 0.9);
+  else if (roll < 0.75) geo = new THREE.TetrahedronGeometry(scale * 0.55, 0);
+  else if (roll < 0.9) geo = new THREE.OctahedronGeometry(scale * 0.5, 0);
+  else geo = new THREE.CylinderGeometry(scale * 0.1, scale * 0.1, scale * 0.9, 6);
+  const posAttr = geo.attributes.position;
+  for (let i = 0; i < posAttr.count; i++) {
+    posAttr.setXYZ(i, posAttr.getX(i)*(0.85+Math.random()*0.3), posAttr.getY(i)*(0.85+Math.random()*0.3), posAttr.getZ(i)*(0.85+Math.random()*0.3));
+  }
+  geo.computeVertexNormals();
+  const isFoil = Math.random() < 0.25;
+  const color = isFoil ? new THREE.Color(0.55+Math.random()*0.2, 0.42+Math.random()*0.15, 0.15) : new THREE.Color().setScalar(0.32+Math.random()*0.35);
+  const mat = new THREE.MeshStandardMaterial({ color, metalness: isFoil?0.85:0.7, roughness: isFoil?0.3:0.5, emissive: riskColor||new THREE.Color(0,0,0), emissiveIntensity: decorative?0:0.05 });
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.rotation.set(Math.random()*Math.PI, Math.random()*Math.PI, Math.random()*Math.PI);
+  mesh.userData.spinAxis = new THREE.Vector3(Math.random()-0.5, Math.random()-0.5, Math.random()-0.5).normalize();
+  mesh.userData.spinSpeed = 0.002 + Math.random() * 0.01;
+  return mesh;
+}
+
+function positionFromKm(x, y, z) { return new THREE.Vector3(x * KM_TO_SCENE, z * KM_TO_SCENE, -y * KM_TO_SCENE); }
+
+let targetRef = null, targetHalo = null;
+const spinningDebris = [];
+const orbitingDebris = [];
+let satelliteElements = null;
+
+async function buildTrackedDebrisField(vizData) {
+  const group = new THREE.Group();
+  window.trackedVisualObjects = [];
+  const visibleDebris = Array.isArray(vizData.debris) ? vizData.debris : [];
+
+  visibleDebris.forEach((d) => {
+    if (d.x == null || d.y == null || d.z == null) return;
+
+    const pos = positionFromKm(d.x, d.y, d.z);
+    const risk = Number(d.collision_risk || 0);
+    const riskColor = new THREE.Color().setHSL(
+      0.33 - Math.min(risk / 100, 1) * 0.33, 0.8, 0.5
+    );
+    const hasVelocity = d.vx != null && d.vy != null && d.vz != null;
+    const elements = hasVelocity
+      ? stateToElements(d.x,d.y,d.z,d.vx,d.vy,d.vz)
+      : null;
+
+    const mesh = makeDebrisMesh(Math.max(Number(d.size_m || 0.15),0.12), riskColor, false);
+    mesh.position.copy(pos);
+    mesh.userData.id = d.id;
+    mesh.userData.name = d.name || "DEBRIS";
+    mesh.userData.sizeM = Number(d.size_m || 0.15);
+    mesh.userData.massKg = Number(d.mass_kg || 0);
+    mesh.userData.risk = risk;
+    mesh.userData.orbitalElements = elements;
+    mesh.userData.originalPos = pos.clone();
+    mesh.userData.isTarget = !!d.is_target;
+
+    if (d.is_target) {
+      targetRef = mesh;
+      mesh.scale.multiplyScalar(1.9);
+      mesh.material.emissive = new THREE.Color(0x49e889);
+      mesh.material.emissiveIntensity = 0.65;
+
+      targetHalo = new THREE.Mesh(
+        new THREE.SphereGeometry(0.62,20,14),
+        new THREE.MeshBasicMaterial({
+          color:0x49e889, transparent:true, opacity:0.16, wireframe:true
+        })
+      );
+      targetHalo.position.copy(pos);
+      group.add(targetHalo);
+    } else {
+      spinningDebris.push(mesh);
+    }
+
+    if (elements) orbitingDebris.push(mesh);
+    group.add(mesh);
+
+    window.trackedVisualObjects.push(mesh);
+  });
+
+  scene.add(group);
+
+  const active = window.trackedVisualObjects;
+  const selected = targetRef || active[0];
+
+  if (selected && !targetRef) {
+    targetRef = selected;
+    selected.userData.isTarget = true;
+    selected.scale.multiplyScalar(1.9);
+    selected.material.emissive = new THREE.Color(0x49e889);
+    selected.material.emissiveIntensity = 0.65;
+    targetHalo = new THREE.Mesh(
+      new THREE.SphereGeometry(0.62,20,14),
+      new THREE.MeshBasicMaterial({color:0x49e889,transparent:true,opacity:0.16,wireframe:true})
+    );
+    targetHalo.position.copy(selected.position);
+    group.add(targetHalo);
+  }
+
+  renderFieldPanel();
+}
+
+function renderFieldPanel() {
+  const objects = window.trackedVisualObjects || [];
+  const selected = targetRef;
+  const total = objects.length;
+  const tracked = objects.length;
+  const candidates = objects.filter(o => o !== selected).length;
+
+  const totalEl = document.getElementById("field-total");
+  const trackedEl = document.getElementById("field-tracked");
+  const candEl = document.getElementById("field-candidates");
+  const selectedEl = document.getElementById("field-selected");
+
+  if (totalEl) totalEl.innerText = total;
+  if (trackedEl) trackedEl.innerText = tracked;
+  if (candEl) candEl.innerText = candidates;
+  if (selectedEl) selectedEl.innerText = selected ? (selected.userData.id || "LOCK") : "—";
+
+  const list = document.getElementById("target-list");
+  if (!list) return;
+
+  list.innerHTML = objects.slice(0,10).map((o,i) => {
+    const cls = o === selected ? "target-row selected" : "target-row";
+    const size = Number(o.userData.sizeM || 0).toFixed(2);
+    const risk = Number(o.userData.risk || 0).toFixed(0);
+    return `<div class="${cls}">
+      <span class="idx">${String(i+1).padStart(2,"0")}</span>
+      <span class="name">${o.userData.name || "DEBRIS"}</span>
+      <span class="meta">${size}m · R${risk}</span>
+    </div>`;
+  }).join("");
+
+  const status = document.getElementById("field-status");
+  if (status) status.innerText = selected ? "TARGET LOCKED" : "SCANNING";
+}
+
+function buildAmbientDebrisField(count) {
+  count = count || 260;
+  const group = new THREE.Group();
+  for (let i = 0; i < count; i++) {
+    const r = EARTH_RADIUS_SCENE * (1.12 + Math.random() * 1.1);
+    const th = Math.random() * Math.PI * 2, ph = Math.acos(Math.random() * 2 - 1);
+    const mesh = makeDebrisMesh(0.1 + Math.random() * 0.3, null, true);
+    mesh.position.set(r * Math.sin(ph) * Math.cos(th), r * Math.sin(ph) * Math.sin(th) * 0.5, r * Math.cos(ph));
+    group.add(mesh);
+    spinningDebris.push(mesh);
+  }
+  scene.add(group);
+}
+
+function buildSatellite() {
+  const group = new THREE.Group();
+  group.scale.setScalar(SATELLITE_SCALE);
+
+  const bus = new THREE.Mesh(
+    new THREE.BoxGeometry(1.3,1.0,1.5),
+    new THREE.MeshStandardMaterial({color:0x14161c,metalness:0.55,roughness:0.5})
+  );
+  group.add(bus);
+
+  const trimTop = new THREE.Mesh(
+    new THREE.BoxGeometry(1.36,0.1,1.56),
+    new THREE.MeshStandardMaterial({color:0x9a7a35,metalness:0.7,roughness:0.35})
+  );
+  trimTop.position.y=0.5;
+  group.add(trimTop);
+
+  const beacon = new THREE.Mesh(
+    new THREE.SphereGeometry(0.09,12,12),
+    new THREE.MeshBasicMaterial({color:0x7fc4ff})
+  );
+  beacon.position.set(0,0.62,0);
+  group.add(beacon);
+  group.userData.beacon=beacon;
+
+  const panelMat = new THREE.MeshStandardMaterial({color:0x0c0e12,metalness:0.4,roughness:0.3});
+  const panelGeo = new THREE.BoxGeometry(2.6,0.05,1.0);
+  const pL = new THREE.Mesh(panelGeo,panelMat);
+  pL.position.set(-1.9,0.15,-0.5); pL.rotation.y=0.15; group.add(pL);
+  const pR = new THREE.Mesh(panelGeo,panelMat);
+  pR.position.set(1.9,0.15,-0.5); pR.rotation.y=-0.15; group.add(pR);
+
+  const armMat = new THREE.MeshStandardMaterial({color:0xc4c4c4,metalness:0.75,roughness:0.3});
+  const jointMat = new THREE.MeshStandardMaterial({color:0x2a2a2a,metalness:0.6,roughness:0.4});
+  const captureArms=[];
+
+  [-1,1].forEach(side=>{
+    const armGroup=new THREE.Group();
+    armGroup.position.set(side*0.72,0,0.2);
+
+    const shoulder=new THREE.Mesh(new THREE.CylinderGeometry(0.07,0.075,0.55,10),armMat);
+    shoulder.rotation.z=Math.PI/2; shoulder.position.x=side*0.28; armGroup.add(shoulder);
+
+    const elbowJoint=new THREE.Mesh(new THREE.SphereGeometry(0.11,12,12),jointMat);
+    elbowJoint.position.x=side*0.56; armGroup.add(elbowJoint);
+
+    const forearmGroup=new THREE.Group();
+    forearmGroup.position.x=side*0.56;
+
+    const forearm=new THREE.Mesh(new THREE.CylinderGeometry(0.06,0.065,0.6,10),armMat);
+    forearm.rotation.z=Math.PI/2; forearm.position.x=side*0.3; forearmGroup.add(forearm);
+
+    const wristJoint=new THREE.Mesh(new THREE.SphereGeometry(0.08,10,10),jointMat);
+    wristJoint.position.x=side*0.6; forearmGroup.add(wristJoint);
+
+    const gripper=new THREE.Group();
+    gripper.position.x=side*0.6;
+    for(let p=0;p<3;p++){
+      const prong=new THREE.Mesh(new THREE.ConeGeometry(0.035,0.22,6),jointMat);
+      prong.rotation.z=side>0?-Math.PI/2:Math.PI/2;
+      prong.position.set(side*0.1,Math.sin(p*2.1)*0.08,Math.cos(p*2.1)*0.08);
+      gripper.add(prong);
+    }
+    forearmGroup.add(gripper);
+    armGroup.add(forearmGroup);
+
+    armGroup.userData.stowedAngle=0.3*side*-1;
+    armGroup.userData.deployedAngle=1.3*side*-1;
+    armGroup.userData.forearmGroup=forearmGroup;
+    armGroup.userData.gripper=gripper;
+    armGroup.rotation.z=armGroup.userData.stowedAngle;
+
+    group.add(armGroup);
+    captureArms.push(armGroup);
+  });
+  group.userData.captureArms=captureArms;
+
+  // Central net-deployment arm. There is intentionally NO circular ring.
+  // The net is a cable-supported flexible envelope attached directly to
+  // the end-effector, which matches the updated mechanism concept.
+  const netArm=new THREE.Group();
+  netArm.position.set(0,-0.1,0.75);
+
+  const netArmBase=new THREE.Mesh(
+    new THREE.CylinderGeometry(0.08,0.09,0.4,12),armMat
+  );
+  netArmBase.rotation.x=Math.PI/2; netArmBase.position.z=0.2; netArm.add(netArmBase);
+
+  const boomGroup=new THREE.Group();
+  boomGroup.position.z=0.4;
+
+  const boom=new THREE.Mesh(
+    new THREE.CylinderGeometry(0.045,0.05,0.7,10),armMat
+  );
+  boom.rotation.x=Math.PI/2; boom.position.z=0.35; boomGroup.add(boom);
+
+  // Flexible net: cable grid, no launcher ring.
+  const netGroup=new THREE.Group();
+  netGroup.position.z=0.72;
+  const netMat=new THREE.LineBasicMaterial({
+    color:0xe8edf2,transparent:true,opacity:0.78
+  });
+
+  const netLines=[];
+  const rings=[0.16,0.34,0.55];
+  const ringZ=[0.0,0.18,0.42];
+  const segments=18;
+
+  rings.forEach((r,ri)=>{
+    const pts=[];
+    for(let j=0;j<=segments;j++){
+      const a=j/segments*Math.PI*2;
+      pts.push(new THREE.Vector3(r*Math.cos(a),r*Math.sin(a),ringZ[ri]));
+    }
+    netLines.push(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),netMat));
+  });
+
+  for(let j=0;j<segments;j+=2){
+    const a=j/segments*Math.PI*2;
+    const pts=[
+      new THREE.Vector3(0,0,0.52),
+      new THREE.Vector3(rings[1]*Math.cos(a),rings[1]*Math.sin(a),ringZ[1]),
+      new THREE.Vector3(rings[2]*Math.cos(a),rings[2]*Math.sin(a),ringZ[2])
+    ];
+    netLines.push(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),netMat));
+  }
+
+  netLines.forEach(l=>netGroup.add(l));
+  netGroup.visible=false;
+  netGroup.scale.setScalar(0.15);
+  boomGroup.add(netGroup);
+
+  netArm.add(boomGroup);
+  netArm.userData.boomGroup=boomGroup;
+  netArm.userData.net=netGroup;
+  netArm.userData.stowedZ=0.4;
+  netArm.userData.deployedZ=1.35;
+
+  group.add(netArm);
+  group.userData.netArm=netArm;
+
+  const canisterGroup=new THREE.Group();
+  canisterGroup.position.set(0,-0.55,0.4);
+
+  const funnel=new THREE.Mesh(
+    new THREE.CylinderGeometry(0.55,0.24,0.5,24,1,true),
+    new THREE.MeshStandardMaterial({color:0x555c66,metalness:0.6,roughness:0.4,side:THREE.DoubleSide})
+  );
+  funnel.rotation.x=Math.PI/2; funnel.position.z=-0.25; canisterGroup.add(funnel);
+
+  const flap=new THREE.Mesh(
+    new THREE.CircleGeometry(0.23,20),
+    new THREE.MeshStandardMaterial({color:0x6a7078,metalness:0.5,roughness:0.35,side:THREE.DoubleSide})
+  );
+  flap.position.z=-0.02; canisterGroup.add(flap);
+  canisterGroup.userData.flap=flap;
+
+  const cCanvas=document.createElement("canvas"); cCanvas.width=cCanvas.height=64;
+  const cctx=cCanvas.getContext("2d");
+  cctx.fillStyle="#3a3a3a"; cctx.fillRect(0,0,64,64);
+  cctx.strokeStyle="#8a8a8a"; cctx.lineWidth=3;
+  for(let i=-64;i<64;i+=10){cctx.beginPath();cctx.moveTo(i,0);cctx.lineTo(i+64,64);cctx.stroke();}
+  const cTex=new THREE.CanvasTexture(cCanvas);
+  cTex.wrapS=cTex.wrapT=THREE.RepeatWrapping; cTex.repeat.set(2,4);
+
+  const liner=new THREE.Mesh(
+    new THREE.CylinderGeometry(0.26,0.26,0.9,20),
+    new THREE.MeshStandardMaterial({map:cTex,metalness:0.5,roughness:0.55})
+  );
+  liner.rotation.x=Math.PI/2; liner.position.z=-0.65; canisterGroup.add(liner);
+  canisterGroup.userData.liner=liner;
+
+  group.add(canisterGroup);
+  group.userData.canisterGroup=canisterGroup;
+  return group;
+}
+
+let satelliteRef;
+let missionStartTime = null;
+let missionDecision = null;
+let missionReason = "";
+let mechanismType = "NET";
+let storedCount = 0;
+let cycleCount = 1;
+let toastShownFor = null;
+let lastCycleIndex = 0;
+
+let targetingLine;
+function buildTargetingLine() {
+  const geo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), new THREE.Vector3()]);
+  const mat = new THREE.LineDashedMaterial({ color: 0x7fc4ff, dashSize: 0.6, gapSize: 0.35, transparent: true, opacity: 0.5 });
+  targetingLine = new THREE.Line(geo, mat);
+  targetingLine.visible = false;
+  scene.add(targetingLine);
+}
+
+// Sensor detection-range boundary — visualizes "tracked within a certain
+// distance of the spacecraft" (matches your Detection module's
+// DETECTION_RANGE_KM filter). Only shown during active searching.
+function buildSensorRangeRing() { /* intentionally not rendered */ }
+
+function setPhase(name, detail, cls) {
+  const strip = document.getElementById("phase-strip");
+  strip.className = cls || "";
+  document.getElementById("phase-name").innerText = name;
+  document.getElementById("phase-detail").innerText = detail;
+}
+
+function showToast(kind, text) {
+  if (toastShownFor === kind) return;
+  toastShownFor = kind;
+  const toast = document.getElementById("outcome-toast");
+  toast.className = "toast-" + kind;
+  toast.innerText = text;
+  requestAnimationFrame(() => toast.classList.add("show"));
+  setTimeout(() => toast.classList.remove("show"), 5500);
+}
+
+function lerpVec(a, b, t) { return a.clone().lerp(b, Math.min(Math.max(t,0),1)); }
+function lerpNum(a, b, t) { return a + (b - a) * Math.min(Math.max(t,0),1); }
+
+function resetVisualState() {
+  if (targetRef && targetRef.userData.originalPos) {
+    targetRef.position.copy(targetRef.userData.originalPos);
+    targetRef.scale.setScalar(1.8);
+  }
+  if (targetHalo) targetHalo.material.opacity = 0.7;
+  if (satelliteRef) {
+    const na = satelliteRef.userData.netArm;
+    na.userData.boomGroup.position.z = 0; na.userData.net.scale.setScalar(0.15); na.userData.net.visible = false;
+    satelliteRef.userData.canisterGroup.userData.flap.rotation.y = 0;
+    satelliteRef.userData.captureArms.forEach(a => { a.rotation.z = a.userData.stowedAngle; a.userData.forearmGroup.rotation.z = 0; });
+  }
+}
+
+function forceOutcome(decision) {
+  missionDecision = decision;
+  missionReason = decision === "PROCEED" ? "Capture score above operational threshold"
+                : decision === "HOLD" ? "Capture score below operational threshold"
+                : "Capture not feasible — parameters exceed safety margin";
+  toastShownFor = null;
+  missionStartTime = performance.now();
+  lastCycleIndex = 0; cycleCount = 1;
+  resetVisualState();
+  document.querySelectorAll("#demo-controls button").forEach(b => b.className = "");
+  document.getElementById(decision === "PROCEED" ? "btn-proceed" : decision === "HOLD" ? "btn-hold" : "btn-abort").className = "active-" + decision.toLowerCase();
+}
+
+function updateCameraFollow(desiredFocus, lerpFactor) {
+  const delta = desiredFocus.clone().sub(controls.target).multiplyScalar(lerpFactor);
+  controls.target.add(delta);
+  camera.position.add(delta);
+}
+
+function updateMission(totalElapsedSec) {
+  if (!targetRef || !satelliteRef) return;
+
+  const cycleIndex = Math.floor(totalElapsedSec / CYCLE_LENGTH_SEC);
+  if (cycleIndex !== lastCycleIndex) {
+    lastCycleIndex = cycleIndex; cycleCount++;
+    document.getElementById("hud-cycle").innerText = "CYCLE " + cycleCount;
+    toastShownFor = null;
+    resetVisualState();
+  }
+  const t = totalElapsedSec % CYCLE_LENGTH_SEC;
+
+  const targetPos = targetRef.position;
+  const simDtSec = totalElapsedSec * SIM_TIME_SCALE;
+  const patrolEci = propagateECI(satelliteElements, simDtSec);
+  const patrolPos = positionFromKm(patrolEci[0], patrolEci[1], patrolEci[2]);
+
+  if (satelliteRef.userData.beacon) {
+    const pulse = 0.6 + 0.4 * Math.sin(totalElapsedSec * 4);
+    satelliteRef.userData.beacon.material.color.setScalar(pulse);
+  }
+
+  if (t < 3) {
+    setPhase("Searching", "Scanning tracked debris field within 5,000 km sensor range...", "");
+    satelliteRef.position.copy(patrolPos); satelliteRef.lookAt(0,0,0);
+    targetingLine.visible = false;
+    updateCameraFollow(new THREE.Vector3(0,0,0), 0.02);
+    return;
+  }
+  if (t < 6) {
+    setPhase("Target Locked", targetRef.userData.name || "Candidate object identified", "");
+    satelliteRef.position.copy(patrolPos);
+    satelliteRef.lookAt(targetPos);
+    targetingLine.visible = true;
+    updateCameraFollow(satelliteRef.position.clone(), 0.035);
+    return;
+  }
+
+  const midpoint = satelliteRef.position.clone().add(targetPos).multiplyScalar(0.5);
+  updateCameraFollow(midpoint, 0.025);
+  targetingLine.geometry.setFromPoints([satelliteRef.position.clone(), targetPos.clone()]);
+  targetingLine.computeLineDistances();
+  targetingLine.visible = true;
+
+  if (t < 8) { setPhase("Assessing", "Computing capture feasibility, risk & mechanism selection...", ""); satelliteRef.lookAt(targetPos); return; }
+
+  const approachStart = patrolPos.clone();
+
+  if (missionDecision === "PROCEED") {
+    if (t < 19) {
+      const tt = (t - 8) / 11;
+      const standoff = lerpVec(approachStart, targetPos, 0.9);
+      satelliteRef.position.copy(lerpVec(approachStart, standoff, tt));
+      satelliteRef.lookAt(targetPos);
+      setPhase("Approaching Target", "Executing rendezvous trajectory (Clohessy-Wiltshire relative motion)...", "");
+      return;
+    }
+
+    if (mechanismType === "ARM") {
+      if (t < 22) {
+        const tt = (t - 19) / 3;
+        satelliteRef.userData.captureArms.forEach(a => { a.rotation.z = lerpNum(a.userData.stowedAngle, a.userData.deployedAngle, tt); });
+        setPhase("Deploying Capture Arms", "Shoulder joints rotating outward — dual arms articulating toward target...", "phase-success");
+        return;
+      }
+      if (t < 24.5) {
+        const tt = (t - 22) / 2.5;
+        satelliteRef.userData.captureArms.forEach(a => { a.userData.forearmGroup.rotation.z = lerpNum(0, -0.5, tt); });
+        setPhase("Forearm Alignment", "Wrist joints adjusting gripper alignment to target surface...", "phase-success");
+        return;
+      }
+      if (t < 27) {
+        const tt = (t - 24.5) / 2.5;
+        satelliteRef.userData.captureArms.forEach(a => {
+          a.userData.forearmGroup.rotation.z = lerpNum(-0.5, -0.82, tt);
+        });
+        setPhase("Grasping", "Three-finger end-effectors closing around the small rigid target...", "phase-success");
+        return;
+      }
+      if (t < 29) { setPhase("Securing", "Retracting arms — object stabilized against spacecraft body...", "phase-success"); return; }
+    } else {
+      const na = satelliteRef.userData.netArm;
+      if (t < 21.5) {
+        const tt = (t - 19) / 2.5;
+        na.userData.boomGroup.position.z = lerpNum(0, na.userData.deployedZ - na.userData.stowedZ, tt);
+        setPhase("Deploying Net Boom", "Middle-arm boom extending toward target (large/multiple object protocol)...", "phase-success");
+        return;
+      }
+      if (t < 24.5) {
+        const tt = (t - 21.5) / 3;
+        na.userData.net.visible = true;
+        na.userData.net.scale.setScalar(0.15 + tt * 1.85);
+        setPhase("Unfurling Net", "Flexible capture net deploying symmetrically around target(s)...", "phase-success");
+        return;
+      }
+      if (t < 27) {
+        const tt = (t - 24.5) / 2.5;
+        const closeScale = lerpNum(3.6, 1.15, tt);
+        na.userData.net.scale.setScalar(closeScale / 3.6);
+        setPhase("Cinching Net Closed", "Drawing net closed around captured object(s)...", "phase-success");
+        return;
+      }
+      if (t < 29) { setPhase("Securing", "Retracting boom — captured object drawn toward spacecraft body...", "phase-success"); return; }
+    }
+
+    if (t < 33) {
+      const tt = (t - 29) / 4;
+      targetRef.position.copy(lerpVec(targetRef.userData.originalPos, satelliteRef.position, tt * 0.6));
+      if (targetHalo) targetHalo.position.copy(targetRef.position);
+      setPhase("Guiding to Funnel", "Moving captured object toward canister funnel entrance...", "phase-success");
+      return;
+    }
+    if (t < 35.5) {
+      const tt = (t - 33) / 2.5;
+      const flap = satelliteRef.userData.canisterGroup.userData.flap;
+      flap.rotation.y = Math.sin(tt * Math.PI) * (Math.PI/2 - 0.1);
+      const funnelWorld = new THREE.Vector3();
+      flap.getWorldPosition(funnelWorld);
+      targetRef.position.copy(lerpVec(targetRef.position, funnelWorld, tt));
+      targetRef.scale.setScalar(lerpNum(1.8, 0.9, tt));
+      setPhase("Entry Through One-Way Flap", "Flap opens, object passes into canister, flap closes automatically...", "phase-success");
+      return;
+    }
+    if (t < 38) {
+      const tt = (t - 35.5) / 2.5;
+      const linerWorld = new THREE.Vector3();
+      satelliteRef.userData.canisterGroup.userData.liner.getWorldPosition(linerWorld);
+      targetRef.position.copy(lerpVec(targetRef.position, linerWorld, tt));
+      targetRef.scale.setScalar(lerpNum(0.9, 0.18, tt));
+      if (targetHalo) targetHalo.material.opacity = 0.7 * (1 - tt);
+      setPhase("Stored Inside Liner", "Object settled in flexible liner — canister capacity updated.", "phase-success");
+      return;
+    }
+
+    if (document.getElementById("storage-count").innerText == "0" && storedCount === 0) storedCount = 1;
+    document.getElementById("storage-count").innerText = Math.min(storedCount, 3);
+    if (storedCount >= 3) {
+      setPhase("Canister at Capacity", "Preparing full-condition detachment and controlled deorbit disposal.", "phase-success");
+      showToast("info", "CANISTER FULL — detaching for controlled deorbit disposal");
+    } else {
+      setPhase("Mission Complete", "Object stowed. Resuming patrol for next candidate target.", "phase-success");
+      showToast("success", (targetRef.userData.name || "TARGET") + " SUCCESSFULLY CAPTURED & STOWED — Canister " + Math.min(storedCount,3) + "/3");
+    }
+    targetingLine.visible = false;
+    const t2 = Math.min((t - 38) / 14, 1);
+    satelliteRef.position.copy(lerpVec(satelliteRef.position, patrolPos, t2));
+    satelliteRef.lookAt(0,0,0);
+    updateCameraFollow(new THREE.Vector3(0,0,0), 0.01);
+    return;
+  }
+
+  if (missionDecision === "HOLD") {
+    if (t < 16) {
+      const tt = (t - 8) / 8;
+      const monitorPos = lerpVec(approachStart, targetPos, 0.65);
+      satelliteRef.position.copy(lerpVec(approachStart, monitorPos, tt));
+      satelliteRef.lookAt(targetPos);
+      setPhase("Assessing Approach", "Evaluating capture score against operational threshold...", "");
+      return;
+    }
+    setPhase("Mission On Hold", missionReason, "phase-hold");
+    showToast("hold", "MISSION ON HOLD — " + missionReason);
+    if (targetHalo) { const p = 1 + 0.12*Math.sin(t*2); targetHalo.scale.set(p,p,p); }
+    satelliteRef.lookAt(targetPos);
+    return;
+  }
+
+  if (t < 16) {
+    const tt = (t - 8) / 8;
+    const standoffSafe = lerpVec(approachStart, targetPos, 0.55);
+    satelliteRef.position.copy(lerpVec(approachStart, standoffSafe, tt));
+    satelliteRef.lookAt(targetPos);
+    setPhase("Assessing Approach", "Verifying capture feasibility...", "");
+    return;
+  }
+  setPhase("Mission Aborted", missionReason, "phase-abort");
+  showToast("abort", "MISSION ABORTED — " + missionReason);
+  if (targetHalo) { const p = 1 + 0.2*Math.sin(t*3); targetHalo.scale.set(p,p,p); }
+  satelliteRef.lookAt(targetPos);
+}
+
+function classifySize(sizeM) {
+  if (sizeM == null) return "Unknown";
+  if (sizeM < 0.2) return "Small";
+  if (sizeM < 0.4) return "Medium";
+  return "Large";
+}
+
+function updatePanel(target, sizeM) {
+  const decisionClass = target.decision === "PROCEED" ? "decision-proceed" : target.decision === "HOLD" ? "decision-hold" : "decision-abort";
+  document.getElementById("target-info").innerHTML =
+    '<div class="row"><span class="label">Target</span><span class="value">' + (target.name||"N/A") + '</span></div>' +
+    '<div class="row"><span class="label">Orbit Class</span><span class="value">' + (target.orbit_class||"N/A") + '</span></div>' +
+    '<div class="row"><span class="label">Altitude</span><span class="value">' + (target.altitude_km!=null?target.altitude_km.toFixed(1):"N/A") + ' km</span></div>' +
+    '<div class="row"><span class="label">Decision</span><span class="value ' + decisionClass + '">' + (target.decision||"N/A") + '</span></div>' +
+    '<div class="row"><span class="label">Reason</span><span class="value">' + (target.decision_reason||"N/A") + '</span></div>' +
+    '<div class="row"><span class="label">Risk Level</span><span class="value">' + (target.risk_level||"N/A") + '</span></div>' +
+    '<div class="row"><span class="label">Capture Score</span><span class="value">' + (target.capture_score ?? "N/A") + '</span></div>';
+
+  const sizeClass = classifySize(sizeM);
+  const mechName = mechanismType === "NET" ? "Middle-Arm Net Launcher" : "Dual Side-Arm Grippers";
+  const mechWhy = mechanismType === "NET"
+    ? "Selected for large or multiple/irregular objects — the net envelops rather than requiring precise grasp points."
+    : "Selected for small, stable single objects — direct gripper contact is reliable and lower-risk.";
+  document.getElementById("mechanism-box").innerHTML =
+    "<strong>Object size:</strong> " + sizeClass + (sizeM != null ? " (" + sizeM.toFixed(2) + " m)" : "") + "<br>" +
+    "<strong>Target count:</strong> Single per cycle<br>" +
+    "<strong>Mechanism:</strong> " + mechName + "<br><br>" + mechWhy +
+    "<br><br>Captured objects are funneled through a one-way flap into a flexible liner inside the temporary storage canister. At full capacity (3 objects), the canister detaches for controlled deorbit disposal.";
+}
+
+async function init() {
+  await buildSky();
+  await buildSun();
+  await buildMoon();
+  earthRef = await buildEarth();
+  buildAmbientDebrisField();
+  buildTargetingLine();
+
+  const satAltitude = 800.0, satInclination = 74.0 * Math.PI/180;
+  const satRadius = EARTH_RADIUS_KM_TRUE + satAltitude;
+  satelliteElements = { a: satRadius, e: 0, i: satInclination, raan: 0, argp: 0, M0: 0, n: Math.sqrt(EARTH_MU_KM / (satRadius*satRadius*satRadius)) };
+
+  const res = await fetch("../SIMULATION/viz_data.json");
+  const vizData = await res.json();
+
+  await buildTrackedDebrisField(vizData);
+  if (targetRef) targetRef.userData.originalPos = targetRef.position.clone();
+
+  missionDecision = vizData.target.decision;
+  missionReason = vizData.target.decision_reason;
+  {
+  const targetEntry = (vizData.debris || []).find(d => d.is_target) || {};
+  const nearbyCount = (vizData.debris || []).filter(d => {
+    if (d.x == null || targetEntry.x == null) return false;
+    const dx = d.x-targetEntry.x, dy=d.y-targetEntry.y, dz=d.z-targetEntry.z;
+    return Math.sqrt(dx*dx+dy*dy+dz*dz) < 250;
+  }).length;
+  mechanismType = (Number(targetEntry.size_m || 0) <= 0.25 && nearbyCount < 2) ? "ARM" : "NET";
+}
+
+  updatePanel(vizData.target, targetRef ? targetRef.userData.sizeM : null);
+
+  satelliteRef = buildSatellite();
+  scene.add(satelliteRef);
+
+  document.querySelectorAll("#demo-controls button").forEach(b => b.className = "");
+  const activeBtn = missionDecision === "PROCEED" ? "btn-proceed" : missionDecision === "HOLD" ? "btn-hold" : "btn-abort";
+  document.getElementById(activeBtn).className = "active-" + missionDecision.toLowerCase();
+
+  document.getElementById("loading").style.display = "none";
+  missionStartTime = performance.now();
+  controls.target.set(0,0,0);
+  animate();
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+  if (earthRef) earthRef.rotation.y += 0.0007;
+  if (earthRef && earthRef.userData.clouds) earthRef.userData.clouds.rotation.y += 0.0011;
+  if (moonRef) { const mt = Date.now() * 0.00008; moonRef.position.set(Math.cos(mt) * 60, 10, Math.sin(mt) * 60); }
+  spinningDebris.forEach(d => d.rotateOnAxis(d.userData.spinAxis, d.userData.spinSpeed));
+
+  if (missionStartTime) {
+    const simDtSec = ((performance.now() - missionStartTime) / 1000) * SIM_TIME_SCALE;
+    orbitingDebris.forEach(mesh => {
+      const eci = propagateECI(mesh.userData.orbitalElements, simDtSec);
+      mesh.position.copy(positionFromKm(eci[0], eci[1], eci[2]));
+    });
+    const cyclePhase = ((performance.now() - missionStartTime) / 1000) % CYCLE_LENGTH_SEC;
+    const underManeuver = missionDecision === "PROCEED" && cyclePhase >= 8 && cyclePhase < 39;
+    if (targetRef && targetRef.userData.orbitalElements && !underManeuver) {
+      const eci = propagateECI(targetRef.userData.orbitalElements, simDtSec);
+      const freePos = positionFromKm(eci[0], eci[1], eci[2]);
+      targetRef.position.copy(freePos);
+      targetRef.userData.originalPos = freePos.clone();
+      if (targetHalo) targetHalo.position.copy(freePos);
+    }
+  }
+
+  document.getElementById("hud-clock").innerText = new Date().toUTCString().split(" ")[4] + " UTC";
+  if (missionStartTime) updateMission((performance.now() - missionStartTime) / 1000);
+  controls.update();
+  renderer.render(scene, camera);
+}
+
+addEventListener("resize", () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+init().catch((err) => {
+  document.getElementById("loading").innerHTML = "Error: " + err.message;
+  console.error(err);
+});
+
+</script>
+</body>
+</html>

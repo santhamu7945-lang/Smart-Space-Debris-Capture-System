@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Smart Space Debris Capture System — Mission Dashboard</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #05070c; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; }
+  #scene-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; }
+
+  #panel {
+    position: fixed; top: 20px; right: 20px; width: 320px;
+    background: rgba(8, 12, 20, 0.85); border: 1px solid rgba(120, 180, 255, 0.25);
+    border-radius: 10px; padding: 18px; color: #d8e6f5; backdrop-filter: blur(6px);
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+  }
+  #panel h2 {
+    font-size: 14px; letter-spacing: 1.5px; color: #7fc4ff; text-transform: uppercase;
+    margin-bottom: 12px; border-bottom: 1px solid rgba(120,180,255,0.2); padding-bottom: 8px;
+  }
+  .row { display: flex; justify-content: space-between; font-size: 13px; margin: 6px 0; }
+  .label { color: #8ea3bd; }
+  .value { color: #eaf3ff; font-weight: 600; text-align: right; }
+  .decision-proceed { color: #4ade80; }
+  .decision-abort { color: #f87171; }
+  #status-bar {
+    position: fixed; top: 20px; left: 20px; background: rgba(8,12,20,0.85);
+    border: 1px solid rgba(120,180,255,0.25); border-radius: 10px; padding: 12px 18px;
+    color: #7fc4ff; font-size: 13px; letter-spacing: 0.5px;
+  }
+  #loading {
+    position: fixed; inset: 0; background: #05070c; display: flex; align-items: center;
+    justify-content: center; color: #7fc4ff; font-size: 15px; z-index: 100; letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+
+<div id="loading">INITIALIZING MISSION VISUALIZATION...</div>
+<div id="scene-container"></div>
+
+<div id="status-bar">SMART SPACE DEBRIS CAPTURE SYSTEM &nbsp;|&nbsp; LIVE SIMULATION VIEW</div>
+
+<div id="panel">
+  <h2>Active Mission Target</h2>
+  <div id="target-info">
+    <div class="row"><span class="label">Loading mission data...</span></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+
+// =====================================================
+// CONFIG
+// =====================================================
+const EARTH_RADIUS_SCENE = 20;          // scene units representing Earth
+const KM_TO_SCENE = EARTH_RADIUS_SCENE / 6378.137; // scale real km down to scene units
+const TEXTURE_PATH = "assets/textures/"; // put your 8K images here: earth_daymap.jpg, stars_milky_way.jpg, etc.
+
+// =====================================================
+// SCENE / CAMERA / RENDERER
+// =====================================================
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 5000);
+camera.position.set(0, 40, 90);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+document.getElementById("scene-container").appendChild(renderer.domElement);
+
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.minDistance = 30;
+controls.maxDistance = 400;
+
+// Lighting — sun-like directional light + faint ambient fill
+const sunLight = new THREE.DirectionalLight(0xffffff, 1.4);
+sunLight.position.set(150, 60, 100);
+scene.add(sunLight);
+scene.add(new THREE.AmbientLight(0x223344, 0.6));
+
+// =====================================================
+// TEXTURE LOADER WITH GRACEFUL FALLBACK
+// If your 8K images aren't in place yet, this falls back to a clean
+// procedural Earth so the demo still works today.
+// =====================================================
+const loader = new THREE.TextureLoader();
+function loadTextureOrNull(filename) {
+  return new Promise((resolve) => {
+    loader.load(
+      TEXTURE_PATH + filename,
+      (tex) => resolve(tex),
+      undefined,
+      () => resolve(null)
+    );
+  });
+}
+
+// =====================================================
+// STARFIELD (procedural — always works, no texture needed)
+// =====================================================
+function buildStarfield() {
+  const starGeo = new THREE.BufferGeometry();
+  const starCount = 6000;
+  const positions = new Float32Array(starCount * 3);
+  for (let i = 0; i < starCount; i++) {
+    const r = 800 + Math.random() * 400;
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos((Math.random() * 2) - 1);
+    positions[i*3]   = r * Math.sin(phi) * Math.cos(theta);
+    positions[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
+    positions[i*3+2] = r * Math.cos(phi);
+  }
+  starGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+  const starMat = new THREE.PointsMaterial({ color: 0xffffff, size: 1.1, sizeAttenuation: true });
+  scene.add(new THREE.Points(starGeo, starMat));
+}
+buildStarfield();
+
+// =====================================================
+// EARTH (textured if available, procedural fallback otherwise)
+// =====================================================
+async function buildEarth() {
+  const dayTex = await loadTextureOrNull("earth_daymap.jpg");
+  const cloudTex = await loadTextureOrNull("earth_clouds.jpg");
+
+  const earthGeo = new THREE.SphereGeometry(EARTH_RADIUS_SCENE, 128, 128);
+  let earthMat;
+  if (dayTex) {
+    earthMat = new THREE.MeshPhongMaterial({ map: dayTex, shininess: 8 });
+  } else {
+    // Fallback: clean procedural blue/green sphere, still looks intentional
+    earthMat = new THREE.MeshPhongMaterial({ color: 0x1b3a6b, shininess: 15 });
+  }
+  const earth = new THREE.Mesh(earthGeo, earthMat);
+  scene.add(earth);
+
+  if (cloudTex) {
+    const cloudGeo = new THREE.SphereGeometry(EARTH_RADIUS_SCENE * 1.01, 128, 128);
+    const cloudMat = new THREE.MeshPhongMaterial({ map: cloudTex, transparent: true, opacity: 0.4 });
+    const clouds = new THREE.Mesh(cloudGeo, cloudMat);
+    scene.add(clouds);
+    earth.userData.clouds = clouds;
+  }
+
+  // subtle atmosphere glow shell
+  const glowGeo = new THREE.SphereGeometry(EARTH_RADIUS_SCENE * 1.03, 64, 64);
+  const glowMat = new THREE.MeshBasicMaterial({ color: 0x4a90d9, transparent: true, opacity: 0.12, side: THREE.BackSide });
+  scene.add(new THREE.Mesh(glowGeo, glowMat));
+
+  return earth;
+}
+
+// =====================================================
+// SATELLITE (simple stylized capture spacecraft mesh)
+// =====================================================
+function buildSatellite() {
+  const group = new THREE.Group();
+
+  const bodyGeo = new THREE.CylinderGeometry(0.6, 0.6, 2.2, 12);
+  const bodyMat = new THREE.MeshPhongMaterial({ color: 0xd8d8d8, shininess: 60 });
+  const body = new THREE.Mesh(bodyGeo, bodyMat);
+  body.rotation.z = Math.PI / 2;
+  group.add(body);
+
+  const panelMat = new THREE.MeshPhongMaterial({ color: 0x2255aa, shininess: 90 });
+  const panelGeo = new THREE.BoxGeometry(3.2, 0.06, 1.1);
+  const panelL = new THREE.Mesh(panelGeo, panelMat); panelL.position.x = -2.6; group.add(panelL);
+  const panelR = new THREE.Mesh(panelGeo, panelMat); panelR.position.x = 2.6; group.add(panelR);
+
+  // ring-net launcher (simple torus, matches your capture mechanism concept)
+  const ringGeo = new THREE.TorusGeometry(0.9, 0.08, 8, 24);
+  const ringMat = new THREE.MeshPhongMaterial({ color: 0xffaa33 });
+  const ring = new THREE.Mesh(ringGeo, ringMat);
+  ring.rotation.y = Math.PI / 2;
+  ring.position.x = 1.4;
+  group.add(ring);
+
+  return group;
+}
+
+// =====================================================
+// DEBRIS FIELD (from viz_data.json)
+// =====================================================
+function positionFromKm(x, y, z) {
+  return new THREE.Vector3(x * KM_TO_SCENE, z * KM_TO_SCENE, -y * KM_TO_SCENE);
+}
+
+async function buildDebrisField(vizData) {
+  const debrisGroup = new THREE.Group();
+  let targetObj = null;
+
+  const smallGeo = new THREE.SphereGeometry(0.35, 8, 8);
+  const smallMat = new THREE.MeshBasicMaterial({ color: 0xaab4c2 });
+
+  vizData.debris.forEach((d) => {
+    if (d.x == null) return;
+    const pos = positionFromKm(d.x, d.y, d.z);
+
+    if (d.is_target) {
+      const targetGeo = new THREE.SphereGeometry(1.1, 20, 20);
+      const decisionColor = vizData.target.decision === "PROCEED" ? 0x4ade80 : 0xff4d4d;
+      const targetMat = new THREE.MeshPhongMaterial({ color: decisionColor, emissive: decisionColor, emissiveIntensity: 0.5 });
+      const mesh = new THREE.Mesh(targetGeo, targetMat);
+      mesh.position.copy(pos);
+      debrisGroup.add(mesh);
+      targetObj = mesh;
+
+      // pulsing halo ring around target
+      const haloGeo = new THREE.RingGeometry(1.6, 1.9, 32);
+      const haloMat = new THREE.MeshBasicMaterial({ color: decisionColor, side: THREE.DoubleSide, transparent: true, opacity: 0.6 });
+      const halo = new THREE.Mesh(haloGeo, haloMat);
+      halo.position.copy(pos);
+      halo.lookAt(camera.position);
+      debrisGroup.add(halo);
+      targetObj.userData.halo = halo;
+    } else {
+      const mesh = new THREE.Mesh(smallGeo, smallMat);
+      mesh.position.copy(pos);
+      debrisGroup.add(mesh);
+    }
+  });
+
+  scene.add(debrisGroup);
+  return targetObj;
+}
+
+// =====================================================
+// UPDATE INFO PANEL
+// =====================================================
+function updatePanel(target) {
+  const decisionClass = target.decision === "PROCEED" ? "decision-proceed" : "decision-abort";
+  document.getElementById("target-info").innerHTML = `
+    <div class="row"><span class="label">Target</span><span class="value">${target.name || "N/A"}</span></div>
+    <div class="row"><span class="label">Tracking ID</span><span class="value">${target.id || "N/A"}</span></div>
+    <div class="row"><span class="label">Orbit Class</span><span class="value">${target.orbit_class || "N/A"}</span></div>
+    <div class="row"><span class="label">Altitude</span><span class="value">${target.altitude_km ? target.altitude_km.toFixed(1) + " km" : "N/A"}</span></div>
+    <div class="row"><span class="label">Inclination</span><span class="value">${target.inclination_deg ? target.inclination_deg.toFixed(2) + "°" : "N/A"}</span></div>
+    <div class="row"><span class="label">Mission Decision</span><span class="value ${decisionClass}">${target.decision || "N/A"}</span></div>
+    <div class="row"><span class="label">Decision Reason</span><span class="value">${target.decision_reason || "N/A"}</span></div>
+    <div class="row"><span class="label">Risk Level</span><span class="value">${target.risk_level || "N/A"}</span></div>
+    <div class="row"><span class="label">Risk Score</span><span class="value">${target.risk_score ?? "N/A"}</span></div>
+    <div class="row"><span class="label">Capture Method</span><span class="value">${target.capture_method || "N/A"}</span></div>
+    <div class="row"><span class="label">Capture Score</span><span class="value">${target.capture_score ?? "N/A"}</span></div>
+    <div class="row"><span class="label">Capture Feasible</span><span class="value">${target.capture_feasible}</span></div>
+    <div class="row"><span class="label">Difficulty</span><span class="value">${target.difficulty_level || "N/A"}</span></div>
+  `;
+}
+
+// =====================================================
+// MAIN INIT
+// =====================================================
+let earthRef, satelliteRef, targetRef;
+
+async function init() {
+  earthRef = await buildEarth();
+
+  const res = await fetch("../SIMULATION/viz_data.json");
+  const vizData = await res.json();
+
+  targetRef = await buildDebrisField(vizData);
+  updatePanel(vizData.target);
+
+  satelliteRef = buildSatellite();
+  satelliteRef.position.set(EARTH_RADIUS_SCENE + 15, 5, 0);
+  scene.add(satelliteRef);
+
+  document.getElementById("loading").style.display = "none";
+  animate();
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+
+  if (earthRef) earthRef.rotation.y += 0.0006;
+  if (earthRef && earthRef.userData.clouds) earthRef.userData.clouds.rotation.y += 0.0009;
+
+  if (targetRef && targetRef.userData.halo) {
+    const s = 1 + 0.15 * Math.sin(Date.now() * 0.003);
+    targetRef.userData.halo.scale.set(s, s, s);
+    targetRef.userData.halo.lookAt(camera.position);
+  }
+
+  if (satelliteRef) {
+    const t = Date.now() * 0.0002;
+    satelliteRef.position.x = (EARTH_RADIUS_SCENE + 15) * Math.cos(t);
+    satelliteRef.position.z = (EARTH_RADIUS_SCENE + 15) * Math.sin(t);
+    satelliteRef.lookAt(0, 0, 0);
+  }
+
+  controls.update();
+  renderer.render(scene, camera);
+}
+
+window.addEventListener("resize", () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+init().catch((err) => {
+  document.getElementById("loading").innerText = "Error loading mission data: " + err.message;
+  console.error(err);
+});
+
+</script>
+</body>
+</html>

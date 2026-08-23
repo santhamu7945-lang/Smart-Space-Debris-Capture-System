@@ -1,0 +1,2960 @@
+[
+    {
+        "tracking_id": "TRK_34611_000029",
+        "object_id": "34611",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -2626.358,
+            "y": 2281.183,
+            "z": 6112.562
+        },
+        "velocity": {
+            "vx": -6.850911,
+            "vy": 0.404503,
+            "vz": -3.076834
+        },
+        "speed": 7.521004,
+        "altitude": 654.996,
+        "inclination": 74.0522,
+        "orbit_class": "LEO",
+        "relative_distance": 742.342,
+        "relative_velocity": 1.322393,
+        "orientation": {
+            "roll": 76.21,
+            "pitch": -24.15,
+            "yaw": 176.62
+        },
+        "estimated_size_m": 0.25,
+        "estimated_rcs_m2": 0.039,
+        "object_type": "DEB",
+        "estimated_mass_kg": 14.7262,
+        "motion_rate": 0.06127,
+        "tumbling_rate": 0.79,
+        "collision_confidence": 71.6,
+        "timestamp": "2026-08-12T10:37:47.325690+00:00"
+    },
+    {
+        "tracking_id": "TRK_37968_000075",
+        "object_id": "37968",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -3651.562,
+            "y": 1445.81,
+            "z": 5740.894
+        },
+        "velocity": {
+            "vx": 3.745001,
+            "vy": -5.423197,
+            "vz": 3.685444
+        },
+        "speed": 7.551065,
+        "altitude": 577.59,
+        "inclination": 73.9963,
+        "orbit_class": "LEO",
+        "relative_distance": 742.551,
+        "relative_velocity": 13.270303,
+        "orientation": {
+            "roll": 6.68,
+            "pitch": 29.21,
+            "yaw": -55.37
+        },
+        "estimated_size_m": 0.35,
+        "estimated_rcs_m2": 0.077,
+        "object_type": "DEB",
+        "estimated_mass_kg": 40.4087,
+        "motion_rate": 0.0622,
+        "tumbling_rate": 6.94,
+        "collision_confidence": 52.12,
+        "timestamp": "2026-08-12T10:37:47.335024+00:00"
+    },
+    {
+        "tracking_id": "TRK_35718_000052",
+        "object_id": "35718",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -3175.741,
+            "y": 817.74,
+            "z": 6213.16
+        },
+        "velocity": {
+            "vx": -6.326988,
+            "vy": -2.94351,
+            "vz": -2.83129
+        },
+        "speed": 7.530686,
+        "altitude": 647.345,
+        "inclination": 74.031,
+        "orbit_class": "LEO",
+        "relative_distance": 958.49,
+        "relative_velocity": 2.095507,
+        "orientation": {
+            "roll": -71.37,
+            "pitch": -22.08,
+            "yaw": -155.05
+        },
+        "estimated_size_m": 0.5,
+        "estimated_rcs_m2": 0.157,
+        "object_type": "DEB",
+        "estimated_mass_kg": 117.8097,
+        "motion_rate": 0.061416,
+        "tumbling_rate": 1.12,
+        "collision_confidence": 68.64,
+        "timestamp": "2026-08-12T10:37:47.330902+00:00"
+    },
+    {
+        "tracking_id": "TRK_38001_000076",
+        "object_id": "38001",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -2297.47,
+            "y": 1369.123,
+            "z": 6417.795
+        },
+        "velocity": {
+            "vx": -6.990094,
+            "vy": -2.160244,
+            "vz": -2.033395
+        },
+        "speed": 7.593601,
+        "altitude": 574.63,
+        "inclination": 73.9996,
+        "orbit_class": "LEO",
+        "relative_distance": 983.378,
+        "relative_velocity": 1.711487,
+        "orientation": {
+            "roll": -74.46,
+            "pitch": -15.53,
+            "yaw": -162.83
+        },
+        "estimated_size_m": 0.36,
+        "estimated_rcs_m2": 0.081,
+        "object_type": "DEB",
+        "estimated_mass_kg": 43.9722,
+        "motion_rate": 0.062577,
+        "tumbling_rate": 0.77,
+        "collision_confidence": 69.3,
+        "timestamp": "2026-08-12T10:37:47.335289+00:00"
+    },
+    {
+        "tracking_id": "TRK_34682_000032",
+        "object_id": "34682",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -2490.738,
+            "y": 2751.66,
+            "z": 6005.956
+        },
+        "velocity": {
+            "vx": -6.583129,
+            "vy": 1.39413,
+            "vz": -3.346211
+        },
+        "speed": 7.515206,
+        "altitude": 682.098,
+        "inclination": 74.0396,
+        "orbit_class": "LEO",
+        "relative_distance": 1200.296,
+        "relative_velocity": 2.309695,
+        "orientation": {
+            "roll": 75.2,
+            "pitch": -26.44,
+            "yaw": 168.04
+        },
+        "estimated_size_m": 0.46,
+        "estimated_rcs_m2": 0.133,
+        "object_type": "DEB",
+        "estimated_mass_kg": 91.737,
+        "motion_rate": 0.060988,
+        "tumbling_rate": 1.77,
+        "collision_confidence": 66.61,
+        "timestamp": "2026-08-12T10:37:47.326158+00:00"
+    },
+    {
+        "tracking_id": "TRK_35759_000053",
+        "object_id": "35759",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -2291.508,
+            "y": 940.63,
+            "z": 6596.407
+        },
+        "velocity": {
+            "vx": 1.912053,
+            "vy": -7.091979,
+            "vz": 1.610625
+        },
+        "speed": 7.519722,
+        "altitude": 668.023,
+        "inclination": 74.0373,
+        "orbit_class": "LEO",
+        "relative_distance": 1273.454,
+        "relative_velocity": 11.618238,
+        "orientation": {
+            "roll": -5.21,
+            "pitch": 12.37,
+            "yaw": -74.91
+        },
+        "estimated_size_m": 0.48,
+        "estimated_rcs_m2": 0.145,
+        "object_type": "DEB",
+        "estimated_mass_kg": 104.2305,
+        "motion_rate": 0.061147,
+        "tumbling_rate": 7.26,
+        "collision_confidence": 50.82,
+        "timestamp": "2026-08-12T10:37:47.330998+00:00"
+    },
+    {
+        "tracking_id": "TRK_35459_000049",
+        "object_id": "35459",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -2074.533,
+            "y": 2742.554,
+            "z": 6251.544
+        },
+        "velocity": {
+            "vx": -0.165849,
+            "vy": -6.861004,
+            "vz": 2.961856
+        },
+        "speed": 7.474856,
+        "altitude": 756.784,
+        "inclination": 73.8715,
+        "orbit_class": "LEO",
+        "relative_distance": 1457.75,
+        "relative_velocity": 10.745466,
+        "orientation": {
+            "roll": -10.47,
+            "pitch": 23.34,
+            "yaw": -91.38
+        },
+        "estimated_size_m": 0.44,
+        "estimated_rcs_m2": 0.122,
+        "object_type": "DEB",
+        "estimated_mass_kg": 80.284,
+        "motion_rate": 0.060026,
+        "tumbling_rate": 7.09,
+        "collision_confidence": 50.56,
+        "timestamp": "2026-08-12T10:37:47.330026+00:00"
+    },
+    {
+        "tracking_id": "TRK_33914_000006",
+        "object_id": "33914",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -2676.258,
+            "y": 3200.551,
+            "z": 6104.815
+        },
+        "velocity": {
+            "vx": -6.208534,
+            "vy": 1.854905,
+            "vz": -3.419897
+        },
+        "speed": 7.326818,
+        "altitude": 1016.094,
+        "inclination": 74.0911,
+        "orbit_class": "LEO",
+        "relative_distance": 1508.446,
+        "relative_velocity": 2.814045,
+        "orientation": {
+            "roll": 73.0,
+            "pitch": -27.82,
+            "yaw": 163.37
+        },
+        "estimated_size_m": 0.29,
+        "estimated_rcs_m2": 0.053,
+        "object_type": "DEB",
+        "estimated_mass_kg": 22.9861,
+        "motion_rate": 0.056773,
+        "tumbling_rate": 1.84,
+        "collision_confidence": 63.21,
+        "timestamp": "2026-08-12T10:37:47.321243+00:00"
+    },
+    {
+        "tracking_id": "TRK_35671_000051",
+        "object_id": "35671",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -1823.043,
+            "y": 2439.516,
+            "z": 6384.872
+        },
+        "velocity": {
+            "vx": -6.983712,
+            "vy": 1.286418,
+            "vz": -2.473908
+        },
+        "speed": 7.519795,
+        "altitude": 695.852,
+        "inclination": 74.0182,
+        "orbit_class": "LEO",
+        "relative_distance": 1508.515,
+        "relative_velocity": 2.314863,
+        "orientation": {
+            "roll": 81.37,
+            "pitch": -19.21,
+            "yaw": 169.56
+        },
+        "estimated_size_m": 0.15,
+        "estimated_rcs_m2": 0.014,
+        "object_type": "DEB",
+        "estimated_mass_kg": 3.1809,
+        "motion_rate": 0.060907,
+        "tumbling_rate": 2.82,
+        "collision_confidence": 64.23,
+        "timestamp": "2026-08-12T10:37:47.330682+00:00"
+    },
+    {
+        "tracking_id": "TRK_33822_000003",
+        "object_id": "33822",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -2517.777,
+            "y": 341.464,
+            "z": 6659.7
+        },
+        "velocity": {
+            "vx": 3.739977,
+            "vy": -6.310902,
+            "vz": 1.662551
+        },
+        "speed": 7.521901,
+        "altitude": 749.794,
+        "inclination": 74.0681,
+        "orbit_class": "LEO",
+        "relative_distance": 1641.026,
+        "relative_velocity": 12.696917,
+        "orientation": {
+            "roll": 34.87,
+            "pitch": 12.77,
+            "yaw": -59.35
+        },
+        "estimated_size_m": 0.11,
+        "estimated_rcs_m2": 0.008,
+        "object_type": "DEB",
+        "estimated_mass_kg": 1.2544,
+        "motion_rate": 0.060463,
+        "tumbling_rate": 16.68,
+        "collision_confidence": 47.13,
+        "timestamp": "2026-08-12T10:37:47.320550+00:00"
+    },
+    {
+        "tracking_id": "TRK_33995_000009",
+        "object_id": "33995",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -1751.286,
+            "y": 1154.228,
+            "z": 6841.278
+        },
+        "velocity": {
+            "vx": -5.983146,
+            "vy": -4.38502,
+            "vz": -0.745395
+        },
+        "speed": 7.455337,
+        "altitude": 777.444,
+        "inclination": 74.0591,
+        "orbit_class": "LEO",
+        "relative_distance": 1674.057,
+        "relative_velocity": 4.292339,
+        "orientation": {
+            "roll": -52.02,
+            "pitch": -5.74,
+            "yaw": -143.76
+        },
+        "estimated_size_m": 0.11,
+        "estimated_rcs_m2": 0.008,
+        "object_type": "DEB",
+        "estimated_mass_kg": 1.2544,
+        "motion_rate": 0.059696,
+        "tumbling_rate": 4.03,
+        "collision_confidence": 58.37,
+        "timestamp": "2026-08-12T10:37:47.322180+00:00"
+    },
+    {
+        "tracking_id": "TRK_34018_000012",
+        "object_id": "34018",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -2722.4,
+            "y": 227.945,
+            "z": 6738.014
+        },
+        "velocity": {
+            "vx": -5.178454,
+            "vy": -5.048706,
+            "vz": -1.715529
+        },
+        "speed": 7.432957,
+        "altitude": 892.644,
+        "inclination": 73.8758,
+        "orbit_class": "LEO",
+        "relative_distance": 1699.417,
+        "relative_velocity": 4.63976,
+        "orientation": {
+            "roll": -57.55,
+            "pitch": -13.34,
+            "yaw": -135.73
+        },
+        "estimated_size_m": 0.22,
+        "estimated_rcs_m2": 0.03,
+        "object_type": "DEB",
+        "estimated_mass_kg": 10.0355,
+        "motion_rate": 0.058574,
+        "tumbling_rate": 1.96,
+        "collision_confidence": 57.76,
+        "timestamp": "2026-08-12T10:37:47.322553+00:00"
+    },
+    {
+        "tracking_id": "TRK_34564_000028",
+        "object_id": "34564",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -4449.079,
+            "y": 888.768,
+            "z": 5513.378
+        },
+        "velocity": {
+            "vx": 4.480645,
+            "vy": -4.175597,
+            "vz": 4.268657
+        },
+        "speed": 7.465469,
+        "altitude": 761.999,
+        "inclination": 74.0321,
+        "orbit_class": "LEO",
+        "relative_distance": 1703.118,
+        "relative_velocity": 13.805759,
+        "orientation": {
+            "roll": 13.56,
+            "pitch": 34.87,
+            "yaw": -42.98
+        },
+        "estimated_size_m": 0.26,
+        "estimated_rcs_m2": 0.042,
+        "object_type": "DEB",
+        "estimated_mass_kg": 16.565,
+        "motion_rate": 0.059906,
+        "tumbling_rate": 6.91,
+        "collision_confidence": 46.38,
+        "timestamp": "2026-08-12T10:37:47.325345+00:00"
+    },
+    {
+        "tracking_id": "TRK_37546_000071",
+        "object_id": "37546",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -3335.27,
+            "y": 3188.825,
+            "z": 5233.717
+        },
+        "velocity": {
+            "vx": -5.90925,
+            "vy": 1.279861,
+            "vz": -4.532835
+        },
+        "speed": 7.556711,
+        "altitude": 599.285,
+        "inclination": 74.0192,
+        "orbit_class": "LEO",
+        "relative_distance": 1716.581,
+        "relative_velocity": 2.697113,
+        "orientation": {
+            "roll": 78.15,
+            "pitch": -36.86,
+            "yaw": 167.78
+        },
+        "estimated_size_m": 0.2,
+        "estimated_rcs_m2": 0.025,
+        "object_type": "DEB",
+        "estimated_mass_kg": 7.5398,
+        "motion_rate": 0.062053,
+        "tumbling_rate": 3.39,
+        "collision_confidence": 62.24,
+        "timestamp": "2026-08-12T10:37:47.334793+00:00"
+    },
+    {
+        "tracking_id": "TRK_34482_000027",
+        "object_id": "34482",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -2174.521,
+            "y": 414.387,
+            "z": 6634.951
+        },
+        "velocity": {
+            "vx": 2.355496,
+            "vy": -7.083458,
+            "vz": 1.193323
+        },
+        "speed": 7.559614,
+        "altitude": 616.349,
+        "inclination": 74.0357,
+        "orbit_class": "LEO",
+        "relative_distance": 1740.174,
+        "relative_velocity": 11.785468,
+        "orientation": {
+            "roll": 1.34,
+            "pitch": 9.08,
+            "yaw": -71.61
+        },
+        "estimated_size_m": 0.44,
+        "estimated_rcs_m2": 0.122,
+        "object_type": "DEB",
+        "estimated_mass_kg": 80.284,
+        "motion_rate": 0.061925,
+        "tumbling_rate": 8.94,
+        "collision_confidence": 48.16,
+        "timestamp": "2026-08-12T10:37:47.325125+00:00"
+    },
+    {
+        "tracking_id": "TRK_37320_000069",
+        "object_id": "37320",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -2006.82,
+            "y": 550.947,
+            "z": 6654.959
+        },
+        "velocity": {
+            "vx": 1.016498,
+            "vy": -7.448472,
+            "vz": 0.896839
+        },
+        "speed": 7.570821,
+        "altitude": 594.62,
+        "inclination": 74.0464,
+        "orbit_class": "LEO",
+        "relative_distance": 1747.315,
+        "relative_velocity": 10.891327,
+        "orientation": {
+            "roll": -11.4,
+            "pitch": 6.8,
+            "yaw": -82.23
+        },
+        "estimated_size_m": 0.47,
+        "estimated_rcs_m2": 0.139,
+        "object_type": "DEB",
+        "estimated_mass_kg": 97.8509,
+        "motion_rate": 0.06221,
+        "tumbling_rate": 6.83,
+        "collision_confidence": 49.01,
+        "timestamp": "2026-08-12T10:37:47.334055+00:00"
+    },
+    {
+        "tracking_id": "TRK_36558_000065",
+        "object_id": "36558",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -1853.411,
+            "y": 722.177,
+            "z": 6779.651
+        },
+        "velocity": {
+            "vx": -4.278755,
+            "vy": -6.15525,
+            "vz": -0.511166
+        },
+        "speed": 7.51373,
+        "altitude": 687.296,
+        "inclination": 74.0413,
+        "orbit_class": "LEO",
+        "relative_distance": 1781.06,
+        "relative_velocity": 6.353928,
+        "orientation": {
+            "roll": -47.3,
+            "pitch": -3.9,
+            "yaw": -124.8
+        },
+        "estimated_size_m": 0.43,
+        "estimated_rcs_m2": 0.116,
+        "object_type": "DEB",
+        "estimated_mass_kg": 74.9336,
+        "motion_rate": 0.060931,
+        "tumbling_rate": 2.81,
+        "collision_confidence": 54.61,
+        "timestamp": "2026-08-12T10:37:47.333399+00:00"
+    },
+    {
+        "tracking_id": "TRK_34845_000036",
+        "object_id": "34845",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -2124.675,
+            "y": 323.378,
+            "z": 6768.218
+        },
+        "velocity": {
+            "vx": -4.045087,
+            "vy": -6.231347,
+            "vz": -0.985388
+        },
+        "speed": 7.494225,
+        "altitude": 723.102,
+        "inclination": 74.0243,
+        "orbit_class": "LEO",
+        "relative_distance": 1876.403,
+        "relative_velocity": 6.330321,
+        "orientation": {
+            "roll": -39.59,
+            "pitch": -7.56,
+            "yaw": -122.99
+        },
+        "estimated_size_m": 0.27,
+        "estimated_rcs_m2": 0.046,
+        "object_type": "DEB",
+        "estimated_mass_kg": 18.5508,
+        "motion_rate": 0.060467,
+        "tumbling_rate": 5.04,
+        "collision_confidence": 53.79,
+        "timestamp": "2026-08-12T10:37:47.326951+00:00"
+    },
+    {
+        "tracking_id": "TRK_33938_000007",
+        "object_id": "33938",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -2154.139,
+            "y": 152.538,
+            "z": 6762.426
+        },
+        "velocity": {
+            "vx": 2.684184,
+            "vy": -6.925792,
+            "vz": 0.99816
+        },
+        "speed": 7.494516,
+        "altitude": 720.735,
+        "inclination": 74.0453,
+        "orbit_class": "LEO",
+        "relative_distance": 1994.837,
+        "relative_velocity": 11.889799,
+        "orientation": {
+            "roll": 20.3,
+            "pitch": 7.65,
+            "yaw": -68.82
+        },
+        "estimated_size_m": 0.17,
+        "estimated_rcs_m2": 0.018,
+        "object_type": "DEB",
+        "estimated_mass_kg": 4.6304,
+        "motion_rate": 0.060489,
+        "tumbling_rate": 14.1,
+        "collision_confidence": 46.16,
+        "timestamp": "2026-08-12T10:37:47.321692+00:00"
+    },
+    {
+        "tracking_id": "TRK_33766_000001",
+        "object_id": "33766",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -1169.667,
+            "y": 1664.462,
+            "z": 6858.719
+        },
+        "velocity": {
+            "vx": -4.540887,
+            "vy": -5.88429,
+            "vz": 0.604237
+        },
+        "speed": 7.457186,
+        "altitude": 775.924,
+        "inclination": 74.1851,
+        "orbit_class": "LEO",
+        "relative_distance": 2105.488,
+        "relative_velocity": 6.599534,
+        "orientation": {
+            "roll": -43.93,
+            "pitch": 4.65,
+            "yaw": -127.66
+        },
+        "estimated_size_m": 0.26,
+        "estimated_rcs_m2": 0.042,
+        "object_type": "DEB",
+        "estimated_mass_kg": 16.565,
+        "motion_rate": 0.059723,
+        "tumbling_rate": 3.53,
+        "collision_confidence": 52.2,
+        "timestamp": "2026-08-12T10:37:47.320018+00:00"
+    },
+    {
+        "tracking_id": "TRK_34756_000034",
+        "object_id": "34756",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -2198.421,
+            "y": 189.047,
+            "z": 7275.32
+        },
+        "velocity": {
+            "vx": -2.819773,
+            "vy": -6.498585,
+            "vz": -0.795306
+        },
+        "speed": 7.128481,
+        "altitude": 1224.433,
+        "inclination": 74.0032,
+        "orbit_class": "LEO",
+        "relative_distance": 2149.728,
+        "relative_velocity": 7.199511,
+        "orientation": {
+            "roll": -15.66,
+            "pitch": -6.41,
+            "yaw": -113.46
+        },
+        "estimated_size_m": 0.12,
+        "estimated_rcs_m2": 0.009,
+        "object_type": "DEB",
+        "estimated_mass_kg": 1.6286,
+        "motion_rate": 0.053723,
+        "tumbling_rate": 10.57,
+        "collision_confidence": 50.7,
+        "timestamp": "2026-08-12T10:37:47.326531+00:00"
+    },
+    {
+        "tracking_id": "TRK_36385_000062",
+        "object_id": "36385",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -934.767,
+            "y": 1695.498,
+            "z": 6695.11
+        },
+        "velocity": {
+            "vx": -6.045975,
+            "vy": -4.56916,
+            "vz": 0.217826
+        },
+        "speed": 7.581457,
+        "altitude": 591.296,
+        "inclination": 73.9671,
+        "orbit_class": "LEO",
+        "relative_distance": 2286.575,
+        "relative_velocity": 5.022906,
+        "orientation": {
+            "roll": -56.38,
+            "pitch": 1.65,
+            "yaw": -142.92
+        },
+        "estimated_size_m": 0.41,
+        "estimated_rcs_m2": 0.106,
+        "object_type": "DEB",
+        "estimated_mass_kg": 64.9565,
+        "motion_rate": 0.062327,
+        "tumbling_rate": 2.15,
+        "collision_confidence": 54.57,
+        "timestamp": "2026-08-12T10:37:47.332542+00:00"
+    },
+    {
+        "tracking_id": "TRK_34990_000042",
+        "object_id": "34990",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -4182.87,
+            "y": -284.235,
+            "z": 5763.23
+        },
+        "velocity": {
+            "vx": 5.583145,
+            "vy": -3.112168,
+            "vz": 3.876522
+        },
+        "speed": 7.475594,
+        "altitude": 748.714,
+        "inclination": 74.0434,
+        "orbit_class": "LEO",
+        "relative_distance": 2338.212,
+        "relative_velocity": 14.316016,
+        "orientation": {
+            "roll": 30.08,
+            "pitch": 31.24,
+            "yaw": -29.14
+        },
+        "estimated_size_m": 0.38,
+        "estimated_rcs_m2": 0.091,
+        "object_type": "DEB",
+        "estimated_mass_kg": 51.7156,
+        "motion_rate": 0.060099,
+        "tumbling_rate": 10.11,
+        "collision_confidence": 43.25,
+        "timestamp": "2026-08-12T10:37:47.328567+00:00"
+    },
+    {
+        "tracking_id": "TRK_34967_000041",
+        "object_id": "34967",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -4960.398,
+            "y": 213.318,
+            "z": 5134.263
+        },
+        "velocity": {
+            "vx": 4.789415,
+            "vy": -3.157887,
+            "vz": 4.763745
+        },
+        "speed": 7.45681,
+        "altitude": 764.111,
+        "inclination": 73.991,
+        "orbit_class": "LEO",
+        "relative_distance": 2605.799,
+        "relative_velocity": 14.126919,
+        "orientation": {
+            "roll": 32.17,
+            "pitch": 39.71,
+            "yaw": -33.4
+        },
+        "estimated_size_m": 0.48,
+        "estimated_rcs_m2": 0.145,
+        "object_type": "DEB",
+        "estimated_mass_kg": 104.2305,
+        "motion_rate": 0.059819,
+        "tumbling_rate": 10.65,
+        "collision_confidence": 42.38,
+        "timestamp": "2026-08-12T10:37:47.328342+00:00"
+    },
+    {
+        "tracking_id": "TRK_37498_000070",
+        "object_id": "37498",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -1983.931,
+            "y": -477.661,
+            "z": 6766.703
+        },
+        "velocity": {
+            "vx": -0.636022,
+            "vy": -7.451169,
+            "vz": -0.711732
+        },
+        "speed": 7.512057,
+        "altitude": 689.565,
+        "inclination": 74.0363,
+        "orbit_class": "LEO",
+        "relative_distance": 2607.753,
+        "relative_velocity": 9.244713,
+        "orientation": {
+            "roll": -21.51,
+            "pitch": -5.44,
+            "yaw": -94.88
+        },
+        "estimated_size_m": 0.28,
+        "estimated_rcs_m2": 0.049,
+        "object_type": "DEB",
+        "estimated_mass_kg": 20.6893,
+        "motion_rate": 0.060898,
+        "tumbling_rate": 6.44,
+        "collision_confidence": 46.21,
+        "timestamp": "2026-08-12T10:37:47.334386+00:00"
+    },
+    {
+        "tracking_id": "TRK_34304_000020",
+        "object_id": "34304",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -590.622,
+            "y": 1925.342,
+            "z": 6757.499
+        },
+        "velocity": {
+            "vx": -6.341305,
+            "vy": -4.075584,
+            "vz": 0.559169
+        },
+        "speed": 7.558783,
+        "altitude": 673.073,
+        "inclination": 74.0112,
+        "orbit_class": "LEO",
+        "relative_distance": 2638.878,
+        "relative_velocity": 4.897443,
+        "orientation": {
+            "roll": -57.02,
+            "pitch": 4.24,
+            "yaw": -147.27
+        },
+        "estimated_size_m": 0.47,
+        "estimated_rcs_m2": 0.139,
+        "object_type": "DEB",
+        "estimated_mass_kg": 97.8509,
+        "motion_rate": 0.06142,
+        "tumbling_rate": 2.34,
+        "collision_confidence": 53.34,
+        "timestamp": "2026-08-12T10:37:47.323997+00:00"
+    },
+    {
+        "tracking_id": "TRK_34388_000022",
+        "object_id": "34388",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -2001.549,
+            "y": -542.45,
+            "z": 6777.994
+        },
+        "velocity": {
+            "vx": 4.315633,
+            "vy": -6.084981,
+            "vz": 0.779321
+        },
+        "speed": 7.500601,
+        "altitude": 709.997,
+        "inclination": 74.0396,
+        "orbit_class": "LEO",
+        "relative_distance": 2658.645,
+        "relative_velocity": 12.783737,
+        "orientation": {
+            "roll": 33.28,
+            "pitch": 5.96,
+            "yaw": -54.65
+        },
+        "estimated_size_m": 0.11,
+        "estimated_rcs_m2": 0.008,
+        "object_type": "DEB",
+        "estimated_mass_kg": 1.2544,
+        "motion_rate": 0.06063,
+        "tumbling_rate": 16.11,
+        "collision_confidence": 42.2,
+        "timestamp": "2026-08-12T10:37:47.324375+00:00"
+    },
+    {
+        "tracking_id": "TRK_35065_000046",
+        "object_id": "35065",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -2307.756,
+            "y": 4238.491,
+            "z": 5233.075
+        },
+        "velocity": {
+            "vx": -0.230453,
+            "vy": -5.872138,
+            "vz": 4.626458
+        },
+        "speed": 7.479253,
+        "altitude": 740.544,
+        "inclination": 74.0195,
+        "orbit_class": "LEO",
+        "relative_distance": 2778.485,
+        "relative_velocity": 11.268074,
+        "orientation": {
+            "roll": -11.1,
+            "pitch": 38.21,
+            "yaw": -92.25
+        },
+        "estimated_size_m": 0.39,
+        "estimated_rcs_m2": 0.096,
+        "object_type": "DEB",
+        "estimated_mass_kg": 55.9068,
+        "motion_rate": 0.060198,
+        "tumbling_rate": 5.96,
+        "collision_confidence": 43.6,
+        "timestamp": "2026-08-12T10:37:47.329478+00:00"
+    },
+    {
+        "tracking_id": "TRK_36430_000063",
+        "object_id": "36430",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -4546.099,
+            "y": -621.951,
+            "z": 5421.163
+        },
+        "velocity": {
+            "vx": -4.729465,
+            "vy": -3.875014,
+            "vz": -4.390827
+        },
+        "speed": 7.527479,
+        "altitude": 724.176,
+        "inclination": 74.0038,
+        "orbit_class": "LEO",
+        "relative_distance": 2873.351,
+        "relative_velocity": 3.765394,
+        "orientation": {
+            "roll": -62.98,
+            "pitch": -35.68,
+            "yaw": -140.67
+        },
+        "estimated_size_m": 0.47,
+        "estimated_rcs_m2": 0.139,
+        "object_type": "DEB",
+        "estimated_mass_kg": 97.8509,
+        "motion_rate": 0.060726,
+        "tumbling_rate": 2.64,
+        "collision_confidence": 54.78,
+        "timestamp": "2026-08-12T10:37:47.332633+00:00"
+    },
+    {
+        "tracking_id": "TRK_35020_000043",
+        "object_id": "35020",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -1782.671,
+            "y": 4226.689,
+            "z": 5367.821
+        },
+        "velocity": {
+            "vx": -0.868264,
+            "vy": -6.044994,
+            "vz": 4.372954
+        },
+        "speed": 7.511229,
+        "altitude": 682.763,
+        "inclination": 74.0465,
+        "orbit_class": "LEO",
+        "relative_distance": 2931.968,
+        "relative_velocity": 10.816772,
+        "orientation": {
+            "roll": -19.42,
+            "pitch": 35.6,
+            "yaw": -98.17
+        },
+        "estimated_size_m": 0.45,
+        "estimated_rcs_m2": 0.127,
+        "object_type": "DEB",
+        "estimated_mass_kg": 85.8833,
+        "motion_rate": 0.06095,
+        "tumbling_rate": 4.53,
+        "collision_confidence": 43.5,
+        "timestamp": "2026-08-12T10:37:47.329061+00:00"
+    },
+    {
+        "tracking_id": "TRK_34451_000025",
+        "object_id": "34451",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -1206.234,
+            "y": 3926.356,
+            "z": 5542.774
+        },
+        "velocity": {
+            "vx": -4.963395,
+            "vy": 4.128155,
+            "vz": -4.001842
+        },
+        "speed": 7.595504,
+        "altitude": 520.676,
+        "inclination": 74.0456,
+        "orbit_class": "LEO",
+        "relative_distance": 2980.145,
+        "relative_velocity": 5.387633,
+        "orientation": {
+            "roll": 68.78,
+            "pitch": -31.79,
+            "yaw": 140.25
+        },
+        "estimated_size_m": 0.47,
+        "estimated_rcs_m2": 0.139,
+        "object_type": "DEB",
+        "estimated_mass_kg": 97.8509,
+        "motion_rate": 0.063082,
+        "tumbling_rate": 3.89,
+        "collision_confidence": 50.88,
+        "timestamp": "2026-08-12T10:37:47.324823+00:00"
+    },
+    {
+        "tracking_id": "TRK_34273_000018",
+        "object_id": "34273",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -141.946,
+            "y": 2075.2,
+            "z": 6734.385
+        },
+        "velocity": {
+            "vx": -7.1911,
+            "vy": 2.06297,
+            "vz": -0.77577
+        },
+        "speed": 7.521276,
+        "altitude": 670.164,
+        "inclination": 74.0367,
+        "orbit_class": "LEO",
+        "relative_distance": 3084.815,
+        "relative_velocity": 3.838851,
+        "orientation": {
+            "roll": 82.01,
+            "pitch": -5.92,
+            "yaw": 163.99
+        },
+        "estimated_size_m": 0.21,
+        "estimated_rcs_m2": 0.028,
+        "object_type": "DEB",
+        "estimated_mass_kg": 8.7283,
+        "motion_rate": 0.061141,
+        "tumbling_rate": 2.77,
+        "collision_confidence": 53.07,
+        "timestamp": "2026-08-12T10:37:47.323789+00:00"
+    },
+    {
+        "tracking_id": "TRK_47116_000087",
+        "object_id": "47116",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -2387.22,
+            "y": 4420.58,
+            "z": 4747.06
+        },
+        "velocity": {
+            "vx": -0.203263,
+            "vy": -5.622249,
+            "vz": 5.098125
+        },
+        "speed": 7.592225,
+        "altitude": 533.804,
+        "inclination": 74.0183,
+        "orbit_class": "LEO",
+        "relative_distance": 3112.863,
+        "relative_velocity": 11.509434,
+        "orientation": {
+            "roll": 15.07,
+            "pitch": 42.18,
+            "yaw": -92.07
+        },
+        "estimated_size_m": 0.18,
+        "estimated_rcs_m2": 0.02,
+        "object_type": "DEB",
+        "estimated_mass_kg": 5.4965,
+        "motion_rate": 0.062935,
+        "tumbling_rate": 13.13,
+        "collision_confidence": 41.43,
+        "timestamp": "2026-08-12T10:37:47.337515+00:00"
+    },
+    {
+        "tracking_id": "TRK_34885_000037",
+        "object_id": "34885",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -1243.582,
+            "y": 4156.765,
+            "z": 5600.686
+        },
+        "velocity": {
+            "vx": -1.675508,
+            "vy": -6.055736,
+            "vz": 4.10139
+        },
+        "speed": 7.503377,
+        "altitude": 706.556,
+        "inclination": 74.031,
+        "orbit_class": "LEO",
+        "relative_distance": 3115.834,
+        "relative_velocity": 10.215248,
+        "orientation": {
+            "roll": -3.23,
+            "pitch": 33.13,
+            "yaw": -105.47
+        },
+        "estimated_size_m": 0.11,
+        "estimated_rcs_m2": 0.008,
+        "object_type": "DEB",
+        "estimated_mass_kg": 1.2544,
+        "motion_rate": 0.060682,
+        "tumbling_rate": 10.27,
+        "collision_confidence": 42.5,
+        "timestamp": "2026-08-12T10:37:47.327273+00:00"
+    },
+    {
+        "tracking_id": "TRK_36050_000060",
+        "object_id": "36050",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -239.222,
+            "y": 2930.294,
+            "z": 6207.166
+        },
+        "velocity": {
+            "vx": -4.430545,
+            "vy": -5.704147,
+            "vz": 2.512519
+        },
+        "speed": 7.647207,
+        "altitude": 490.106,
+        "inclination": 74.03,
+        "orbit_class": "LEO",
+        "relative_distance": 3144.54,
+        "relative_velocity": 7.763856,
+        "orientation": {
+            "roll": -37.54,
+            "pitch": 19.18,
+            "yaw": -127.84
+        },
+        "estimated_size_m": 0.49,
+        "estimated_rcs_m2": 0.151,
+        "object_type": "DEB",
+        "estimated_mass_kg": 110.8816,
+        "motion_rate": 0.063794,
+        "tumbling_rate": 4.34,
+        "collision_confidence": 46.29,
+        "timestamp": "2026-08-12T10:37:47.332234+00:00"
+    },
+    {
+        "tracking_id": "TRK_34062_000015",
+        "object_id": "34062",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -5147.899,
+            "y": -197.112,
+            "z": 4729.988
+        },
+        "velocity": {
+            "vx": -4.668172,
+            "vy": -2.992653,
+            "vz": -5.117928
+        },
+        "speed": 7.545925,
+        "altitude": 615.61,
+        "inclination": 74.0252,
+        "orbit_class": "LEO",
+        "relative_distance": 3157.527,
+        "relative_velocity": 3.504603,
+        "orientation": {
+            "roll": -69.35,
+            "pitch": -42.71,
+            "yaw": -147.34
+        },
+        "estimated_size_m": 0.24,
+        "estimated_rcs_m2": 0.036,
+        "object_type": "DEB",
+        "estimated_mass_kg": 13.0288,
+        "motion_rate": 0.061819,
+        "tumbling_rate": 2.18,
+        "collision_confidence": 53.63,
+        "timestamp": "2026-08-12T10:37:47.323151+00:00"
+    },
+    {
+        "tracking_id": "TRK_34120_000016",
+        "object_id": "34120",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -5714.907,
+            "y": 1242.642,
+            "z": 4389.486
+        },
+        "velocity": {
+            "vx": 3.42489,
+            "vy": -3.332524,
+            "vz": 5.603126
+        },
+        "speed": 7.364143,
+        "altitude": 934.312,
+        "inclination": 73.9915,
+        "orbit_class": "LEO",
+        "relative_distance": 3169.392,
+        "relative_velocity": 13.598789,
+        "orientation": {
+            "roll": 20.21,
+            "pitch": 49.54,
+            "yaw": -44.22
+        },
+        "estimated_size_m": 0.31,
+        "estimated_rcs_m2": 0.06,
+        "object_type": "DEB",
+        "estimated_mass_kg": 28.0774,
+        "motion_rate": 0.057701,
+        "tumbling_rate": 7.92,
+        "collision_confidence": 39.87,
+        "timestamp": "2026-08-12T10:37:47.323475+00:00"
+    },
+    {
+        "tracking_id": "TRK_40803_000084",
+        "object_id": "40803",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -2403.225,
+            "y": 4548.316,
+            "z": 4851.746
+        },
+        "velocity": {
+            "vx": -4.768502,
+            "vy": 2.890231,
+            "vz": -5.045298
+        },
+        "speed": 7.519779,
+        "altitude": 693.08,
+        "inclination": 74.0129,
+        "orbit_class": "LEO",
+        "relative_distance": 3172.595,
+        "relative_velocity": 4.653801,
+        "orientation": {
+            "roll": 69.09,
+            "pitch": -42.14,
+            "yaw": 148.78
+        },
+        "estimated_size_m": 0.21,
+        "estimated_rcs_m2": 0.028,
+        "object_type": "DEB",
+        "estimated_mass_kg": 8.7283,
+        "motion_rate": 0.06093,
+        "tumbling_rate": 3.62,
+        "collision_confidence": 50.9,
+        "timestamp": "2026-08-12T10:37:47.337041+00:00"
+    },
+    {
+        "tracking_id": "TRK_34061_000014",
+        "object_id": "34061",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -3103.604,
+            "y": -1482.457,
+            "z": 6255.025
+        },
+        "velocity": {
+            "vx": 6.691761,
+            "vy": -1.523229,
+            "vz": 2.939987
+        },
+        "speed": 7.466152,
+        "altitude": 760.166,
+        "inclination": 74.0372,
+        "orbit_class": "LEO",
+        "relative_distance": 3259.56,
+        "relative_velocity": 14.717361,
+        "orientation": {
+            "roll": 67.47,
+            "pitch": 23.19,
+            "yaw": -12.82
+        },
+        "estimated_size_m": 0.18,
+        "estimated_rcs_m2": 0.02,
+        "object_type": "DEB",
+        "estimated_mass_kg": 5.4965,
+        "motion_rate": 0.059927,
+        "tumbling_rate": 19.27,
+        "collision_confidence": 38.47,
+        "timestamp": "2026-08-12T10:37:47.323096+00:00"
+    },
+    {
+        "tracking_id": "TRK_33907_000005",
+        "object_id": "33907",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -135.61,
+            "y": 3012.029,
+            "z": 6571.038
+        },
+        "velocity": {
+            "vx": -5.116998,
+            "vy": 4.813137,
+            "vz": -2.273981
+        },
+        "speed": 7.383831,
+        "altitude": 851.61,
+        "inclination": 74.0699,
+        "orbit_class": "LEO",
+        "relative_distance": 3292.829,
+        "relative_velocity": 5.996097,
+        "orientation": {
+            "roll": 87.29,
+            "pitch": -17.94,
+            "yaw": 136.75
+        },
+        "estimated_size_m": 0.15,
+        "estimated_rcs_m2": 0.014,
+        "object_type": "DEB",
+        "estimated_mass_kg": 3.1809,
+        "motion_rate": 0.058517,
+        "tumbling_rate": 8.64,
+        "collision_confidence": 47.67,
+        "timestamp": "2026-08-12T10:37:47.321103+00:00"
+    },
+    {
+        "tracking_id": "TRK_34425_000023",
+        "object_id": "34425",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -56.637,
+            "y": 3031.059,
+            "z": 6373.026
+        },
+        "velocity": {
+            "vx": -4.947419,
+            "vy": 5.09808,
+            "vz": -2.441992
+        },
+        "speed": 7.512037,
+        "altitude": 679.199,
+        "inclination": 74.0196,
+        "orbit_class": "LEO",
+        "relative_distance": 3356.251,
+        "relative_velocity": 6.291777,
+        "orientation": {
+            "roll": 71.06,
+            "pitch": -18.97,
+            "yaw": 134.14
+        },
+        "estimated_size_m": 0.33,
+        "estimated_rcs_m2": 0.068,
+        "object_type": "DEB",
+        "estimated_mass_kg": 33.8698,
+        "motion_rate": 0.060987,
+        "tumbling_rate": 4.41,
+        "collision_confidence": 47.32,
+        "timestamp": "2026-08-12T10:37:47.324586+00:00"
+    },
+    {
+        "tracking_id": "TRK_38479_000079",
+        "object_id": "38479",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -1846.518,
+            "y": 4692.89,
+            "z": 5054.768
+        },
+        "velocity": {
+            "vx": -0.883524,
+            "vy": -5.638882,
+            "vz": 4.814936
+        },
+        "speed": 7.467343,
+        "altitude": 762.138,
+        "inclination": 74.0056,
+        "orbit_class": "LEO",
+        "relative_distance": 3397.275,
+        "relative_velocity": 10.939273,
+        "orientation": {
+            "roll": -14.31,
+            "pitch": 40.15,
+            "yaw": -98.9
+        },
+        "estimated_size_m": 0.28,
+        "estimated_rcs_m2": 0.049,
+        "object_type": "DEB",
+        "estimated_mass_kg": 20.6893,
+        "motion_rate": 0.05992,
+        "tumbling_rate": 5.76,
+        "collision_confidence": 41.01,
+        "timestamp": "2026-08-12T10:37:47.336051+00:00"
+    },
+    {
+        "tracking_id": "TRK_47045_000085",
+        "object_id": "47045",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -2914.239,
+            "y": -1669.779,
+            "z": 6273.158
+        },
+        "velocity": {
+            "vx": -2.525395,
+            "vy": -6.434056,
+            "vz": -2.8927
+        },
+        "speed": 7.492824,
+        "altitude": 737.582,
+        "inclination": 74.0577,
+        "orbit_class": "LEO",
+        "relative_distance": 3455.71,
+        "relative_velocity": 6.926009,
+        "orientation": {
+            "roll": -23.31,
+            "pitch": -22.71,
+            "yaw": -111.43
+        },
+        "estimated_size_m": 0.18,
+        "estimated_rcs_m2": 0.02,
+        "object_type": "DEB",
+        "estimated_mass_kg": 5.4965,
+        "motion_rate": 0.060332,
+        "tumbling_rate": 9.29,
+        "collision_confidence": 45.52,
+        "timestamp": "2026-08-12T10:37:47.337198+00:00"
+    },
+    {
+        "tracking_id": "TRK_36369_000061",
+        "object_id": "36369",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": 211.996,
+            "y": 2462.989,
+            "z": 6560.964
+        },
+        "velocity": {
+            "vx": -5.525105,
+            "vy": 4.856991,
+            "vz": -1.632515
+        },
+        "speed": 7.5354,
+        "altitude": 633.104,
+        "inclination": 74.0309,
+        "orbit_class": "LEO",
+        "relative_distance": 3464.923,
+        "relative_velocity": 6.073336,
+        "orientation": {
+            "roll": 73.56,
+            "pitch": -12.51,
+            "yaw": 138.68
+        },
+        "estimated_size_m": 0.39,
+        "estimated_rcs_m2": 0.096,
+        "object_type": "DEB",
+        "estimated_mass_kg": 55.9068,
+        "motion_rate": 0.061579,
+        "tumbling_rate": 4.08,
+        "collision_confidence": 47.4,
+        "timestamp": "2026-08-12T10:37:47.332451+00:00"
+    },
+    {
+        "tracking_id": "TRK_33999_000010",
+        "object_id": "33999",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -1576.861,
+            "y": -1521.111,
+            "z": 6646.993
+        },
+        "velocity": {
+            "vx": 2.119703,
+            "vy": -7.138754,
+            "vz": -1.118637
+        },
+        "speed": 7.530358,
+        "altitude": 620.633,
+        "inclination": 73.9165,
+        "orbit_class": "LEO",
+        "relative_distance": 3687.269,
+        "relative_velocity": 10.981843,
+        "orientation": {
+            "roll": -16.15,
+            "pitch": -8.54,
+            "yaw": -73.46
+        },
+        "estimated_size_m": 0.42,
+        "estimated_rcs_m2": 0.111,
+        "object_type": "DEB",
+        "estimated_mass_kg": 69.8263,
+        "motion_rate": 0.061648,
+        "tumbling_rate": 5.44,
+        "collision_confidence": 40.15,
+        "timestamp": "2026-08-12T10:37:47.322235+00:00"
+    },
+    {
+        "tracking_id": "TRK_35031_000045",
+        "object_id": "35031",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -5554.573,
+            "y": -478.105,
+            "z": 4480.622
+        },
+        "velocity": {
+            "vx": 4.590667,
+            "vy": -2.242345,
+            "vz": 5.434445
+        },
+        "speed": 7.458923,
+        "altitude": 774.334,
+        "inclination": 74.0366,
+        "orbit_class": "LEO",
+        "relative_distance": 3705.224,
+        "relative_velocity": 14.242055,
+        "orientation": {
+            "roll": 42.01,
+            "pitch": 46.77,
+            "yaw": -26.03
+        },
+        "estimated_size_m": 0.17,
+        "estimated_rcs_m2": 0.018,
+        "object_type": "DEB",
+        "estimated_mass_kg": 4.6304,
+        "motion_rate": 0.059751,
+        "tumbling_rate": 12.01,
+        "collision_confidence": 36.93,
+        "timestamp": "2026-08-12T10:37:47.329256+00:00"
+    },
+    {
+        "tracking_id": "TRK_35440_000048",
+        "object_id": "35440",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -1897.535,
+            "y": 4949.774,
+            "z": 4678.24
+        },
+        "velocity": {
+            "vx": -0.880878,
+            "vy": -5.318722,
+            "vz": 5.201072
+        },
+        "speed": 7.491055,
+        "altitude": 692.0,
+        "inclination": 74.0148,
+        "orbit_class": "LEO",
+        "relative_distance": 3738.122,
+        "relative_velocity": 11.093964,
+        "orientation": {
+            "roll": -2.94,
+            "pitch": 43.97,
+            "yaw": -99.4
+        },
+        "estimated_size_m": 0.32,
+        "estimated_rcs_m2": 0.064,
+        "object_type": "DEB",
+        "estimated_mass_kg": 30.8831,
+        "motion_rate": 0.060707,
+        "tumbling_rate": 8.8,
+        "collision_confidence": 39.6,
+        "timestamp": "2026-08-12T10:37:47.329779+00:00"
+    },
+    {
+        "tracking_id": "TRK_40796_000083",
+        "object_id": "40796",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": 541.96,
+            "y": 2208.205,
+            "z": 6567.87
+        },
+        "velocity": {
+            "vx": -7.120318,
+            "vy": -2.265721,
+            "vz": 1.334456
+        },
+        "speed": 7.590335,
+        "altitude": 572.172,
+        "inclination": 74.0109,
+        "orbit_class": "LEO",
+        "relative_distance": 3750.009,
+        "relative_velocity": 4.713294,
+        "orientation": {
+            "roll": -61.22,
+            "pitch": 10.13,
+            "yaw": -162.35
+        },
+        "estimated_size_m": 0.41,
+        "estimated_rcs_m2": 0.106,
+        "object_type": "DEB",
+        "estimated_mass_kg": 64.9565,
+        "motion_rate": 0.062572,
+        "tumbling_rate": 2.66,
+        "collision_confidence": 48.92,
+        "timestamp": "2026-08-12T10:37:47.336926+00:00"
+    },
+    {
+        "tracking_id": "TRK_40238_000081",
+        "object_id": "40238",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -3978.166,
+            "y": -1893.036,
+            "z": 6511.732
+        },
+        "velocity": {
+            "vx": -3.199132,
+            "vy": -5.290915,
+            "vz": -3.204717
+        },
+        "speed": 6.964081,
+        "altitude": 1483.926,
+        "inclination": 73.9894,
+        "orbit_class": "LEO",
+        "relative_distance": 3771.649,
+        "relative_velocity": 5.604668,
+        "orientation": {
+            "roll": -47.79,
+            "pitch": -27.4,
+            "yaw": -121.16
+        },
+        "estimated_size_m": 0.48,
+        "estimated_rcs_m2": 0.145,
+        "object_type": "DEB",
+        "estimated_mass_kg": 104.2305,
+        "motion_rate": 0.050752,
+        "tumbling_rate": 3.88,
+        "collision_confidence": 47.25,
+        "timestamp": "2026-08-12T10:37:47.336752+00:00"
+    },
+    {
+        "tracking_id": "TRK_35979_000058",
+        "object_id": "35979",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -1322.215,
+            "y": -1491.811,
+            "z": 6728.326
+        },
+        "velocity": {
+            "vx": 4.141509,
+            "vy": -6.258753,
+            "vz": -0.618771
+        },
+        "speed": 7.530403,
+        "altitude": 639.279,
+        "inclination": 74.0088,
+        "orbit_class": "LEO",
+        "relative_distance": 3789.095,
+        "relative_velocity": 12.344985,
+        "orientation": {
+            "roll": -1.44,
+            "pitch": -4.71,
+            "yaw": -56.51
+        },
+        "estimated_size_m": 0.44,
+        "estimated_rcs_m2": 0.122,
+        "object_type": "DEB",
+        "estimated_mass_kg": 80.284,
+        "motion_rate": 0.061484,
+        "tumbling_rate": 7.19,
+        "collision_confidence": 38.6,
+        "timestamp": "2026-08-12T10:37:47.331840+00:00"
+    },
+    {
+        "tracking_id": "TRK_37312_000068",
+        "object_id": "37312",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -3085.587,
+            "y": 4951.977,
+            "z": 4078.348
+        },
+        "velocity": {
+            "vx": 0.033674,
+            "vy": -4.760349,
+            "vz": 5.770268
+        },
+        "speed": 7.480511,
+        "altitude": 740.56,
+        "inclination": 74.0316,
+        "orbit_class": "LEO",
+        "relative_distance": 3816.694,
+        "relative_velocity": 11.821943,
+        "orientation": {
+            "roll": -1.69,
+            "pitch": 50.48,
+            "yaw": -89.59
+        },
+        "estimated_size_m": 0.47,
+        "estimated_rcs_m2": 0.139,
+        "object_type": "DEB",
+        "estimated_mass_kg": 97.8509,
+        "motion_rate": 0.060208,
+        "tumbling_rate": 7.43,
+        "collision_confidence": 39.0,
+        "timestamp": "2026-08-12T10:37:47.333984+00:00"
+    },
+    {
+        "tracking_id": "TRK_35025_000044",
+        "object_id": "35025",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": 626.323,
+            "y": 2349.841,
+            "z": 6555.698
+        },
+        "velocity": {
+            "vx": -4.771986,
+            "vy": 5.639355,
+            "vz": -1.620746
+        },
+        "speed": 7.563134,
+        "altitude": 614.088,
+        "inclination": 73.9393,
+        "orbit_class": "LEO",
+        "relative_distance": 3850.784,
+        "relative_velocity": 6.990715,
+        "orientation": {
+            "roll": 84.95,
+            "pitch": -12.37,
+            "yaw": 130.24
+        },
+        "estimated_size_m": 0.16,
+        "estimated_rcs_m2": 0.016,
+        "object_type": "DEB",
+        "estimated_mass_kg": 3.8604,
+        "motion_rate": 0.061974,
+        "tumbling_rate": 8.41,
+        "collision_confidence": 43.8,
+        "timestamp": "2026-08-12T10:37:47.329160+00:00"
+    },
+    {
+        "tracking_id": "TRK_36045_000059",
+        "object_id": "36045",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": 582.128,
+            "y": 2911.241,
+            "z": 6387.144
+        },
+        "velocity": {
+            "vx": -3.932041,
+            "vy": 5.94326,
+            "vz": -2.355491
+        },
+        "speed": 7.50544,
+        "altitude": 665.286,
+        "inclination": 73.7621,
+        "orbit_class": "LEO",
+        "relative_distance": 3919.349,
+        "relative_velocity": 7.426129,
+        "orientation": {
+            "roll": 70.21,
+            "pitch": -18.29,
+            "yaw": 123.49
+        },
+        "estimated_size_m": 0.24,
+        "estimated_rcs_m2": 0.036,
+        "object_type": "DEB",
+        "estimated_mass_kg": 13.0288,
+        "motion_rate": 0.061054,
+        "tumbling_rate": 5.49,
+        "collision_confidence": 43.07,
+        "timestamp": "2026-08-12T10:37:47.332101+00:00"
+    },
+    {
+        "tracking_id": "TRK_35829_000055",
+        "object_id": "35829",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -5483.307,
+            "y": 2935.281,
+            "z": 3221.104
+        },
+        "velocity": {
+            "vx": -4.022596,
+            "vy": -0.506033,
+            "vz": -6.360753
+        },
+        "speed": 7.542978,
+        "altitude": 626.007,
+        "inclination": 74.024,
+        "orbit_class": "LEO",
+        "relative_distance": 3944.297,
+        "relative_velocity": 4.186672,
+        "orientation": {
+            "roll": -82.59,
+            "pitch": -57.49,
+            "yaw": -172.83
+        },
+        "estimated_size_m": 0.29,
+        "estimated_rcs_m2": 0.053,
+        "object_type": "DEB",
+        "estimated_mass_kg": 22.9861,
+        "motion_rate": 0.061704,
+        "tumbling_rate": 2.73,
+        "collision_confidence": 49.01,
+        "timestamp": "2026-08-12T10:37:47.331286+00:00"
+    },
+    {
+        "tracking_id": "TRK_37967_000074",
+        "object_id": "37967",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": 564.921,
+            "y": 3197.883,
+            "z": 6276.954
+        },
+        "velocity": {
+            "vx": -5.365077,
+            "vy": -4.558939,
+            "vz": 2.692792
+        },
+        "speed": 7.537845,
+        "altitude": 689.093,
+        "inclination": 74.0127,
+        "orbit_class": "LEO",
+        "relative_distance": 3991.883,
+        "relative_velocity": 7.02334,
+        "orientation": {
+            "roll": -42.52,
+            "pitch": 20.93,
+            "yaw": -139.64
+        },
+        "estimated_size_m": 0.28,
+        "estimated_rcs_m2": 0.049,
+        "object_type": "DEB",
+        "estimated_mass_kg": 20.6893,
+        "motion_rate": 0.061111,
+        "tumbling_rate": 4.31,
+        "collision_confidence": 43.5,
+        "timestamp": "2026-08-12T10:37:47.334974+00:00"
+    },
+    {
+        "tracking_id": "TRK_33980_000008",
+        "object_id": "33980",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": 843.791,
+            "y": 1890.484,
+            "z": 6743.308
+        },
+        "velocity": {
+            "vx": -5.521305,
+            "vy": 5.057303,
+            "vz": -0.706059
+        },
+        "speed": 7.520614,
+        "altitude": 675.806,
+        "inclination": 74.0219,
+        "orbit_class": "LEO",
+        "relative_distance": 4047.141,
+        "relative_velocity": 6.551878,
+        "orientation": {
+            "roll": 71.98,
+            "pitch": -5.39,
+            "yaw": 137.51
+        },
+        "estimated_size_m": 0.22,
+        "estimated_rcs_m2": 0.03,
+        "object_type": "DEB",
+        "estimated_mass_kg": 10.0355,
+        "motion_rate": 0.061086,
+        "tumbling_rate": 3.27,
+        "collision_confidence": 43.9,
+        "timestamp": "2026-08-12T10:37:47.321976+00:00"
+    },
+    {
+        "tracking_id": "TRK_35830_000056",
+        "object_id": "35830",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -4766.464,
+            "y": -1752.493,
+            "z": 5012.958
+        },
+        "velocity": {
+            "vx": 5.615681,
+            "vy": -1.056967,
+            "vz": 4.853485
+        },
+        "speed": 7.49729,
+        "altitude": 757.699,
+        "inclination": 73.859,
+        "orbit_class": "LEO",
+        "relative_distance": 4051.042,
+        "relative_velocity": 14.683316,
+        "orientation": {
+            "roll": 34.37,
+            "pitch": 40.34,
+            "yaw": -10.66
+        },
+        "estimated_size_m": 0.29,
+        "estimated_rcs_m2": 0.053,
+        "object_type": "DEB",
+        "estimated_mass_kg": 22.9861,
+        "motion_rate": 0.060198,
+        "tumbling_rate": 8.31,
+        "collision_confidence": 35.62,
+        "timestamp": "2026-08-12T10:37:47.331335+00:00"
+    },
+    {
+        "tracking_id": "TRK_34793_000035",
+        "object_id": "34793",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -6150.951,
+            "y": 997.514,
+            "z": 3532.904
+        },
+        "velocity": {
+            "vx": 3.046697,
+            "vy": -2.876918,
+            "vz": 6.157921
+        },
+        "speed": 7.448423,
+        "altitude": 785.007,
+        "inclination": 74.0017,
+        "orbit_class": "LEO",
+        "relative_distance": 4074.984,
+        "relative_velocity": 13.617813,
+        "orientation": {
+            "roll": 51.69,
+            "pitch": 55.77,
+            "yaw": -43.36
+        },
+        "estimated_size_m": 0.17,
+        "estimated_rcs_m2": 0.018,
+        "object_type": "DEB",
+        "estimated_mass_kg": 4.6304,
+        "motion_rate": 0.059578,
+        "tumbling_rate": 16.36,
+        "collision_confidence": 35.92,
+        "timestamp": "2026-08-12T10:37:47.326713+00:00"
+    },
+    {
+        "tracking_id": "TRK_33828_000004",
+        "object_id": "33828",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -5760.533,
+            "y": 2787.37,
+            "z": 3153.068
+        },
+        "velocity": {
+            "vx": 1.858139,
+            "vy": -3.427543,
+            "vz": 6.370547
+        },
+        "speed": 7.468909,
+        "altitude": 755.937,
+        "inclination": 74.0458,
+        "orbit_class": "LEO",
+        "relative_distance": 4124.098,
+        "relative_velocity": 13.045924,
+        "orientation": {
+            "roll": 16.69,
+            "pitch": 58.53,
+            "yaw": -61.54
+        },
+        "estimated_size_m": 0.34,
+        "estimated_rcs_m2": 0.073,
+        "object_type": "DEB",
+        "estimated_mass_kg": 37.0431,
+        "motion_rate": 0.059985,
+        "tumbling_rate": 8.5,
+        "collision_confidence": 36.55,
+        "timestamp": "2026-08-12T10:37:47.320666+00:00"
+    },
+    {
+        "tracking_id": "TRK_34446_000024",
+        "object_id": "34446",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": 933.591,
+            "y": 1754.341,
+            "z": 6792.953
+        },
+        "velocity": {
+            "vx": -5.952535,
+            "vy": 4.572495,
+            "vz": -0.329785
+        },
+        "speed": 7.513265,
+        "altitude": 699.54,
+        "inclination": 74.0428,
+        "orbit_class": "LEO",
+        "relative_distance": 4141.454,
+        "relative_velocity": 6.208554,
+        "orientation": {
+            "roll": 92.15,
+            "pitch": -2.52,
+            "yaw": 142.47
+        },
+        "estimated_size_m": 0.14,
+        "estimated_rcs_m2": 0.012,
+        "object_type": "DEB",
+        "estimated_mass_kg": 2.5862,
+        "motion_rate": 0.060822,
+        "tumbling_rate": 8.19,
+        "collision_confidence": 43.94,
+        "timestamp": "2026-08-12T10:37:47.324746+00:00"
+    },
+    {
+        "tracking_id": "TRK_33789_000002",
+        "object_id": "33789",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": 915.563,
+            "y": 2888.312,
+            "z": 6467.27
+        },
+        "velocity": {
+            "vx": -6.227204,
+            "vy": -3.54633,
+            "vz": 2.381877
+        },
+        "speed": 7.55168,
+        "altitude": 763.725,
+        "inclination": 74.0622,
+        "orbit_class": "LEO",
+        "relative_distance": 4237.534,
+        "relative_velocity": 6.154116,
+        "orientation": {
+            "roll": -46.19,
+            "pitch": 18.39,
+            "yaw": -150.34
+        },
+        "estimated_size_m": 0.31,
+        "estimated_rcs_m2": 0.06,
+        "object_type": "DEB",
+        "estimated_mass_kg": 28.0774,
+        "motion_rate": 0.060584,
+        "tumbling_rate": 4.82,
+        "collision_confidence": 44.08,
+        "timestamp": "2026-08-12T10:37:47.320195+00:00"
+    },
+    {
+        "tracking_id": "TRK_36453_000064",
+        "object_id": "36453",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -3955.309,
+            "y": -2359.306,
+            "z": 5426.872
+        },
+        "velocity": {
+            "vx": -2.782645,
+            "vy": -5.355312,
+            "vz": -4.395599
+        },
+        "speed": 7.466176,
+        "altitude": 739.569,
+        "inclination": 73.9233,
+        "orbit_class": "LEO",
+        "relative_distance": 4279.487,
+        "relative_velocity": 6.049128,
+        "orientation": {
+            "roll": -47.94,
+            "pitch": -36.07,
+            "yaw": -117.46
+        },
+        "estimated_size_m": 0.4,
+        "estimated_rcs_m2": 0.101,
+        "object_type": "DEB",
+        "estimated_mass_kg": 60.3186,
+        "motion_rate": 0.060101,
+        "tumbling_rate": 3.98,
+        "collision_confidence": 44.33,
+        "timestamp": "2026-08-12T10:37:47.333017+00:00"
+    },
+    {
+        "tracking_id": "TRK_40792_000082",
+        "object_id": "40792",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": 1098.491,
+            "y": 2041.595,
+            "z": 6645.579
+        },
+        "velocity": {
+            "vx": -3.75642,
+            "vy": 6.378719,
+            "vz": -1.323868
+        },
+        "speed": 7.520065,
+        "altitude": 660.223,
+        "inclination": 74.0447,
+        "orbit_class": "LEO",
+        "relative_distance": 4294.812,
+        "relative_velocity": 8.063496,
+        "orientation": {
+            "roll": 72.76,
+            "pitch": -10.14,
+            "yaw": 120.49
+        },
+        "estimated_size_m": 0.49,
+        "estimated_rcs_m2": 0.151,
+        "object_type": "DEB",
+        "estimated_mass_kg": 110.8816,
+        "motion_rate": 0.061217,
+        "tumbling_rate": 6.02,
+        "collision_confidence": 41.35,
+        "timestamp": "2026-08-12T10:37:47.336830+00:00"
+    },
+    {
+        "tracking_id": "TRK_35786_000054",
+        "object_id": "35786",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": 1134.337,
+            "y": 2150.866,
+            "z": 6608.723
+        },
+        "velocity": {
+            "vx": -3.39206,
+            "vy": 6.537143,
+            "vz": -1.514642
+        },
+        "speed": 7.518939,
+        "altitude": 663.75,
+        "inclination": 74.0145,
+        "orbit_class": "LEO",
+        "relative_distance": 4334.781,
+        "relative_velocity": 8.304178,
+        "orientation": {
+            "roll": 65.86,
+            "pitch": -11.62,
+            "yaw": 117.42
+        },
+        "estimated_size_m": 0.32,
+        "estimated_rcs_m2": 0.064,
+        "object_type": "DEB",
+        "estimated_mass_kg": 30.8831,
+        "motion_rate": 0.061177,
+        "tumbling_rate": 4.55,
+        "collision_confidence": 40.48,
+        "timestamp": "2026-08-12T10:37:47.331152+00:00"
+    },
+    {
+        "tracking_id": "TRK_38483_000080",
+        "object_id": "38483",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -1170.042,
+            "y": 5352.329,
+            "z": 4742.927
+        },
+        "velocity": {
+            "vx": -3.572187,
+            "vy": 3.846526,
+            "vz": -5.18202
+        },
+        "speed": 7.376287,
+        "altitude": 868.364,
+        "inclination": 74.2611,
+        "orbit_class": "LEO",
+        "relative_distance": 4344.104,
+        "relative_velocity": 6.032613,
+        "orientation": {
+            "roll": 75.31,
+            "pitch": -44.63,
+            "yaw": 132.88
+        },
+        "estimated_size_m": 0.15,
+        "estimated_rcs_m2": 0.014,
+        "object_type": "DEB",
+        "estimated_mass_kg": 3.1809,
+        "motion_rate": 0.058322,
+        "tumbling_rate": 7.62,
+        "collision_confidence": 43.52,
+        "timestamp": "2026-08-12T10:37:47.336150+00:00"
+    },
+    {
+        "tracking_id": "TRK_35476_000050",
+        "object_id": "35476",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -1934.145,
+            "y": 5382.954,
+            "z": 4037.171
+        },
+        "velocity": {
+            "vx": -3.800685,
+            "vy": 2.980918,
+            "vz": -5.797663
+        },
+        "speed": 7.546123,
+        "altitude": 622.996,
+        "inclination": 73.9773,
+        "orbit_class": "LEO",
+        "relative_distance": 4378.722,
+        "relative_velocity": 5.514949,
+        "orientation": {
+            "roll": 76.22,
+            "pitch": -50.2,
+            "yaw": 141.89
+        },
+        "estimated_size_m": 0.16,
+        "estimated_rcs_m2": 0.016,
+        "object_type": "DEB",
+        "estimated_mass_kg": 3.8604,
+        "motion_rate": 0.061756,
+        "tumbling_rate": 7.12,
+        "collision_confidence": 44.37,
+        "timestamp": "2026-08-12T10:37:47.330163+00:00"
+    },
+    {
+        "tracking_id": "TRK_47068_000086",
+        "object_id": "47068",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -1371.015,
+            "y": -2208.494,
+            "z": 6575.584
+        },
+        "velocity": {
+            "vx": 2.270805,
+            "vy": -6.916628,
+            "vz": -1.854257
+        },
+        "speed": 7.512295,
+        "altitude": 692.608,
+        "inclination": 74.0242,
+        "orbit_class": "LEO",
+        "relative_distance": 4386.039,
+        "relative_velocity": 10.867714,
+        "orientation": {
+            "roll": -18.39,
+            "pitch": -14.29,
+            "yaw": -71.82
+        },
+        "estimated_size_m": 0.46,
+        "estimated_rcs_m2": 0.133,
+        "object_type": "DEB",
+        "estimated_mass_kg": 91.737,
+        "motion_rate": 0.060874,
+        "tumbling_rate": 5.0,
+        "collision_confidence": 37.71,
+        "timestamp": "2026-08-12T10:37:47.337376+00:00"
+    },
+    {
+        "tracking_id": "TRK_34028_000013",
+        "object_id": "34028",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": 1181.973,
+            "y": 1644.732,
+            "z": 6860.164
+        },
+        "velocity": {
+            "vx": -6.852564,
+            "vy": 3.385856,
+            "vz": 0.476243
+        },
+        "speed": 7.658228,
+        "altitude": 774.769,
+        "inclination": 73.8837,
+        "orbit_class": "LEO",
+        "relative_distance": 4398.957,
+        "relative_velocity": 5.625539,
+        "orientation": {
+            "roll": 78.53,
+            "pitch": 3.57,
+            "yaw": 153.71
+        },
+        "estimated_size_m": 0.23,
+        "estimated_rcs_m2": 0.033,
+        "object_type": "DEB",
+        "estimated_mass_kg": 11.4671,
+        "motion_rate": 0.061343,
+        "tumbling_rate": 2.42,
+        "collision_confidence": 44.25,
+        "timestamp": "2026-08-12T10:37:47.322785+00:00"
+    },
+    {
+        "tracking_id": "TRK_35887_000057",
+        "object_id": "35887",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": 891.084,
+            "y": 3602.156,
+            "z": 6043.224
+        },
+        "velocity": {
+            "vx": -5.13064,
+            "vy": -4.373007,
+            "vz": 3.287031
+        },
+        "speed": 7.500082,
+        "altitude": 713.415,
+        "inclination": 73.9795,
+        "orbit_class": "LEO",
+        "relative_distance": 4450.04,
+        "relative_velocity": 7.482316,
+        "orientation": {
+            "roll": -36.53,
+            "pitch": 25.99,
+            "yaw": -139.56
+        },
+        "estimated_size_m": 0.28,
+        "estimated_rcs_m2": 0.049,
+        "object_type": "DEB",
+        "estimated_mass_kg": 20.6893,
+        "motion_rate": 0.060596,
+        "tumbling_rate": 5.65,
+        "collision_confidence": 41.11,
+        "timestamp": "2026-08-12T10:37:47.331554+00:00"
+    },
+    {
+        "tracking_id": "TRK_37089_000066",
+        "object_id": "37089",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -4325.956,
+            "y": -2395.45,
+            "z": 4973.833
+        },
+        "velocity": {
+            "vx": -2.957938,
+            "vy": -4.993265,
+            "vz": -4.864511
+        },
+        "speed": 7.572685,
+        "altitude": 635.499,
+        "inclination": 74.0344,
+        "orbit_class": "LEO",
+        "relative_distance": 4498.66,
+        "relative_velocity": 5.791641,
+        "orientation": {
+            "roll": -49.16,
+            "pitch": -39.97,
+            "yaw": -120.64
+        },
+        "estimated_size_m": 0.46,
+        "estimated_rcs_m2": 0.133,
+        "object_type": "DEB",
+        "estimated_mass_kg": 91.737,
+        "motion_rate": 0.061863,
+        "tumbling_rate": 4.32,
+        "collision_confidence": 44.14,
+        "timestamp": "2026-08-12T10:37:47.333556+00:00"
+    },
+    {
+        "tracking_id": "TRK_38220_000078",
+        "object_id": "38220",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": 1334.578,
+            "y": 1739.695,
+            "z": 6550.134
+        },
+        "velocity": {
+            "vx": -3.160347,
+            "vy": 6.807358,
+            "vz": -1.159448
+        },
+        "speed": 7.594224,
+        "altitude": 529.243,
+        "inclination": 74.0076,
+        "orbit_class": "LEO",
+        "relative_distance": 4513.031,
+        "relative_velocity": 8.713745,
+        "orientation": {
+            "roll": 63.02,
+            "pitch": -8.78,
+            "yaw": 114.9
+        },
+        "estimated_size_m": 0.24,
+        "estimated_rcs_m2": 0.036,
+        "object_type": "DEB",
+        "estimated_mass_kg": 13.0288,
+        "motion_rate": 0.062993,
+        "tumbling_rate": 3.86,
+        "collision_confidence": 39.11,
+        "timestamp": "2026-08-12T10:37:47.335877+00:00"
+    },
+    {
+        "tracking_id": "TRK_34270_000017",
+        "object_id": "34270",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -1302.798,
+            "y": -2395.841,
+            "z": 6525.211
+        },
+        "velocity": {
+            "vx": 7.015582,
+            "vy": 1.662938,
+            "vz": 2.031156
+        },
+        "speed": 7.490617,
+        "altitude": 694.042,
+        "inclination": 74.008,
+        "orbit_class": "LEO",
+        "relative_distance": 4580.256,
+        "relative_velocity": 14.877123,
+        "orientation": {
+            "roll": 82.03,
+            "pitch": 15.73,
+            "yaw": 13.33
+        },
+        "estimated_size_m": 0.17,
+        "estimated_rcs_m2": 0.018,
+        "object_type": "DEB",
+        "estimated_mass_kg": 4.6304,
+        "motion_rate": 0.060686,
+        "tumbling_rate": 20.6,
+        "collision_confidence": 33.28,
+        "timestamp": "2026-08-12T10:37:47.323716+00:00"
+    },
+    {
+        "tracking_id": "TRK_34964_000040",
+        "object_id": "34964",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": 492.784,
+            "y": 4460.216,
+            "z": 5547.954
+        },
+        "velocity": {
+            "vx": -2.735395,
+            "vy": 5.649328,
+            "vz": -4.175069
+        },
+        "speed": 7.538467,
+        "altitude": 757.419,
+        "inclination": 73.9718,
+        "orbit_class": "LEO",
+        "relative_distance": 4582.08,
+        "relative_velocity": 7.721995,
+        "orientation": {
+            "roll": 59.89,
+            "pitch": -33.63,
+            "yaw": 115.84
+        },
+        "estimated_size_m": 0.33,
+        "estimated_rcs_m2": 0.068,
+        "object_type": "DEB",
+        "estimated_mass_kg": 33.8698,
+        "motion_rate": 0.060531,
+        "tumbling_rate": 4.62,
+        "collision_confidence": 40.42,
+        "timestamp": "2026-08-12T10:37:47.328100+00:00"
+    },
+    {
+        "tracking_id": "TRK_37959_000072",
+        "object_id": "37959",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": 1410.687,
+            "y": 1352.462,
+            "z": 6766.375
+        },
+        "velocity": {
+            "vx": -5.188918,
+            "vy": 5.461148,
+            "vz": 0.027003
+        },
+        "speed": 7.533242,
+        "altitude": 664.804,
+        "inclination": 74.0096,
+        "orbit_class": "LEO",
+        "relative_distance": 4630.018,
+        "relative_velocity": 7.274919,
+        "orientation": {
+            "roll": 78.45,
+            "pitch": 0.21,
+            "yaw": 133.54
+        },
+        "estimated_size_m": 0.48,
+        "estimated_rcs_m2": 0.145,
+        "object_type": "DEB",
+        "estimated_mass_kg": 104.2305,
+        "motion_rate": 0.061284,
+        "tumbling_rate": 5.23,
+        "collision_confidence": 41.27,
+        "timestamp": "2026-08-12T10:37:47.334848+00:00"
+    },
+    {
+        "tracking_id": "TRK_34619_000030",
+        "object_id": "34619",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -1640.27,
+            "y": -2625.768,
+            "z": 6261.423
+        },
+        "velocity": {
+            "vx": 1.117677,
+            "vy": -7.014903,
+            "vz": -2.664201
+        },
+        "speed": 7.586569,
+        "altitude": 606.887,
+        "inclination": 74.0444,
+        "orbit_class": "LEO",
+        "relative_distance": 4658.557,
+        "relative_velocity": 9.925208,
+        "orientation": {
+            "roll": -18.85,
+            "pitch": -20.56,
+            "yaw": -80.95
+        },
+        "estimated_size_m": 0.35,
+        "estimated_rcs_m2": 0.077,
+        "object_type": "DEB",
+        "estimated_mass_kg": 40.4087,
+        "motion_rate": 0.06223,
+        "tumbling_rate": 6.49,
+        "collision_confidence": 37.45,
+        "timestamp": "2026-08-12T10:37:47.325807+00:00"
+    },
+    {
+        "tracking_id": "TRK_37275_000067",
+        "object_id": "37275",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -375.272,
+            "y": -1922.898,
+            "z": 6809.549
+        },
+        "velocity": {
+            "vx": 7.454186,
+            "vy": -0.783781,
+            "vz": 0.252406
+        },
+        "speed": 7.499527,
+        "altitude": 707.646,
+        "inclination": 74.0155,
+        "orbit_class": "LEO",
+        "relative_distance": 4673.237,
+        "relative_velocity": 14.548746,
+        "orientation": {
+            "roll": 36.14,
+            "pitch": 1.93,
+            "yaw": -6.0
+        },
+        "estimated_size_m": 0.39,
+        "estimated_rcs_m2": 0.096,
+        "object_type": "DEB",
+        "estimated_mass_kg": 55.9068,
+        "motion_rate": 0.060641,
+        "tumbling_rate": 10.96,
+        "collision_confidence": 33.68,
+        "timestamp": "2026-08-12T10:37:47.333784+00:00"
+    },
+    {
+        "tracking_id": "TRK_35073_000047",
+        "object_id": "35073",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -329.462,
+            "y": -1934.094,
+            "z": 6586.059
+        },
+        "velocity": {
+            "vx": 7.566594,
+            "vy": 0.573209,
+            "vz": 0.541047
+        },
+        "speed": 7.607539,
+        "altitude": 493.94,
+        "inclination": 73.9827,
+        "orbit_class": "LEO",
+        "relative_distance": 4685.541,
+        "relative_velocity": 14.801407,
+        "orientation": {
+            "roll": 70.06,
+            "pitch": 4.08,
+            "yaw": 4.33
+        },
+        "estimated_size_m": 0.12,
+        "estimated_rcs_m2": 0.009,
+        "object_type": "DEB",
+        "estimated_mass_kg": 1.6286,
+        "motion_rate": 0.063428,
+        "tumbling_rate": 19.17,
+        "collision_confidence": 32.84,
+        "timestamp": "2026-08-12T10:37:47.329550+00:00"
+    },
+    {
+        "tracking_id": "TRK_34944_000039",
+        "object_id": "34944",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -527.416,
+            "y": -2012.68,
+            "z": 7014.269
+        },
+        "velocity": {
+            "vx": 6.59191,
+            "vy": -3.185054,
+            "vz": -0.289623
+        },
+        "speed": 7.326782,
+        "altitude": 938.216,
+        "inclination": 73.7484,
+        "orbit_class": "LEO",
+        "relative_distance": 4688.287,
+        "relative_velocity": 13.776733,
+        "orientation": {
+            "roll": 9.04,
+            "pitch": -2.27,
+            "yaw": -25.79
+        },
+        "estimated_size_m": 0.44,
+        "estimated_rcs_m2": 0.122,
+        "object_type": "DEB",
+        "estimated_mass_kg": 80.284,
+        "motion_rate": 0.057377,
+        "tumbling_rate": 6.06,
+        "collision_confidence": 34.24,
+        "timestamp": "2026-08-12T10:37:47.327497+00:00"
+    },
+    {
+        "tracking_id": "TRK_34323_000021",
+        "object_id": "34323",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": 1512.902,
+            "y": 1985.357,
+            "z": 6532.859
+        },
+        "velocity": {
+            "vx": -7.347513,
+            "vy": 0.00835,
+            "vz": 1.738734
+        },
+        "speed": 7.550444,
+        "altitude": 615.343,
+        "inclination": 73.9496,
+        "orbit_class": "LEO",
+        "relative_distance": 4694.064,
+        "relative_velocity": 5.024235,
+        "orientation": {
+            "roll": 95.85,
+            "pitch": 13.31,
+            "yaw": 179.93
+        },
+        "estimated_size_m": 0.44,
+        "estimated_rcs_m2": 0.122,
+        "object_type": "DEB",
+        "estimated_mass_kg": 80.284,
+        "motion_rate": 0.061859,
+        "tumbling_rate": 3.3,
+        "collision_confidence": 44.87,
+        "timestamp": "2026-08-12T10:37:47.324154+00:00"
+    },
+    {
+        "tracking_id": "TRK_34001_000011",
+        "object_id": "34001",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -651.129,
+            "y": -2184.238,
+            "z": 6777.445
+        },
+        "velocity": {
+            "vx": 7.197787,
+            "vy": 1.556702,
+            "vz": 1.180477
+        },
+        "speed": 7.458216,
+        "altitude": 772.291,
+        "inclination": 74.0363,
+        "orbit_class": "LEO",
+        "relative_distance": 4726.483,
+        "relative_velocity": 14.755247,
+        "orientation": {
+            "roll": 48.16,
+            "pitch": 9.11,
+            "yaw": 12.2
+        },
+        "estimated_size_m": 0.27,
+        "estimated_rcs_m2": 0.046,
+        "object_type": "DEB",
+        "estimated_mass_kg": 18.5508,
+        "motion_rate": 0.059762,
+        "tumbling_rate": 11.54,
+        "collision_confidence": 33.09,
+        "timestamp": "2026-08-12T10:37:47.322287+00:00"
+    },
+    {
+        "tracking_id": "TRK_34685_000033",
+        "object_id": "34685",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -4422.619,
+            "y": -2627.063,
+            "z": 4838.802
+        },
+        "velocity": {
+            "vx": -2.673595,
+            "vy": -4.869716,
+            "vz": -5.064367
+        },
+        "speed": 7.517317,
+        "altitude": 684.088,
+        "inclination": 74.0284,
+        "orbit_class": "LEO",
+        "relative_distance": 4775.506,
+        "relative_velocity": 5.955922,
+        "orientation": {
+            "roll": -53.43,
+            "pitch": -42.35,
+            "yaw": -118.77
+        },
+        "estimated_size_m": 0.47,
+        "estimated_rcs_m2": 0.139,
+        "object_type": "DEB",
+        "estimated_mass_kg": 97.8509,
+        "motion_rate": 0.060988,
+        "tumbling_rate": 3.03,
+        "collision_confidence": 42.9,
+        "timestamp": "2026-08-12T10:37:47.326228+00:00"
+    },
+    {
+        "tracking_id": "TRK_34910_000038",
+        "object_id": "34910",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -2422.218,
+            "y": -2989.401,
+            "z": 6091.074
+        },
+        "velocity": {
+            "vx": -0.35188,
+            "vy": -6.639283,
+            "vz": -3.635395
+        },
+        "speed": 7.577598,
+        "altitude": 826.365,
+        "inclination": 73.8732,
+        "orbit_class": "LEO",
+        "relative_distance": 4823.865,
+        "relative_velocity": 8.559297,
+        "orientation": {
+            "roll": -11.27,
+            "pitch": -28.67,
+            "yaw": -93.03
+        },
+        "estimated_size_m": 0.18,
+        "estimated_rcs_m2": 0.02,
+        "object_type": "DEB",
+        "estimated_mass_kg": 5.4965,
+        "motion_rate": 0.060263,
+        "tumbling_rate": 10.79,
+        "collision_confidence": 38.08,
+        "timestamp": "2026-08-12T10:37:47.327364+00:00"
+    },
+    {
+        "tracking_id": "TRK_34302_000019",
+        "object_id": "34302",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": 1428.268,
+            "y": 3367.839,
+            "z": 6152.722
+        },
+        "velocity": {
+            "vx": -5.767183,
+            "vy": -3.476934,
+            "vz": 3.178214
+        },
+        "speed": 7.44651,
+        "altitude": 779.955,
+        "inclination": 74.1764,
+        "orbit_class": "LEO",
+        "relative_distance": 4860.705,
+        "relative_velocity": 6.899595,
+        "orientation": {
+            "roll": -45.23,
+            "pitch": 25.27,
+            "yaw": -148.91
+        },
+        "estimated_size_m": 0.33,
+        "estimated_rcs_m2": 0.068,
+        "object_type": "DEB",
+        "estimated_mass_kg": 33.8698,
+        "motion_rate": 0.059604,
+        "tumbling_rate": 4.42,
+        "collision_confidence": 40.69,
+        "timestamp": "2026-08-12T10:37:47.323925+00:00"
+    },
+    {
+        "tracking_id": "TRK_37960_000073",
+        "object_id": "37960",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -720.356,
+            "y": -2437.311,
+            "z": 6596.738
+        },
+        "velocity": {
+            "vx": 4.204446,
+            "vy": -6.086094,
+            "vz": -1.713239
+        },
+        "speed": 7.592963,
+        "altitude": 691.258,
+        "inclination": 74.0606,
+        "orbit_class": "LEO",
+        "relative_distance": 4887.391,
+        "relative_velocity": 12.148564,
+        "orientation": {
+            "roll": -5.0,
+            "pitch": -13.04,
+            "yaw": -55.36
+        },
+        "estimated_size_m": 0.38,
+        "estimated_rcs_m2": 0.091,
+        "object_type": "DEB",
+        "estimated_mass_kg": 51.7156,
+        "motion_rate": 0.061539,
+        "tumbling_rate": 6.62,
+        "collision_confidence": 34.63,
+        "timestamp": "2026-08-12T10:37:47.334898+00:00"
+    },
+    {
+        "tracking_id": "TRK_38199_000077",
+        "object_id": "38199",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": 1563.881,
+            "y": 2825.787,
+            "z": 6938.855
+        },
+        "velocity": {
+            "vx": -6.393283,
+            "vy": -1.997897,
+            "vz": 2.309127
+        },
+        "speed": 7.085035,
+        "altitude": 1275.523,
+        "inclination": 73.9559,
+        "orbit_class": "LEO",
+        "relative_distance": 4900.243,
+        "relative_velocity": 5.582635,
+        "orientation": {
+            "roll": -59.83,
+            "pitch": 19.02,
+            "yaw": -162.65
+        },
+        "estimated_size_m": 0.31,
+        "estimated_rcs_m2": 0.06,
+        "object_type": "DEB",
+        "estimated_mass_kg": 28.0774,
+        "motion_rate": 0.053039,
+        "tumbling_rate": 2.46,
+        "collision_confidence": 42.77,
+        "timestamp": "2026-08-12T10:37:47.335659+00:00"
+    },
+    {
+        "tracking_id": "TRK_34481_000026",
+        "object_id": "34481",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": -5327.259,
+            "y": 4113.703,
+            "z": 2396.19
+        },
+        "velocity": {
+            "vx": -3.286111,
+            "vy": -0.242764,
+            "vz": -6.714122
+        },
+        "speed": 7.479097,
+        "altitude": 766.369,
+        "inclination": 73.9798,
+        "orbit_class": "LEO",
+        "relative_distance": 4956.158,
+        "relative_velocity": 4.966498,
+        "orientation": {
+            "roll": -85.75,
+            "pitch": -63.86,
+            "yaw": -175.77
+        },
+        "estimated_size_m": 0.22,
+        "estimated_rcs_m2": 0.03,
+        "object_type": "DEB",
+        "estimated_mass_kg": 10.0355,
+        "motion_rate": 0.059979,
+        "tumbling_rate": 2.66,
+        "collision_confidence": 43.56,
+        "timestamp": "2026-08-12T10:37:47.325071+00:00"
+    },
+    {
+        "tracking_id": "TRK_34634_000031",
+        "object_id": "34634",
+        "name": "COSMOS 2251 DEB",
+        "position": {
+            "x": 1720.544,
+            "y": 959.435,
+            "z": 6809.074
+        },
+        "velocity": {
+            "vx": -3.181389,
+            "vy": 6.780094,
+            "vz": -0.118456
+        },
+        "speed": 7.490324,
+        "altitude": 710.183,
+        "inclination": 74.0526,
+        "orbit_class": "LEO",
+        "relative_distance": 4990.622,
+        "relative_velocity": 8.978043,
+        "orientation": {
+            "roll": 70.87,
+            "pitch": -0.91,
+            "yaw": 115.14
+        },
+        "estimated_size_m": 0.33,
+        "estimated_rcs_m2": 0.068,
+        "object_type": "DEB",
+        "estimated_mass_kg": 33.8698,
+        "motion_rate": 0.060545,
+        "tumbling_rate": 5.51,
+        "collision_confidence": 37.35,
+        "timestamp": "2026-08-12T10:37:47.325919+00:00"
+    }
+]

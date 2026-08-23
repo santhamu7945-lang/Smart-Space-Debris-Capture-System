@@ -1,0 +1,17 @@
+{
+  "mission_id": "MIS-2026-001",
+  "tracking_id": "TRK_34611_000029",
+  "target_name": "COSMOS 2251 DEB",
+  "orbit_class": "LEO",
+  "altitude_km": 654.996,
+  "inclination_deg": 74.0522,
+  "risk_level": "MEDIUM",
+  "risk_score": 26.26,
+  "capture_method": "robotic_net",
+  "capture_score": 50.0,
+  "capture_feasible": true,
+  "difficulty_level": "MEDIUM",
+  "decision": "HOLD",
+  "reason": "Capture score below operational threshold",
+  "timestamp": "2026-08-12T10:37:47.325690+00:00"
+}
