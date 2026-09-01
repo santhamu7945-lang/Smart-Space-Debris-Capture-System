@@ -1,392 +1,2620 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
-<title>Autonomous Space Debris Monitoring &amp; Capture System — Mission Dashboard</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>
+Autonomous Space Debris Monitoring & Capture System — Mission Dashboard
+</title>
+
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #030407; color: #d8e6f5; font-family: 'Segoe UI', Arial, sans-serif; min-height: 100vh; }
-  a { color: #7fc4ff; text-decoration: none; }
 
-  header { display: flex; align-items: center; justify-content: space-between; padding: 16px 30px;
-    border-bottom: 1px solid rgba(120,180,255,0.1); background: rgba(255,255,255,0.015); }
-  #brand { display: flex; align-items: center; gap: 10px; }
-  #brand .dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; animation: pulse 1.6s infinite; }
-  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.35; } }
-  header h1 { font-size: 13px; font-weight: 500; letter-spacing: 1px; color: #a8bdd2; }
-  header h1 b { color: #eaf3ff; font-weight: 600; }
-  #nav-links { display: flex; gap: 20px; align-items: center; font-size: 12px; }
-  #clock { color: #6b7f97; font-size: 11.5px; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-  #banner { margin: 20px 30px 0; padding: 16px 22px; border-radius: 10px; font-size: 13.5px;
-    letter-spacing: 0.2px; display: flex; justify-content: space-between; align-items: center; }
-  .banner-proceed { background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.35); color: #4ade80; }
-  .banner-abort { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.35); color: #f87171; }
-  .banner-hold { background: rgba(255,170,51,0.08); border: 1px solid rgba(255,170,51,0.35); color: #ffaa33; }
+body {
+    background: #030407;
+    color: #d8e6f5;
+    font-family: "Segoe UI", Arial, sans-serif;
+    min-height: 100vh;
+}
 
-  .section-title { margin: 30px 30px 12px; font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase;
-    color: #4a5a70; display: flex; align-items: center; gap: 12px; }
-  .section-title::after { content: ""; flex: 1; height: 1px; background: rgba(120,180,255,0.1); }
+a {
+    color: #7fc4ff;
+    text-decoration: none;
+}
 
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 16px; padding: 0 30px; }
-  .card { background: rgba(255,255,255,0.02); border: 1px solid rgba(120,180,255,0.1); border-radius: 12px; padding: 20px;
-    transition: border-color 0.3s ease; }
-  .card:hover { border-color: rgba(120,180,255,0.22); }
-  .card h2 { font-size: 10.5px; letter-spacing: 1.6px; color: #7fc4ff; text-transform: uppercase;
-    margin-bottom: 16px; border-bottom: 1px solid rgba(120,180,255,0.1); padding-bottom: 10px; }
-  .row { display: flex; justify-content: space-between; font-size: 12.5px; margin: 8px 0; gap: 8px; }
-  .label { color: #6b7f97; } .value { color: #eaf3ff; font-weight: 600; text-align: right; }
 
-  .gauge-wrap { display: flex; justify-content: space-around; margin-top: 4px; margin-bottom: 14px; }
-  .gauge { text-align: center; }
-  .gauge-ring { width: 66px; height: 66px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    font-size: 12px; font-weight: 600; color: #eaf3ff; margin: 0 auto 6px; }
-  .gauge-label { font-size: 10px; color: #6b7f97; letter-spacing: 0.6px; }
+/* ================= HEADER ================= */
 
-  .module-row { display: flex; align-items: center; justify-content: space-between; padding: 9px 0;
-    border-bottom: 1px solid rgba(120,180,255,0.06); font-size: 12.5px; }
-  .module-row:last-child { border-bottom: none; }
-  .module-status { display: flex; align-items: center; gap: 6px; }
-  .module-status .dot { width: 7px; height: 7px; border-radius: 50%; }
-  .status-online .dot { background: #4ade80; } .status-online { color: #4ade80; }
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-  #risk-chart { width: 100%; height: 90px; margin-top: 8px; }
+    padding: 16px 30px;
 
-  #log { grid-column: 1 / -1; background: #04060a; border: 1px solid rgba(120,180,255,0.1); border-radius: 12px;
-    padding: 16px; font-family: 'Courier New', monospace; font-size: 11.5px; color: #8fc9ff; max-height: 220px; overflow-y: auto; }
-  #log div { margin: 3px 0; } .log-time { color: #3a4557; margin-right: 8px; }
+    border-bottom: 1px solid rgba(120,180,255,0.1);
 
-  .decision-proceed { color: #4ade80; } .decision-abort { color: #f87171; } .decision-hold { color: #ffaa33; }
+    background: rgba(255,255,255,0.015);
+}
 
-  footer { text-align: center; padding: 32px 30px; color: #2e3a4a; font-size: 10.5px; letter-spacing: 0.6px; line-height: 1.8; }
+#brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-  #mission-timeline .step { position:relative; padding:9px 4px; text-align:center; border:1px solid rgba(120,180,255,.08);
-    border-radius:7px; background:rgba(255,255,255,.018); color:#5f7287; font-size:8.5px; letter-spacing:.6px; }
-  #mission-timeline .step.active { border-color:rgba(74,222,128,.55); color:#4ade80; background:rgba(74,222,128,.06); box-shadow:0 0 18px rgba(74,222,128,.06); }
-  #mission-timeline .step.done { border-color:rgba(127,196,255,.25); color:#9ab2c9; }
-  #target-registry table { width:100%; border-collapse:collapse; font-size:11px; }
-  #target-registry th { text-align:left; color:#53677d; font-size:8.5px; letter-spacing:1px; font-weight:500; padding:7px 8px; border-bottom:1px solid rgba(120,180,255,.12); }
-  #target-registry td { padding:8px; color:#b7c7d8; border-bottom:1px solid rgba(120,180,255,.05); }
-  #target-registry tr.selected { background:rgba(74,222,128,.055); }
-  #target-registry tr.selected td { color:#e8f5ff; }
-  .pill { display:inline-block; padding:3px 7px; border-radius:999px; font-size:8px; letter-spacing:.6px; border:1px solid rgba(120,180,255,.15); }
-  .pill-green { color:#4ade80; border-color:rgba(74,222,128,.35); background:rgba(74,222,128,.05); }
-  .pill-blue { color:#7fc4ff; border-color:rgba(127,196,255,.35); background:rgba(127,196,255,.05); }
-  .pill-amber { color:#ffaa33; border-color:rgba(255,170,51,.35); background:rgba(255,170,51,.05); }
-  .pill-red { color:#f87171; border-color:rgba(248,113,113,.35); background:rgba(248,113,113,.05); }
+#brand .dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #4ade80;
+
+    animation: pulse 1.6s infinite;
+}
+
+@keyframes pulse {
+
+    0%,100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.35;
+    }
+
+}
+
+header h1 {
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    letter-spacing: 1px;
+
+    color: #a8bdd2;
+
+}
+
+header h1 b {
+
+    color: #eaf3ff;
+
+    font-weight: 600;
+
+}
+
+#nav-links {
+
+    display: flex;
+
+    gap: 20px;
+
+    align-items: center;
+
+    font-size: 12px;
+
+}
+
+#clock {
+
+    color: #6b7f97;
+
+    font-size: 11.5px;
+
+}
+
+
+/* ================= BANNER ================= */
+
+#banner {
+
+    margin: 20px 30px 0;
+
+    padding: 16px 22px;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+
+    letter-spacing: 0.2px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+}
+
+.banner-proceed {
+
+    background: rgba(74,222,128,0.08);
+
+    border: 1px solid rgba(74,222,128,0.35);
+
+    color: #4ade80;
+
+}
+
+.banner-abort {
+
+    background: rgba(248,113,113,0.08);
+
+    border: 1px solid rgba(248,113,113,0.35);
+
+    color: #f87171;
+
+}
+
+.banner-hold {
+
+    background: rgba(255,170,51,0.08);
+
+    border: 1px solid rgba(255,170,51,0.35);
+
+    color: #ffaa33;
+
+}
+
+.banner-complete {
+
+    background: rgba(127,196,255,0.08);
+
+    border: 1px solid rgba(127,196,255,0.35);
+
+    color: #7fc4ff;
+
+}
+
+
+/* ================= SECTION TITLE ================= */
+
+.section-title {
+
+    margin: 30px 30px 12px;
+
+    font-size: 10.5px;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+
+    color: #4a5a70;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+.section-title::after {
+
+    content: "";
+
+    flex: 1;
+
+    height: 1px;
+
+    background: rgba(120,180,255,0.1);
+
+}
+
+
+/* ================= GRID ================= */
+
+.grid {
+
+    display: grid;
+
+    grid-template-columns:
+    repeat(auto-fit, minmax(270px, 1fr));
+
+    gap: 16px;
+
+    padding: 0 30px;
+
+}
+
+
+/* ================= CARD ================= */
+
+.card {
+
+    background: rgba(255,255,255,0.02);
+
+    border: 1px solid rgba(120,180,255,0.1);
+
+    border-radius: 12px;
+
+    padding: 20px;
+
+    transition: border-color 0.3s ease;
+
+}
+
+.card:hover {
+
+    border-color: rgba(120,180,255,0.22);
+
+}
+
+.card h2 {
+
+    font-size: 10.5px;
+
+    letter-spacing: 1.6px;
+
+    color: #7fc4ff;
+
+    text-transform: uppercase;
+
+    margin-bottom: 16px;
+
+    border-bottom:
+    1px solid rgba(120,180,255,0.1);
+
+    padding-bottom: 10px;
+
+}
+
+
+/* ================= ROW ================= */
+
+.row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    font-size: 12.5px;
+
+    margin: 8px 0;
+
+    gap: 8px;
+
+}
+
+.label {
+
+    color: #6b7f97;
+
+}
+
+.value {
+
+    color: #eaf3ff;
+
+    font-weight: 600;
+
+    text-align: right;
+
+}
+
+
+/* ================= GAUGES ================= */
+
+.gauge-wrap {
+
+    display: flex;
+
+    justify-content: space-around;
+
+    margin-top: 4px;
+
+    margin-bottom: 14px;
+
+}
+
+.gauge {
+
+    text-align: center;
+
+}
+
+.gauge-ring {
+
+    width: 66px;
+
+    height: 66px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    color: #eaf3ff;
+
+    margin: 0 auto 6px;
+
+}
+
+.gauge-label {
+
+    font-size: 10px;
+
+    color: #6b7f97;
+
+    letter-spacing: 0.6px;
+
+}
+
+
+/* ================= MODULE STATUS ================= */
+
+.module-row {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 9px 0;
+
+    border-bottom:
+    1px solid rgba(120,180,255,0.06);
+
+    font-size: 12.5px;
+
+}
+
+.module-row:last-child {
+
+    border-bottom: none;
+
+}
+
+.module-status {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+}
+
+.module-status .dot {
+
+    width: 7px;
+
+    height: 7px;
+
+    border-radius: 50%;
+
+}
+
+.status-online .dot {
+
+    background: #4ade80;
+
+}
+
+.status-online {
+
+    color: #4ade80;
+
+}
+
+
+/* ================= TIMELINE ================= */
+
+#mission-timeline .step {
+
+    padding: 9px 4px;
+
+    text-align: center;
+
+    border:
+    1px solid rgba(120,180,255,.08);
+
+    border-radius: 7px;
+
+    background:
+    rgba(255,255,255,.018);
+
+    color: #5f7287;
+
+    font-size: 8.5px;
+
+    letter-spacing: .6px;
+
+}
+
+#mission-timeline .step.active {
+
+    border-color:
+    rgba(74,222,128,.55);
+
+    color: #4ade80;
+
+    background:
+    rgba(74,222,128,.06);
+
+}
+
+#mission-timeline .step.done {
+
+    border-color:
+    rgba(127,196,255,.25);
+
+    color: #9ab2c9;
+
+}
+
+
+/* ================= TABLE ================= */
+
+#target-registry table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    font-size: 11px;
+
+}
+
+#target-registry th {
+
+    text-align: left;
+
+    color: #53677d;
+
+    font-size: 8.5px;
+
+    letter-spacing: 1px;
+
+    font-weight: 500;
+
+    padding: 7px 8px;
+
+    border-bottom:
+    1px solid rgba(120,180,255,.12);
+
+}
+
+#target-registry td {
+
+    padding: 8px;
+
+    color: #b7c7d8;
+
+    border-bottom:
+    1px solid rgba(120,180,255,.05);
+
+}
+
+
+/* ================= PILLS ================= */
+
+.pill {
+
+    display: inline-block;
+
+    padding: 3px 7px;
+
+    border-radius: 999px;
+
+    font-size: 8px;
+
+    letter-spacing: .6px;
+
+}
+
+.pill-green {
+
+    color: #4ade80;
+
+    border:
+    1px solid rgba(74,222,128,.35);
+
+    background:
+    rgba(74,222,128,.05);
+
+}
+
+.pill-blue {
+
+    color: #7fc4ff;
+
+    border:
+    1px solid rgba(127,196,255,.35);
+
+    background:
+    rgba(127,196,255,.05);
+
+}
+
+.pill-amber {
+
+    color: #ffaa33;
+
+    border:
+    1px solid rgba(255,170,51,.35);
+
+    background:
+    rgba(255,170,51,.05);
+
+}
+
+.pill-red {
+
+    color: #f87171;
+
+    border:
+    1px solid rgba(248,113,113,.35);
+
+    background:
+    rgba(248,113,113,.05);
+
+}
+
+
+/* ================= CHART ================= */
+
+#risk-chart {
+
+    width: 100%;
+
+    height: 90px;
+
+    margin-top: 8px;
+
+}
+
+
+/* ================= LOG ================= */
+
+#log {
+
+    grid-column: 1 / -1;
+
+    background: #04060a;
+
+    border:
+    1px solid rgba(120,180,255,0.1);
+
+    border-radius: 12px;
+
+    padding: 16px;
+
+    font-family:
+    "Courier New", monospace;
+
+    font-size: 11.5px;
+
+    color: #8fc9ff;
+
+    max-height: 260px;
+
+    overflow-y: auto;
+
+}
+
+#log div {
+
+    margin: 5px 0;
+
+}
+
+.log-time {
+
+    color: #3a4557;
+
+    margin-right: 8px;
+
+}
+
+
+/* ================= FOOTER ================= */
+
+footer {
+
+    text-align: center;
+
+    padding: 32px 30px;
+
+    color: #2e3a4a;
+
+    font-size: 10.5px;
+
+    letter-spacing: 0.6px;
+
+    line-height: 1.8;
+
+}
 
 </style>
+
 </head>
+
+
 <body>
 
+
+<!-- ================= HEADER ================= -->
+
 <header>
-  <div id="brand">
-    <span class="dot"></span>
-    <h1>AUTONOMOUS SPACE DEBRIS MONITORING &amp; CAPTURE SYSTEM — <b>MISSION DASHBOARD</b></h1>
-  </div>
-  <div id="nav-links">
-    <span id="clock">--:--:-- UTC</span>
-    <a href="index.html">Home</a>
-    <a href="simulation.html">Live Simulation →</a>
-  </div>
+
+<div id="brand">
+
+<span class="dot"></span>
+
+<h1>
+AUTONOMOUS SPACE DEBRIS MONITORING & CAPTURE SYSTEM —
+<b>MISSION DASHBOARD</b>
+</h1>
+
+</div>
+
+
+<div id="nav-links">
+
+<span id="clock">--:--:-- UTC</span>
+
+<a href="index.html">Home</a>
+
+<a href="simulation.html">
+Live Simulation →
+</a>
+
+</div>
+
 </header>
 
-<div id="banner">Loading mission data...</div>
 
-<div id="scenario-controls" style="margin: 14px 30px 0; display: flex; gap: 8px; align-items: center;">
-  <span style="color:#4a5a70; font-size:10.5px; letter-spacing:1px; text-transform:uppercase;">Demo Scenarios:</span>
-  <button onclick="loadData()" style="background:rgba(255,255,255,0.04); border:1px solid rgba(120,180,255,0.22); color:#d8e6f5; font-size:11px; padding:6px 12px; border-radius:6px; cursor:pointer;">Live Data</button>
-  <button onclick="showScenario('proceed_small')" style="background:rgba(255,255,255,0.04); border:1px solid rgba(74,222,128,0.4); color:#4ade80; font-size:11px; padding:6px 12px; border-radius:6px; cursor:pointer;">Capture — Small (Dual Arm)</button>
-  <button onclick="showScenario('proceed_large')" style="background:rgba(255,255,255,0.04); border:1px solid rgba(74,222,128,0.4); color:#4ade80; font-size:11px; padding:6px 12px; border-radius:6px; cursor:pointer;">Capture — Large/Multiple (Net)</button>
-  <button onclick="showScenario('hold')" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,170,51,0.4); color:#ffaa33; font-size:11px; padding:6px 12px; border-radius:6px; cursor:pointer;">Hold</button>
-  <button onclick="showScenario('abort')" style="background:rgba(255,255,255,0.04); border:1px solid rgba(248,113,113,0.4); color:#f87171; font-size:11px; padding:6px 12px; border-radius:6px; cursor:pointer;">Abort</button>
+
+<!-- ================= BANNER ================= -->
+
+<div id="banner">
+
+Loading mission data...
+
 </div>
 
-<div class="section-title">Spacecraft &amp; Mission Status</div>
+
+
+<!-- ================= SPACECRAFT STATUS ================= -->
+
+<div class="section-title">
+
+Spacecraft & Mission Status
+
+</div>
+
+
 <div class="grid">
 
-  <div class="card">
-    <h2>Spacecraft Telemetry</h2>
-    <div class="gauge-wrap">
-      <div class="gauge"><div class="gauge-ring" id="gauge-fuel">--</div><div class="gauge-label">FUEL</div></div>
-      <div class="gauge"><div class="gauge-ring" id="gauge-power">--</div><div class="gauge-label">POWER</div></div>
-      <div class="gauge"><div class="gauge-ring" id="gauge-storage">0/3</div><div class="gauge-label">CANISTER</div></div>
-    </div>
-    <div class="row"><span class="label">Orbit Altitude</span><span class="value" id="tel-altitude">--</span></div>
-    <div class="row"><span class="label">Orbital Velocity</span><span class="value" id="tel-velocity">--</span></div>
-    <div class="row"><span class="label">Mission State</span><span class="value" id="tel-state">SEARCHING</span></div>
-    <div class="row"><span class="label">Data Timestamp (UTC)</span><span class="value" id="tel-timestamp">--</span></div>
-  </div>
 
-  <div class="card">
-    <h2>Active Target Assessment</h2>
-    <div id="target-info"><div class="row"><span class="label">Loading...</span></div></div>
-  </div>
+<!-- TELEMETRY -->
 
-  <div class="card">
-    <h2>Capture Mechanism</h2>
-    <div id="mechanism-info"><div class="row"><span class="label">Loading...</span></div></div>
-  </div>
+<div class="card">
 
-  <div class="card">
-    <h2>System Module Status</h2>
-    <div class="module-row"><span>Detection</span><span class="module-status status-online"><span class="dot"></span>ONLINE</span></div>
-    <div class="module-row"><span>Prediction / Mission Manager</span><span class="module-status status-online"><span class="dot"></span>ONLINE</span></div>
-    <div class="module-row"><span>Simulation &amp; Dashboard</span><span class="module-status status-online"><span class="dot"></span>ONLINE</span></div>
-    <div class="module-row"><span>Hardware (Robotic Capture)</span><span class="module-status status-online"><span class="dot"></span>ONLINE</span></div>
-  </div>
+<h2>Spacecraft Telemetry</h2>
+
+
+<div class="gauge-wrap">
+
+<div class="gauge">
+
+<div
+class="gauge-ring"
+id="gauge-fuel">
+--
+</div>
+
+<div class="gauge-label">
+FUEL
+</div>
 
 </div>
 
-<div class="section-title">Mission Sequence</div>
+
+<div class="gauge">
+
+<div
+class="gauge-ring"
+id="gauge-power">
+--
+</div>
+
+<div class="gauge-label">
+POWER
+</div>
+
+</div>
+
+
+<div class="gauge">
+
+<div
+class="gauge-ring"
+id="gauge-storage">
+--
+</div>
+
+<div class="gauge-label">
+CANISTER
+</div>
+
+</div>
+
+</div>
+
+
+<div class="row">
+
+<span class="label">
+Orbit Altitude
+</span>
+
+<span
+class="value"
+id="tel-altitude">
+--
+</span>
+
+</div>
+
+
+<div class="row">
+
+<span class="label">
+Orbital Velocity
+</span>
+
+<span
+class="value"
+id="tel-velocity">
+--
+</span>
+
+</div>
+
+
+<div class="row">
+
+<span class="label">
+Mission State
+</span>
+
+<span
+class="value"
+id="tel-state">
+--
+</span>
+
+</div>
+
+
+<div class="row">
+
+<span class="label">
+Data Timestamp
+</span>
+
+<span
+class="value"
+id="tel-timestamp">
+--
+</span>
+
+</div>
+
+</div>
+
+
+
+<!-- TARGET ASSESSMENT -->
+
+<div class="card">
+
+<h2>
+Active Target Assessment
+</h2>
+
+<div id="target-info">
+
+<div class="row">
+
+<span class="label">
+Loading...
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- CAPTURE MECHANISM -->
+
+<div class="card">
+
+<h2>
+Capture Mechanism
+</h2>
+
+<div id="mechanism-info">
+
+<div class="row">
+
+<span class="label">
+Loading...
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- MODULE STATUS -->
+
+<div class="card">
+
+<h2>
+System Module Status
+</h2>
+
+
+<div class="module-row">
+
+<span>Detection</span>
+
+<span
+class="module-status status-online">
+
+<span class="dot"></span>
+
+ONLINE
+
+</span>
+
+</div>
+
+
+<div class="module-row">
+
+<span>
+Prediction / Mission Manager
+</span>
+
+<span
+class="module-status status-online">
+
+<span class="dot"></span>
+
+ONLINE
+
+</span>
+
+</div>
+
+
+<div class="module-row">
+
+<span>
+Simulation & Dashboard
+</span>
+
+<span
+class="module-status status-online">
+
+<span class="dot"></span>
+
+ONLINE
+
+</span>
+
+</div>
+
+
+<div class="module-row">
+
+<span>
+Hardware (Robotic Capture)
+</span>
+
+<span
+class="module-status status-online">
+
+<span class="dot"></span>
+
+ONLINE
+
+</span>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<!-- ================= MISSION TIMELINE ================= -->
+
+<div class="section-title">
+
+Mission Sequence
+
+</div>
+
+
 <div class="grid">
-  <div class="card" style="grid-column:1 / -1;">
-    <h2>Autonomous Mission Timeline</h2>
-    <div id="mission-timeline" style="display:grid;grid-template-columns:repeat(9,1fr);gap:5px;"></div>
-  </div>
+
+<div
+class="card"
+style="grid-column:1 / -1;">
+
+<h2>
+Autonomous Mission Timeline
+</h2>
+
+<div
+id="mission-timeline"
+style="
+display:grid;
+grid-template-columns:repeat(9,1fr);
+gap:5px;
+">
+
 </div>
 
-<div class="section-title">Tracked Target Registry</div>
+</div>
+
+</div>
+
+
+
+<!-- ================= TARGET REGISTRY ================= -->
+
+<div class="section-title">
+
+Tracked Target Registry
+
+</div>
+
+
 <div class="grid">
-  <div class="card" style="grid-column:1 / -1;overflow:auto;">
-    <h2>Local Debris Candidates</h2>
-    <div id="target-registry" style="min-width:720px;"></div>
-  </div>
+
+<div
+class="card"
+style="
+grid-column:1 / -1;
+overflow:auto;
+">
+
+<h2>
+Local Debris Candidates
+</h2>
+
+<div
+id="target-registry"
+style="min-width:720px;">
+
 </div>
 
-<div class="section-title">Debris Field Analytics</div>
+</div>
+
+</div>
+
+
+
+<!-- ================= ANALYTICS ================= -->
+
+<div class="section-title">
+
+Debris Field Analytics
+
+</div>
+
+
 <div class="grid">
 
-  <div class="card">
-    <h2>Field Summary</h2>
-    <div id="field-info"><div class="row"><span class="label">Loading...</span></div></div>
-  </div>
 
-  <div class="card">
-    <h2>Collision Risk Distribution</h2>
-    <canvas id="risk-chart"></canvas>
-  </div>
+<div class="card">
 
-  <div class="card">
-    <h2>Orbit Class Breakdown</h2>
-    <div id="orbit-breakdown"><div class="row"><span class="label">Loading...</span></div></div>
-  </div>
+<h2>
+Field Summary
+</h2>
+
+<div id="field-info">
 
 </div>
 
-<div class="section-title">Mission Event Log</div>
+</div>
+
+
+
+<div class="card">
+
+<h2>
+Collision Risk Distribution
+</h2>
+
+<canvas id="risk-chart"></canvas>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>
+Orbit Class Breakdown
+</h2>
+
+<div id="orbit-breakdown">
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<!-- ================= EVENT LOG ================= -->
+
+<div class="section-title">
+
+Mission Event Log
+
+</div>
+
+
 <div class="grid">
-  <div id="log"><div><span class="log-time">--:--:--</span>System initializing...</div></div>
+
+<div id="log">
+
+<div>
+
+<span class="log-time">
+SYSTEM
+</span>
+
+Initializing mission dashboard...
+
 </div>
+
+</div>
+
+</div>
+
+
+
+<!-- ================= FOOTER ================= -->
 
 <footer>
-  © 2026 SMART SPACE DEBRIS CAPTURE SYSTEM — B.TECH CAPSTONE PROJECT — MISSION CONTROL INTERFACE<br>
-  Technology demonstrator. Verify all third-party asset licenses before public redistribution.
+
+© 2026 SMART SPACE DEBRIS CAPTURE SYSTEM —
+B.TECH CAPSTONE PROJECT —
+MISSION CONTROL INTERFACE
+
 </footer>
 
+
+
+<!-- ================================================= -->
+<!-- JAVASCRIPT -->
+<!-- ================================================= -->
+
 <script>
-function logLine(text) {
-  const log = document.getElementById("log");
-  const time = new Date().toLocaleTimeString();
-  const line = document.createElement("div");
-  line.innerHTML = '<span class="log-time">' + time + '</span>' + text;
-  log.appendChild(line);
-  log.scrollTop = log.scrollHeight;
+
+
+/* ==========================================
+CLOCK
+========================================== */
+
+function updateClock() {
+
+    const now = new Date();
+
+    document.getElementById("clock").innerText =
+        now.toUTCString().split(" ")[4] + " UTC";
+
 }
+
+
+
+/* ==========================================
+GAUGE
+========================================== */
 
 function setGauge(id, pct, color) {
-  const el = document.getElementById(id);
-  el.style.background = "conic-gradient(" + color + " " + pct + "%, #14181f " + pct + "% 100%)";
-  el.innerText = Math.round(pct) + "%";
+
+    const el =
+        document.getElementById(id);
+
+    pct =
+        Math.max(0, Math.min(100, pct));
+
+    el.style.background =
+        "conic-gradient(" +
+        color +
+        " " +
+        pct +
+        "%, #14181f " +
+        pct +
+        "% 100%)";
+
+    el.innerText =
+        Math.round(pct) + "%";
+
 }
+
+
+
+/* ==========================================
+SIZE CLASSIFICATION
+========================================== */
 
 function classifySize(sizeM) {
-  if (sizeM == null) return "Unknown";
-  if (sizeM < 0.2) return "Small";
-  if (sizeM < 0.4) return "Medium";
-  return "Large";
+
+    if (sizeM == null)
+        return "UNKNOWN";
+
+    if (sizeM < 0.25)
+        return "SMALL";
+
+    if (sizeM < 0.60)
+        return "MEDIUM";
+
+    return "LARGE";
+
 }
+
+
+
+/* ==========================================
+CAPTURE METHOD
+========================================== */
+
+function captureMethodForTarget(debris) {
+
+    const size =
+        Number(debris.size_m || 0);
+
+    if (size <= 0.25) {
+
+        return "DUAL ARM GRIPPER";
+
+    }
+
+    return "MIDDLE ARM NET";
+
+}
+
+
+
+/* ==========================================
+RISK CHART
+========================================== */
 
 function drawRiskChart(debris) {
-  const canvas = document.getElementById("risk-chart");
-  const ctx = canvas.getContext("2d");
-  const w = canvas.width = canvas.clientWidth;
-  const h = canvas.height = 90;
-  const buckets = [0,0,0,0,0];
-  debris.forEach(d => { const idx = Math.min(Math.floor((d.collision_risk||0) / 20), 4); buckets[idx]++; });
-  const max = Math.max(...buckets, 1);
-  const barW = w / buckets.length - 10;
-  const colors = ["#4ade80", "#a3e635", "#ffaa33", "#fb923c", "#f87171"];
-  ctx.clearRect(0,0,w,h);
-  buckets.forEach((count, i) => {
-    const barH = (count / max) * (h - 20);
-    const x = i * (w / buckets.length) + 5;
-    ctx.fillStyle = colors[i];
-    ctx.fillRect(x, h - barH - 14, barW, barH);
-    ctx.fillStyle = "#6b7f97";
-    ctx.font = "9px Segoe UI";
-    ctx.fillText(count, x + barW/2 - 4, h - barH - 18);
-    ctx.fillText((i*20)+"-"+(i*20+20), x, h - 3);
-  });
+
+    const canvas =
+        document.getElementById("risk-chart");
+
+    const ctx =
+        canvas.getContext("2d");
+
+    const w =
+        canvas.width =
+        canvas.clientWidth;
+
+    const h =
+        canvas.height = 90;
+
+
+    const buckets =
+        [0, 0, 0, 0, 0];
+
+
+    debris.forEach(d => {
+
+        const risk =
+            Number(d.collision_risk || 0);
+
+        const index =
+            Math.min(
+                Math.floor(risk / 20),
+                4
+            );
+
+        buckets[index]++;
+
+    });
+
+
+    const max =
+        Math.max(...buckets, 1);
+
+
+    const colors = [
+
+        "#4ade80",
+        "#a3e635",
+        "#ffaa33",
+        "#fb923c",
+        "#f87171"
+
+    ];
+
+
+    const barWidth =
+        w / buckets.length - 10;
+
+
+    ctx.clearRect(0, 0, w, h);
+
+
+    buckets.forEach((count, i) => {
+
+        const barHeight =
+            (count / max) *
+            (h - 25);
+
+
+        const x =
+            i * (w / buckets.length) + 5;
+
+
+        ctx.fillStyle =
+            colors[i];
+
+
+        ctx.fillRect(
+
+            x,
+
+            h - barHeight - 14,
+
+            barWidth,
+
+            barHeight
+
+        );
+
+
+        ctx.fillStyle =
+            "#6b7f97";
+
+
+        ctx.font =
+            "9px Segoe UI";
+
+
+        ctx.fillText(
+
+            count,
+
+            x + barWidth / 2 - 4,
+
+            h - barHeight - 18
+
+        );
+
+
+        ctx.fillText(
+
+            (i * 20) +
+            "-" +
+            (i * 20 + 20),
+
+            x,
+
+            h - 3
+
+        );
+
+    });
+
 }
 
-function captureMethodForTarget(targetEntry, debris) {
-  const size = Number(targetEntry?.size_m || 0);
-  const nearby = (debris || []).filter(d => {
-    if (d.x == null || targetEntry?.x == null) return false;
-    const dx=d.x-targetEntry.x, dy=d.y-targetEntry.y, dz=d.z-targetEntry.z;
-    return Math.sqrt(dx*dx+dy*dy+dz*dz) < 250;
-  }).length;
-  if (size <= 0.25 && nearby < 2) return "DUAL ARM GRIPPER";
-  return "MIDDLE ARM NET";
-}
 
-function renderTimeline(state, decision) {
-  const states=["SEARCH","TRACK","APPROACH","ALIGN","CAPTURE","VERIFY","STORE","STABILIZE","DISPOSE"];
-  const normalized=(state||"SEARCH").toUpperCase();
-  const activeIndex=Math.max(0,states.indexOf(normalized));
-  document.getElementById("mission-timeline").innerHTML=states.map((s,i)=>{
-    const cls=i===activeIndex?"active":i<activeIndex?"done":"";
-    return '<div class="step '+cls+'">'+String(i+1).padStart(2,"0")+'<br>'+s+'</div>';
-  }).join("");
-}
 
-function renderRegistry(debris, target) {
-  const rows=(debris||[]).map((d,i)=>{
-    const selected=!!d.is_target;
-    const size=Number(d.size_m||0);
-    const method=captureMethodForTarget(d,debris);
-    const risk=Number(d.collision_risk||0);
-    const riskClass=risk>=60?"pill-red":risk>=35?"pill-amber":"pill-green";
-    return '<tr class="'+(selected?'selected':'')+'">'+
-      '<td>'+(i+1)+'</td>'+
-      '<td>'+((d.name||"DEBRIS").replace(/</g,"&lt;"))+'</td>'+
-      '<td>'+size.toFixed(2)+' m</td>'+
-      '<td>'+Number(d.mass_kg||0).toFixed(1)+' kg</td>'+
-      '<td>'+risk.toFixed(1)+'</td>'+
-      '<td><span class="pill '+riskClass+'">'+(risk>=60?"HIGH":risk>=35?"MEDIUM":"LOW")+'</span></td>'+
-      '<td>'+(selected?'<span class="pill pill-green">SELECTED</span>':'<span class="pill pill-blue">MONITORED</span>')+'</td>'+
-      '<td>'+method+'</td>'+
-    '</tr>';
-  }).join("");
-  document.getElementById("target-registry").innerHTML=
-    '<table><thead><tr><th>#</th><th>OBJECT</th><th>SIZE</th><th>MASS</th><th>RISK</th><th>LEVEL</th><th>STATUS</th><th>MECHANISM</th></tr></thead><tbody>'+
-    (rows||'<tr><td colspan="8">No tracked objects.</td></tr>')+
-    '</tbody></table>';
-}
+/* ==========================================
+MISSION TIMELINE
+========================================== */
 
-function renderMission(target, debris, simState) {
-    const targetEntry = (debris || []).find(d => d.is_target) || {};
-    const mechanismType = captureMethodForTarget(targetEntry, debris);
-    const banner = document.getElementById("banner");
-    const decision = target.decision || "HOLD";
+function renderTimeline(missionState) {
 
-    if (decision === "PROCEED") {
-      banner.className="banner-proceed";
-      banner.innerHTML="<span>&#10003; CAPTURE APPROVED — autonomous sequence armed</span><span>"+(target.name||"TARGET")+"</span>";
-    } else if (decision === "HOLD") {
-      banner.className="banner-hold";
-      banner.innerHTML="<span>&#9203; MISSION HOLD — monitoring and reassessment active</span><span>"+(target.name||"TARGET")+"</span>";
-    } else {
-      banner.className="banner-abort";
-      banner.innerHTML="<span>&#10007; MISSION ABORT — safe separation / replanning</span><span>"+(target.name||"TARGET")+"</span>";
+
+    const states = [
+
+        "SEARCH",
+        "TRACK",
+        "PREDICT",
+        "PLAN",
+        "APPROACH",
+        "CAPTURE",
+        "VERIFY",
+        "STORE",
+        "COMPLETE"
+
+    ];
+
+
+    const state =
+        String(missionState || "")
+        .toUpperCase();
+
+
+    let activeIndex = 0;
+
+
+    if (
+        state.includes("TRACK")
+    ) {
+        activeIndex = 1;
     }
 
-    const decisionClass=decision==="PROCEED"?"decision-proceed":decision==="HOLD"?"decision-hold":"decision-abort";
-    document.getElementById("target-info").innerHTML=
-      '<div class="row"><span class="label">Name</span><span class="value">'+(target.name||"N/A")+'</span></div>'+
-      '<div class="row"><span class="label">Orbit Class</span><span class="value">'+(target.orbit_class||"LEO")+'</span></div>'+
-      '<div class="row"><span class="label">Altitude</span><span class="value">'+(target.altitude_km!=null?Number(target.altitude_km).toFixed(1):"N/A")+' km</span></div>'+
-      '<div class="row"><span class="label">Inclination</span><span class="value">'+(target.inclination_deg!=null?Number(target.inclination_deg).toFixed(2):"N/A")+'°</span></div>'+
-      '<div class="row"><span class="label">Risk</span><span class="value">'+(target.risk_level||"N/A")+' / '+(target.risk_score!=null?Number(target.risk_score).toFixed(1):"N/A")+'</span></div>'+
-      '<div class="row"><span class="label">Capture Score</span><span class="value">'+(target.capture_score!=null?Number(target.capture_score).toFixed(1):"N/A")+'</span></div>'+
-      '<div class="row"><span class="label">Decision</span><span class="value '+decisionClass+'">'+decision+'</span></div>';
+    else if (
+        state.includes("PREDICTION")
+    ) {
+        activeIndex = 2;
+    }
 
-    document.getElementById("mechanism-info").innerHTML=
-      '<div class="row"><span class="label">Target Size</span><span class="value">'+(targetEntry.size_m!=null?Number(targetEntry.size_m).toFixed(2):"N/A")+' m</span></div>'+
-      '<div class="row"><span class="label">Tracked Objects</span><span class="value">'+(debris||[]).length+'</span></div>'+
-      '<div class="row"><span class="label">Capture Mode</span><span class="value">'+mechanismType+'</span></div>'+
-      '<div class="row"><span class="label">Transfer</span><span class="value">Funnel → Canister</span></div>';
+    else if (
+        state.includes("PLANNING") ||
+        state.includes("REORIENT")
+    ) {
+        activeIndex = 3;
+    }
 
-    const avgRisk=debris.length?(debris.reduce((s,d)=>s+Number(d.collision_risk||0),0)/debris.length).toFixed(1):"N/A";
-    const highRisk=debris.filter(d=>Number(d.collision_risk||0)>60).length;
-    document.getElementById("field-info").innerHTML=
-      '<div class="row"><span class="label">Visible / Tracked</span><span class="value">'+debris.length+' / '+debris.length+'</span></div>'+
-      '<div class="row"><span class="label">Average Risk</span><span class="value">'+avgRisk+'</span></div>'+
-      '<div class="row"><span class="label">High-Risk Objects</span><span class="value">'+highRisk+'</span></div>'+
-      '<div class="row"><span class="label">Detection Envelope</span><span class="value">Configured LEO range</span></div>'+
-      '<div class="row"><span class="label">Selection</span><span class="value">Single-target sequential</span></div>';
+    else if (
+        state.includes("APPROACH")
+    ) {
+        activeIndex = 4;
+    }
 
-    const orbitCounts={};
-    debris.forEach(d=>{const oc=d.orbit_class||target.orbit_class||"LEO";orbitCounts[oc]=(orbitCounts[oc]||0)+1;});
-    document.getElementById("orbit-breakdown").innerHTML=Object.entries(orbitCounts)
-      .map(([k,v])=>'<div class="row"><span class="label">'+k+'</span><span class="value">'+v+'</span></div>').join("");
+    else if (
+        state.includes("CAPTURE") ||
+        state.includes("GRIPPER") ||
+        state.includes("NET")
+    ) {
+        activeIndex = 5;
+    }
+
+    else if (
+        state.includes("VERIFICATION")
+    ) {
+        activeIndex = 6;
+    }
+
+    else if (
+        state.includes("STORAGE") ||
+        state.includes("TRANSFER")
+    ) {
+        activeIndex = 7;
+    }
+
+    else if (
+        state.includes("COMPLETED")
+    ) {
+        activeIndex = 8;
+    }
+
+
+    document
+        .getElementById("mission-timeline")
+        .innerHTML =
+
+        states.map((s, i) => {
+
+            let cls = "";
+
+            if (
+                i < activeIndex
+            ) {
+                cls = "done";
+            }
+
+            if (
+                i === activeIndex
+            ) {
+                cls = "active";
+            }
+
+
+            return `
+
+            <div class="step ${cls}">
+
+            ${String(i + 1).padStart(2, "0")}
+
+            <br>
+
+            ${s}
+
+            </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+
+/* ==========================================
+TARGET REGISTRY
+========================================== */
+
+function renderRegistry(
+    debris,
+    lockedTargetID,
+    capturedIDs
+) {
+
+
+    const rows =
+        debris.map((d, i) => {
+
+
+            const risk =
+                Number(
+                    d.collision_risk || 0
+                );
+
+
+            let riskClass =
+                "pill-green";
+
+            let riskText =
+                "LOW";
+
+
+            if (risk >= 60) {
+
+                riskClass =
+                    "pill-red";
+
+                riskText =
+                    "HIGH";
+
+            }
+
+            else if (risk >= 35) {
+
+                riskClass =
+                    "pill-amber";
+
+                riskText =
+                    "MEDIUM";
+
+            }
+
+
+            const isSelected =
+                d.id === lockedTargetID;
+
+
+            const isCaptured =
+                capturedIDs.includes(d.id);
+
+
+            let statusHTML =
+
+                `<span class="pill pill-blue">
+                MONITORED
+                </span>`;
+
+
+            if (isSelected) {
+
+                statusHTML =
+
+                `<span class="pill pill-green">
+                ACTIVE TARGET
+                </span>`;
+
+            }
+
+
+            if (isCaptured) {
+
+                statusHTML =
+
+                `<span class="pill pill-green">
+                CAPTURED
+                </span>`;
+
+            }
+
+
+            const method =
+                captureMethodForTarget(d);
+
+
+            return `
+
+            <tr>
+
+            <td>${i + 1}</td>
+
+            <td>${d.id}</td>
+
+            <td>
+            ${Number(d.size_m || 0)
+            .toFixed(2)} m
+            </td>
+
+            <td>
+            ${Number(d.mass_kg || 0)
+            .toFixed(1)} kg
+            </td>
+
+            <td>
+            ${risk.toFixed(1)}
+            </td>
+
+            <td>
+
+            <span
+            class="pill ${riskClass}">
+
+            ${riskText}
+
+            </span>
+
+            </td>
+
+            <td>
+            ${statusHTML}
+            </td>
+
+            <td>
+            ${method}
+            </td>
+
+            </tr>
+
+            `;
+
+        }).join("");
+
+
+    document
+        .getElementById("target-registry")
+        .innerHTML = `
+
+        <table>
+
+        <thead>
+
+        <tr>
+
+        <th>#</th>
+
+        <th>OBJECT</th>
+
+        <th>SIZE</th>
+
+        <th>MASS</th>
+
+        <th>RISK</th>
+
+        <th>LEVEL</th>
+
+        <th>STATUS</th>
+
+        <th>MECHANISM</th>
+
+        </tr>
+
+        </thead>
+
+
+        <tbody>
+
+        ${rows}
+
+        </tbody>
+
+        </table>
+
+        `;
+
+}
+
+
+
+/* ==========================================
+EVENT LOG
+========================================== */
+
+function renderEventLog(events) {
+
+
+    const log =
+        document.getElementById("log");
+
+
+    if (
+        !events ||
+        events.length === 0
+    ) {
+
+        log.innerHTML =
+            "No mission events available.";
+
+        return;
+
+    }
+
+
+    log.innerHTML =
+        events
+        .slice(-20)
+        .map(item => `
+
+        <div>
+
+        <span class="log-time">
+
+        T+${Number(item.time_s)
+        .toFixed(0)}s
+
+        </span>
+
+        ${item.event}
+
+        </div>
+
+        `)
+        .join("");
+
+
+    log.scrollTop =
+        log.scrollHeight;
+
+}
+
+
+
+/* ==========================================
+MAIN RENDER FUNCTION
+========================================== */
+
+function renderMission(
+    vizData,
+    simState
+) {
+
+
+    const debris =
+        simState.tracked_debris ||
+        vizData.debris ||
+        [];
+
+
+    const spacecraft =
+        simState.spacecraft ||
+        {};
+
+
+    const missionState =
+        simState.mission_state ||
+        "SEARCHING";
+
+
+    const capturedIDs =
+        simState.captured_ids ||
+        [];
+
+
+    const lockedTargetID =
+        simState.locked_target_id;
+
+
+    const activeTarget =
+        debris.find(
+            d => d.id === lockedTargetID
+        );
+
+
+    /* ==============================
+    BANNER
+    ============================== */
+
+
+    const banner =
+        document.getElementById("banner");
+
+
+    if (
+        missionState === "COMPLETED"
+    ) {
+
+        banner.className =
+            "banner-complete";
+
+        banner.innerHTML = `
+
+        <span>
+        ✓ MISSION COMPLETED —
+        all viable capture cycles finished
+        </span>
+
+        <span>
+        ${capturedIDs.length} OBJECTS CAPTURED
+        </span>
+
+        `;
+
+    }
+
+    else if (
+        missionState === "ABORT"
+    ) {
+
+        banner.className =
+            "banner-abort";
+
+        banner.innerHTML = `
+
+        <span>
+        ✕ MISSION ABORT —
+        safe separation initiated
+        </span>
+
+        `;
+
+    }
+
+    else if (
+        activeTarget
+    ) {
+
+        banner.className =
+            "banner-proceed";
+
+        banner.innerHTML = `
+
+        <span>
+        ✓ ACTIVE CAPTURE SEQUENCE —
+        ${missionState}
+        </span>
+
+        <span>
+        ${activeTarget.id}
+        </span>
+
+        `;
+
+    }
+
+    else {
+
+        banner.className =
+            "banner-hold";
+
+        banner.innerHTML = `
+
+        <span>
+        ◉ AUTONOMOUS SEARCH —
+        monitoring debris field
+        </span>
+
+        <span>
+        ${debris.length} OBJECTS TRACKED
+        </span>
+
+        `;
+
+    }
+
+
+
+    /* ==============================
+    GAUGES
+    ============================== */
+
+
+    const fuelPct =
+        Math.max(
+            0,
+            Math.min(
+                100,
+
+                (
+                    Number(
+                        spacecraft.remaining_delta_v_km_s ||
+                        0
+                    )
+                    /
+                    0.08
+                )
+                *
+                100
+            )
+        );
+
+
+    const storagePct =
+        Number(
+            simState.canister?.occupancy_percent
+            ??
+            (
+                Number(
+                    spacecraft.storage_current_capacity_used ||
+                    0
+                )
+                *
+                100
+            )
+        );
+
+
+    setGauge(
+
+        "gauge-fuel",
+
+        fuelPct,
+
+        "#7fc4ff"
+
+    );
+
+
+    setGauge(
+
+        "gauge-power",
+
+        91,
+
+        "#4ade80"
+
+    );
+
+
+    setGauge(
+
+        "gauge-storage",
+
+        storagePct,
+
+        "#ffaa33"
+
+    );
+
+
+
+    /* ==============================
+    TELEMETRY
+    ============================== */
+
+
+    document
+        .getElementById("tel-altitude")
+        .innerText =
+
+        (
+            vizData.target?.altitude_km ||
+            650
+        )
+        +
+        " km";
+
+
+    document
+        .getElementById("tel-velocity")
+        .innerText =
+        "7.50 km/s";
+
+
+    document
+        .getElementById("tel-state")
+        .innerText =
+        missionState;
+
+
+    document
+        .getElementById("tel-timestamp")
+        .innerText =
+        Number(
+            simState.timestamp_s || 0
+        )
+        .toFixed(0)
+        +
+        " s";
+
+
+
+    /* ==============================
+    TARGET ASSESSMENT
+    ============================== */
+
+
+    let targetHTML = "";
+
+
+    if (activeTarget) {
+
+        targetHTML = `
+
+        <div class="row">
+
+        <span class="label">Target</span>
+
+        <span class="value">
+        ${activeTarget.id}
+        </span>
+
+        </div>
+
+
+        <div class="row">
+
+        <span class="label">Size</span>
+
+        <span class="value">
+
+        ${Number(
+            activeTarget.size_m
+        ).toFixed(2)} m
+
+        </span>
+
+        </div>
+
+
+        <div class="row">
+
+        <span class="label">
+        Relative Distance
+        </span>
+
+        <span class="value">
+
+        ${Number(
+            activeTarget.relative_distance_km ||
+            0
+        ).toFixed(2)} km
+
+        </span>
+
+        </div>
+
+
+        <div class="row">
+
+        <span class="label">
+        Relative Speed
+        </span>
+
+        <span class="value">
+
+        ${Number(
+            activeTarget.relative_speed_mps ||
+            0
+        ).toFixed(2)} m/s
+
+        </span>
+
+        </div>
+
+
+        <div class="row">
+
+        <span class="label">
+        Threat Level
+        </span>
+
+        <span class="value">
+
+        ${activeTarget.threat_level}
+
+        </span>
+
+        </div>
+
+        `;
+
+    }
+
+    else if (
+        missionState === "COMPLETED"
+    ) {
+
+        targetHTML = `
+
+        <div class="row">
+
+        <span class="label">
+        Mission Result
+        </span>
+
+        <span class="value"
+        style="color:#4ade80">
+
+        COMPLETED
+
+        </span>
+
+        </div>
+
+
+        <div class="row">
+
+        <span class="label">
+        Captured Objects
+        </span>
+
+        <span class="value">
+
+        ${capturedIDs.join(", ")}
+
+        </span>
+
+        </div>
+
+
+        <div class="row">
+
+        <span class="label">
+        Remaining Candidates
+        </span>
+
+        <span class="value">
+
+        ${debris.length}
+
+        </span>
+
+        </div>
+
+
+        <div class="row">
+
+        <span class="label">
+        Mission Decision
+        </span>
+
+        <span class="value"
+        style="color:#7fc4ff">
+
+        PATROL COMPLETE
+
+        </span>
+
+        </div>
+
+        `;
+
+    }
+
+    else {
+
+        targetHTML = `
+
+        <div class="row">
+
+        <span class="label">
+        Target Status
+        </span>
+
+        <span class="value">
+
+        SEARCHING
+
+        </span>
+
+        </div>
+
+
+        <div class="row">
+
+        <span class="label">
+        Candidates
+        </span>
+
+        <span class="value">
+
+        ${debris.length}
+
+        </span>
+
+        </div>
+
+        `;
+
+    }
+
+
+    document
+        .getElementById("target-info")
+        .innerHTML =
+        targetHTML;
+
+
+
+    /* ==============================
+    CAPTURE MECHANISM
+    ============================== */
+
+
+    let mechanism =
+        "STANDBY";
+
+
+    if (activeTarget) {
+
+        mechanism =
+            captureMethodForTarget(
+                activeTarget
+            );
+
+    }
+
+
+    document
+        .getElementById("mechanism-info")
+        .innerHTML = `
+
+
+        <div class="row">
+
+        <span class="label">
+        Capture Mode
+        </span>
+
+        <span class="value">
+
+        ${mechanism}
+
+        </span>
+
+        </div>
+
+
+        <div class="row">
+
+        <span class="label">
+        Capture Strategy
+        </span>
+
+        <span class="value">
+
+        Single Target Sequential
+
+        </span>
+
+        </div>
+
+
+        <div class="row">
+
+        <span class="label">
+        Transfer System
+        </span>
+
+        <span class="value">
+
+        Funnel → Canister
+
+        </span>
+
+        </div>
+
+
+        <div class="row">
+
+        <span class="label">
+        Storage Status
+        </span>
+
+        <span class="value">
+
+        ${storagePct.toFixed(0)}% USED
+
+        </span>
+
+        </div>
+
+        `;
+
+
+
+    /* ==============================
+    FIELD ANALYTICS
+    ============================== */
+
+
+    const averageRisk =
+
+        debris.length > 0
+
+        ?
+
+        debris.reduce(
+
+            (sum, d) =>
+
+                sum +
+                Number(
+                    d.collision_risk || 0
+                ),
+
+            0
+
+        )
+        /
+        debris.length
+
+        :
+
+        0;
+
+
+    const highRisk =
+
+        debris.filter(
+
+            d =>
+            Number(
+                d.collision_risk || 0
+            ) >= 60
+
+        )
+        .length;
+
+
+
+    document
+        .getElementById("field-info")
+        .innerHTML = `
+
+
+        <div class="row">
+
+        <span class="label">
+        Tracked Objects
+        </span>
+
+        <span class="value">
+
+        ${debris.length}
+
+        </span>
+
+        </div>
+
+
+        <div class="row">
+
+        <span class="label">
+        Average Risk
+        </span>
+
+        <span class="value">
+
+        ${averageRisk.toFixed(1)}
+
+        </span>
+
+        </div>
+
+
+        <div class="row">
+
+        <span class="label">
+        High-Risk Objects
+        </span>
+
+        <span class="value">
+
+        ${highRisk}
+
+        </span>
+
+        </div>
+
+
+        <div class="row">
+
+        <span class="label">
+        Captured Objects
+        </span>
+
+        <span class="value">
+
+        ${capturedIDs.length}
+
+        </span>
+
+        </div>
+
+
+        <div class="row">
+
+        <span class="label">
+        Mission Strategy
+        </span>
+
+        <span class="value">
+
+        Sequential Capture
+
+        </span>
+
+        </div>
+
+        `;
+
+
+
+    /* ==============================
+    ORBIT BREAKDOWN
+    ============================== */
+
+
+    document
+        .getElementById("orbit-breakdown")
+        .innerHTML = `
+
+
+        <div class="row">
+
+        <span class="label">
+
+        Local Rendezvous
+
+        </span>
+
+        <span class="value">
+
+        ${debris.length}
+
+        </span>
+
+        </div>
+
+
+        <div class="row">
+
+        <span class="label">
+
+        Captured / Stored
+
+        </span>
+
+        <span class="value">
+
+        ${capturedIDs.length}
+
+        </span>
+
+        </div>
+
+
+        <div class="row">
+
+        <span class="label">
+
+        Mission Environment
+
+        </span>
+
+        <span class="value">
+
+        LEO
+
+        </span>
+
+        </div>
+
+        `;
+
+
+
+    /* ==============================
+    RENDER COMPONENTS
+    ============================== */
+
 
     drawRiskChart(debris);
-    renderRegistry(debris,target);
-    renderTimeline(simState?.mission_state || (decision==="PROCEED"?"APPROACH":"SEARCH"),decision);
 
-    const sim=simState?.spacecraft;
-    if(sim){
-      const fuel=Math.max(0,Math.min(100,(Number(sim.remaining_delta_v_km_s||0)/0.08)*100));
-      const storage=Math.max(0,Math.min(100,Number(sim.storage_current_capacity_used||0)*100));
-      setGauge("gauge-fuel",fuel,"#7fc4ff");
-      setGauge("gauge-power",91,"#4ade80");
-      setGauge("gauge-storage",storage,"#ffaa33");
-      document.getElementById("gauge-storage").innerText=Math.round(storage)+"%";
-      document.getElementById("tel-state").innerText=sim.mission_state||"SEARCHING";
-      document.getElementById("tel-timestamp").innerText=simState.timestamp_s!=null?Number(simState.timestamp_s).toFixed(0)+" s":"--";
-      document.getElementById("tel-altitude").innerText=(target.altitude_km!=null?Number(target.altitude_km).toFixed(1):"—")+" km";
-      document.getElementById("tel-velocity").innerText="7.50 km/s";
-    }
 
-    logLine("Field update: "+debris.length+" objects tracked; selected "+(target.name||"target")+"; mechanism "+mechanismType+".");
+    renderRegistry(
+
+        debris,
+
+        lockedTargetID,
+
+        capturedIDs
+
+    );
+
+
+    renderTimeline(
+        missionState
+    );
+
+
+    renderEventLog(
+        simState.event_log
+    );
+
+
+
+    /* STORE GLOBAL DATA */
+
+
+    window.latestSimState =
+        simState;
+
+
+    window.latestVizData =
+        vizData;
+
 }
+
+
+
+/* ==========================================
+LOAD DATA
+========================================== */
 
 async function loadData() {
-  try {
-    const [vizRes, simRes] = await Promise.all([
-      fetch("../SIMULATION/viz_data.json", {cache:"no-store"}),
-      fetch("../SIMULATION/data/debris_state.json", {cache:"no-store"}).catch(()=>null)
-    ]);
-    const data = await vizRes.json();
-    const simState = simRes ? await simRes.json().catch(()=>null) : null;
-    window.latestVizData=data;
-    window.latestSimState=simState;
-    renderMission(data.target, data.debris || [], simState);
-  } catch(err) {
-    document.getElementById("banner").innerHTML="Mission data unavailable — start the local simulation service.";
-    logLine("DATA LINK: "+err.message);
-  }
+
+    try {
+
+
+        const vizResponse =
+            await fetch(
+
+                "../SIMULATION/viz_data.json",
+
+                {
+                    cache: "no-store"
+                }
+
+            );
+
+
+        const simResponse =
+            await fetch(
+
+                "../SIMULATION/data/debris_state.json",
+
+                {
+                    cache: "no-store"
+                }
+
+            );
+
+
+        if (!vizResponse.ok) {
+
+            throw new Error(
+                "Cannot load viz_data.json"
+            );
+
+        }
+
+
+        if (!simResponse.ok) {
+
+            throw new Error(
+                "Cannot load debris_state.json"
+            );
+
+        }
+
+
+        const vizData =
+            await vizResponse.json();
+
+
+        const simState =
+            await simResponse.json();
+
+
+        renderMission(
+
+            vizData,
+
+            simState
+
+        );
+
+
+    }
+
+    catch (error) {
+
+
+        console.error(error);
+
+
+        const banner =
+            document.getElementById("banner");
+
+
+        banner.className =
+            "banner-abort";
+
+
+        banner.innerHTML = `
+
+        <span>
+
+        ✕ MISSION DATA LINK ERROR —
+        ${error.message}
+
+        </span>
+
+        `;
+
+    }
+
 }
 
-setInterval(() => { document.getElementById("clock").innerText = new Date().toUTCString().split(" ")[4] + " UTC"; }, 1000);
-setInterval(tickTelemetry, 800);
+
+
+/* ==========================================
+AUTO UPDATE
+========================================== */
+
+
+updateClock();
+
 loadData();
+
+
+setInterval(
+
+    updateClock,
+
+    1000
+
+);
+
+
+setInterval(
+
+    loadData,
+
+    1500
+
+);
+
+
 </script>
 
-</body>
-</html>let simTime=0;
-function tickTelemetry(){
-  simTime++;
-  const sim=window.latestSimState;
-  if(sim && sim.spacecraft){
-    const fuelPct=Math.max(0,Math.min(100,(Number(sim.spacecraft.remaining_delta_v_km_s||0)/0.08)*100));
-    const storagePct=Math.max(0,Math.min(100,Number(sim.spacecraft.storage_current_capacity_used||0)*100));
-    setGauge("gauge-fuel",fuelPct,"#7fc4ff");
-    setGauge("gauge-power",91,"#4ade80");
-    setGauge("gauge-storage",storagePct,"#ffaa33");
-    document.getElementById("gauge-storage").innerText=Math.round(storagePct)+"%";
-    document.getElementById("tel-state").innerText=sim.mission_state||"SEARCHING";
-    document.getElementById("tel-timestamp").innerText=sim.timestamp_s!=null?Number(sim.timestamp_s).toFixed(0)+" s":"--";
-  }
-}
-
-setInterval(()=>{document.getElementById("clock").innerText=new Date().toUTCString().split(" ")[4]+" UTC";},1000);
-setInterval(async()=>{await loadData();},1500);
-setInterval(tickTelemetry,800);
-loadData();
-</script>
 
 </body>
+
 </html>
