@@ -1,203 +1,683 @@
 {
-  "timestamp_s": 2.0,
+  "timestamp_s": 30.0,
+  "mission_state": "TARGET_TRACKING",
+  "mission_phase_elapsed_s": 0.0,
+  "completed_cycles": 1,
+  "tracking_range_km": 5000.0,
+  "tracked_count": 11,
+  "candidate_count": 11,
+  "locked_target_id": null,
+  "selected_target": null,
+  "capture_method": "NONE",
+  "capture_event": null,
+  "capture_decision": "SEARCH",
   "spacecraft": {
-    "total_mass_kg": 500.0,
-    "center_of_mass_m": [
-      0.0,
-      0.0,
-      0.0
+    "position_km": [
+      1.10767256635396,
+      -2.348656425067354,
+      -1.5611466571240107
     ],
-    "remaining_delta_v_km_s": 0.08,
-    "storage_current_capacity_used": 0.0,
-    "storage_full": false
+    "velocity_km_s": [
+      0.006154731625717861,
+      -0.016014052283889312,
+      -0.010279562639735599
+    ],
+    "attitude_deg": -172.01,
+    "desired_attitude_deg": 116.6,
+    "attitude_status": "ALIGNING",
+    "remaining_delta_v_km_s": 0.079847,
+    "storage_current_capacity_used": 0.4,
+    "storage_mass_kg": 24.0,
+    "storage_capacity_kg": 60.0,
+    "storage_full": false,
+    "system_health": "NOMINAL",
+    "mission_state": "TARGET_TRACKING"
   },
-  "tracked_debris": [
+  "canister": {
+    "occupancy_percent": 40.0,
+    "stored_mass_kg": 24.0,
+    "capacity_kg": 60.0
+  },
+  "sensors": {
+    "camera": {
+      "status": "ACTIVE",
+      "tracked_objects": 11
+    },
+    "lidar": {
+      "status": "ACTIVE",
+      "max_range_km": 20.0,
+      "objects_in_range": 5
+    },
+    "sensor_fusion": {
+      "status": "ACTIVE",
+      "kalman_filters": 12
+    }
+  },
+  "scenario": "MULTI_TARGET_TRACKING",
+  "event_log": [
     {
-      "id": "f4bc0517",
-      "position_km": [
-        7004.867794229045,
-        21.612249381743684,
-        5.262775662745541
-      ],
-      "velocity_km_s": [
-        0.17592877629734038,
-        7.5401706671464845,
-        -0.1941184892416089
-      ],
-      "position_uncertainty_km": 14.87119662762985,
-      "relative_distance_km": 14004.382812558013,
-      "relative_velocity_km_s": [
-        -0.032123683669023684,
-        14.999155794967503,
-        0.0009379322788908782
-      ],
-      "collision_confidence": 0.5,
-      "threat_level": "MED",
-      "mass_kg": 9.372536721893884,
-      "size_m": 0.8074578747492585,
-      "tumbling_rate_rad_s": 0.053446090349324044,
-      "rotation_axis": [
-        -0.287971342246622,
-        0.3193024539202282,
-        0.9028391046942967
-      ]
+      "time_s": 0.0,
+      "event": "Mission initialized: autonomous multi-target surveillance active"
     },
     {
-      "id": "e93c7955",
-      "position_km": [
-        6993.82757432799,
-        21.535290190467148,
-        -2.268359687006871
-      ],
-      "velocity_km_s": [
-        -0.08997432761115336,
-        7.438200872004372,
-        -0.06258647771911283
-      ],
-      "position_uncertainty_km": 14.871008053556668,
-      "relative_distance_km": 13994.049589639752,
-      "relative_velocity_km_s": [
-        -0.03171295091880393,
-        15.000254671764628,
-        0.0006503386530161079
-      ],
-      "collision_confidence": 0.5,
-      "threat_level": "MED",
-      "mass_kg": 5.877556187100643,
-      "size_m": 0.3045148496062992,
-      "tumbling_rate_rad_s": 0.05149743402727881,
-      "rotation_axis": [
-        0.3720608135282963,
-        -0.18298302644201903,
-        -0.9099933862785936
-      ]
+      "time_s": 1.0,
+      "event": "TARGET_TRACKING: multiple debris objects detected inside tracking envelope"
     },
     {
-      "id": "3e56a96d",
-      "position_km": [
-        7000.84151534015,
-        15.433330466211046,
-        5.252555599373858
-      ],
-      "velocity_km_s": [
-        -0.018378277053028073,
-        7.468087662795335,
-        -0.004076771081908605
-      ],
-      "position_uncertainty_km": 14.871132440799446,
-      "relative_distance_km": 14000.861257678649,
-      "relative_velocity_km_s": [
-        -0.032271412501108605,
-        15.00049753212347,
-        -0.0003031265190036815
-      ],
-      "collision_confidence": 0.5,
-      "threat_level": "MED",
-      "mass_kg": 11.677678268343936,
-      "size_m": 0.9038090091899779,
-      "tumbling_rate_rad_s": 0.01701211774910166,
-      "rotation_axis": [
-        -0.10755523352839894,
-        -0.8582076573446885,
-        -0.5019078487288211
-      ]
+      "time_s": 2.0,
+      "event": "TARGET_SELECTION: camera, LiDAR and Kalman filter multi-target tracking complete"
     },
     {
-      "id": "55ca78f5",
-      "position_km": [
-        7004.863138143155,
-        17.518911279058944,
-        -0.18509818354652252
-      ],
-      "velocity_km_s": [
-        0.14509207561483994,
-        7.457419668263739,
-        0.1332562662115801
-      ],
-      "position_uncertainty_km": 14.871197738867902,
-      "relative_distance_km": 14004.442319362357,
-      "relative_velocity_km_s": [
-        -0.03343052354602168,
-        14.999285084671765,
-        0.000367332251047332
-      ],
-      "collision_confidence": 0.5,
-      "threat_level": "MED",
-      "mass_kg": 9.192383714985988,
-      "size_m": 0.970758759190789,
-      "tumbling_rate_rad_s": 0.010828055082635511,
-      "rotation_axis": [
-        0.9895991372667555,
-        0.06362941466325601,
-        -0.12901490266827476
-      ]
+      "time_s": 3.0,
+      "event": "Target selected: DEB-02 score=131.42"
     },
     {
-      "id": "5f146488",
-      "position_km": [
-        6997.150231138196,
-        20.152923674729237,
-        -0.8134672645231257
-      ],
-      "velocity_km_s": [
-        -0.020009638706594578,
-        7.400271037159391,
-        -0.12462714283599545
-      ],
-      "position_uncertainty_km": 14.87106573572499,
-      "relative_distance_km": 13997.207277817595,
-      "relative_velocity_km_s": [
-        -0.03317282258124375,
-        14.999229783873087,
-        -4.745654644437484e-05
-      ],
-      "collision_confidence": 0.5,
-      "threat_level": "MED",
-      "mass_kg": 3.496002839559725,
-      "size_m": 0.7028325952142593,
-      "tumbling_rate_rad_s": 0.02327774223846038,
-      "rotation_axis": [
-        0.0013677141293231344,
-        -0.4325279434722053,
-        0.9016194915116716
-      ]
+      "time_s": 3.0,
+      "event": "PREDICTION: autonomous multi-target ranking complete"
     },
     {
-      "id": "39eda19c",
-      "position_km": [
-        6998.953745749337,
-        27.72492167711516,
-        2.93122528745194
-      ],
-      "velocity_km_s": [
-        -0.015589643939112718,
-        7.465686503218054,
-        -0.11813425673613115
-      ],
-      "position_uncertainty_km": 14.871098530109663,
-      "relative_distance_km": 13999.00607107629,
-      "relative_velocity_km_s": [
-        -0.03291867200722551,
-        15.00061727096066,
-        0.0006020768175423333
-      ],
-      "collision_confidence": 0.5,
-      "threat_level": "MED",
-      "mass_kg": 5.262262169331919,
-      "size_m": 0.35949529353721976,
-      "tumbling_rate_rad_s": 0.06594023293547574,
-      "rotation_axis": [
-        -0.6767481154566359,
-        -0.7361116905998897,
-        0.01231126265107819
-      ]
+      "time_s": 4.0,
+      "event": "CAPTURE_PLANNING: relative trajectory prediction and capture feasibility valid"
+    },
+    {
+      "time_s": 5.0,
+      "event": "REORIENTING: capture mechanism and approach plan selected"
+    },
+    {
+      "time_s": 8.0,
+      "event": "APPROACHING: spacecraft capture axis aligned with target"
+    },
+    {
+      "time_s": 21.0,
+      "event": "CAPTURE_MODE_SELECTION: capture window reached under controlled rendezvous"
+    },
+    {
+      "time_s": 22.0,
+      "event": "NET_CAPTURE: LARGE debris -> middle arm net selected"
+    },
+    {
+      "time_s": 23.0,
+      "event": "Capture successful: DEB-02 using middle_arm_net"
+    },
+    {
+      "time_s": 23.0,
+      "event": "CAPTURE_VERIFICATION: capture sequence completed successfully"
+    },
+    {
+      "time_s": 24.0,
+      "event": "TRANSFER_TO_CANISTER: target containment verified"
+    },
+    {
+      "time_s": 25.0,
+      "event": "DEB-02 transferred through funnel into storage canister"
+    },
+    {
+      "time_s": 25.0,
+      "event": "STORAGE_CONFIRMATION: canister occupancy updated"
+    },
+    {
+      "time_s": 26.0,
+      "event": "RETURN_TO_ORBIT: captured debris securely stored"
+    },
+    {
+      "time_s": 29.0,
+      "event": "SURVEILLANCE: patrol orbit restored; searching for next debris"
+    },
+    {
+      "time_s": 30.0,
+      "event": "TARGET_TRACKING: multiple debris objects detected inside tracking envelope"
     }
   ],
-  "mission_state": "TRACKING",
-  "locked_target_id": null,
-  "capture_method": null,
-  "capture_event": null,
-  "tracked_count": 6,
-  "tracked_within_range": 0,
-  "abort_log": []
+  "tracked_debris": [
+    {
+      "id": "DEB-03",
+      "name": "Orbital Debris 03",
+      "position_km": [
+        0.2321148448041167,
+        -1.1631646168643741,
+        1.5065780876228165
+      ],
+      "velocity_km_s": [
+        -0.013959643850109501,
+        0.025489220129189888,
+        0.01731405693270589
+      ],
+      "relative_position_km": [
+        0.2321148448041167,
+        -1.1631646168643741,
+        1.5065780876228165
+      ],
+      "relative_velocity_km_s": [
+        -0.013959643850109501,
+        0.025489220129189888,
+        0.01731405693270589
+      ],
+      "relative_distance_km": 1.9174479813567065,
+      "relative_speed_km_s": 0.03382822145317693,
+      "relative_speed_mps": 33.82822145317693,
+      "range_rate_mps": -3.5481644430569292,
+      "camera_detected": true,
+      "lidar_detected": true,
+      "sensors_used": [
+        "camera",
+        "lidar"
+      ],
+      "position_uncertainty_km": 4.266931106363031e-06,
+      "collision_risk": 57.75377741800176,
+      "collision_confidence": 0.5775377741800176,
+      "threat_level": "MED",
+      "mass_kg": 15.0,
+      "size_m": 0.55,
+      "tumbling_rate_rad_s": 0.05557073589156907,
+      "rotation_axis": [
+        0.44045152899433043,
+        0.8412876398585508,
+        -0.31342871219431345
+      ],
+      "tracked": true,
+      "captured": false,
+      "score": 85.33494512876575
+    },
+    {
+      "id": "DEB-01",
+      "name": "Orbital Debris 01",
+      "position_km": [
+        -0.758868681711582,
+        0.8486515737099881,
+        2.977528797088868
+      ],
+      "velocity_km_s": [
+        -0.016313472311332233,
+        0.03174844265993583,
+        0.021255172424185294
+      ],
+      "relative_position_km": [
+        -0.758868681711582,
+        0.8486515737099881,
+        2.977528797088868
+      ],
+      "relative_velocity_km_s": [
+        -0.016313472311332233,
+        0.03174844265993583,
+        0.021255172424185294
+      ],
+      "relative_distance_km": 3.18775295578823,
+      "relative_speed_km_s": 0.04154365589311662,
+      "relative_speed_mps": 41.54365589311662,
+      "range_rate_mps": 32.189143404923435,
+      "camera_detected": true,
+      "lidar_detected": true,
+      "sensors_used": [
+        "camera",
+        "lidar"
+      ],
+      "position_uncertainty_km": 4.832956770466189e-06,
+      "collision_risk": 55.50990971123567,
+      "collision_confidence": 0.5550990971123567,
+      "threat_level": "MED",
+      "mass_kg": 8.0,
+      "size_m": 0.28,
+      "tumbling_rate_rad_s": 0.03968049595235498,
+      "rotation_axis": [
+        -0.9372019134311833,
+        -0.1250338759979343,
+        -0.3256057482813564
+      ],
+      "tracked": true,
+      "captured": false,
+      "score": 65.7032240737863
+    },
+    {
+      "id": "DEB-04",
+      "name": "Orbital Debris 04",
+      "position_km": [
+        -5.087354257551076,
+        6.695067535509338,
+        5.301835284113088
+      ],
+      "velocity_km_s": [
+        -0.027017867076358164,
+        0.06006108715190406,
+        0.03931114133196743
+      ],
+      "relative_position_km": [
+        -5.087354257551076,
+        6.695067535509338,
+        5.301835284113088
+      ],
+      "relative_velocity_km_s": [
+        -0.027017867076358164,
+        0.06006108715190406,
+        0.03931114133196743
+      ],
+      "relative_distance_km": 9.940551293903203,
+      "relative_speed_km_s": 0.07669853430181238,
+      "relative_speed_mps": 76.69853430181237,
+      "range_rate_mps": 75.24569512259433,
+      "camera_detected": true,
+      "lidar_detected": true,
+      "sensors_used": [
+        "camera",
+        "lidar"
+      ],
+      "position_uncertainty_km": 9.14072006652625e-06,
+      "collision_risk": 41.84783654366694,
+      "collision_confidence": 0.41847836543666944,
+      "threat_level": "MED",
+      "mass_kg": 20.0,
+      "size_m": 0.72,
+      "tumbling_rate_rad_s": 0.04312622989301566,
+      "rotation_axis": [
+        0.7714057010852113,
+        0.46436960174597197,
+        -0.4350794379277433
+      ],
+      "tracked": true,
+      "captured": false,
+      "score": 3.575559715674178
+    },
+    {
+      "id": "DEB-06",
+      "name": "Orbital Debris 06",
+      "position_km": [
+        -7.681091628816956,
+        5.571179458244838,
+        -5.333313237266401
+      ],
+      "velocity_km_s": [
+        -0.02764332588130426,
+        0.06365928780811834,
+        0.040623250487562726
+      ],
+      "relative_position_km": [
+        -7.681091628816956,
+        5.571179458244838,
+        -5.333313237266401
+      ],
+      "relative_velocity_km_s": [
+        -0.02764332588130426,
+        0.06365928780811834,
+        0.040623250487562726
+      ],
+      "relative_distance_km": 10.884917971810912,
+      "relative_speed_km_s": 0.08041708071170015,
+      "relative_speed_mps": 80.41708071170015,
+      "range_rate_mps": 32.18505797873633,
+      "camera_detected": true,
+      "lidar_detected": true,
+      "sensors_used": [
+        "camera",
+        "lidar"
+      ],
+      "position_uncertainty_km": 1.0081933127536707e-05,
+      "collision_risk": 40.66930245569215,
+      "collision_confidence": 0.40669302455692147,
+      "threat_level": "MED",
+      "mass_kg": 30.0,
+      "size_m": 1.1,
+      "tumbling_rate_rad_s": 0.030206650319168242,
+      "rotation_axis": [
+        0.8772864737268309,
+        0.4459889414322202,
+        0.17737617409367612
+      ],
+      "tracked": true,
+      "captured": false,
+      "score": 2.5479935087578376
+    },
+    {
+      "id": "DEB-05",
+      "name": "Orbital Debris 05",
+      "position_km": [
+        -0.7759928898534402,
+        10.128311744540033,
+        4.894711809224428
+      ],
+      "velocity_km_s": [
+        -0.026295653395985004,
+        0.06268112277425739,
+        0.04195535229950535
+      ],
+      "relative_position_km": [
+        -0.7759928898534402,
+        10.128311744540033,
+        4.894711809224428
+      ],
+      "relative_velocity_km_s": [
+        -0.026295653395985004,
+        0.06268112277425739,
+        0.04195535229950535
+      ],
+      "relative_distance_km": 11.27577347480215,
+      "relative_speed_km_s": 0.07987888410799762,
+      "relative_speed_mps": 79.87888410799762,
+      "range_rate_mps": 76.32456898044083,
+      "camera_detected": true,
+      "lidar_detected": true,
+      "sensors_used": [
+        "camera",
+        "lidar"
+      ],
+      "position_uncertainty_km": 1.0138089851185125e-05,
+      "collision_risk": 40.24301815046594,
+      "collision_confidence": 0.4024301815046594,
+      "threat_level": "MED",
+      "mass_kg": 10.0,
+      "size_m": 0.38,
+      "tumbling_rate_rad_s": 0.03893510445741783,
+      "rotation_axis": [
+        0.7369297745584299,
+        0.42339903511065347,
+        0.5269418985397057
+      ],
+      "tracked": true,
+      "captured": false,
+      "score": -10.541325091836686
+    },
+    {
+      "id": "DEB-09",
+      "name": "Orbital Debris 09",
+      "position_km": [
+        -3.6540091943543103,
+        -13.10635168349452,
+        -13.897733100882151
+      ],
+      "velocity_km_s": [
+        -0.05241535422060004,
+        0.11058972457484238,
+        0.06995913555041176
+      ],
+      "relative_position_km": [
+        -3.6540091943543103,
+        -13.10635168349452,
+        -13.897733100882151
+      ],
+      "relative_velocity_km_s": [
+        -0.05241535422060004,
+        0.11058972457484238,
+        0.06995913555041176
+      ],
+      "relative_distance_km": 19.449298778804877,
+      "relative_speed_km_s": 0.1409671493170354,
+      "relative_speed_mps": 140.96714931703542,
+      "range_rate_mps": -114.66608929313642,
+      "camera_detected": true,
+      "lidar_detected": false,
+      "sensors_used": [
+        "camera"
+      ],
+      "position_uncertainty_km": 0.0009901849731409835,
+      "collision_risk": 36.0372634536475,
+      "collision_confidence": 0.360372634536475,
+      "threat_level": "MED",
+      "mass_kg": 8.547312618022858,
+      "size_m": 0.5960780207120175,
+      "tumbling_rate_rad_s": 0.05788331663414324,
+      "rotation_axis": [
+        -0.23873440134751697,
+        -0.7123815715160123,
+        -0.6599381654197757
+      ],
+      "tracked": true,
+      "captured": false,
+      "score": -117.02703023434357
+    },
+    {
+      "id": "DEB-08",
+      "name": "Orbital Debris 08",
+      "position_km": [
+        2.062090214573036,
+        21.069660445433623,
+        -1.1700535380817838
+      ],
+      "velocity_km_s": [
+        -0.05938631434862799,
+        0.129242928987938,
+        0.08569127900895603
+      ],
+      "relative_position_km": [
+        2.062090214573036,
+        21.069660445433623,
+        -1.1700535380817838
+      ],
+      "relative_velocity_km_s": [
+        -0.05938631434862799,
+        0.129242928987938,
+        0.08569127900895603
+      ],
+      "relative_distance_km": 21.20263739775988,
+      "relative_speed_km_s": 0.16605259505194728,
+      "relative_speed_mps": 166.05259505194726,
+      "range_rate_mps": 117.92784359592312,
+      "camera_detected": true,
+      "lidar_detected": false,
+      "sensors_used": [
+        "camera"
+      ],
+      "position_uncertainty_km": 0.00024564081868399596,
+      "collision_risk": 35.723684319131024,
+      "collision_confidence": 0.3572368431913102,
+      "threat_level": "MED",
+      "mass_kg": 7.702947809621148,
+      "size_m": 0.19161357749786734,
+      "tumbling_rate_rad_s": 0.046792924980771235,
+      "rotation_axis": [
+        -0.8760985541998522,
+        0.4751986559673821,
+        -0.08147122618275845
+      ],
+      "tracked": true,
+      "captured": false,
+      "score": -165.84636984386216
+    },
+    {
+      "id": "DEB-11",
+      "name": "Orbital Debris 11",
+      "position_km": [
+        21.28865978048674,
+        5.219357742561998,
+        11.68666745508811
+      ],
+      "velocity_km_s": [
+        -0.05164569189064245,
+        0.10845922818214064,
+        0.07401687728346844
+      ],
+      "relative_position_km": [
+        21.28865978048674,
+        5.219357742561998,
+        11.68666745508811
+      ],
+      "relative_velocity_km_s": [
+        -0.05164569189064245,
+        0.10845922818214064,
+        0.07401687728346844
+      ],
+      "relative_distance_km": 24.8400267048965,
+      "relative_speed_km_s": 0.14109989295362646,
+      "relative_speed_mps": 141.09989295362647,
+      "range_rate_mps": 13.350653096826727,
+      "camera_detected": true,
+      "lidar_detected": false,
+      "sensors_used": [
+        "camera"
+      ],
+      "position_uncertainty_km": 0.0013562967065303367,
+      "collision_risk": 35.36819500404908,
+      "collision_confidence": 0.35368195004049074,
+      "threat_level": "MED",
+      "mass_kg": 7.354059606623435,
+      "size_m": 0.7983707287762267,
+      "tumbling_rate_rad_s": 0.016700707932070766,
+      "rotation_axis": [
+        -0.4066112676247271,
+        0.7622960728387388,
+        0.5035593057180543
+      ],
+      "tracked": true,
+      "captured": false,
+      "score": -125.56637514933722
+    },
+    {
+      "id": "DEB-10",
+      "name": "Orbital Debris 10",
+      "position_km": [
+        19.3482011490909,
+        -22.569622852055918,
+        10.861423785446075
+      ],
+      "velocity_km_s": [
+        -0.052780095976861376,
+        0.1065056879902434,
+        0.06926472061283165
+      ],
+      "relative_position_km": [
+        19.3482011490909,
+        -22.569622852055918,
+        10.861423785446075
+      ],
+      "relative_velocity_km_s": [
+        -0.052780095976861376,
+        0.1065056879902434,
+        0.06926472061283165
+      ],
+      "relative_distance_km": 31.649822906878654,
+      "relative_speed_km_s": 0.13757471289148818,
+      "relative_speed_mps": 137.5747128914882,
+      "range_rate_mps": -84.44532682139638,
+      "camera_detected": true,
+      "lidar_detected": false,
+      "sensors_used": [
+        "camera"
+      ],
+      "position_uncertainty_km": 0.0021307795738371377,
+      "collision_risk": 35.12106653797774,
+      "collision_confidence": 0.3512106653797774,
+      "threat_level": "MED",
+      "mass_kg": 20.806362448053978,
+      "size_m": 0.9410442862549456,
+      "tumbling_rate_rad_s": 0.06138915631322484,
+      "rotation_axis": [
+        -0.3710076043279582,
+        -0.6574598220362782,
+        0.6558200514919122
+      ],
+      "tracked": true,
+      "captured": false,
+      "score": -132.7396137212357
+    },
+    {
+      "id": "DEB-12",
+      "name": "Orbital Debris 12",
+      "position_km": [
+        -14.623818951308698,
+        -2.545620055530877,
+        32.75620623830368
+      ],
+      "velocity_km_s": [
+        -0.054025155420754506,
+        0.11493507296737748,
+        0.07361911909898033
+      ],
+      "relative_position_km": [
+        -14.623818951308698,
+        -2.545620055530877,
+        32.75620623830368
+      ],
+      "relative_velocity_km_s": [
+        -0.054025155420754506,
+        0.11493507296737748,
+        0.07361911909898033
+      ],
+      "relative_distance_km": 35.96255426570896,
+      "relative_speed_km_s": 0.14679428842146044,
+      "relative_speed_mps": 146.79428842146044,
+      "range_rate_mps": 80.8884733730373,
+      "camera_detected": true,
+      "lidar_detected": false,
+      "sensors_used": [
+        "camera"
+      ],
+      "position_uncertainty_km": 0.002482960063040186,
+      "collision_risk": 35.07485430537067,
+      "collision_confidence": 0.35074854305370673,
+      "threat_level": "MED",
+      "mass_kg": 15.013978612920159,
+      "size_m": 0.8916925794708696,
+      "tumbling_rate_rad_s": 0.05449015309744111,
+      "rotation_axis": [
+        0.1608447897384012,
+        -0.604525795466306,
+        0.780177874737447
+      ],
+      "tracked": true,
+      "captured": false,
+      "score": -156.95504365156012
+    },
+    {
+      "id": "DEB-07",
+      "name": "Orbital Debris 07",
+      "position_km": [
+        35.42385309559728,
+        -1.7284556844514645,
+        -10.91498279168939
+      ],
+      "velocity_km_s": [
+        -0.051281103389817916,
+        0.10683651406277456,
+        0.07280457523683155
+      ],
+      "relative_position_km": [
+        35.42385309559728,
+        -1.7284556844514645,
+        -10.91498279168939
+      ],
+      "relative_velocity_km_s": [
+        -0.051281103389817916,
+        0.10683651406277456,
+        0.07280457523683155
+      ],
+      "relative_distance_km": 37.10759728862063,
+      "relative_speed_km_s": 0.13908378222272388,
+      "relative_speed_mps": 139.0837822227239,
+      "range_rate_mps": -75.3456796790097,
+      "camera_detected": true,
+      "lidar_detected": false,
+      "sensors_used": [
+        "camera"
+      ],
+      "position_uncertainty_km": 0.0027866877148443616,
+      "collision_risk": 35.07171228847319,
+      "collision_confidence": 0.35071712288473184,
+      "threat_level": "MED",
+      "mass_kg": 12.50862323511684,
+      "size_m": 0.8701833530811052,
+      "tumbling_rate_rad_s": 0.053431545691634684,
+      "rotation_axis": [
+        -0.8266600799087247,
+        -0.40915175697833184,
+        -0.38630033917516193
+      ],
+      "tracked": true,
+      "captured": false,
+      "score": -148.29732555252556
+    }
+  ],
+  "captured_ids": [
+    "DEB-02"
+  ],
+  "mission_complete": false,
+  "state_machine": {
+    "state": "TARGET_TRACKING",
+    "selected_target_id": null,
+    "capture_mode": "net",
+    "transition_count": 15,
+    "abort_count": 0,
+    "last_transition": {
+      "from": "SURVEILLANCE",
+      "to": "TARGET_TRACKING",
+      "trigger": "multiple debris objects detected inside tracking envelope"
+    },
+    "last_abort": null
+  }
 }
