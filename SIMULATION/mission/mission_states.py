@@ -1,44 +1,163 @@
 """
 mission_states.py
-Defines the mission state enum and abort-reason taxonomy.
 
-Solves:
-- Challenge 5 (states restricted to internally-triggered transitions)
-- Challenge 8 (ABORT state for collision avoidance)
-- Challenge 13 (distinguishes internal-fault Aborts from external ones)
+Mission-state definitions for the autonomous debris-capture simulation.
+
+This state model is shared by the mission state machine, simulation engine,
+mission manager, and dashboard telemetry.
 """
 
 from enum import Enum, auto
 
 
 class MissionState(Enum):
+    """Autonomous mission lifecycle."""
+
     IDLE = auto()
-    TRACKING = auto()
+    SURVEILLANCE = auto()
+    TARGET_TRACKING = auto()
+    TARGET_SELECTION = auto()
+    PREDICTION = auto()
+    CAPTURE_PLANNING = auto()
+    REORIENTING = auto()
     APPROACHING = auto()
-    CAPTURING = auto()
+    CAPTURE_MODE_SELECTION = auto()
+    GRIPPER_CAPTURE = auto()
+    NET_CAPTURE = auto()
+    CAPTURE_VERIFICATION = auto()
+    TRANSFER_TO_CANISTER = auto()
+    STORAGE_CONFIRMATION = auto()
+    RETURN_TO_ORBIT = auto()
     ABORT = auto()
     COMPLETED = auto()
 
 
-# Transitions allowed FROM each state, and the internal telemetry
-# condition (not an external command) that triggers each one. This table
-# is documentation-as-code for interface_spec.md's "no ground command"
-# constraint (Challenge 5).
-ALLOWED_TRANSITIONS = {
-    MissionState.IDLE: {MissionState.TRACKING},
-    MissionState.TRACKING: {MissionState.APPROACHING, MissionState.ABORT, MissionState.IDLE},
-    MissionState.APPROACHING: {MissionState.CAPTURING, MissionState.ABORT, MissionState.TRACKING},
-    MissionState.CAPTURING: {MissionState.COMPLETED, MissionState.ABORT},
-    MissionState.ABORT: {MissionState.IDLE, MissionState.TRACKING},
-    MissionState.COMPLETED: {MissionState.IDLE},
-}
+class CaptureMode(Enum):
+    """Available autonomous capture mechanisms."""
+
+    GRIPPER = "gripper"
+    NET = "net"
 
 
 class AbortReason(Enum):
-    """Challenge 13: distinguish external threats from internal faults so
-    the demo narrative ('responds to both') has real log data behind it."""
-    COLLISION_RISK = "external_collision_risk"          # Challenge 8
-    SENSOR_DROPOUT = "internal_sensor_dropout"           # Challenge 13
-    MECHANISM_HEALTH_CRITICAL = "internal_mechanism_health_critical"  # Challenge 13
-    FUEL_BELOW_SAFETY_THRESHOLD = "internal_fuel_below_safety_threshold"  # Challenge 4/13
-    MANUAL_TEST_OVERRIDE = "test_only_manual_override"   # never used during RENDEZVOUS->CAPTURE in flight logic
+    """Autonomous abort categories."""
+
+    COLLISION_RISK = "external_collision_risk"
+
+    SENSOR_DROPOUT = "internal_sensor_dropout"
+
+    MECHANISM_HEALTH_CRITICAL = (
+        "internal_mechanism_health_critical"
+    )
+
+    FUEL_BELOW_SAFETY_THRESHOLD = (
+        "internal_fuel_below_safety_threshold"
+    )
+
+    PREDICTION_UNCERTAINTY_HIGH = (
+        "prediction_uncertainty_high"
+    )
+
+    TARGET_LOST = "target_lost"
+
+    CAPTURE_FAILURE = "capture_failure"
+
+    STORAGE_FAILURE = "storage_failure"
+
+    GUIDANCE_ERROR = "guidance_error"
+
+    MANUAL_TEST_OVERRIDE = "test_only_manual_override"
+
+
+# Only these transitions are permitted.
+#
+# The state machine decides when a transition occurs using internal
+# telemetry, sensor estimates, guidance results, mechanism health,
+# resource state, and mission-planner decisions.
+ALLOWED_TRANSITIONS = {
+
+    MissionState.IDLE: {
+        MissionState.SURVEILLANCE,
+    },
+
+    MissionState.SURVEILLANCE: {
+        MissionState.TARGET_TRACKING,
+        MissionState.ABORT,
+    },
+
+    MissionState.TARGET_TRACKING: {
+        MissionState.TARGET_SELECTION,
+        MissionState.ABORT,
+    },
+
+    MissionState.TARGET_SELECTION: {
+        MissionState.PREDICTION,
+        MissionState.ABORT,
+    },
+
+    MissionState.PREDICTION: {
+        MissionState.CAPTURE_PLANNING,
+        MissionState.ABORT,
+    },
+
+    MissionState.CAPTURE_PLANNING: {
+        MissionState.REORIENTING,
+        MissionState.ABORT,
+    },
+
+    MissionState.REORIENTING: {
+        MissionState.APPROACHING,
+        MissionState.ABORT,
+    },
+
+    MissionState.APPROACHING: {
+        MissionState.CAPTURE_MODE_SELECTION,
+        MissionState.ABORT,
+    },
+
+    MissionState.CAPTURE_MODE_SELECTION: {
+        MissionState.GRIPPER_CAPTURE,
+        MissionState.NET_CAPTURE,
+        MissionState.ABORT,
+    },
+
+    MissionState.GRIPPER_CAPTURE: {
+        MissionState.CAPTURE_VERIFICATION,
+        MissionState.ABORT,
+    },
+
+    MissionState.NET_CAPTURE: {
+        MissionState.CAPTURE_VERIFICATION,
+        MissionState.ABORT,
+    },
+
+    MissionState.CAPTURE_VERIFICATION: {
+        MissionState.TRANSFER_TO_CANISTER,
+        MissionState.ABORT,
+    },
+
+    MissionState.TRANSFER_TO_CANISTER: {
+        MissionState.STORAGE_CONFIRMATION,
+        MissionState.ABORT,
+    },
+
+    MissionState.STORAGE_CONFIRMATION: {
+        MissionState.RETURN_TO_ORBIT,
+        MissionState.ABORT,
+    },
+
+    MissionState.RETURN_TO_ORBIT: {
+        MissionState.SURVEILLANCE,
+        MissionState.COMPLETED,
+        MissionState.ABORT,
+    },
+
+    MissionState.ABORT: {
+        MissionState.SURVEILLANCE,
+        MissionState.IDLE,
+    },
+
+    MissionState.COMPLETED: {
+        MissionState.IDLE,
+    },
+}

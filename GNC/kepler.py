@@ -1,122 +1,309 @@
-"""
-kepler.py
-Two-body Keplerian propagation, used for LONG-RANGE prediction
-(relative_distance > threshold_km). Handed off to relative_motion.py's
-CW equations once inside close range — see orbit_propagator.py.
 
-Solves Challenge 2 (long-range part).
 """
+GNC/kepler.py
+
+Two-body Keplerian propagation.
+
+Units:
+    position : km
+    velocity : km/s
+    acceleration : km/s^2
+    time : s
+
+This module is responsible ONLY for absolute two-body orbital propagation.
+
+It does not perform rendezvous guidance or capture control.
+Those functions belong to the relative-motion / approach controller.
+"""
+
+from __future__ import annotations
 
 import numpy as np
 
-MU_EARTH_KM3_S2 = 398600.4418  # standard gravitational parameter, km^3/s^2
+
+MU_EARTH_KM3_S2 = 398600.4418
 
 
-def orbital_elements_from_state(position_km, velocity_km_s, mu=MU_EARTH_KM3_S2):
+def _as_vector(value, name: str) -> np.ndarray:
+    """Convert a 3-element vector to a float numpy array."""
+    arr = np.asarray(value, dtype=float)
+
+    if arr.shape != (3,):
+        raise ValueError(
+            f"{name} must be a 3-element vector, got shape {arr.shape}"
+        )
+
+    if not np.all(np.isfinite(arr)):
+        raise ValueError(f"{name} contains non-finite values")
+
+    return arr
+
+
+def orbital_elements_from_state(
+    position_km,
+    velocity_km_s,
+    mu: float = MU_EARTH_KM3_S2,
+):
     """
-    Convert a Cartesian state vector to classical orbital elements.
-    Returns dict: a (semi-major axis, km), e (eccentricity),
-    i (inclination, rad), raan (rad), argp (rad), nu (true anomaly, rad).
+    Convert Cartesian state to classical orbital elements.
+
+    Returns:
+        {
+            "a": semi-major axis [km],
+            "e": eccentricity,
+            "i": inclination [rad],
+            "raan": right ascension of ascending node [rad],
+            "argp": argument of periapsis [rad],
+            "nu": true anomaly [rad],
+        }
     """
-    r = np.array(position_km, dtype=float)
-    v = np.array(velocity_km_s, dtype=float)
+
+    r = _as_vector(position_km, "position_km")
+    v = _as_vector(velocity_km_s, "velocity_km_s")
+
     r_norm = np.linalg.norm(r)
     v_norm = np.linalg.norm(v)
 
-    h = np.cross(r, v)              # specific angular momentum
+    if r_norm < 1e-9:
+        raise ValueError("Position magnitude is too small.")
+
+    h = np.cross(r, v)
     h_norm = np.linalg.norm(h)
-    n = np.cross([0, 0, 1], h)      # node vector
+
+    if h_norm < 1e-12:
+        raise ValueError("Specific angular momentum is too small.")
+
+    n = np.cross(np.array([0.0, 0.0, 1.0]), h)
     n_norm = np.linalg.norm(n)
 
-    e_vec = (np.cross(v, h) / mu) - (r / r_norm)
-    e = np.linalg.norm(e_vec)
+    e_vec = np.cross(v, h) / mu - r / r_norm
+    e = float(np.linalg.norm(e_vec))
 
-    energy = v_norm ** 2 / 2 - mu / r_norm
-    a = -mu / (2 * energy) if abs(energy) > 1e-12 else np.inf
+    specific_energy = (
+        0.5 * v_norm**2
+        - mu / r_norm
+    )
 
-    i = np.arccos(np.clip(h[2] / h_norm, -1, 1))
+    if abs(specific_energy) > 1e-12:
+        a = -mu / (2.0 * specific_energy)
+    else:
+        a = np.inf
 
-    if n_norm > 1e-9:
-        raan = np.arccos(np.clip(n[0] / n_norm, -1, 1))
-        if n[1] < 0:
-            raan = 2 * np.pi - raan
+    inclination = np.arccos(
+        np.clip(h[2] / h_norm, -1.0, 1.0)
+    )
+
+    # RAAN
+    if n_norm > 1e-12:
+        raan = np.arctan2(n[1], n[0]) % (2.0 * np.pi)
     else:
         raan = 0.0
 
-    if n_norm > 1e-9 and e > 1e-9:
-        argp = np.arccos(np.clip(np.dot(n, e_vec) / (n_norm * e), -1, 1))
+    # Argument of periapsis
+    if n_norm > 1e-12 and e > 1e-10:
+        argp = np.arccos(
+            np.clip(
+                np.dot(n, e_vec) / (n_norm * e),
+                -1.0,
+                1.0,
+            )
+        )
+
         if e_vec[2] < 0:
-            argp = 2 * np.pi - argp
+            argp = 2.0 * np.pi - argp
     else:
         argp = 0.0
 
-    if e > 1e-9:
-        nu = np.arccos(np.clip(np.dot(e_vec, r) / (e * r_norm), -1, 1))
+    # True anomaly
+    if e > 1e-10:
+        nu = np.arccos(
+            np.clip(
+                np.dot(e_vec, r) / (e * r_norm),
+                -1.0,
+                1.0,
+            )
+        )
+
         if np.dot(r, v) < 0:
-            nu = 2 * np.pi - nu
+            nu = 2.0 * np.pi - nu
     else:
         nu = 0.0
 
-    return {"a": a, "e": e, "i": i, "raan": raan, "argp": argp, "nu": nu}
+    return {
+        "a": float(a),
+        "e": float(e),
+        "i": float(inclination),
+        "raan": float(raan),
+        "argp": float(argp),
+        "nu": float(nu),
+    }
 
 
-def mean_motion(a_km, mu=MU_EARTH_KM3_S2) -> float:
-    """n = sqrt(mu / a^3), rad/s. Needed by relative_motion.py's CW equations."""
-    return np.sqrt(mu / a_km ** 3)
-
-
-def _solve_kepler_eq(M, e, tol=1e-10, max_iter=50):
-    """Newton-Raphson solve of Kepler's equation M = E - e*sin(E)."""
-    E = M if e < 0.8 else np.pi
-    for _ in range(max_iter):
-        dE = (E - e * np.sin(E) - M) / (1 - e * np.cos(E))
-        E -= dE
-        if abs(dE) < tol:
-            break
-    return E
-
-
-def propagate_kepler(position_km, velocity_km_s, dt_s, mu=MU_EARTH_KM3_S2):
+def mean_motion(
+    a_km: float,
+    mu: float = MU_EARTH_KM3_S2,
+) -> float:
     """
-    Propagate a Cartesian state forward by dt_s seconds using classical
-    Keplerian (two-body) mechanics. Returns (new_position_km, new_velocity_km_s).
+    Mean orbital motion.
+
+    Returns:
+        rad/s
     """
-    elems = orbital_elements_from_state(position_km, velocity_km_s, mu)
-    a, e, i, raan, argp, nu0 = (elems["a"], elems["e"], elems["i"],
-                                 elems["raan"], elems["argp"], elems["nu"])
 
-    n = mean_motion(a, mu)
-    E0 = 2 * np.arctan2(np.sqrt(1 - e) * np.sin(nu0 / 2), np.sqrt(1 + e) * np.cos(nu0 / 2))
-    M0 = E0 - e * np.sin(E0)
-    M1 = M0 + n * dt_s
-    E1 = _solve_kepler_eq(M1 % (2 * np.pi), e)
-    nu1 = 2 * np.arctan2(np.sqrt(1 + e) * np.sin(E1 / 2), np.sqrt(1 - e) * np.cos(E1 / 2))
+    if not np.isfinite(a_km) or a_km <= 0.0:
+        raise ValueError("Semi-major axis must be positive and finite.")
 
-    p = a * (1 - e ** 2)
-    r_mag = p / (1 + e * np.cos(nu1))
+    return float(np.sqrt(mu / a_km**3))
 
-    # position/velocity in perifocal frame
-    r_pf = r_mag * np.array([np.cos(nu1), np.sin(nu1), 0])
-    v_pf = (np.sqrt(mu / p) * np.array([-np.sin(nu1), e + np.cos(nu1), 0]))
 
-    # rotation perifocal -> ECI
-    cO, sO = np.cos(raan), np.sin(raan)
-    ci, si = np.cos(i), np.sin(i)
-    cw, sw = np.cos(argp), np.sin(argp)
-    R = np.array([
-        [cO * cw - sO * sw * ci, -cO * sw - sO * cw * ci, sO * si],
-        [sO * cw + cO * sw * ci, -sO * sw + cO * cw * ci, -cO * si],
-        [sw * si,                 cw * si,                 ci],
-    ])
+def _two_body_acceleration(
+    position_km: np.ndarray,
+    mu: float,
+) -> np.ndarray:
+    """Two-body gravitational acceleration."""
+    r_norm = np.linalg.norm(position_km)
 
-    r_new = R @ r_pf
-    v_new = R @ v_pf
+    if r_norm < 1e-9:
+        raise ValueError(
+            "Position magnitude became too small during propagation."
+        )
+
+    return -mu * position_km / r_norm**3
+
+
+def propagate_kepler(
+    position_km,
+    velocity_km_s,
+    dt_s: float,
+    mu: float = MU_EARTH_KM3_S2,
+):
+    """
+    Propagate an inertial Cartesian state using RK4 integration
+    of the two-body equations.
+
+    This is intentionally a small-step propagator suitable for
+    the simulation.
+
+    IMPORTANT:
+        This function does not perform rendezvous guidance.
+        It only propagates the state that it receives.
+    """
+
+    r0 = _as_vector(position_km, "position_km")
+    v0 = _as_vector(velocity_km_s, "velocity_km_s")
+
+    dt_s = float(dt_s)
+
+    if not np.isfinite(dt_s):
+        raise ValueError("dt_s must be finite.")
+
+    if abs(dt_s) < 1e-15:
+        return r0.copy(), v0.copy()
+
+    if np.linalg.norm(r0) < 1e-9:
+        raise ValueError(
+            "Initial position magnitude is too small."
+        )
+
+    def derivative(state):
+        r = state[:3]
+        v = state[3:]
+
+        a = _two_body_acceleration(r, mu)
+
+        return np.concatenate(
+            (
+                v,
+                a,
+            )
+        )
+
+    state = np.concatenate(
+        (
+            r0,
+            v0,
+        )
+    )
+
+    # Maximum RK4 substep = 1 second.
+    n_substeps = max(
+        1,
+        int(np.ceil(abs(dt_s))),
+    )
+
+    h = dt_s / n_substeps
+
+    for _ in range(n_substeps):
+
+        k1 = derivative(state)
+
+        k2 = derivative(
+            state + 0.5 * h * k1
+        )
+
+        k3 = derivative(
+            state + 0.5 * h * k2
+        )
+
+        k4 = derivative(
+            state + h * k3
+        )
+
+        state = state + (
+            h
+            / 6.0
+            * (
+                k1
+                + 2.0 * k2
+                + 2.0 * k3
+                + k4
+            )
+        )
+
+    r_new = state[:3]
+    v_new = state[3:]
+
+    if not np.all(np.isfinite(r_new)):
+        raise FloatingPointError(
+            "Kepler propagation produced invalid position."
+        )
+
+    if not np.all(np.isfinite(v_new)):
+        raise FloatingPointError(
+            "Kepler propagation produced invalid velocity."
+        )
+
     return r_new, v_new
 
 
 if __name__ == "__main__":
-    r0 = [7000.0, 0.0, 0.0]
-    v0 = [0.0, 7.5, 0.5]
-    r1, v1 = propagate_kepler(r0, v0, dt_s=600)
-    print("r1:", r1)
-    print("v1:", v1)
+
+    r0 = np.array(
+        [7000.0, 0.0, 0.0]
+    )
+
+    v0 = np.array(
+        [0.0, 7.5, 0.5]
+    )
+
+    r1, v1 = propagate_kepler(
+        r0,
+        v0,
+        dt_s=600.0,
+    )
+
+    print("Initial position:", r0)
+    print("Initial velocity:", v0)
+
+    print("Final position:", r1)
+    print("Final velocity:", v1)
+
+    elements = orbital_elements_from_state(
+        r0,
+        v0,
+    )
+
+    print("Orbital elements:")
+    for key, value in elements.items():
+        print(f"  {key}: {value}")
+
