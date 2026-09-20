@@ -1,17 +1,33 @@
 {
   "mission_id": "MIS-2026-001",
-  "tracking_id": "TRK_22675_000001",
-  "target_name": "COSMOS 2251",
+  "tracking_id": "TRK_4211",
+  "object_id": "4211",
+  "target_name": "THORAD AGENA D DEB",
   "orbit_class": "LEO",
-  "altitude_km": 792.72,
-  "inclination_deg": 74.0379,
-  "risk_level": "LOW",
-  "risk_score": 9.33,
-  "capture_method": "robotic_net_large",
-  "capture_score": 30.0,
-  "capture_feasible": false,
-  "difficulty_level": "HIGH",
-  "decision": "ABORT",
-  "reason": "Capture not feasible",
-  "timestamp": "2026-07-31T09:16:22.629541+00:00"
+  "altitude_km": 840.385,
+  "inclination_deg": 70.0721,
+  "closest_distance_m": 47745.0,
+  "time_to_closest_approach_s": 0.0,
+  "relative_velocity_kms": 14.11301,
+  "collision_probability": 0.0,
+  "risk_level": "MEDIUM",
+  "risk_score": 27.16,
+  "capture_method": "robotic_net",
+  "capture_score": 50.0,
+  "capture_feasible": true,
+  "difficulty_level": "MEDIUM",
+  "prediction_horizon_s": 60,
+  "predicted_position_km": {
+    "x": -6977.379940831643,
+    "y": -435.6689126391282,
+    "z": -1923.1886986393504
+  },
+  "predicted_velocity_kms": {
+    "vx": -1.6858993550453034,
+    "vy": -2.7276979598858717,
+    "vz": 6.6775318033004964
+  },
+  "decision": "HOLD",
+  "reason": "Capture score below operational threshold",
+  "timestamp": "2026-09-20T06:48:04.991979+00:00"
 }
