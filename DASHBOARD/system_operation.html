@@ -1,0 +1,3227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#241b3b">
+<meta name="description" content="Mission Dossier for the Autonomous Space Debris Monitoring & Capture System — fifteen-stage conceptual mission sequence.">
+<title>Mission Dossier | Autonomous Space Debris Monitoring & Capture System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Inter:wght@400;500;600;700;800&family=Michroma&family=Orbitron:wght@500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--bg:#17122a;
+--bg2:#211a38;
+--bg3:#2a2144;
+--deep:#0e0a18;
+--p:rgba(38,29,62,.78);
+--p2:rgba(21,15,37,.9);
+--lav:#cdb9ff;
+--lav2:#9b7ee4;
+--cyan:#8eeaff;
+--mint:#8ef3c4;
+--amber:#ffc878;
+--red:#ff7f98;
+--text:#f5f0fb;
+--soft:#d2c8dd;
+--muted:#a79bb4;
+--dim:#766a84;
+--line:rgba(210,190,255,.20);
+--line2:rgba(210,190,255,.35);
+--shadow:0 30px 90px rgba(0,0,0,.38);
+--max:1440px
+}
+
+*{box-sizing:border-box}
+
+html{
+scroll-behavior:smooth;
+background:var(--bg)
+}
+
+body{
+margin:0;
+min-height:100vh;
+overflow-x:hidden;
+color:var(--text);
+font-family:Inter,system-ui,sans-serif;
+line-height:1.7;
+background:
+radial-gradient(circle at 78% 7%,rgba(170,126,239,.22),transparent 30%),
+radial-gradient(circle at 10% 34%,rgba(120,88,183,.17),transparent 31%),
+radial-gradient(circle at 65% 72%,rgba(102,74,162,.12),transparent 34%),
+linear-gradient(180deg,#241b3b,#1b1430 36%,#171126 72%,#120d1e)
+}
+
+body:before{
+content:"";
+position:fixed;
+inset:0;
+z-index:-2;
+pointer-events:none;
+background-image:
+radial-gradient(circle,rgba(255,255,255,.7) 0 1px,transparent 1.4px);
+background-size:154px 154px;
+opacity:.07
+}
+
+a{
+color:inherit;
+text-decoration:none
+}
+
+button{
+font:inherit
+}
+
+.skip{
+position:absolute;
+left:15px;
+top:8px;
+z-index:5000;
+padding:10px 14px;
+background:#090611;
+border:1px solid var(--line);
+transform:translateY(-160%)
+}
+
+.skip:focus{
+transform:none
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.site-header{
+position:sticky;
+top:0;
+z-index:3000;
+background:rgba(17,12,29,.78);
+backdrop-filter:blur(22px);
+border-bottom:1px solid rgba(211,188,255,.15);
+box-shadow:0 14px 44px rgba(0,0,0,.18)
+}
+
+.nav{
+width:min(var(--max),calc(100% - 52px));
+min-height:76px;
+margin:auto;
+display:flex;
+align-items:center;
+gap:22px
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:12px;
+min-width:max-content
+}
+
+.brand-mark{
+width:40px;
+height:40px;
+display:grid;
+place-items:center;
+border:1px solid rgba(205,185,255,.48);
+background:rgba(205,185,255,.08);
+color:var(--lav);
+font:800 9px 'Space Mono';
+transform:rotate(45deg);
+box-shadow:0 0 28px rgba(172,127,239,.12)
+}
+
+.brand-mark span{
+transform:rotate(-45deg)
+}
+
+.brand-title{
+font:800 15px Orbitron;
+letter-spacing:.13em
+}
+
+.brand-sub{
+display:block;
+margin-top:3px;
+color:var(--dim);
+font:700 8px 'Space Mono';
+letter-spacing:.14em
+}
+
+.nav-links{
+margin-left:auto;
+display:flex;
+gap:3px
+}
+
+.nav-links a{
+padding:10px 11px;
+border:1px solid transparent;
+color:#bdb3c9;
+font:700 9px 'Space Mono';
+letter-spacing:.06em;
+text-transform:uppercase;
+transition:.25s
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+color:#fff;
+background:rgba(205,185,255,.07);
+border-color:var(--line)
+}
+
+.live{
+color:#dfffee!important
+}
+
+.live-dot,
+.status:before{
+display:inline-block;
+width:6px;
+height:6px;
+border-radius:50%;
+background:var(--mint);
+box-shadow:0 0 12px rgba(142,243,196,.8)
+}
+
+.live-dot{
+margin-right:7px
+}
+
+.status{
+white-space:nowrap;
+color:var(--mint);
+font:700 8px 'Space Mono';
+letter-spacing:.1em
+}
+
+.status:before{
+content:"";
+margin-right:7px
+}
+
+.menu{
+display:none;
+margin-left:auto;
+border:1px solid var(--line);
+background:transparent;
+color:#fff;
+padding:10px 12px;
+font:700 10px 'Space Mono'
+}
+
+.mobile-nav{
+display:none;
+background:rgba(14,9,24,.97);
+border-top:1px solid var(--line)
+}
+
+.mobile-nav.open{
+display:block
+}
+
+.mobile-nav a{
+display:block;
+padding:14px 26px;
+border-bottom:1px solid rgba(205,185,255,.09);
+font:700 10px 'Space Mono'
+}
+
+.container{
+width:min(var(--max),calc(100% - 52px));
+margin:auto
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+position:relative;
+min-height:640px;
+padding:100px 0 88px;
+display:grid;
+grid-template-columns:1.08fr .92fr;
+gap:66px;
+align-items:center;
+overflow:hidden
+}
+
+.hero:after{
+content:"MISSION DOSSIER";
+position:absolute;
+right:-15px;
+bottom:10px;
+color:rgba(205,185,255,.035);
+font:900 clamp(80px,14vw,210px) Michroma;
+letter-spacing:-.08em;
+pointer-events:none
+}
+
+.kicker,
+.section-kicker{
+color:var(--cyan);
+font:700 9px 'Space Mono';
+letter-spacing:.18em
+}
+
+.hero h1{
+font:900 clamp(45px,6.7vw,94px)/.95 Audiowide;
+letter-spacing:-.055em;
+margin:18px 0 24px
+}
+
+.hero h1 span{
+display:block;
+color:var(--lav);
+font-family:Michroma;
+letter-spacing:-.04em
+}
+
+.hero p{
+max-width:780px;
+color:var(--soft);
+font-size:16px;
+line-height:1.9
+}
+
+.chips{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+margin-top:26px
+}
+
+.chip{
+padding:8px 10px;
+border:1px solid var(--line);
+background:rgba(205,185,255,.045);
+color:#d8cde5;
+font:700 8px 'Space Mono';
+letter-spacing:.08em
+}
+
+.hero-art{
+min-height:450px;
+border:1px solid var(--line);
+border-radius:36px 8px 48px 14px;
+background:
+radial-gradient(circle at 52% 47%,rgba(166,124,235,.17),transparent 31%),
+rgba(10,6,18,.4);
+position:relative;
+overflow:hidden;
+box-shadow:var(--shadow)
+}
+
+.hero-art:before{
+content:"";
+position:absolute;
+inset:24px;
+border:1px solid rgba(205,185,255,.12);
+border-radius:28px 8px 36px 8px
+}
+
+.grid{
+position:absolute;
+inset:0;
+background:
+linear-gradient(rgba(205,185,255,.035) 1px,transparent 1px),
+linear-gradient(90deg,rgba(205,185,255,.035) 1px,transparent 1px);
+background-size:45px 45px
+}
+
+.earth{
+position:absolute;
+width:190px;
+height:190px;
+left:50%;
+top:51%;
+transform:translate(-50%,-50%);
+border-radius:50%;
+background:
+radial-gradient(circle at 35% 27%,#d0c0dc 0 6%,#79688d 21%,#443653 48%,#22172f 73%,#100a18);
+border:1px solid rgba(205,185,255,.42);
+box-shadow:
+0 0 100px rgba(163,117,235,.22),
+inset -22px -18px 40px rgba(0,0,0,.55)
+}
+
+.orb{
+position:absolute;
+left:11%;
+right:11%;
+top:25%;
+bottom:25%;
+border:1px solid rgba(142,234,255,.28);
+border-radius:50%;
+transform:rotate(-17deg)
+}
+
+.orb.b{
+left:3%;
+right:3%;
+top:34%;
+bottom:34%;
+border-style:dashed;
+border-color:rgba(205,185,255,.2);
+transform:rotate(22deg)
+}
+
+.orb.c{
+left:19%;
+right:19%;
+top:15%;
+bottom:15%;
+border-color:rgba(255,127,152,.14);
+transform:rotate(58deg)
+}
+
+.satdot{
+position:absolute;
+width:12px;
+height:12px;
+left:22%;
+top:42%;
+background:var(--cyan);
+box-shadow:0 0 28px rgba(142,234,255,.95);
+transform:rotate(45deg)
+}
+
+.targetdot{
+position:absolute;
+width:19px;
+height:19px;
+right:19%;
+top:30%;
+border:1px solid var(--red);
+box-shadow:0 0 30px rgba(255,127,152,.7)
+}
+
+.targetdot:before,
+.targetdot:after{
+content:"";
+position:absolute;
+background:var(--red);
+opacity:.72
+}
+
+.targetdot:before{
+width:46px;
+height:1px;
+left:-14px;
+top:8px
+}
+
+.targetdot:after{
+height:46px;
+width:1px;
+left:8px;
+top:-14px
+}
+
+.visual-code,
+.visual-caption{
+position:absolute;
+font:700 7px 'Space Mono';
+letter-spacing:.11em
+}
+
+.visual-code{
+right:24px;
+top:22px;
+color:var(--red)
+}
+
+.visual-caption{
+left:24px;
+bottom:20px;
+color:#877a96
+}
+
+/* =========================================================
+   MISSION RIBBON
+========================================================= */
+
+.ribbon{
+border-top:1px solid var(--line);
+border-bottom:1px solid var(--line);
+background:rgba(13,9,22,.34)
+}
+
+.ribbon-grid{
+display:grid;
+grid-template-columns:repeat(5,1fr)
+}
+
+.ribbon-cell{
+min-height:104px;
+padding:22px 20px;
+border-right:1px solid var(--line);
+display:flex;
+flex-direction:column;
+justify-content:center
+}
+
+.ribbon-cell:last-child{
+border:0
+}
+
+.ribbon-cell b{
+font:800 13px Orbitron
+}
+
+.ribbon-cell span{
+margin-top:5px;
+color:var(--dim);
+font:700 8px 'Space Mono'
+}
+
+/* =========================================================
+   GENERAL SECTIONS
+========================================================= */
+
+.section{
+position:relative;
+padding:112px 0
+}
+
+.section:before{
+content:"";
+position:absolute;
+top:0;
+left:50%;
+width:min(var(--max),calc(100% - 52px));
+height:1px;
+transform:translateX(-50%);
+background:linear-gradient(90deg,transparent,var(--line),transparent)
+}
+
+.section-head{
+display:flex;
+justify-content:space-between;
+gap:40px;
+align-items:end
+}
+
+.section-title{
+font:900 clamp(30px,4.3vw,58px)/1.03 Audiowide;
+letter-spacing:-.045em;
+margin:15px 0 18px
+}
+
+.section-title span{
+color:var(--lav)
+}
+
+.section-lead{
+max-width:920px;
+color:var(--soft);
+font-size:15px;
+line-height:1.9;
+margin:0
+}
+
+.section-index{
+text-align:right;
+color:var(--dim);
+font:700 8px/1.8 'Space Mono';
+white-space:nowrap
+}
+
+/* =========================================================
+   CONOPS
+========================================================= */
+
+.conops{
+display:grid;
+grid-template-columns:1.1fr .9fr;
+gap:18px;
+margin-top:42px
+}
+
+.panel{
+padding:32px;
+border:1px solid var(--line);
+background:
+linear-gradient(145deg,rgba(45,34,70,.78),rgba(18,12,30,.9));
+box-shadow:0 24px 70px rgba(0,0,0,.2);
+overflow:hidden
+}
+
+.panel:first-child{
+border-radius:32px 8px 32px 8px
+}
+
+.panel:last-child{
+border-radius:8px 32px 8px 32px
+}
+
+.panel-label{
+color:var(--lav);
+font:800 8px 'Space Mono';
+letter-spacing:.15em
+}
+
+.panel h3{
+font:800 20px Michroma;
+margin:13px 0
+}
+
+.panel p{
+color:#bdb3c8;
+font-size:12px;
+line-height:1.8
+}
+
+.trace{
+display:grid;
+gap:8px;
+margin-top:20px
+}
+
+.trace-row{
+display:grid;
+grid-template-columns:38px 1fr;
+gap:12px;
+align-items:center;
+padding:11px;
+border:1px solid rgba(205,185,255,.13);
+background:rgba(10,6,17,.3);
+border-radius:13px 4px
+}
+
+.trace-row b{
+font:800 9px 'Space Mono';
+color:var(--cyan)
+}
+
+.trace-row strong{
+font:700 11px Orbitron
+}
+
+.trace-row small{
+display:block;
+color:var(--dim);
+font-size:9px;
+margin-top:2px
+}
+
+/* =========================================================
+   MISSION SEGMENTS
+========================================================= */
+
+.segment-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:16px;
+margin-top:40px
+}
+
+.segment{
+min-height:240px;
+padding:28px;
+border:1px solid var(--line);
+background:rgba(25,18,42,.7);
+position:relative;
+overflow:hidden
+}
+
+.segment:nth-child(1){
+border-radius:30px 8px 8px 30px
+}
+
+.segment:nth-child(2){
+border-radius:8px 30px 8px 30px
+}
+
+.segment:nth-child(3){
+border-radius:8px 8px 30px 30px
+}
+
+.segment-no{
+font:900 42px Orbitron;
+color:rgba(205,185,255,.18)
+}
+
+.segment h3{
+font:800 17px Michroma;
+margin:7px 0
+}
+
+.segment p{
+color:var(--muted);
+font-size:11px;
+line-height:1.75
+}
+
+.segment i{
+position:absolute;
+left:28px;
+right:28px;
+bottom:23px;
+height:1px;
+background:linear-gradient(90deg,var(--lav2),transparent)
+}
+
+/* =========================================================
+   JUMP NAVIGATION
+========================================================= */
+
+.jump-shell{
+margin-top:38px;
+padding:17px;
+border:1px solid var(--line);
+background:rgba(15,10,25,.36);
+border-radius:26px 8px
+}
+
+.jump-label{
+color:var(--dim);
+font:700 8px 'Space Mono';
+letter-spacing:.13em
+}
+
+.jump-grid{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:7px;
+margin-top:9px
+}
+
+.jump{
+padding:11px;
+border:1px solid rgba(205,185,255,.15);
+background:rgba(205,185,255,.035);
+color:#cfc5d9;
+font:700 8px 'Space Mono';
+transition:.25s
+}
+
+.jump:hover{
+color:#fff;
+border-color:var(--line2);
+background:rgba(205,185,255,.09);
+transform:translateY(-2px)
+}
+
+/* =========================================================
+   STAGE CARDS
+========================================================= */
+
+.stage-list{
+display:grid;
+gap:24px;
+margin-top:40px
+}
+
+.stage{
+scroll-margin-top:105px;
+border:1px solid var(--line);
+background:
+linear-gradient(145deg,rgba(43,32,67,.78),rgba(15,10,26,.91));
+box-shadow:var(--shadow);
+overflow:hidden
+}
+
+.stage:nth-child(3n+1){
+border-radius:34px 10px 10px 34px
+}
+
+.stage:nth-child(3n+2){
+border-radius:10px 34px 10px 34px
+}
+
+.stage:nth-child(3n){
+border-radius:10px 10px 34px 34px
+}
+
+.stage-head{
+display:grid;
+grid-template-columns:94px 1fr auto;
+gap:22px;
+align-items:center;
+padding:25px 28px;
+border-bottom:1px solid var(--line);
+background:linear-gradient(90deg,rgba(205,185,255,.075),transparent)
+}
+
+.num{
+font:900 35px Orbitron;
+color:var(--lav)
+}
+
+.phase{
+color:var(--cyan);
+font:700 8px 'Space Mono';
+letter-spacing:.15em
+}
+
+.stage h3{
+font:800 clamp(18px,2.1vw,25px) Michroma;
+margin:6px 0 0
+}
+
+.sub{
+color:var(--dim);
+font:700 8px 'Space Mono';
+letter-spacing:.08em;
+margin-top:6px
+}
+
+.state{
+padding:8px 10px;
+border:1px solid rgba(142,243,196,.25);
+background:rgba(142,243,196,.04);
+color:var(--mint);
+font:800 8px 'Space Mono';
+white-space:nowrap
+}
+
+.stage-body{
+display:grid;
+grid-template-columns:1fr 1.08fr
+}
+
+.copy{
+padding:31px
+}
+
+.objective{
+color:#d7cedf;
+font-size:13px;
+line-height:1.85;
+margin:0 0 23px
+}
+
+.data-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:9px
+}
+
+.data{
+min-height:94px;
+padding:13px;
+border:1px solid rgba(205,185,255,.13);
+background:rgba(8,5,14,.28);
+transition:.25s
+}
+
+.data:hover{
+transform:translateY(-2px);
+border-color:rgba(205,185,255,.28)
+}
+
+.data label{
+display:block;
+color:var(--dim);
+font:700 7px 'Space Mono';
+letter-spacing:.12em
+}
+
+.data strong{
+display:block;
+color:#eee8f5;
+font-size:10px;
+line-height:1.5;
+margin-top:7px
+}
+
+.verify{
+margin-top:10px;
+padding:14px 15px;
+border-left:2px solid var(--cyan);
+background:
+linear-gradient(90deg,rgba(142,234,255,.05),transparent);
+color:#aaa0b2;
+font-size:10px;
+line-height:1.7
+}
+
+.verify b{
+color:#e1d8e8
+}
+
+/* =========================================================
+   ENGINEERING GRAPHICS
+========================================================= */
+
+.art{
+position:relative;
+min-height:410px;
+margin:0;
+border-left:1px solid var(--line);
+display:flex;
+align-items:center;
+justify-content:center;
+background:
+radial-gradient(circle at 50% 50%,rgba(167,124,235,.14),transparent 48%),
+#110b1d;
+overflow:hidden
+}
+
+.art:before{
+content:"";
+position:absolute;
+inset:24px;
+border:1px solid rgba(205,185,255,.09);
+border-radius:24px 7px
+}
+
+.art:after{
+content:"ENGINEERING SCHEMATIC";
+position:absolute;
+right:24px;
+top:18px;
+color:rgba(205,185,255,.28);
+font:700 7px 'Space Mono';
+letter-spacing:.15em
+}
+
+.art svg{
+width:94%;
+position:relative;
+z-index:1;
+filter:drop-shadow(0 20px 34px rgba(0,0,0,.3))
+}
+
+.caption{
+position:absolute;
+left:24px;
+bottom:17px;
+color:#74677f;
+font:700 7px 'Space Mono';
+letter-spacing:.08em;
+z-index:2
+}
+
+.slabel{
+font:700 10px 'Space Mono';
+letter-spacing:2px;
+fill:#cdb9ff
+}
+
+.ssmall{
+font:700 8px 'Space Mono';
+letter-spacing:1.4px;
+fill:#887a96
+}
+
+.sl{
+stroke:#8eeaff;
+stroke-width:1.5;
+fill:none;
+opacity:.7
+}
+
+.sl2{
+stroke:#cdb9ff;
+stroke-width:1;
+fill:none;
+opacity:.34
+}
+
+.node{
+fill:#211735;
+stroke:#cdb9ff;
+stroke-width:1.2
+}
+
+.target{
+fill:none;
+stroke:#ff7f98;
+stroke-width:2
+}
+
+.sat{
+fill:#171024;
+stroke:#8eeaff;
+stroke-width:1.6
+}
+
+.stage:nth-child(5) .art{
+background:
+radial-gradient(circle,rgba(255,127,152,.13),transparent 48%),
+#110b1d
+}
+
+.stage:nth-child(6) .art,
+.stage:nth-child(11) .art{
+background:
+radial-gradient(circle,rgba(255,200,120,.12),transparent 50%),
+#110b1d
+}
+
+.stage:nth-child(9) .art,
+.stage:nth-child(13) .art{
+background:
+radial-gradient(circle,rgba(142,243,196,.12),transparent 50%),
+#110b1d
+}
+
+/* =========================================================
+   DECISION AUTHORITY
+========================================================= */
+
+.decision{
+display:grid;
+grid-template-columns:1.08fr .92fr;
+gap:18px;
+margin-top:40px
+}
+
+.decision-panel{
+padding:32px;
+border:1px solid var(--line);
+background:
+linear-gradient(145deg,rgba(44,33,69,.72),rgba(15,10,26,.9))
+}
+
+.decision-panel:first-child{
+border-radius:30px 8px 8px 30px
+}
+
+.decision-panel:last-child{
+border-radius:8px 30px 30px 8px
+}
+
+.decision-panel h3,
+.record h3,
+.boundary h3{
+font:800 17px Michroma;
+margin:0 0 18px
+}
+
+.table{
+width:100%;
+border-collapse:collapse;
+font-size:10px
+}
+
+.table th{
+text-align:left;
+color:var(--dim);
+font:700 7px 'Space Mono';
+padding:10px;
+border-bottom:1px solid var(--line)
+}
+
+.table td{
+padding:12px 10px;
+border-bottom:1px solid rgba(205,185,255,.1);
+color:#c6bdcf;
+vertical-align:top
+}
+
+.table td:first-child{
+font:800 8px 'Space Mono';
+white-space:nowrap
+}
+
+.hold{
+color:var(--amber)!important
+}
+
+.abort{
+color:var(--red)!important
+}
+
+.proceed{
+color:var(--mint)!important
+}
+
+.gates{
+display:grid;
+gap:8px
+}
+
+.gate{
+display:grid;
+grid-template-columns:32px 1fr auto;
+gap:10px;
+align-items:center;
+padding:11px;
+border:1px solid rgba(205,185,255,.13);
+background:rgba(9,6,16,.3);
+border-radius:14px 4px
+}
+
+.gate-no{
+width:27px;
+height:27px;
+display:grid;
+place-items:center;
+border:1px solid rgba(205,185,255,.25);
+border-radius:50%;
+font:800 8px 'Space Mono';
+color:var(--lav)
+}
+
+.gate strong{
+font:700 10px Orbitron
+}
+
+.gate span{
+color:var(--dim);
+font:700 7px 'Space Mono'
+}
+
+.states{
+display:flex;
+flex-wrap:wrap;
+gap:7px;
+margin-top:16px
+}
+
+.states span{
+padding:8px 9px;
+border:1px solid rgba(205,185,255,.15);
+background:rgba(205,185,255,.04);
+font:700 7px 'Space Mono';
+color:#c9bfd3
+}
+
+.states .active{
+color:var(--cyan);
+border-color:rgba(142,234,255,.3)
+}
+
+/* =========================================================
+   ENGINEERING RECORD
+========================================================= */
+
+.records{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+margin-top:38px
+}
+
+.record{
+min-height:165px;
+padding:23px;
+border:1px solid var(--line);
+background:rgba(26,19,44,.65)
+}
+
+.record:nth-child(1){
+border-radius:24px 6px 6px 6px
+}
+
+.record:nth-child(2){
+border-radius:6px 24px 6px 6px
+}
+
+.record:nth-child(3){
+border-radius:6px 6px 24px 6px
+}
+
+.record:nth-child(4){
+border-radius:6px 6px 6px 24px
+}
+
+.record-no{
+font:900 25px Orbitron;
+color:rgba(205,185,255,.26)
+}
+
+.record h3{
+margin:7px 0
+}
+
+.record p,
+.boundary p{
+margin:0;
+color:var(--muted);
+font-size:10px;
+line-height:1.75
+}
+
+/* =========================================================
+   MODEL BOUNDARY
+========================================================= */
+
+.boundary{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+margin-top:42px
+}
+
+.boundary-card{
+padding:30px;
+border:1px solid var(--line);
+background:rgba(24,17,40,.68)
+}
+
+.boundary-card:first-child{
+border-radius:26px 8px
+}
+
+.boundary-card:last-child{
+border-radius:8px 26px
+}
+
+.boundary ul{
+margin:15px 0 0;
+padding-left:18px;
+color:#9f93ab;
+font-size:10px
+}
+
+.boundary li{
+margin:6px 0
+}
+
+.notice{
+margin-top:18px;
+padding:14px 16px;
+border:1px solid rgba(255,200,120,.2);
+background:rgba(255,200,120,.035);
+color:#b9aeb9;
+font-size:9px
+}
+
+.notice b{
+color:var(--amber)
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+padding:70px 0 90px;
+border-top:1px solid var(--line);
+background:rgba(10,7,16,.3)
+}
+
+.footer-grid{
+display:grid;
+grid-template-columns:1fr auto;
+gap:40px
+}
+
+.footer-title{
+font:800 12px Orbitron;
+letter-spacing:.08em
+}
+
+.footer-copy{
+margin-top:8px;
+color:var(--dim);
+font:700 8px 'Space Mono'
+}
+
+.footer-source{
+max-width:850px;
+margin-top:15px;
+color:#756a80;
+font-size:9px;
+line-height:1.7
+}
+
+.footer-right{
+text-align:right;
+color:#7d7188;
+font:700 8px/2 'Space Mono';
+letter-spacing:.1em
+}
+
+/* =========================================================
+   UNIQUE SCROLL REVEALS
+========================================================= */
+
+.reveal{
+opacity:0;
+will-change:transform,opacity,filter;
+transition:
+opacity .82s cubic-bezier(.16,1,.3,1),
+transform .82s cubic-bezier(.16,1,.3,1),
+filter .82s ease
+}
+
+.reveal.show{
+opacity:1;
+transform:none!important;
+filter:none!important
+}
+
+.fx-l{
+transform:translateX(-70px);
+filter:blur(7px)
+}
+
+.fx-r{
+transform:translateX(70px);
+filter:blur(7px)
+}
+
+.fx-u{
+transform:translateY(60px);
+filter:blur(6px)
+}
+
+.fx-d{
+transform:translateY(-55px);
+filter:blur(6px)
+}
+
+.fx-s{
+transform:scale(.86);
+filter:blur(6px)
+}
+
+.fx-tl{
+transform:translateX(-50px) rotate(-2deg);
+filter:blur(5px)
+}
+
+.fx-tr{
+transform:translateX(50px) rotate(2deg);
+filter:blur(5px)
+}
+
+.fx-z{
+transform:scale(.72);
+filter:blur(8px)
+}
+
+.fx-shl{
+transform:translateX(-45px) skewX(-4deg);
+filter:blur(5px)
+}
+
+.fx-shr{
+transform:translateX(45px) skewX(4deg);
+filter:blur(5px)
+}
+
+.fx-o{
+transform:translateX(55px) rotate(4deg) scale(.94);
+filter:blur(6px)
+}
+
+.fx-f{
+transform:perspective(900px) rotateX(8deg) translateY(45px);
+filter:blur(5px)
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1120px){
+
+.nav-links,
+.status{
+display:none
+}
+
+.menu{
+display:block
+}
+
+.hero{
+grid-template-columns:1fr;
+min-height:auto
+}
+
+.conops,
+.decision,
+.boundary{
+grid-template-columns:1fr
+}
+
+.segment-grid{
+grid-template-columns:1fr
+}
+
+.stage-body{
+grid-template-columns:1fr
+}
+
+.art{
+border-left:0;
+border-top:1px solid var(--line)
+}
+
+.records{
+grid-template-columns:repeat(2,1fr)
+}
+
+.jump-grid{
+grid-template-columns:repeat(3,1fr)
+}
+
+}
+
+@media(max-width:760px){
+
+.container,
+.nav{
+width:min(100% - 30px,var(--max))
+}
+
+.hero{
+padding:72px 0 62px
+}
+
+.hero h1{
+font-size:clamp(38px,12vw,64px)
+}
+
+.hero-art{
+min-height:330px
+}
+
+.earth{
+width:145px;
+height:145px
+}
+
+.ribbon-grid{
+grid-template-columns:1fr 1fr
+}
+
+.ribbon-cell{
+border-bottom:1px solid var(--line)
+}
+
+.section{
+padding:80px 0
+}
+
+.section-head{
+display:block
+}
+
+.section-index{
+text-align:left;
+margin-top:14px
+}
+
+.stage-head{
+grid-template-columns:58px 1fr;
+gap:13px;
+padding:20px
+}
+
+.state{
+grid-column:2;
+justify-self:start
+}
+
+.stage h3{
+font-size:17px
+}
+
+.copy{
+padding:23px
+}
+
+.data-grid{
+grid-template-columns:1fr
+}
+
+.art{
+min-height:300px
+}
+
+.records{
+grid-template-columns:1fr
+}
+
+.jump-grid{
+grid-template-columns:repeat(2,1fr)
+}
+
+.footer-grid{
+grid-template-columns:1fr
+}
+
+.footer-right{
+text-align:left
+}
+
+.table{
+display:block;
+overflow-x:auto
+}
+
+.table th,
+.table td{
+min-width:145px
+}
+
+}
+
+@media(prefers-reduced-motion:reduce){
+
+html{
+scroll-behavior:auto
+}
+
+.reveal,
+.reveal.show{
+opacity:1!important;
+transform:none!important;
+filter:none!important;
+transition:none!important
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<a class="skip" href="#main">Skip to mission dossier</a>
+
+<header class="site-header">
+
+<div class="nav">
+
+<a class="brand" href="index.html" aria-label="Autonomous Space Debris Monitoring and Capture System home">
+
+<span class="brand-mark"><span>ADCS</span></span>
+
+<span>
+<span class="brand-title">ADCS</span>
+<span class="brand-sub">ORBITAL OPERATIONS SYSTEM</span>
+</span>
+
+</a>
+
+<nav class="nav-links" aria-label="Primary navigation">
+
+<a href="index.html">Home</a>
+
+<a href="system_operation.html" class="active">Mission Dossier</a>
+
+<a href="foc.html">Flight Operations Centre</a>
+
+<a href="orbitview.html">OrbitView</a>
+
+<a href="simulation.html" class="live">
+<span class="live-dot"></span>
+Live Simulation
+</a>
+
+</nav>
+
+<span class="status">SYSTEM READY</span>
+
+<button class="menu" id="menu" aria-expanded="false" aria-controls="mobile">
+MENU
+</button>
+
+</div>
+
+<nav class="mobile-nav" id="mobile">
+
+<a href="index.html">HOME</a>
+<a href="system_operation.html">MISSION DOSSIER</a>
+<a href="foc.html">FLIGHT OPERATIONS CENTRE</a>
+<a href="orbitview.html">ORBITVIEW</a>
+<a href="simulation.html">LIVE SIMULATION</a>
+
+</nav>
+
+</header>
+
+
+<main id="main">
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+<div class="container" style="display:contents">
+
+<div class="reveal fx-l">
+
+<div class="kicker">
+01 · MISSION CONCEPT OF OPERATIONS
+</div>
+
+<h1>
+<span>AUTONOMOUS</span>
+MISSION
+<span>SEQUENCE</span>
+</h1>
+
+<p>
+A structured fifteen-stage mission sequence for the
+<strong>Autonomous Space Debris Monitoring &amp; Capture System</strong>.
+The dossier traces the conceptual flow from orbital surveillance and
+object characterization through target authorization, relative navigation,
+controlled capture, containment and return to a known mission state.
+</p>
+
+<div class="chips">
+
+<span class="chip">ADCS-01</span>
+<span class="chip">LEO OPERATING MODEL</span>
+<span class="chip">15 STAGES</span>
+<span class="chip">CLOSED-LOOP CONTROL</span>
+<span class="chip">SIMULATION BASELINE</span>
+
+</div>
+
+</div>
+
+
+<div class="hero-art reveal fx-r">
+
+<div class="grid"></div>
+
+<div class="orb"></div>
+<div class="orb b"></div>
+<div class="orb c"></div>
+
+<div class="earth"></div>
+
+<div class="satdot"></div>
+<div class="targetdot"></div>
+
+<div class="visual-code">
+MISSION DOSSIER / ADCS-01
+</div>
+
+<div class="visual-caption">
+SURVEILLANCE → ASSESSMENT → RENDEZVOUS → CAPTURE → CONTINUATION
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     MISSION RIBBON
+===================================================== -->
+
+<section class="ribbon">
+
+<div class="container ribbon-grid">
+
+<div class="ribbon-cell reveal fx-u">
+<b>15</b>
+<span>CONTROLLED STAGES</span>
+</div>
+
+<div class="ribbon-cell reveal fx-d">
+<b>05</b>
+<span>DECISION OUTCOMES</span>
+</div>
+
+<div class="ribbon-cell reveal fx-u">
+<b>03</b>
+<span>OPERATIONAL SEGMENTS</span>
+</div>
+
+<div class="ribbon-cell reveal fx-d">
+<b>01</b>
+<span>ACTIVE TARGET AUTHORITY</span>
+</div>
+
+<div class="ribbon-cell reveal fx-u">
+<b>V&amp;V</b>
+<span>TRACEABLE VERIFICATION FOCUS</span>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     OPERATING LOGIC
+===================================================== -->
+
+<section class="section">
+
+<div class="container">
+
+<div class="section-head reveal fx-l">
+
+<div>
+
+<div class="section-kicker">
+02 · OPERATING LOGIC
+</div>
+
+<h2 class="section-title">
+One mission,
+<span>one traceable chain.</span>
+</h2>
+
+<p class="section-lead">
+The dossier separates observation, state estimation, decision authority
+and physical action. Each stage declares its principal input,
+processing function, resulting state and verification focus so that
+the simulated mission can be inspected as an engineering process
+rather than as unrelated animations.
+</p>
+
+</div>
+
+<div class="section-index">
+CONOPS / FUNCTIONAL TRACE<br>
+ADCS-01 / BASELINE 2026
+</div>
+
+</div>
+
+
+<div class="conops">
+
+
+<article class="panel reveal fx-shl">
+
+<div class="panel-label">
+MISSION CONTROL PRINCIPLE
+</div>
+
+<h3>
+OBSERVE → ESTIMATE → AUTHORIZE → ACT → RE-OBSERVE
+</h3>
+
+<p>
+The control loop is deliberately closed. Measurements are converted
+into a state estimate, mission logic evaluates constraints and selects
+an allowed transition, guidance and capture functions act, and the
+resulting state is observed again before the next cycle.
+</p>
+
+
+<div class="trace">
+
+<div class="trace-row">
+<b>01</b>
+<div>
+<strong>OBSERVE</strong>
+<small>Acquire object, environment and relative-motion measurements.</small>
+</div>
+</div>
+
+<div class="trace-row">
+<b>02</b>
+<div>
+<strong>ESTIMATE</strong>
+<small>Maintain a usable relative state and uncertainty representation.</small>
+</div>
+</div>
+
+<div class="trace-row">
+<b>03</b>
+<div>
+<strong>AUTHORIZE</strong>
+<small>Evaluate safety, geometry, resources and target validity.</small>
+</div>
+</div>
+
+<div class="trace-row">
+<b>04</b>
+<div>
+<strong>ACT</strong>
+<small>Execute the selected guidance, reorientation or capture action.</small>
+</div>
+</div>
+
+<div class="trace-row">
+<b>05</b>
+<div>
+<strong>RE-OBSERVE</strong>
+<small>Confirm the resulting state and determine the next transition.</small>
+</div>
+</div>
+
+</div>
+
+</article>
+
+
+<article class="panel reveal fx-shr">
+
+<div class="panel-label">
+MISSION STATE DISCIPLINE
+</div>
+
+<h3>
+NO ACTION WITHOUT A VALID STATE
+</h3>
+
+<p>
+Progression is gated by the information available to the mission manager.
+Loss of target validity, a safety violation, inadequate relative geometry
+or insufficient resources routes the sequence to a defined safe state
+instead of forcing the next action.
+</p>
+
+
+<div class="trace">
+
+<div class="trace-row">
+<b>H</b>
+<div>
+<strong>HOLD</strong>
+<small>Remain safe while additional observations or margin are required.</small>
+</div>
+</div>
+
+<div class="trace-row">
+<b>A</b>
+<div>
+<strong>ABORT</strong>
+<small>Terminate proximity activity and return to a defined safe state.</small>
+</div>
+</div>
+
+<div class="trace-row">
+<b>P</b>
+<div>
+<strong>PROCEED</strong>
+<small>Enter the applicable capture branch only after the gate is satisfied.</small>
+</div>
+</div>
+
+</div>
+
+</article>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     MISSION PHASE MODEL
+===================================================== -->
+
+<section class="section">
+
+<div class="container">
+
+<div class="section-head reveal fx-r">
+
+<div>
+
+<div class="section-kicker">
+03 · MISSION PHASE MODEL
+</div>
+
+<h2 class="section-title">
+Three segments.
+<span>Fifteen controlled stages.</span>
+</h2>
+
+<p class="section-lead">
+The sequence is grouped by operational purpose. These are simulation-level
+functional segments, not claims of flight-certified phase boundaries.
+</p>
+
+</div>
+
+<div class="section-index">
+FUNCTIONAL DECOMPOSITION<br>
+NOT A FLIGHT PROCEDURE
+</div>
+
+</div>
+
+
+<div class="segment-grid">
+
+<article class="segment reveal fx-l">
+
+<div class="segment-no">I</div>
+
+<h3>
+DETECT &amp; ASSESS
+</h3>
+
+<p>
+Build the orbital picture, detect candidates, maintain tracks,
+estimate state and quantify risk before target authorization.
+</p>
+
+<i></i>
+
+</article>
+
+
+<article class="segment reveal fx-u">
+
+<div class="segment-no">II</div>
+
+<h3>
+DECIDE &amp; RENDEZVOUS
+</h3>
+
+<p>
+Select one target, apply decision logic, reorient the spacecraft
+and execute the simulated rendezvous and controlled approach.
+</p>
+
+<i></i>
+
+</article>
+
+
+<article class="segment reveal fx-r">
+
+<div class="segment-no">III</div>
+
+<h3>
+CAPTURE &amp; CONTINUE
+</h3>
+
+<p>
+Configure the mechanism, capture the target, transfer it to storage,
+verify containment and reset the mission.
+</p>
+
+<i></i>
+
+</article>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     15-STAGE SEQUENCE
+===================================================== -->
+
+<section class="section" id="sequence">
+
+<div class="container">
+
+<div class="section-head reveal fx-s">
+
+<div>
+
+<div class="section-kicker">
+04 · STAGE EXECUTION RECORD
+</div>
+
+<h2 class="section-title">
+Fifteen stages,
+<span>fifteen engineering views.</span>
+</h2>
+
+<p class="section-lead">
+Every stage has its own graphical schematic, state record and verification
+focus. The graphics are original engineering schematics: they communicate
+system relationships without presenting the conceptual model as
+flight-qualified hardware.
+</p>
+
+</div>
+
+<div class="section-index">
+SCROLL TO TRACE THE MISSION<br>
+ORIGINAL PROJECT GRAPHICS
+</div>
+
+</div>
+
+
+<div class="jump-shell reveal fx-u">
+
+<div class="jump-label">
+JUMP TO STAGE
+</div>
+
+<div class="jump-grid" id="jumps"></div>
+
+</div>
+
+
+<div class="stage-list" id="stages"></div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     DECISION AUTHORITY
+===================================================== -->
+
+<section class="section">
+
+<div class="container">
+
+<div class="section-head reveal fx-l">
+
+<div>
+
+<div class="section-kicker">
+05 · DECISION AUTHORITY
+</div>
+
+<h2 class="section-title">
+Progression is controlled by
+<span>explicit gates.</span>
+</h2>
+
+<p class="section-lead">
+The mission manager does not treat every candidate as immediately
+capturable. Five simulation outcomes keep safety and target validity
+visible in the operational record.
+</p>
+
+</div>
+
+<div class="section-index">
+STATE TRANSITION LOGIC<br>
+SAFE-STATE FIRST
+</div>
+
+</div>
+
+
+<div class="decision">
+
+
+<article class="decision-panel reveal fx-shl">
+
+<h3>
+Operational outcomes
+</h3>
+
+<table class="table">
+
+<thead>
+
+<tr>
+<th>OUTCOME</th>
+<th>FUNCTION</th>
+<th>SIMULATION CONDITION</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td class="hold">HOLD</td>
+<td>Maintain current safe state</td>
+<td>
+State quality, geometry or margin is insufficient for the next transition.
+</td>
+</tr>
+
+<tr>
+<td class="abort">ABORT</td>
+<td>Terminate proximity activity</td>
+<td>
+A safety constraint is violated, target validity is lost or approach conditions diverge.
+</td>
+</tr>
+
+<tr>
+<td class="proceed">PROCEED — SMALL</td>
+<td>Gripper-oriented branch</td>
+<td>
+Target classification and geometry are compatible with small-object handling.
+</td>
+</tr>
+
+<tr>
+<td class="proceed">PROCEED — LARGE</td>
+<td>Circular-ring branch</td>
+<td>
+Target classification and geometry are compatible with the larger-object concept.
+</td>
+</tr>
+
+<tr>
+<td class="proceed">PROCEED — MULTIPLE</td>
+<td>Return to selection</td>
+<td>
+Multiple candidates remain eligible; one object receives active capture authority.
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</article>
+
+
+<article class="decision-panel reveal fx-shr">
+
+<h3>
+State transition chain
+</h3>
+
+<div class="gates">
+
+<div class="gate">
+<b class="gate-no">01</b>
+<strong>SURVEILLANCE</strong>
+<span>OBSERVE</span>
+</div>
+
+<div class="gate">
+<b class="gate-no">02</b>
+<strong>ASSESSMENT</strong>
+<span>ESTIMATE</span>
+</div>
+
+<div class="gate">
+<b class="gate-no">03</b>
+<strong>TARGET LOCK</strong>
+<span>AUTHORIZE</span>
+</div>
+
+<div class="gate">
+<b class="gate-no">04</b>
+<strong>RENDEZVOUS / APPROACH</strong>
+<span>CONTROL</span>
+</div>
+
+<div class="gate">
+<b class="gate-no">05</b>
+<strong>CAPTURE / STORAGE</strong>
+<span>ACT + VERIFY</span>
+</div>
+
+<div class="gate">
+<b class="gate-no">06</b>
+<strong>RESET</strong>
+<span>RE-OBSERVE</span>
+</div>
+
+</div>
+
+
+<div class="states">
+
+<span class="active">SURVEILLANCE</span>
+<span>ASSESSMENT</span>
+<span>RENDEZVOUS</span>
+<span>CAPTURE</span>
+<span>STORAGE</span>
+<span>RESET</span>
+
+</div>
+
+</article>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     ENGINEERING RECORD
+===================================================== -->
+
+<section class="section">
+
+<div class="container">
+
+<div class="section-head reveal fx-r">
+
+<div>
+
+<div class="section-kicker">
+06 · ENGINEERING RECORD
+</div>
+
+<h2 class="section-title">
+The dossier exposes the
+<span>reasoning chain.</span>
+</h2>
+
+<p class="section-lead">
+Each transition can be traced through four records: the information
+entering the function, the function being performed, the resulting
+state and the check used to verify the simulated transition.
+</p>
+
+</div>
+
+<div class="section-index">
+INPUT → FUNCTION → STATE → VERIFICATION
+</div>
+
+</div>
+
+
+<div class="records">
+
+<article class="record reveal fx-l">
+
+<div class="record-no">01</div>
+
+<h3>INPUT</h3>
+
+<p>
+Sensor observations, propagated state, target characteristics,
+spacecraft state and resource availability.
+</p>
+
+</article>
+
+
+<article class="record reveal fx-u">
+
+<div class="record-no">02</div>
+
+<h3>FUNCTION</h3>
+
+<p>
+Detection, estimation, risk evaluation, decision logic,
+guidance, attitude control or capture.
+</p>
+
+</article>
+
+
+<article class="record reveal fx-d">
+
+<div class="record-no">03</div>
+
+<h3>STATE</h3>
+
+<p>
+Mission state, target validity, relative geometry,
+capture status and storage condition.
+</p>
+
+</article>
+
+
+<article class="record reveal fx-r">
+
+<div class="record-no">04</div>
+
+<h3>VERIFICATION</h3>
+
+<p>
+An observable check that the simulated transition occurred
+within intended logical and resource constraints.
+</p>
+
+</article>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     VERIFICATION / MODEL BOUNDARY
+===================================================== -->
+
+<section class="section">
+
+<div class="container">
+
+<div class="section-head reveal fx-s">
+
+<div>
+
+<div class="section-kicker">
+07 · VERIFICATION &amp; MODEL BOUNDARY
+</div>
+
+<h2 class="section-title">
+Engineering discipline without
+<span>overclaiming.</span>
+</h2>
+
+<p class="section-lead">
+This website presents a conceptual simulation model. It uses
+systems-engineering traceability patterns, but it does not claim
+flight qualification, operational certification, regulatory approval
+or validated orbital performance.
+</p>
+
+</div>
+
+<div class="section-index">
+PROJECT MODEL / NOT FLIGHT HARDWARE
+</div>
+
+</div>
+
+
+<div class="boundary">
+
+
+<article class="boundary-card reveal fx-l">
+
+<h3>
+Verification focus
+</h3>
+
+<p>
+Stage-level checks support software and simulation verification
+such as state-transition testing, algorithm checks, resource accounting
+and end-to-end scenario testing.
+</p>
+
+<ul>
+
+<li>
+Verify every transition against defined mission logic.
+</li>
+
+<li>
+Route unsafe or invalid conditions to HOLD or ABORT.
+</li>
+
+<li>
+Maintain one active capture authority.
+</li>
+
+<li>
+Keep capture, transfer and storage states consistent.
+</li>
+
+<li>
+Exercise the full sequence using repeatable scenarios.
+</li>
+
+</ul>
+
+</article>
+
+
+<article class="boundary-card reveal fx-r">
+
+<h3>
+Model boundary
+</h3>
+
+<p>
+Project values and mechanisms are simulation assumptions used to make
+the interface concrete and testable.
+</p>
+
+<ul>
+
+<li>
+Surveillance radius and object counts are project configuration values.
+</li>
+
+<li>
+Spacecraft mass and storage capacity are model parameters.
+</li>
+
+<li>
+Relative motion and capture behaviour are simulated rather than flight-tested.
+</li>
+
+<li>
+Graphics are engineering schematics, not manufacturing drawings.
+</li>
+
+<li>
+Operational decisions remain inside the project mission model.
+</li>
+
+</ul>
+
+</article>
+
+</div>
+
+
+<div class="notice reveal fx-u">
+
+<b>REFERENCE FRAME:</b>
+The structure follows common systems-engineering patterns such as
+ConOps, functional decomposition, state analysis, requirements
+traceability and verification/validation thinking. It is not a claim
+of compliance with an external flight standard.
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer class="footer">
+
+<div class="container footer-grid">
+
+<div>
+
+<div class="footer-title">
+AUTONOMOUS SPACE DEBRIS MONITORING &amp; CAPTURE SYSTEM
+</div>
+
+<div class="footer-copy">
+ADCS-01 · MISSION DOSSIER · FIFTEEN-STAGE MISSION SEQUENCE
+</div>
+
+<div class="footer-source">
+Original engineering schematics are used for the fifteen mission stages.
+Any Earth imagery used elsewhere in the dashboard is credited to its source.
+This project interface is not affiliated with or endorsed by NASA.
+</div>
+
+</div>
+
+
+<div class="footer-right">
+MISSION DOSSIER<br>
+FUNCTION / STATE / DECISION / VERIFICATION<br>
+SIMULATION MODEL · 2026
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   MISSION DATA
+========================================================= */
+
+const data = [
+
+[
+'01',
+'PHASE I · DETECT & ASSESS',
+'Orbital Surveillance',
+'BUILD THE INITIAL ORBITAL PICTURE',
+'SURVEILLANCE',
+'Establish the simulated observation volume and continuously sample the environment for objects that may enter the mission monitoring region.',
+'Environmental model, spacecraft state, catalogue seed and sensor field of regard',
+'Observation scheduling and orbital propagation',
+'Updated surveillance set and time-tagged observations',
+'Mission manager / surveillance function',
+'Coverage continuity, time progression, valid coordinate frame and observation availability.'
+],
+
+[
+'02',
+'PHASE I · DETECT & ASSESS',
+'Debris Detection',
+'CONVERT OBSERVATIONS INTO CANDIDATE OBJECTS',
+'DETECTION',
+'Identify candidate debris signatures from the observation stream and create object hypotheses for subsequent tracking.',
+'Time-tagged observations and detection thresholds',
+'Feature extraction, association and candidate generation',
+'Candidate object list with initial attributes',
+'Detection function',
+'False-positive handling, object creation rules and repeatability under the same input.'
+],
+
+[
+'03',
+'PHASE I · DETECT & ASSESS',
+'Target Tracking',
+'MAINTAIN OBJECT IDENTITY THROUGH TIME',
+'TRACKING',
+'Associate successive observations with existing objects and maintain a continuously updated track for each candidate that remains observable.',
+'Candidate detections and previous track states',
+'Data association and track propagation',
+'Time-consistent target tracks',
+'Tracking function',
+'Track continuity, identity consistency, stale-track handling and update timing.'
+],
+
+[
+'04',
+'PHASE I · DETECT & ASSESS',
+'State Estimation',
+'FORM A USABLE RELATIVE STATE',
+'STATE ESTIMATION',
+'Estimate the relative position, velocity, range and other state variables required by decision and proximity-navigation functions.',
+'Tracked observations, spacecraft state and orbital model',
+'State propagation, relative-state calculation and uncertainty handling',
+'Estimated relative state with confidence indicators',
+'Navigation / estimation function',
+'Numerical consistency, coordinate-frame handling, update cadence and bounded uncertainty assumptions.'
+],
+
+[
+'05',
+'PHASE I · DETECT & ASSESS',
+'Collision / Risk Assessment',
+'QUANTIFY PROXIMITY AND OPERATIONAL RISK',
+'RISK ASSESSMENT',
+'Evaluate predicted relative geometry and motion against project safety and approach constraints before target authorization.',
+'Estimated state, predicted trajectory and safety thresholds',
+'Relative-motion analysis and constraint evaluation',
+'Risk classification and allowable-action status',
+'Mission manager with navigation inputs',
+'Threshold behaviour, collision-zone logic, margin calculation and correct HOLD / ABORT routing.'
+],
+
+[
+'06',
+'PHASE II · DECIDE & RENDEZVOUS',
+'Single-Target Selection',
+'ASSIGN ONE ACTIVE CAPTURE TARGET',
+'TARGET SELECTION',
+'Select one eligible object from the assessed candidate set while retaining other objects as non-active candidates.',
+'Eligible target list, risk state, resource state and capture constraints',
+'Target scoring / filtering and authority lock',
+'One active target ID or return-to-surveillance decision',
+'Mission manager',
+'Single-target exclusivity, deterministic selection rules and release of invalid targets.'
+],
+
+[
+'07',
+'PHASE II · DECIDE & RENDEZVOUS',
+'Decision Logic',
+'AUTHORIZE THE NEXT MISSION TRANSITION',
+'DECISION GATE',
+'Apply mission rules to determine HOLD, ABORT, small-object proceed, large-object proceed or return to target selection.',
+'Active target state, risk classification, resources and mission mode',
+'Rule evaluation and state-machine transition',
+'Authorized next state and capture mode',
+'Mission manager / state machine',
+'Priority of safety conditions, mutually exclusive outcomes and deterministic transitions.'
+],
+
+[
+'08',
+'PHASE II · DECIDE & RENDEZVOUS',
+'Spacecraft Reorientation',
+'ALIGN THE SPACECRAFT FOR THE NEXT MANEUVER',
+'ATTITUDE CONTROL',
+'Change the simulated spacecraft attitude so guidance and capture geometry can be established for the selected target.',
+'Target line-of-sight, spacecraft attitude and actuator limits',
+'Attitude error calculation and commanded reorientation',
+'Updated spacecraft orientation and stabilized pointing state',
+'GNC / attitude-control function',
+'Attitude error convergence, rate limits, command saturation and stable end condition.'
+],
+
+[
+'09',
+'PHASE II · DECIDE & RENDEZVOUS',
+'Rendezvous',
+'REDUCE RELATIVE ORBITAL SEPARATION',
+'RENDEZVOUS',
+'Execute the simulated transfer toward the selected object while monitoring relative position, velocity and safety constraints.',
+'Current relative state, target state and guidance parameters',
+'Orbital propagation, guidance update and relative-motion control',
+'Rendezvous corridor entry or safe fallback',
+'GNC / mission manager',
+'Trajectory consistency, relative-velocity behaviour, approach corridor and abort availability.'
+],
+
+[
+'10',
+'PHASE II · DECIDE & RENDEZVOUS',
+'Controlled Approach',
+'ENTER THE CAPTURE GEOMETRY UNDER CONTROLLED MOTION',
+'PROXIMITY APPROACH',
+'Reduce relative distance and velocity within the project capture envelope without allowing approach to diverge beyond defined limits.',
+'Rendezvous state, relative range and velocity limits',
+'Closed-loop position / velocity control and constraint monitoring',
+'Capture-ready relative state or HOLD / ABORT',
+'GNC / proximity controller',
+'Relative-speed limit, range threshold, divergence detection and controller stability.'
+],
+
+[
+'11',
+'PHASE III · CAPTURE & CONTINUE',
+'Capture Configuration',
+'DEPLOY THE APPROPRIATE CAPTURE MECHANISM',
+'CAPTURE CONFIGURATION',
+'Configure the capture hardware model according to target class and prepare the spacecraft for the capture event.',
+'Target size, capture mode, relative pose and mechanism state',
+'Mechanism selection, arm positioning and readiness checks',
+'Capture mechanism in ready state',
+'Capture controller / mission manager',
+'Correct mechanism selection, arm geometry, readiness interlocks and target alignment.'
+],
+
+[
+'12',
+'PHASE III · CAPTURE & CONTINUE',
+'Robotic Capture',
+'SECURE THE ACTIVE TARGET',
+'CAPTURE',
+'Execute the simulated capture using gripper-oriented handling for smaller objects or the circular-ring net concept for larger objects.',
+'Capture-ready state, target relative pose and selected mechanism',
+'Arm / end-effector control and capture-state transition',
+'Target secured by capture mechanism',
+'Robotic capture controller',
+'Capture confirmation, relative-motion containment, mechanism state and failure handling.'
+],
+
+[
+'13',
+'PHASE III · CAPTURE & CONTINUE',
+'Debris Transfer',
+'MOVE THE CAPTURED OBJECT INTO THE STORAGE PATH',
+'TRANSFER',
+'Translate the secured object from the capture location to the defined storage interface while maintaining capture state.',
+'Captured target, arm pose and storage availability',
+'Manipulator motion planning and transfer control',
+'Object aligned with storage interface',
+'Robotic subsystem / storage controller',
+'Object retention, collision clearance, transfer completion and storage-interface alignment.'
+],
+
+[
+'14',
+'PHASE III · CAPTURE & CONTINUE',
+'Storage / Containment',
+'CONFIRM RETENTION AND RESOURCE ACCOUNTING',
+'CONTAINMENT',
+'Place the captured object into the storage model, confirm containment and update mass / capacity state for the next mission decision.',
+'Transferred object, storage state and capacity model',
+'Containment state update and resource accounting',
+'Contained object record and updated storage capacity',
+'Storage controller / mission manager',
+'Containment confirmation, capacity threshold, object persistence and resource consistency.'
+],
+
+[
+'15',
+'PHASE III · CAPTURE & CONTINUE',
+'System Reset & Continuation',
+'RETURN TO A KNOWN SURVEILLANCE STATE',
+'RESET / CONTINUE',
+'Reconcile mission, navigation, robotics and storage states. After health and resource checks pass, release the completed target and return to surveillance.',
+'Post-capture subsystem state, resource state and mission log',
+'State reconciliation, controller reset and target release',
+'Known surveillance-ready state',
+'Mission manager',
+'Subsystem health, resource accounting, target release, controller reset and correct return to surveillance.'
+]
+
+];
+
+
+/* =========================================================
+   UNIQUE SCROLL MOTION PER STAGE
+========================================================= */
+
+const fx = [
+'fx-l',
+'fx-r',
+'fx-tl',
+'fx-tr',
+'fx-s',
+'fx-shl',
+'fx-shr',
+'fx-u',
+'fx-o',
+'fx-d',
+'fx-u',
+'fx-z',
+'fx-f',
+'fx-s',
+'fx-r'
+];
+
+
+/* =========================================================
+   ORIGINAL GRAPHICAL SCHEMATIC GENERATOR
+========================================================= */
+
+function art(i,title){
+
+let x = '';
+
+switch(i){
+
+case 1:
+
+x = `
+<circle cx="450" cy="250" r="70" class="node"/>
+<ellipse cx="450" cy="250" rx="320" ry="130" class="sl"/>
+<ellipse cx="450" cy="250" rx="235" ry="180"
+class="sl2" transform="rotate(-22 450 250)"/>
+<circle cx="690" cy="155" r="9" fill="#8eeaff"/>
+<text x="450" y="247" text-anchor="middle" class="slabel">OBSERVATION</text>
+<text x="450" y="265" text-anchor="middle" class="ssmall">FIELD OF REGARD</text>
+`;
+
+break;
+
+
+case 2:
+
+x = `
+<rect x="100" y="90" width="700" height="320" rx="24" class="node"/>
+<path d="M140 335 L245 255 L330 295 L430 185 L525 245 L630 150 L760 215" class="sl"/>
+<circle cx="245" cy="255" r="10" fill="#cdb9ff"/>
+<circle cx="430" cy="185" r="11" fill="#8eeaff"/>
+<circle cx="630" cy="150" r="12" fill="#ff7f98"/>
+<text x="125" y="120" class="slabel">DETECTION FIELD</text>
+<text x="600" y="382" class="ssmall">CANDIDATE SIGNATURES</text>
+`;
+
+break;
+
+
+case 3:
+
+x = `
+<path d="M80 340 C220 110 360 410 510 180 S700 120 820 250" class="sl2"/>
+<path d="M80 365 C220 140 360 435 510 205 S700 145 820 275" class="sl"/>
+<circle cx="220" cy="220" r="9" fill="#8eeaff"/>
+<circle cx="380" cy="320" r="9" fill="#8eeaff"/>
+<circle cx="550" cy="165" r="9" fill="#8eeaff"/>
+<circle cx="700" cy="165" r="9" fill="#ff7f98"/>
+<path d="M220 220 L380 320 L550 165 L700 165"
+stroke="#cdb9ff" stroke-dasharray="6 8" fill="none"/>
+<text x="80" y="110" class="slabel">TRACK ID / 05</text>
+`;
+
+break;
+
+
+case 4:
+
+x = `
+<g transform="translate(450 250)">
+<ellipse rx="250" ry="105" class="sl2"/>
+<ellipse rx="185" ry="72" class="sl" transform="rotate(-28)"/>
+<circle r="55" class="node"/>
+<path d="M-125 0 H125 M0 -125 V125" class="sl2"/>
+<path d="M0 0 L130 -70" class="sl"/>
+<circle cx="130" cy="-70" r="10" fill="#8eeaff"/>
+<text x="0" y="-5" text-anchor="middle" class="slabel">STATE</text>
+<text x="0" y="14" text-anchor="middle" class="ssmall">r / v</text>
+</g>
+<text x="90" y="90" class="slabel">RELATIVE STATE ESTIMATE</text>
+`;
+
+break;
+
+
+case 5:
+
+x = `
+<circle cx="450" cy="250" r="78" class="node"/>
+<circle cx="450" cy="250" r="155"
+fill="none" stroke="#ff7f98" stroke-dasharray="5 8"/>
+<circle cx="450" cy="250" r="235"
+fill="none" stroke="#ff7f98" opacity=".3"/>
+<circle cx="700" cy="180" r="14" class="target"/>
+<path d="M450 250 L700 180" class="sl"/>
+<text x="450" y="245" text-anchor="middle" class="slabel">SAFETY</text>
+<text x="450" y="265" text-anchor="middle" class="ssmall">MARGIN</text>
+`;
+
+break;
+
+
+case 6:
+
+x = `
+<rect x="90" y="90" width="190" height="78" rx="14" class="node"/>
+<rect x="90" y="211" width="190" height="78" rx="14" class="node"/>
+<rect x="90" y="332" width="190" height="78" rx="14" class="node"/>
+<circle cx="650" cy="250" r="86" class="node"/>
+<path d="M280 130 H520 Q650 130 650 250
+M280 250 H564
+M280 370 H520 Q650 370 650 250" class="sl"/>
+<circle cx="650" cy="250" r="12" fill="#8ef3c4"/>
+<text x="120" y="123" class="ssmall">CANDIDATE A</text>
+<text x="120" y="244" class="ssmall">CANDIDATE B</text>
+<text x="120" y="365" class="ssmall">CANDIDATE C</text>
+<text x="650" y="247" text-anchor="middle" class="slabel">TARGET</text>
+`;
+
+break;
+
+
+case 7:
+
+x = `
+<path d="M450 70 L530 125 L500 220 L590 275
+L540 365 L450 430 L360 365 L310 275
+L400 220 L370 125 Z"
+fill="none" stroke="#cdb9ff" opacity=".45"/>
+<circle cx="450" cy="250" r="64" class="node"/>
+<path d="M450 186 V110 M514 250 H590
+M450 314 V390 M386 250 H310" class="sl"/>
+<circle cx="450" cy="110" r="10" fill="#ffc878"/>
+<circle cx="590" cy="250" r="10" fill="#ff7f98"/>
+<circle cx="450" cy="390" r="10" fill="#8ef3c4"/>
+<text x="450" y="246" text-anchor="middle" class="slabel">DECIDE</text>
+<text x="450" y="265" text-anchor="middle" class="ssmall">GATE</text>
+`;
+
+break;
+
+
+case 8:
+
+x = `
+<rect x="370" y="170" width="160" height="160" rx="24" class="sat"/>
+<path d="M450 250 L610 145
+M450 250 L610 350
+M450 250 L350 110" class="sl"/>
+<path d="M590 130 A175 175 0 0 1 620 350"
+fill="none" stroke="#8eeaff"
+stroke-dasharray="7 8" stroke-width="2"/>
+<circle cx="610" cy="145" r="11" fill="#ff7f98"/>
+<text x="450" y="245" text-anchor="middle" class="slabel">ADCS</text>
+<text x="450" y="263" text-anchor="middle" class="ssmall">REORIENTATION</text>
+`;
+
+break;
+
+
+case 9:
+
+x = `
+<circle cx="450" cy="250" r="46" class="node"/>
+<ellipse cx="450" cy="250" rx="315" ry="150" class="sl2"/>
+<ellipse cx="450" cy="250" rx="235" ry="105"
+class="sl" transform="rotate(-12 450 250)"/>
+<rect x="190" y="310" width="34" height="34"
+transform="rotate(45 207 327)" class="sat"/>
+<circle cx="675" cy="170" r="15" class="target"/>
+<path d="M225 327 C350 350 465 300 570 230
+S640 190 675 170" class="sl"/>
+<text x="450" y="246" text-anchor="middle" class="slabel">RENDEZVOUS</text>
+<text x="450" y="265" text-anchor="middle" class="ssmall">TRANSFER PATH</text>
+`;
+
+break;
+
+
+case 10:
+
+x = `
+<rect x="90" y="95" width="720" height="310" rx="28" class="node"/>
+<path d="M150 330 C280 330 330 300 420 260
+S575 190 690 170" class="sl"/>
+<path d="M150 290 C280 290 350 275 430 235
+S585 155 690 135"
+stroke="#ff7f98"
+stroke-dasharray="8 9"
+fill="none"
+opacity=".4"/>
+<circle cx="690" cy="170" r="15" class="target"/>
+<rect x="140" y="300" width="44" height="24"
+rx="6" class="sat"/>
+<text x="120" y="125" class="slabel">CONTROLLED APPROACH</text>
+<text x="510" y="205" class="ssmall">CAPTURE ENVELOPE</text>
+`;
+
+break;
+
+
+case 11:
+
+x = `
+<rect x="380" y="170" width="140" height="160" rx="24" class="sat"/>
+<circle cx="450" cy="250" r="110"
+fill="none"
+stroke="#ffc878"
+stroke-dasharray="6 8"
+stroke-width="2"/>
+<path d="M390 200 C315 155 270 145 220 175
+M390 300 C315 345 270 355 220 325
+M510 200 C585 155 630 145 680 175"
+class="sl"/>
+<circle cx="210" cy="175" r="22"
+fill="none" stroke="#ffc878" stroke-width="2"/>
+<circle cx="210" cy="325" r="22"
+fill="none" stroke="#ffc878" stroke-width="2"/>
+<circle cx="690" cy="175" r="22"
+fill="none" stroke="#ffc878" stroke-width="2"/>
+<text x="450" y="247" text-anchor="middle" class="slabel">CAPTURE</text>
+<text x="450" y="265" text-anchor="middle" class="ssmall">CONFIGURE</text>
+`;
+
+break;
+
+
+case 12:
+
+x = `
+<rect x="380" y="170" width="140" height="160" rx="22" class="sat"/>
+<circle cx="450" cy="250" r="100"
+fill="none" stroke="#8eeaff" stroke-width="2"/>
+<circle cx="450" cy="250" r="42" class="node"/>
+<path d="M370 190 L270 135
+M370 310 L270 365
+M530 190 L630 135
+M530 310 L630 365"
+class="sl"/>
+<circle cx="450" cy="250" r="17" fill="#ff7f98"/>
+<text x="450" y="246" text-anchor="middle" class="slabel">CAPTURE</text>
+<text x="450" y="265" text-anchor="middle" class="ssmall">SECURED</text>
+`;
+
+break;
+
+
+case 13:
+
+x = `
+<rect x="115" y="125" width="200" height="250"
+rx="26" class="node"/>
+<rect x="585" y="125" width="200" height="250"
+rx="26" class="node"/>
+<rect x="185" y="205" width="60" height="90"
+rx="10" class="sat"/>
+<rect x="655" y="205" width="60" height="90"
+rx="10" fill="#211735" stroke="#8ef3c4"/>
+<path d="M245 250 C340 150 560 150 655 250"
+class="sl"/>
+<circle cx="450" cy="175" r="12" fill="#8eeaff"/>
+<text x="215" y="165" text-anchor="middle" class="ssmall">CAPTURE BAY</text>
+<text x="685" y="165" text-anchor="middle" class="ssmall">STORAGE</text>
+<text x="450" y="355" text-anchor="middle" class="slabel">TRANSFER</text>
+`;
+
+break;
+
+
+case 14:
+
+x = `
+<rect x="270" y="105" width="360" height="290"
+rx="46" class="node"/>
+<rect x="315" y="150" width="270" height="200"
+rx="30" fill="#171024" stroke="#8ef3c4"/>
+<circle cx="450" cy="250" r="52"
+class="node" stroke="#8ef3c4"/>
+<path d="M425 250 l17 18 l36 -45"
+fill="none" stroke="#8ef3c4" stroke-width="5"/>
+<text x="450" y="222" text-anchor="middle" class="ssmall">CONTAINMENT</text>
+<text x="450" y="294" text-anchor="middle" class="slabel">CONFIRMED</text>
+`;
+
+break;
+
+
+default:
+
+x = `
+<circle cx="450" cy="250" r="145"
+fill="none" stroke="#cdb9ff" opacity=".28"/>
+<circle cx="450" cy="250" r="88" class="node"/>
+<path d="M450 162 V90
+M538 250 H610
+M450 338 V410
+M362 250 H290" class="sl"/>
+<circle cx="450" cy="90" r="11" fill="#8eeaff"/>
+<circle cx="610" cy="250" r="11" fill="#8ef3c4"/>
+<circle cx="450" cy="410" r="11" fill="#cdb9ff"/>
+<circle cx="290" cy="250" r="11" fill="#ffc878"/>
+<path d="M290 250 A160 160 0 1 1 450 90"
+fill="none"
+stroke="#8eeaff"
+stroke-dasharray="7 9"
+stroke-width="2"/>
+<text x="450" y="246" text-anchor="middle" class="slabel">RESET</text>
+<text x="450" y="265" text-anchor="middle" class="ssmall">RETURN TO SURVEILLANCE</text>
+`;
+
+}
+
+return `
+<svg viewBox="0 0 900 500"
+role="img"
+aria-label="Original engineering schematic for Stage ${i}: ${title}">
+<rect width="900" height="500" fill="#110b1d"/>
+<path d="M40 460 H860 M60 55 H840"
+stroke="#cdb9ff" opacity=".07"/>
+${x}
+<text x="55" y="445" class="ssmall">
+STAGE ${String(i).padStart(2,'0')} / ${title.toUpperCase()}
+</text>
+</svg>
+`;
+
+}
+
+
+/* =========================================================
+   BUILD THE 15 STAGE RECORDS
+========================================================= */
+
+function render(){
+
+const stageContainer = document.getElementById('stages');
+const jumpContainer = document.getElementById('jumps');
+
+data.forEach((d,i)=>{
+
+const n = i + 1;
+
+const [
+num,
+phase,
+title,
+sub,
+state,
+obj,
+inp,
+proc,
+out,
+auth,
+ver
+] = d;
+
+
+/* Jump navigation */
+
+jumpContainer.insertAdjacentHTML(
+'beforeend',
+`
+<a class="jump" href="#stage-${num}">
+${num} · ${title.toUpperCase()}
+</a>
+`
+);
+
+
+/* Stage card */
+
+stageContainer.insertAdjacentHTML(
+'beforeend',
+`
+<article class="stage reveal ${fx[i]}" id="stage-${num}">
+
+<div class="stage-head">
+
+<div class="num">
+${num}
+</div>
+
+<div>
+
+<div class="phase">
+${phase}
+</div>
+
+<h3>
+${title}
+</h3>
+
+<div class="sub">
+${sub}
+</div>
+
+</div>
+
+<div class="state">
+${state}
+</div>
+
+</div>
+
+
+<div class="stage-body">
+
+<div class="copy">
+
+<p class="objective">
+${obj}
+</p>
+
+
+<div class="data-grid">
+
+<div class="data">
+
+<label>
+PRIMARY INPUT
+</label>
+
+<strong>
+${inp}
+</strong>
+
+</div>
+
+
+<div class="data">
+
+<label>
+PROCESSING FUNCTION
+</label>
+
+<strong>
+${proc}
+</strong>
+
+</div>
+
+
+<div class="data">
+
+<label>
+OUTPUT STATE
+</label>
+
+<strong>
+${out}
+</strong>
+
+</div>
+
+
+<div class="data">
+
+<label>
+DECISION AUTHORITY
+</label>
+
+<strong>
+${auth}
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="verify">
+
+<b>
+Verification focus:
+</b>
+
+${ver}
+
+</div>
+
+</div>
+
+
+<figure class="art">
+
+${art(n,title)}
+
+<figcaption class="caption">
+FIGURE ${n} — ORIGINAL PROJECT SCHEMATIC / NOT A MANUFACTURING DRAWING
+</figcaption>
+
+</figure>
+
+</div>
+
+</article>
+`
+);
+
+});
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+render();
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+const menu = document.getElementById('menu');
+const mobile = document.getElementById('mobile');
+
+menu.addEventListener('click',()=>{
+
+const open = mobile.classList.toggle('open');
+
+menu.setAttribute(
+'aria-expanded',
+open
+);
+
+});
+
+mobile.querySelectorAll('a').forEach(link=>{
+
+link.addEventListener(
+'click',
+()=>mobile.classList.remove('open')
+);
+
+});
+
+
+/* =========================================================
+   UNIQUE SCROLL REVEAL
+========================================================= */
+
+const io =
+'IntersectionObserver' in window
+?
+new IntersectionObserver(
+entries=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.classList.add('show');
+
+io.unobserve(entry.target);
+
+}
+
+});
+
+},
+{
+threshold:.12,
+rootMargin:'0px 0px -8% 0px'
+}
+)
+:
+null;
+
+
+document.querySelectorAll('.reveal').forEach(element=>{
+
+if(io){
+
+io.observe(element);
+
+}else{
+
+element.classList.add('show');
+
+}
+
+});
+
+</script>
+
+</body>
+</html>

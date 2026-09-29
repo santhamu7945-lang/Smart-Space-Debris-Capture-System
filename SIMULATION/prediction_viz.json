@@ -1,0 +1,31 @@
+{
+    "source": "AI_Engine/telemetry/mission_decision.json",
+    "mission": {
+        "mission_id": "MIS-2026-001",
+        "tracking_id": "TRK_4211",
+        "target_name": "THORAD AGENA D DEB"
+    },
+    "prediction": {
+        "horizon_s": 60,
+        "position_km": {
+            "x": -6977.379940831643,
+            "y": -435.6689126391282,
+            "z": -1923.1886986393504
+        },
+        "velocity_kms": {
+            "vx": -1.6858993550453034,
+            "vy": -2.7276979598858717,
+            "vz": 6.6775318033004964
+        }
+    },
+    "assessment": {
+        "risk_level": "MEDIUM",
+        "risk_score": 27.16,
+        "capture_feasible": true,
+        "capture_method": "robotic_net"
+    },
+    "decision": {
+        "decision": "HOLD",
+        "reason": "Capture score below operational threshold"
+    }
+}

@@ -1,0 +1,2664 @@
+{
+  "project": {
+    "name": "Autonomous Space Debris Monitoring & Capturing System",
+    "short": "ADCS"
+  },
+  "environment": {
+    "monitored_objects": 195,
+    "tracked_objects": 15,
+    "surveillance_radius_km": 100,
+    "orbit_altitude_km": 550,
+    "orbital_velocity_kms": 7.58
+  },
+  "spacecraft": {
+    "id": "ADCS-SERVICER-01",
+    "color": "#9b6cff",
+    "storage_capacity": "6\u201310 objects",
+    "storage_note": "Subject to cumulative captured mass and available containment volume."
+  },
+  "active_target_id": "ORB-DEB-05",
+  "debris": [
+    {
+      "id": "ORB-BG-001",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        -1.0147,
+        -0.9787,
+        -1.2176
+      ],
+      "size_m": 0.35,
+      "velocity_kms": 7.78,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-002",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        -0.5874,
+        0.6739,
+        -1.184
+      ],
+      "size_m": 0.62,
+      "velocity_kms": 6.94,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-003",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        0.2422,
+        0.0086,
+        1.2132
+      ],
+      "size_m": 0.32,
+      "velocity_kms": 7.68,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-004",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        -1.9448,
+        -0.7359,
+        -0.5642
+      ],
+      "size_m": 1.14,
+      "velocity_kms": 6.91,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-005",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        0.576,
+        0.4318,
+        -1.5743
+      ],
+      "size_m": 0.26,
+      "velocity_kms": 8.05,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-006",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        -0.6913,
+        -0.707,
+        1.1426
+      ],
+      "size_m": 1.19,
+      "velocity_kms": 7.62,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-007",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        0.6853,
+        0.5826,
+        -1.8264
+      ],
+      "size_m": 1.36,
+      "velocity_kms": 7.35,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-008",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        -1.9565,
+        0.8847,
+        -0.6635
+      ],
+      "size_m": 1.21,
+      "velocity_kms": 7.59,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-009",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        -0.4277,
+        -0.8969,
+        -1.4576
+      ],
+      "size_m": 0.44,
+      "velocity_kms": 7.0,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-010",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        0.1715,
+        -0.8243,
+        1.5799
+      ],
+      "size_m": 0.91,
+      "velocity_kms": 7.34,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-011",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        -1.0786,
+        -0.5943,
+        1.146
+      ],
+      "size_m": 1.31,
+      "velocity_kms": 7.68,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-012",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        -1.7188,
+        -0.9494,
+        -1.4062
+      ],
+      "size_m": 0.27,
+      "velocity_kms": 7.36,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-013",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        1.9754,
+        0.3603,
+        -0.1302
+      ],
+      "size_m": 0.97,
+      "velocity_kms": 7.91,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-014",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        0.2025,
+        -0.4385,
+        -1.2284
+      ],
+      "size_m": 0.48,
+      "velocity_kms": 7.22,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-015",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        0.589,
+        1.3974,
+        2.3544
+      ],
+      "size_m": 0.47,
+      "velocity_kms": 7.69,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-016",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        -1.4602,
+        0.9929,
+        1.1234
+      ],
+      "size_m": 0.41,
+      "velocity_kms": 7.2,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-017",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        -1.8702,
+        -0.6226,
+        -0.7591
+      ],
+      "size_m": 1.26,
+      "velocity_kms": 7.38,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-018",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        0.3665,
+        1.2375,
+        1.8779
+      ],
+      "size_m": 0.17,
+      "velocity_kms": 6.96,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-019",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        1.7823,
+        0.3825,
+        1.4678
+      ],
+      "size_m": 0.62,
+      "velocity_kms": 6.98,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-020",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        -1.4282,
+        1.2517,
+        1.3141
+      ],
+      "size_m": 1.36,
+      "velocity_kms": 7.93,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-021",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        2.1488,
+        0.6182,
+        0.1553
+      ],
+      "size_m": 0.77,
+      "velocity_kms": 7.22,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-022",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        -1.1444,
+        -0.9133,
+        -1.4005
+      ],
+      "size_m": 0.66,
+      "velocity_kms": 8.04,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-023",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        1.3513,
+        -0.5847,
+        -1.3369
+      ],
+      "size_m": 0.29,
+      "velocity_kms": 8.0,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-024",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        1.4388,
+        -0.5488,
+        -1.5222
+      ],
+      "size_m": 0.87,
+      "velocity_kms": 7.08,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-025",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        0.1798,
+        0.1172,
+        -2.283
+      ],
+      "size_m": 0.77,
+      "velocity_kms": 6.9,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-026",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        -1.1235,
+        -1.5622,
+        2.2342
+      ],
+      "size_m": 1.24,
+      "velocity_kms": 7.9,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-027",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        -0.8589,
+        -1.3961,
+        2.2723
+      ],
+      "size_m": 1.33,
+      "velocity_kms": 7.0,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-028",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        -2.2561,
+        -1.2684,
+        0.1991
+      ],
+      "size_m": 1.08,
+      "velocity_kms": 7.05,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-029",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        -1.5522,
+        0.1017,
+        0.243
+      ],
+      "size_m": 1.23,
+      "velocity_kms": 7.41,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-030",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        0.5282,
+        0.1135,
+        2.1582
+      ],
+      "size_m": 0.32,
+      "velocity_kms": 7.27,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-031",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        1.8125,
+        0.3533,
+        -0.0553
+      ],
+      "size_m": 0.75,
+      "velocity_kms": 7.05,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-032",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        0.3204,
+        -0.426,
+        1.9981
+      ],
+      "size_m": 0.36,
+      "velocity_kms": 7.16,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-033",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        1.3717,
+        0.2591,
+        0.656
+      ],
+      "size_m": 1.27,
+      "velocity_kms": 7.93,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-034",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        1.9283,
+        -0.7277,
+        0.9201
+      ],
+      "size_m": 0.34,
+      "velocity_kms": 7.06,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-035",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        1.711,
+        0.1719,
+        -0.7339
+      ],
+      "size_m": 1.11,
+      "velocity_kms": 7.87,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-036",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        0.6596,
+        -0.945,
+        1.6785
+      ],
+      "size_m": 0.62,
+      "velocity_kms": 7.46,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-037",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        -0.3379,
+        0.581,
+        -2.5556
+      ],
+      "size_m": 0.18,
+      "velocity_kms": 7.38,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-038",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        -0.8238,
+        0.7279,
+        1.3107
+      ],
+      "size_m": 0.31,
+      "velocity_kms": 7.44,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-039",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        -1.3668,
+        -0.4462,
+        0.7305
+      ],
+      "size_m": 1.3,
+      "velocity_kms": 7.43,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-040",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        0.8183,
+        0.0831,
+        -0.9723
+      ],
+      "size_m": 1.4,
+      "velocity_kms": 7.9,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-041",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        2.343,
+        1.3237,
+        -0.4623
+      ],
+      "size_m": 0.27,
+      "velocity_kms": 7.48,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-042",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        0.2895,
+        -0.1649,
+        1.249
+      ],
+      "size_m": 0.56,
+      "velocity_kms": 8.08,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-043",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        -0.1752,
+        0.6784,
+        1.8286
+      ],
+      "size_m": 0.62,
+      "velocity_kms": 8.05,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-044",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        2.2049,
+        0.1599,
+        -0.0634
+      ],
+      "size_m": 0.26,
+      "velocity_kms": 7.26,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-045",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        1.9213,
+        0.2017,
+        -0.3827
+      ],
+      "size_m": 1.06,
+      "velocity_kms": 6.97,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-046",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        -2.0667,
+        0.0089,
+        -1.2079
+      ],
+      "size_m": 0.26,
+      "velocity_kms": 8.05,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-047",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        1.7809,
+        -0.8304,
+        0.9807
+      ],
+      "size_m": 0.96,
+      "velocity_kms": 7.18,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-048",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        1.1268,
+        0.7837,
+        1.0566
+      ],
+      "size_m": 0.85,
+      "velocity_kms": 7.64,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-049",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        -1.6884,
+        0.2101,
+        0.9389
+      ],
+      "size_m": 1.31,
+      "velocity_kms": 7.15,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-050",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        -0.3698,
+        -0.5959,
+        -1.7147
+      ],
+      "size_m": 0.96,
+      "velocity_kms": 7.26,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-051",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        -0.5257,
+        0.4262,
+        1.1907
+      ],
+      "size_m": 0.67,
+      "velocity_kms": 8.1,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-052",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        1.498,
+        -0.8313,
+        -0.0367
+      ],
+      "size_m": 0.41,
+      "velocity_kms": 8.02,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-053",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        1.2583,
+        0.8467,
+        -1.1688
+      ],
+      "size_m": 0.26,
+      "velocity_kms": 7.9,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-054",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        -0.7431,
+        0.3749,
+        -2.4729
+      ],
+      "size_m": 0.93,
+      "velocity_kms": 6.91,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-055",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        0.8712,
+        -0.5552,
+        -1.9423
+      ],
+      "size_m": 1.32,
+      "velocity_kms": 7.06,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-056",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        1.4776,
+        -1.0087,
+        1.3098
+      ],
+      "size_m": 0.42,
+      "velocity_kms": 7.63,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-057",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        -0.422,
+        -0.8045,
+        -2.0448
+      ],
+      "size_m": 0.41,
+      "velocity_kms": 7.49,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-058",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        1.1009,
+        0.5981,
+        -0.7448
+      ],
+      "size_m": 0.62,
+      "velocity_kms": 7.23,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-059",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        2.0914,
+        0.7373,
+        0.0466
+      ],
+      "size_m": 0.4,
+      "velocity_kms": 7.79,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-060",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        -1.1501,
+        -0.1141,
+        -0.3872
+      ],
+      "size_m": 0.15,
+      "velocity_kms": 7.96,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-061",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        1.9499,
+        0.1404,
+        -1.3444
+      ],
+      "size_m": 0.84,
+      "velocity_kms": 7.08,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-062",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        1.7116,
+        -0.6128,
+        1.765
+      ],
+      "size_m": 1.12,
+      "velocity_kms": 7.93,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-063",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        1.2473,
+        -0.5839,
+        -0.9191
+      ],
+      "size_m": 0.19,
+      "velocity_kms": 7.84,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-064",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        1.5445,
+        -0.2518,
+        -1.3766
+      ],
+      "size_m": 0.26,
+      "velocity_kms": 8.02,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-065",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        1.5399,
+        1.4456,
+        -1.7554
+      ],
+      "size_m": 1.24,
+      "velocity_kms": 6.93,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-066",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        -0.2111,
+        -0.5461,
+        -2.4942
+      ],
+      "size_m": 1.13,
+      "velocity_kms": 7.94,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-067",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        0.8576,
+        -0.698,
+        -2.1366
+      ],
+      "size_m": 0.2,
+      "velocity_kms": 7.95,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-068",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        1.4776,
+        -0.8455,
+        -1.8186
+      ],
+      "size_m": 0.67,
+      "velocity_kms": 7.27,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-069",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        0.3466,
+        -0.4367,
+        -1.1834
+      ],
+      "size_m": 0.31,
+      "velocity_kms": 7.29,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-070",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        1.0471,
+        0.9655,
+        -1.1975
+      ],
+      "size_m": 0.92,
+      "velocity_kms": 7.38,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-071",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        2.4973,
+        0.1184,
+        -0.2972
+      ],
+      "size_m": 0.21,
+      "velocity_kms": 8.06,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-072",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        0.6819,
+        0.945,
+        1.416
+      ],
+      "size_m": 0.2,
+      "velocity_kms": 7.42,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-073",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        -0.2753,
+        -0.4962,
+        -2.0301
+      ],
+      "size_m": 0.74,
+      "velocity_kms": 7.36,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-074",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        -1.9433,
+        -0.699,
+        -1.0147
+      ],
+      "size_m": 0.05,
+      "velocity_kms": 8.01,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-075",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        -2.1737,
+        0.6386,
+        -0.5356
+      ],
+      "size_m": 0.96,
+      "velocity_kms": 7.34,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-076",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        1.5042,
+        0.3549,
+        0.7075
+      ],
+      "size_m": 0.47,
+      "velocity_kms": 7.92,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-077",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        -0.3085,
+        -0.4239,
+        -1.6036
+      ],
+      "size_m": 0.6,
+      "velocity_kms": 7.38,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-078",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        -0.5061,
+        -0.8666,
+        1.7155
+      ],
+      "size_m": 1.32,
+      "velocity_kms": 7.71,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-079",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        1.3283,
+        0.2435,
+        -0.9297
+      ],
+      "size_m": 0.79,
+      "velocity_kms": 6.9,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-080",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        -0.4625,
+        -0.1834,
+        1.9581
+      ],
+      "size_m": 0.93,
+      "velocity_kms": 7.46,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-081",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        -1.7408,
+        -0.6932,
+        0.6621
+      ],
+      "size_m": 1.27,
+      "velocity_kms": 7.86,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-082",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        0.929,
+        -1.0372,
+        1.6821
+      ],
+      "size_m": 0.9,
+      "velocity_kms": 7.3,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-083",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        0.8927,
+        0.6993,
+        -1.947
+      ],
+      "size_m": 0.35,
+      "velocity_kms": 7.14,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-084",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        1.8433,
+        -0.6187,
+        0.2851
+      ],
+      "size_m": 1.2,
+      "velocity_kms": 6.99,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-085",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        -1.2646,
+        0.2484,
+        0.7539
+      ],
+      "size_m": 0.99,
+      "velocity_kms": 7.49,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-086",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        0.0456,
+        0.245,
+        1.2069
+      ],
+      "size_m": 1.06,
+      "velocity_kms": 7.82,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-087",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        1.1339,
+        -0.1407,
+        0.8978
+      ],
+      "size_m": 1.34,
+      "velocity_kms": 7.52,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-088",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        2.2698,
+        -0.7785,
+        0.7409
+      ],
+      "size_m": 0.67,
+      "velocity_kms": 7.86,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-089",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        -1.0067,
+        1.2899,
+        -1.767
+      ],
+      "size_m": 1.33,
+      "velocity_kms": 7.97,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-090",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        -1.4487,
+        0.5435,
+        -1.2397
+      ],
+      "size_m": 1.17,
+      "velocity_kms": 7.56,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-091",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        1.489,
+        0.5906,
+        -1.1222
+      ],
+      "size_m": 0.4,
+      "velocity_kms": 7.2,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-092",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        -1.2518,
+        0.6669,
+        -1.4687
+      ],
+      "size_m": 0.9,
+      "velocity_kms": 7.23,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-093",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        1.3968,
+        -0.4402,
+        0.7394
+      ],
+      "size_m": 0.48,
+      "velocity_kms": 7.55,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-094",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        1.4012,
+        -0.7586,
+        1.659
+      ],
+      "size_m": 1.0,
+      "velocity_kms": 6.98,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-095",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        -1.4901,
+        0.0987,
+        0.9775
+      ],
+      "size_m": 0.33,
+      "velocity_kms": 7.4,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-096",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        1.7966,
+        0.2376,
+        -1.2236
+      ],
+      "size_m": 1.21,
+      "velocity_kms": 7.82,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-097",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        -1.2365,
+        -1.0871,
+        1.1556
+      ],
+      "size_m": 1.07,
+      "velocity_kms": 7.92,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-098",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        2.151,
+        -0.2365,
+        -0.648
+      ],
+      "size_m": 0.79,
+      "velocity_kms": 7.62,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-099",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        0.3332,
+        -0.6603,
+        1.7792
+      ],
+      "size_m": 0.09,
+      "velocity_kms": 7.3,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-100",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        -0.6163,
+        -0.178,
+        -1.2916
+      ],
+      "size_m": 0.68,
+      "velocity_kms": 7.05,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-101",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        -1.2598,
+        -1.0772,
+        -1.2171
+      ],
+      "size_m": 0.81,
+      "velocity_kms": 6.93,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-102",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        -1.1522,
+        -0.8744,
+        -1.4428
+      ],
+      "size_m": 0.12,
+      "velocity_kms": 7.35,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-103",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        0.5405,
+        -0.51,
+        2.2003
+      ],
+      "size_m": 0.56,
+      "velocity_kms": 7.8,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-104",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        0.6472,
+        -0.4234,
+        -1.1443
+      ],
+      "size_m": 0.08,
+      "velocity_kms": 7.55,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-105",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        2.1102,
+        -0.4116,
+        -0.0012
+      ],
+      "size_m": 1.1,
+      "velocity_kms": 7.68,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-106",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        0.0393,
+        0.8645,
+        -1.4786
+      ],
+      "size_m": 0.08,
+      "velocity_kms": 7.08,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-107",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        1.396,
+        0.4383,
+        1.4176
+      ],
+      "size_m": 0.34,
+      "velocity_kms": 7.74,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-108",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        0.2173,
+        -0.8854,
+        -2.0386
+      ],
+      "size_m": 1.06,
+      "velocity_kms": 7.04,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-109",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        0.57,
+        0.8164,
+        -1.2252
+      ],
+      "size_m": 0.08,
+      "velocity_kms": 7.27,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-110",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        -0.7737,
+        1.0455,
+        -1.5756
+      ],
+      "size_m": 1.02,
+      "velocity_kms": 6.99,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-111",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        -0.4894,
+        0.2221,
+        -1.2503
+      ],
+      "size_m": 1.09,
+      "velocity_kms": 7.92,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-112",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        -2.0812,
+        -1.2697,
+        -1.5203
+      ],
+      "size_m": 1.11,
+      "velocity_kms": 7.32,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-113",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        -1.7184,
+        -0.3211,
+        0.8301
+      ],
+      "size_m": 0.51,
+      "velocity_kms": 7.92,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-114",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        1.1173,
+        -1.3051,
+        -2.2868
+      ],
+      "size_m": 0.91,
+      "velocity_kms": 7.89,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-115",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        -0.5903,
+        -0.1868,
+        -2.1477
+      ],
+      "size_m": 1.35,
+      "velocity_kms": 7.22,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-116",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        0.6711,
+        0.0931,
+        -1.7528
+      ],
+      "size_m": 0.64,
+      "velocity_kms": 7.78,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-117",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        -0.2725,
+        1.0804,
+        2.3473
+      ],
+      "size_m": 0.17,
+      "velocity_kms": 7.96,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-118",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        0.0792,
+        -0.0943,
+        2.0529
+      ],
+      "size_m": 0.56,
+      "velocity_kms": 6.93,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-119",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        0.8871,
+        -0.6192,
+        -1.2058
+      ],
+      "size_m": 1.13,
+      "velocity_kms": 7.31,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-120",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        1.1589,
+        0.415,
+        -1.0839
+      ],
+      "size_m": 0.06,
+      "velocity_kms": 8.04,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-121",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        1.6179,
+        0.539,
+        0.9653
+      ],
+      "size_m": 1.07,
+      "velocity_kms": 7.73,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-122",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        -1.4055,
+        -0.0276,
+        -1.8333
+      ],
+      "size_m": 0.18,
+      "velocity_kms": 7.17,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-123",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        -0.7204,
+        -0.5074,
+        -1.8809
+      ],
+      "size_m": 0.69,
+      "velocity_kms": 7.54,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-124",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        -1.4842,
+        0.5317,
+        0.7503
+      ],
+      "size_m": 1.0,
+      "velocity_kms": 7.23,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-125",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        -0.013,
+        -0.7247,
+        1.4696
+      ],
+      "size_m": 0.21,
+      "velocity_kms": 7.54,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-126",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        0.115,
+        -0.6152,
+        -1.4985
+      ],
+      "size_m": 0.7,
+      "velocity_kms": 7.77,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-127",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        1.579,
+        0.0511,
+        -0.2338
+      ],
+      "size_m": 0.19,
+      "velocity_kms": 7.13,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-128",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        0.172,
+        -0.5083,
+        1.2076
+      ],
+      "size_m": 0.77,
+      "velocity_kms": 7.23,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-129",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        2.1481,
+        0.151,
+        -0.35
+      ],
+      "size_m": 0.22,
+      "velocity_kms": 7.94,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-130",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        -2.0004,
+        0.9709,
+        0.1148
+      ],
+      "size_m": 0.68,
+      "velocity_kms": 7.43,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-131",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        1.009,
+        -1.4682,
+        2.3064
+      ],
+      "size_m": 0.69,
+      "velocity_kms": 7.89,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-132",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        -1.6892,
+        -1.1524,
+        1.2158
+      ],
+      "size_m": 0.12,
+      "velocity_kms": 7.08,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-133",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        -2.3921,
+        -0.6609,
+        -0.9968
+      ],
+      "size_m": 0.21,
+      "velocity_kms": 7.82,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-134",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        -1.1901,
+        0.573,
+        -0.939
+      ],
+      "size_m": 0.76,
+      "velocity_kms": 7.44,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-135",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        -2.4204,
+        1.2108,
+        0.9107
+      ],
+      "size_m": 0.46,
+      "velocity_kms": 7.65,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-136",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        -1.9505,
+        0.7886,
+        -1.606
+      ],
+      "size_m": 0.33,
+      "velocity_kms": 7.15,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-137",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        -0.7701,
+        -0.6435,
+        -1.2207
+      ],
+      "size_m": 0.15,
+      "velocity_kms": 6.9,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-138",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        -1.5306,
+        0.1961,
+        0.492
+      ],
+      "size_m": 0.36,
+      "velocity_kms": 7.75,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-139",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        -0.6295,
+        -0.1292,
+        -2.0687
+      ],
+      "size_m": 1.3,
+      "velocity_kms": 7.85,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-140",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        -1.7722,
+        0.5253,
+        -1.7735
+      ],
+      "size_m": 0.62,
+      "velocity_kms": 7.55,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-141",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        -1.4138,
+        1.2516,
+        -1.8863
+      ],
+      "size_m": 0.15,
+      "velocity_kms": 7.1,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-142",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        -0.7072,
+        0.6463,
+        1.8675
+      ],
+      "size_m": 0.44,
+      "velocity_kms": 7.05,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-143",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        -0.947,
+        0.6543,
+        -2.335
+      ],
+      "size_m": 0.73,
+      "velocity_kms": 7.49,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-144",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        1.5792,
+        -1.0796,
+        0.8739
+      ],
+      "size_m": 0.49,
+      "velocity_kms": 7.2,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-145",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        1.9907,
+        1.4234,
+        1.2867
+      ],
+      "size_m": 0.83,
+      "velocity_kms": 8.04,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-146",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        1.5773,
+        0.3533,
+        -0.0042
+      ],
+      "size_m": 0.1,
+      "velocity_kms": 7.81,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-147",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        -2.44,
+        0.489,
+        0.4575
+      ],
+      "size_m": 0.3,
+      "velocity_kms": 7.6,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-148",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        -0.8794,
+        -0.0143,
+        -0.9948
+      ],
+      "size_m": 0.52,
+      "velocity_kms": 7.3,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-149",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        -0.7993,
+        0.7728,
+        -1.4569
+      ],
+      "size_m": 0.99,
+      "velocity_kms": 7.25,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-150",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        1.8545,
+        0.8031,
+        -0.6651
+      ],
+      "size_m": 0.66,
+      "velocity_kms": 7.28,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-151",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        -0.7846,
+        1.0794,
+        1.582
+      ],
+      "size_m": 0.74,
+      "velocity_kms": 8.09,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-152",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        -0.975,
+        0.0985,
+        -1.4875
+      ],
+      "size_m": 0.3,
+      "velocity_kms": 7.33,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-153",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        0.0916,
+        0.3691,
+        -2.2621
+      ],
+      "size_m": 0.32,
+      "velocity_kms": 7.56,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-154",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        1.9565,
+        -0.1752,
+        -0.9559
+      ],
+      "size_m": 0.21,
+      "velocity_kms": 8.07,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-155",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        -1.1019,
+        -0.4818,
+        -0.8985
+      ],
+      "size_m": 0.79,
+      "velocity_kms": 7.56,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-156",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        2.0651,
+        1.5858,
+        1.3698
+      ],
+      "size_m": 0.67,
+      "velocity_kms": 7.04,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-157",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        1.0873,
+        -0.0047,
+        -1.9163
+      ],
+      "size_m": 0.74,
+      "velocity_kms": 7.23,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-158",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        0.7822,
+        0.9622,
+        -1.328
+      ],
+      "size_m": 0.79,
+      "velocity_kms": 7.36,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-159",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        2.144,
+        0.026,
+        -1.1461
+      ],
+      "size_m": 1.22,
+      "velocity_kms": 7.23,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-160",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        0.6238,
+        -0.2773,
+        -2.4291
+      ],
+      "size_m": 0.74,
+      "velocity_kms": 7.88,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-161",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        -0.4142,
+        -0.5294,
+        1.9788
+      ],
+      "size_m": 1.4,
+      "velocity_kms": 7.49,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-162",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        1.0013,
+        0.0844,
+        1.3529
+      ],
+      "size_m": 0.8,
+      "velocity_kms": 7.55,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-163",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        -1.4069,
+        -0.3392,
+        0.4054
+      ],
+      "size_m": 0.99,
+      "velocity_kms": 7.59,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-164",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        0.13,
+        0.4517,
+        1.2544
+      ],
+      "size_m": 1.06,
+      "velocity_kms": 7.75,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-165",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        0.8013,
+        -0.3153,
+        -1.9726
+      ],
+      "size_m": 1.16,
+      "velocity_kms": 8.08,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-166",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        -1.9024,
+        -1.1455,
+        0.0559
+      ],
+      "size_m": 0.85,
+      "velocity_kms": 7.94,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-167",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        1.3622,
+        -0.1503,
+        -1.3761
+      ],
+      "size_m": 0.67,
+      "velocity_kms": 7.77,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-168",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        -1.1956,
+        0.2849,
+        0.7589
+      ],
+      "size_m": 0.68,
+      "velocity_kms": 8.06,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-169",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        -1.1143,
+        0.5285,
+        1.7915
+      ],
+      "size_m": 1.2,
+      "velocity_kms": 7.92,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-170",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        1.0423,
+        -0.2563,
+        -1.2705
+      ],
+      "size_m": 1.02,
+      "velocity_kms": 7.81,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-171",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        0.9011,
+        -0.7818,
+        -0.9312
+      ],
+      "size_m": 0.9,
+      "velocity_kms": 8.01,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-172",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        1.8073,
+        0.5799,
+        -0.0292
+      ],
+      "size_m": 0.18,
+      "velocity_kms": 7.66,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-173",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        1.512,
+        -0.159,
+        -1.5587
+      ],
+      "size_m": 1.27,
+      "velocity_kms": 6.96,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-174",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        0.4931,
+        -0.4633,
+        -1.6528
+      ],
+      "size_m": 0.25,
+      "velocity_kms": 7.54,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-175",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        -1.3164,
+        0.5468,
+        -0.5788
+      ],
+      "size_m": 0.16,
+      "velocity_kms": 7.95,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-176",
+      "class": "BACKGROUND",
+      "shape": "fragment",
+      "position": [
+        -1.8094,
+        -0.8349,
+        -1.693
+      ],
+      "size_m": 0.24,
+      "velocity_kms": 7.45,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-177",
+      "class": "BACKGROUND",
+      "shape": "panel",
+      "position": [
+        -0.0303,
+        -0.3859,
+        1.2128
+      ],
+      "size_m": 1.14,
+      "velocity_kms": 7.98,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-178",
+      "class": "BACKGROUND",
+      "shape": "cylinder",
+      "position": [
+        -0.7989,
+        -0.8085,
+        -1.6335
+      ],
+      "size_m": 0.52,
+      "velocity_kms": 7.61,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-179",
+      "class": "BACKGROUND",
+      "shape": "irregular",
+      "position": [
+        -0.996,
+        -0.1525,
+        -1.1878
+      ],
+      "size_m": 1.19,
+      "velocity_kms": 7.14,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-BG-180",
+      "class": "BACKGROUND",
+      "shape": "bracket",
+      "position": [
+        -1.1473,
+        -0.0334,
+        1.0154
+      ],
+      "size_m": 0.82,
+      "velocity_kms": 7.59,
+      "risk": "LOW"
+    },
+    {
+      "id": "ORB-DEB-01",
+      "class": "TRACKED",
+      "shape": "cylinder",
+      "position": [
+        0.4679,
+        0.3346,
+        0.0556
+      ],
+      "size_m": 1.23,
+      "velocity_kms": 7.32,
+      "risk": "LOW",
+      "distance_km": 60.7
+    },
+    {
+      "id": "ORB-DEB-02",
+      "class": "TRACKED",
+      "shape": "irregular",
+      "position": [
+        0.6547,
+        -0.3157,
+        0.3272
+      ],
+      "size_m": 1.14,
+      "velocity_kms": 7.5,
+      "risk": "LOW",
+      "distance_km": 89.8
+    },
+    {
+      "id": "ORB-DEB-03",
+      "class": "TRACKED",
+      "shape": "bracket",
+      "position": [
+        0.5392,
+        0.0749,
+        0.5403
+      ],
+      "size_m": 0.71,
+      "velocity_kms": 7.61,
+      "risk": "MEDIUM",
+      "distance_km": 65.4
+    },
+    {
+      "id": "ORB-DEB-04",
+      "class": "TRACKED",
+      "shape": "fragment",
+      "position": [
+        0.1926,
+        0.1114,
+        0.6918
+      ],
+      "size_m": 1.53,
+      "velocity_kms": 7.6,
+      "risk": "LOW",
+      "distance_km": 89.7
+    },
+    {
+      "id": "ORB-DEB-05",
+      "class": "TARGET",
+      "shape": "panel",
+      "position": [
+        -0.0668,
+        -0.0414,
+        0.4745
+      ],
+      "size_m": 1.09,
+      "velocity_kms": 7.69,
+      "risk": "HIGH",
+      "distance_km": 19.8
+    },
+    {
+      "id": "ORB-DEB-06",
+      "class": "TRACKED",
+      "shape": "cylinder",
+      "position": [
+        -0.3351,
+        -0.2271,
+        0.6525
+      ],
+      "size_m": 0.34,
+      "velocity_kms": 7.53,
+      "risk": "LOW",
+      "distance_km": 95.5
+    },
+    {
+      "id": "ORB-DEB-07",
+      "class": "TRACKED",
+      "shape": "irregular",
+      "position": [
+        -0.6749,
+        0.2313,
+        0.4828
+      ],
+      "size_m": 0.55,
+      "velocity_kms": 7.76,
+      "risk": "LOW",
+      "distance_km": 53.4
+    },
+    {
+      "id": "ORB-DEB-08",
+      "class": "TRACKED",
+      "shape": "bracket",
+      "position": [
+        -0.7262,
+        -0.1129,
+        0.0993
+      ],
+      "size_m": 0.31,
+      "velocity_kms": 7.87,
+      "risk": "LOW",
+      "distance_km": 24.1
+    },
+    {
+      "id": "ORB-DEB-09",
+      "class": "TRACKED",
+      "shape": "fragment",
+      "position": [
+        -0.758,
+        0.157,
+        -0.2524
+      ],
+      "size_m": 1.77,
+      "velocity_kms": 7.87,
+      "risk": "MEDIUM",
+      "distance_km": 81.2
+    },
+    {
+      "id": "ORB-DEB-10",
+      "class": "TRACKED",
+      "shape": "panel",
+      "position": [
+        -0.6278,
+        -0.3403,
+        -0.4259
+      ],
+      "size_m": 1.02,
+      "velocity_kms": 7.46,
+      "risk": "LOW",
+      "distance_km": 69.9
+    },
+    {
+      "id": "ORB-DEB-11",
+      "class": "TRACKED",
+      "shape": "cylinder",
+      "position": [
+        -0.2964,
+        0.2257,
+        -0.5662
+      ],
+      "size_m": 1.7,
+      "velocity_kms": 7.19,
+      "risk": "LOW",
+      "distance_km": 32.1
+    },
+    {
+      "id": "ORB-DEB-12",
+      "class": "TRACKED",
+      "shape": "irregular",
+      "position": [
+        -0.1764,
+        0.043,
+        -0.7935
+      ],
+      "size_m": 1.66,
+      "velocity_kms": 7.28,
+      "risk": "MEDIUM",
+      "distance_km": 17.4
+    },
+    {
+      "id": "ORB-DEB-13",
+      "class": "TRACKED",
+      "shape": "bracket",
+      "position": [
+        0.316,
+        -0.1385,
+        -0.7647
+      ],
+      "size_m": 0.81,
+      "velocity_kms": 7.21,
+      "risk": "LOW",
+      "distance_km": 93.4
+    },
+    {
+      "id": "ORB-DEB-14",
+      "class": "TRACKED",
+      "shape": "fragment",
+      "position": [
+        0.3711,
+        -0.282,
+        -0.4532
+      ],
+      "size_m": 1.61,
+      "velocity_kms": 7.21,
+      "risk": "LOW",
+      "distance_km": 51.0
+    },
+    {
+      "id": "ORB-DEB-15",
+      "class": "TRACKED",
+      "shape": "panel",
+      "position": [
+        0.6794,
+        0.3122,
+        -0.2698
+      ],
+      "size_m": 0.82,
+      "velocity_kms": 7.69,
+      "risk": "LOW",
+      "distance_km": 25.3
+    }
+  ],
+  "phases": [
+    "ORBITAL SURVEILLANCE",
+    "MULTI-OBJECT TRACKING",
+    "TARGET PRIORITIZATION",
+    "SPACECRAFT REORIENTATION",
+    "RENDEZVOUS",
+    "PROXIMITY APPROACH",
+    "MISSION DECISION",
+    "CAPTURE EXECUTION",
+    "ONBOARD TRANSFER",
+    "SECURE CONTAINMENT",
+    "SYSTEM RESET",
+    "CONTINUED SURVEILLANCE"
+  ],
+  "scenarios": {
+    "hold": {
+      "label": "HOLD",
+      "decision": "HOLD",
+      "description": "Maintain surveillance while capture conditions remain outside operational limits.",
+      "rationale": "Relative motion remains unsuitable for capture authorization.",
+      "assessment": {
+        "size_m": 0.55,
+        "relative_speed_mps": 7.2,
+        "range_km": 0.08,
+        "risk": "MEDIUM",
+        "group_count": 1,
+        "tumbling": true,
+        "sensor_confidence": 0.95
+      }
+    },
+    "abort": {
+      "label": "ABORT",
+      "decision": "ABORT",
+      "description": "Terminate proximity operations and return the spacecraft to a safe operational state.",
+      "rationale": "Target separation has entered an unsafe proximity condition.",
+      "assessment": {
+        "size_m": 1.1,
+        "relative_speed_mps": 14.5,
+        "range_km": 0.008,
+        "risk": "HIGH",
+        "group_count": 1,
+        "tumbling": false,
+        "sensor_confidence": 0.95
+      }
+    },
+    "small": {
+      "label": "PROCEED \u2014 SMALL OBJECT",
+      "decision": "PROCEED_SMALL",
+      "description": "Authorize precision capture using the dual side-arm gripper mechanism.",
+      "rationale": "Target geometry is compatible with precision side-arm gripper capture.",
+      "assessment": {
+        "size_m": 0.42,
+        "relative_speed_mps": 2.1,
+        "range_km": 0.06,
+        "risk": "HIGH",
+        "group_count": 1,
+        "tumbling": false,
+        "sensor_confidence": 0.95
+      }
+    },
+    "large": {
+      "label": "PROCEED \u2014 LARGE OBJECT",
+      "decision": "PROCEED_LARGE",
+      "description": "Authorize central deployable-net capture for a large or irregular debris object.",
+      "rationale": "Target geometry favors central deployable-net capture.",
+      "assessment": {
+        "size_m": 1.65,
+        "relative_speed_mps": 2.4,
+        "range_km": 0.07,
+        "risk": "HIGH",
+        "group_count": 1,
+        "tumbling": true,
+        "sensor_confidence": 0.95
+      }
+    },
+    "multiple": {
+      "label": "PROCEED \u2014 MULTIPLE OBJECTS",
+      "decision": "PROCEED_MULTIPLE",
+      "description": "Authorize grouped-object containment using the central deployable-net capture mechanism.",
+      "rationale": "Grouped debris objects are compatible with deployable-net containment.",
+      "assessment": {
+        "size_m": 0.65,
+        "relative_speed_mps": 2.2,
+        "range_km": 0.08,
+        "risk": "HIGH",
+        "group_count": 3,
+        "tumbling": false,
+        "sensor_confidence": 0.95
+      }
+    }
+  },
+  "default_scenario": "large"
+}

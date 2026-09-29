@@ -1,121 +1,309 @@
 """
-export_for_visualization.py
+ADCS Mission Visualization Data Generator
 
-Exports a lightweight JSON for the Three.js dashboard/simulation, combining
-debris_state.json (Detection) and mission_decision.json (Mission Manager).
+Run from project root:
 
-UPDATED: now includes each object's velocity vector (vx, vy, vz), not just
-position. This is required for real two-body Kepler orbital propagation in
-the simulation — position alone isn't enough to determine an orbit; you
-need velocity too, since state vectors (r, v) uniquely define the six
-classical orbital elements.
-
-IMPORTANT: tracking_id resets and regenerates every time
-feature_extraction.py runs, so a tracking_id saved in an older
-mission_decision.json will NOT reliably match the tracking_id in a
-freshly-regenerated debris_state.json. This script matches the target by
-NAME instead, which is stable across separate runs.
-
-Run from repo root:
-    python3 SIMULATION/engine/export_for_visualization.py
-
-Output:
-    SIMULATION/viz_data.json
+python3 SIMULATION/engine/export_for_visualization.py
 """
 
-import os
+from pathlib import Path
 import json
+import random
+import math
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-DEBRIS_STATE_PATH = os.path.join(BASE_DIR, "DATA", "processed", "debris_state.json")
-MISSION_DECISION_PATH = os.path.join(BASE_DIR, "AI_Engine", "telemetry", "mission_decision.json")
-OUTPUT_PATH = os.path.join(BASE_DIR, "SIMULATION", "viz_data.json")
-
-EARTH_RADIUS_KM = 6378.137
+from scenario_logic import (
+    SCENARIOS,
+    PHASES,
+    evaluate_target
+)
 
 
-def load_json(path):
-    if not os.path.exists(path):
-        raise FileNotFoundError(f"Required file not found: {path}")
-    with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
+random.seed(42)
+
+OUTPUT = Path(__file__).with_name("viz_data.json")
+
+
+DEBRIS_SHAPES = [
+    "fragment",
+    "panel",
+    "cylinder",
+    "irregular",
+    "bracket"
+]
+
+
+def generate_background_debris():
+
+    debris = []
+
+    for i in range(180):
+
+        angle = random.random() * math.tau
+
+        vertical = random.uniform(-1, 1)
+
+        radius = random.uniform(1.2, 2.6)
+
+        debris.append({
+
+            "id": f"ORB-BG-{i + 1:03d}",
+
+            "class": "BACKGROUND",
+
+            "shape": DEBRIS_SHAPES[i % len(DEBRIS_SHAPES)],
+
+            "position": [
+
+                round(math.cos(angle) * radius, 4),
+
+                round(vertical * radius * 0.65, 4),
+
+                round(math.sin(angle) * radius, 4)
+            ],
+
+            "size_m": round(
+                random.uniform(0.05, 1.4),
+                2
+            ),
+
+            "velocity_kms": round(
+                random.uniform(6.9, 8.1),
+                2
+            ),
+
+            "risk": "LOW"
+        })
+
+    return debris
+
+
+def generate_tracked_debris():
+
+    debris = []
+
+    for i in range(15):
+
+        angle = (
+            math.tau * i / 15
+            + random.uniform(-0.12, 0.12)
+        )
+
+        radius = random.uniform(0.30, 0.88)
+
+        risk = "LOW"
+
+        if i == 4:
+            risk = "HIGH"
+
+        elif i in (2, 8, 11):
+            risk = "MEDIUM"
+
+        debris.append({
+
+            "id": f"ORB-DEB-{i + 1:02d}",
+
+            # EXACTLY ONE TARGET
+            "class":
+                "TARGET"
+                if i == 4
+                else "TRACKED",
+
+            "shape":
+                DEBRIS_SHAPES[
+                    (i + 2) % len(DEBRIS_SHAPES)
+                ],
+
+            "position": [
+
+                round(math.cos(angle) * radius, 4),
+
+                round(
+                    random.uniform(-0.35, 0.35),
+                    4
+                ),
+
+                round(math.sin(angle) * radius, 4)
+            ],
+
+            "size_m":
+                round(random.uniform(0.12, 1.8), 2),
+
+            "velocity_kms":
+                round(random.uniform(7.1, 7.9), 2),
+
+            "risk": risk,
+
+            "distance_km":
+                round(random.uniform(12, 98), 1)
+        })
+
+    return debris
+
+
+def generate_scenarios():
+
+    scenarios = {}
+
+    for key, scenario in SCENARIOS.items():
+
+        assessment = scenario["assessment"]
+
+        decision, rationale = evaluate_target(
+            assessment
+        )
+
+        scenarios[key] = {
+
+            "label":
+                scenario["label"],
+
+            "decision":
+                decision.value,
+
+            "description":
+                scenario["description"],
+
+            "rationale":
+                rationale,
+
+            "assessment": {
+
+                "size_m":
+                    assessment.size_m,
+
+                "relative_speed_mps":
+                    assessment.relative_speed_mps,
+
+                "range_km":
+                    assessment.range_km,
+
+                "risk":
+                    assessment.risk,
+
+                "group_count":
+                    assessment.group_count,
+
+                "tumbling":
+                    assessment.tumbling,
+
+                "sensor_confidence":
+                    assessment.sensor_confidence
+            }
+        }
+
+    return scenarios
 
 
 def main():
-    debris_raw = load_json(DEBRIS_STATE_PATH)
-    if isinstance(debris_raw, dict) and "debris_objects" in debris_raw:
-        debris_raw = debris_raw["debris_objects"]
 
-    mission_raw = load_json(MISSION_DECISION_PATH)
-    if isinstance(mission_raw, list) and len(mission_raw) > 0:
-        mission_raw = mission_raw[0]
+    print("=" * 72)
+    print("ADCS MISSION VISUALIZATION ENGINE")
+    print("=" * 72)
 
-    target_name = mission_raw.get("target_name")
+    background = generate_background_debris()
 
-    debris_list = []
-    matched_target = False
+    tracked = generate_tracked_debris()
 
-    for obj in debris_raw:
-        pos = obj.get("position", {})
-        vel = obj.get("velocity", {})
-        if pos.get("x") is None:
-            continue
+    debris = background + tracked
 
-        is_target = (obj.get("name") == target_name) and not matched_target
-        if is_target:
-            matched_target = True
+    data = {
 
-        debris_list.append({
-            "id": obj.get("tracking_id"),
-            "name": obj.get("name"),
-            "x": pos.get("x"),
-            "y": pos.get("y"),
-            "z": pos.get("z"),
-            # NEW: velocity components, needed to compute real orbital
-            # elements (a, e, i, RAAN, argument of perigee, true anomaly)
-            # for Kepler propagation in the simulation.
-            "vx": vel.get("vx"),
-            "vy": vel.get("vy"),
-            "vz": vel.get("vz"),
-            "size_m": obj.get("estimated_size_m"),
-            "mass_kg": obj.get("estimated_mass_kg"),
-            "tumbling_rate": obj.get("tumbling_rate"),
-            "collision_risk": obj.get("collision_confidence"),
-            "is_target": is_target
-        })
+        "project": {
 
-    if not matched_target:
-        print(f"WARNING: No debris object found matching target_name "
-              f"'{target_name}'. Target will not be highlighted.")
+            "name":
+                "Autonomous Space Debris Monitoring & Capturing System",
 
-    output = {
-        "earth_radius_km": EARTH_RADIUS_KM,
-        "target": {
-            "id": mission_raw.get("tracking_id"),
-            "name": target_name,
-            "decision": mission_raw.get("decision"),
-            "decision_reason": mission_raw.get("reason"),
-            "risk_level": mission_raw.get("risk_level"),
-            "risk_score": mission_raw.get("risk_score"),
-            "capture_method": mission_raw.get("capture_method"),
-            "capture_score": mission_raw.get("capture_score"),
-            "capture_feasible": mission_raw.get("capture_feasible"),
-            "difficulty_level": mission_raw.get("difficulty_level"),
-            "altitude_km": mission_raw.get("altitude_km"),
-            "inclination_deg": mission_raw.get("inclination_deg"),
-            "orbit_class": mission_raw.get("orbit_class"),
+            "short":
+                "ADCS"
         },
-        "debris": debris_list
+
+        "environment": {
+
+            "monitored_objects":
+                195,
+
+            "tracked_objects":
+                15,
+
+            "surveillance_radius_km":
+                100,
+
+            "orbit_altitude_km":
+                550,
+
+            "orbital_velocity_kms":
+                7.58
+        },
+
+        "spacecraft": {
+
+            "id":
+                "ADCS-SERVICER-01",
+
+            "color":
+                "#9b6cff",
+
+            "storage_capacity":
+                "6–10 objects",
+
+            "storage_note":
+                "Subject to cumulative captured mass and available containment volume."
+        },
+
+        "active_target_id":
+            "ORB-DEB-05",
+
+        "debris":
+            debris,
+
+        "phases":
+            PHASES,
+
+        "scenarios":
+            generate_scenarios(),
+
+        "default_scenario":
+            "large"
     }
 
-    with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
-        json.dump(output, f, indent=2)
+    OUTPUT.write_text(
 
-    print(f"Exported {len(debris_list)} debris objects (with velocity vectors) for visualization")
-    print(f"Target: {output['target']['name']} ({'matched' if matched_target else 'NOT MATCHED'})")
-    print(f"Decision: {output['target']['decision']}")
-    print(f"Output: {OUTPUT_PATH}")
+        json.dumps(
+            data,
+            indent=2
+        ),
+
+        encoding="utf-8"
+    )
+
+    print(
+        f"Total monitored objects: "
+        f"{data['environment']['monitored_objects']}"
+    )
+
+    print(
+        f"Tracked objects within "
+        f"{data['environment']['surveillance_radius_km']} km: "
+        f"{data['environment']['tracked_objects']}"
+    )
+
+    print(
+        f"Active operational target: "
+        f"{data['active_target_id']}"
+    )
+
+    print()
+    print("Available demonstration scenarios:")
+
+    for scenario in data["scenarios"].values():
+
+        print(
+            f"  • {scenario['label']}"
+        )
+
+    print()
+    print(f"Output file: {OUTPUT}")
+    print("=" * 72)
 
 
 if __name__ == "__main__":

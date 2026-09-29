@@ -1,0 +1,4258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#120a20">
+<meta name="description" content="Flight Operations Centre for the Autonomous Space Debris Monitoring & Capture System.">
+<title>Flight Operations Centre | ADCS-01</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Inter:wght@400;500;600;700;800&family=Michroma&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================================
+   ADCS-01
+   FLIGHT OPERATIONS CENTRE
+   Autonomous Space Debris Monitoring & Capture System
+   ========================================================= */
+
+:root{
+  --bg:#120a20;
+  --bg-deep:#0c0615;
+  --bg-mid:#170c28;
+  --bg-soft:#1c1031;
+
+  --panel:rgba(30,17,51,.76);
+  --panel-strong:rgba(20,10,35,.90);
+  --panel-light:rgba(185,156,255,.055);
+
+  --lav:#b99cff;
+  --lav-soft:#d4c5ff;
+  --lav-dim:#8069a8;
+
+  --cyan:#76e6ff;
+  --cyan-soft:#bcefff;
+
+  --green:#7df0bd;
+  --orange:#ffb15e;
+  --red:#ff6e83;
+  --yellow:#f4e58d;
+
+  --white:#f7f2ff;
+  --text:#d8d0e6;
+  --muted:#9e91b7;
+  --dim:#706480;
+
+  --line:rgba(185,156,255,.19);
+  --line-strong:rgba(185,156,255,.34);
+  --cyan-line:rgba(118,230,255,.20);
+
+  --shadow:0 30px 90px rgba(0,0,0,.38);
+  --shadow-soft:0 18px 50px rgba(0,0,0,.24);
+
+  --max:1380px;
+}
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  overflow-x:hidden;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 78% 7%,rgba(121,82,186,.19),transparent 28%),
+    radial-gradient(circle at 18% 28%,rgba(102,68,164,.13),transparent 31%),
+    radial-gradient(circle at 80% 75%,rgba(80,58,140,.08),transparent 28%),
+    linear-gradient(180deg,#120a20 0%,#150b26 42%,#0f081b 100%);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  line-height:1.6;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-5;
+  pointer-events:none;
+  background-image:
+    radial-gradient(circle,rgba(255,255,255,.62) 0 1px,transparent 1.5px),
+    radial-gradient(circle,rgba(185,156,255,.42) 0 1px,transparent 1.5px);
+  background-size:170px 170px,260px 260px;
+  background-position:20px 30px,80px 120px;
+  opacity:.075;
+  mask-image:linear-gradient(180deg,#000 0%,transparent 88%);
+}
+
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-4;
+  pointer-events:none;
+  background:
+    linear-gradient(
+      115deg,
+      transparent 0%,
+      rgba(185,156,255,.025) 35%,
+      transparent 55%
+    );
+  animation:ambientSweep 16s ease-in-out infinite alternate;
+}
+
+@keyframes ambientSweep{
+  from{transform:translateX(-5%);opacity:.55}
+  to{transform:translateX(5%);opacity:1}
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+button{
+  font:inherit;
+}
+
+img{
+  max-width:100%;
+  display:block;
+}
+
+::selection{
+  background:rgba(185,156,255,.28);
+  color:#fff;
+}
+
+/* =========================================================
+   INTRO HANDOFF
+   ========================================================= */
+
+.page-entry{
+  position:fixed;
+  inset:0;
+  z-index:5000;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 45%,rgba(185,156,255,.18),transparent 30%),
+    linear-gradient(180deg,#160b28,#0b0512);
+  transform:translateY(0);
+  transition:
+    transform .56s cubic-bezier(.77,0,.18,1),
+    opacity .35s ease;
+}
+
+.page-entry::before,
+.page-entry::after{
+  content:"";
+  position:absolute;
+  left:0;
+  width:100%;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--lav),transparent);
+}
+
+.page-entry::before{top:46%}
+.page-entry::after{top:54%}
+
+.page-entry.loaded{
+  transform:translateY(-100%);
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+.skip{
+  position:absolute;
+  left:14px;
+  top:10px;
+  z-index:6000;
+  padding:9px 12px;
+  background:#08040e;
+  color:#fff;
+  border:1px solid var(--line);
+  transform:translateY(-150%);
+}
+
+.skip:focus{
+  transform:none;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.site-header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:rgba(12,6,22,.76);
+  border-bottom:1px solid rgba(185,156,255,.13);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+}
+
+.site-header::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-1px;
+  height:1px;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(118,230,255,.35),
+    rgba(185,156,255,.25),
+    transparent
+  );
+}
+
+.nav-shell{
+  width:min(var(--max),calc(100% - 48px));
+  min-height:78px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  gap:28px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:max-content;
+}
+
+.brand-mark{
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(118,230,255,.44);
+  color:var(--cyan);
+  font:700 12px "Space Mono",monospace;
+  letter-spacing:.04em;
+  box-shadow:
+    0 0 24px rgba(118,230,255,.08),
+    inset 0 0 18px rgba(118,230,255,.035);
+  transform:rotate(45deg);
+}
+
+.brand-mark span{
+  transform:rotate(-45deg);
+}
+
+.brand-copy{
+  display:flex;
+  flex-direction:column;
+}
+
+.brand-copy strong{
+  color:var(--white);
+  font:800 16px/1 Orbitron,sans-serif;
+  letter-spacing:.14em;
+}
+
+.brand-copy small{
+  margin-top:5px;
+  color:var(--muted);
+  font:700 8px/1.2 "Space Mono",monospace;
+  letter-spacing:.15em;
+}
+
+.primary-nav{
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  gap:3px;
+}
+
+.primary-nav a{
+  position:relative;
+  padding:11px 13px;
+  border:1px solid transparent;
+  color:#bcb2ce;
+  font:700 10px/1 "Space Mono",monospace;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  transition:.28s ease;
+}
+
+.primary-nav a::after{
+  content:"";
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:5px;
+  height:1px;
+  background:var(--cyan);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:.3s ease;
+}
+
+.primary-nav a:hover,
+.primary-nav a.active{
+  color:var(--white);
+  border-color:rgba(185,156,255,.22);
+  background:rgba(185,156,255,.055);
+}
+
+.primary-nav a:hover::after,
+.primary-nav a.active::after{
+  transform:scaleX(1);
+}
+
+.live-link{
+  color:#d7fff0!important;
+}
+
+.live-dot{
+  display:inline-block;
+  width:7px;
+  height:7px;
+  margin-right:7px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 13px rgba(125,240,189,.8);
+  animation:livePulse 1.7s ease-in-out infinite;
+}
+
+@keyframes livePulse{
+  0%,100%{opacity:.65;transform:scale(.85)}
+  50%{opacity:1;transform:scale(1.15)}
+}
+
+.nav-state{
+  margin-left:7px;
+  white-space:nowrap;
+  color:var(--green);
+  font:700 9px "Space Mono",monospace;
+  letter-spacing:.12em;
+}
+
+.nav-state::before{
+  content:"";
+  display:inline-block;
+  width:6px;
+  height:6px;
+  margin-right:6px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 10px rgba(125,240,189,.8);
+}
+
+.menu-button{
+  display:none;
+  margin-left:auto;
+  padding:10px 12px;
+  border:1px solid var(--line);
+  background:rgba(185,156,255,.04);
+  color:var(--white);
+  font:700 10px "Space Mono",monospace;
+  letter-spacing:.08em;
+}
+
+.mobile-nav{
+  display:none;
+  width:min(var(--max),calc(100% - 48px));
+  margin:0 auto 14px;
+  padding:10px;
+  border-top:1px solid var(--line);
+}
+
+.mobile-nav.open{
+  display:block;
+}
+
+.mobile-nav a{
+  display:block;
+  padding:12px;
+  border-bottom:1px solid rgba(185,156,255,.08);
+  color:#c8bfd3;
+  font:700 10px "Space Mono",monospace;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+.container{
+  width:min(var(--max),calc(100% - 48px));
+  margin:auto;
+}
+
+.section{
+  position:relative;
+  padding:110px 0;
+}
+
+.section::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:50%;
+  width:min(var(--max),calc(100% - 48px));
+  height:1px;
+  transform:translateX(-50%);
+  background:linear-gradient(
+    90deg,
+    transparent,
+    var(--line),
+    transparent
+  );
+}
+
+.eyebrow{
+  color:var(--cyan);
+  font:700 9px/1.3 "Space Mono",monospace;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+
+.section-code{
+  color:#756983;
+  font:700 9px "Space Mono",monospace;
+  letter-spacing:.12em;
+}
+
+h1,
+h2,
+h3,
+h4{
+  margin:0;
+  color:var(--white);
+}
+
+h1,
+h2{
+  font-family:Audiowide,Orbitron,sans-serif;
+}
+
+h3,
+h4{
+  font-family:Michroma,Orbitron,sans-serif;
+}
+
+h1{
+  font-size:clamp(42px,6vw,78px);
+  line-height:.98;
+  letter-spacing:-.045em;
+}
+
+h2{
+  font-size:clamp(28px,4vw,50px);
+  line-height:1.04;
+  letter-spacing:-.035em;
+}
+
+h3{
+  font-size:17px;
+  line-height:1.3;
+}
+
+p{
+  margin:0;
+}
+
+.accent{
+  color:var(--lav);
+}
+
+.cyan{
+  color:var(--cyan);
+}
+
+.green{
+  color:var(--green)!important;
+}
+
+.orange{
+  color:var(--orange)!important;
+}
+
+.red{
+  color:var(--red)!important;
+}
+
+.muted{
+  color:var(--muted);
+}
+
+.reveal{
+  opacity:0;
+  transform:translateY(30px);
+  transition:
+    opacity .8s cubic-bezier(.22,1,.36,1),
+    transform .8s cubic-bezier(.22,1,.36,1);
+}
+
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+
+.from-left{
+  transform:translateX(-55px);
+}
+
+.from-right{
+  transform:translateX(55px);
+}
+
+.from-scale{
+  transform:scale(.92);
+}
+
+.from-tilt{
+  transform:perspective(900px) rotateX(8deg) translateY(35px);
+}
+
+.from-up{
+  transform:translateY(65px);
+}
+
+.reveal.visible.from-left,
+.reveal.visible.from-right,
+.reveal.visible.from-scale,
+.reveal.visible.from-tilt,
+.reveal.visible.from-up{
+  transform:none;
+}
+
+.delay-1{transition-delay:.08s}
+.delay-2{transition-delay:.16s}
+.delay-3{transition-delay:.24s}
+.delay-4{transition-delay:.32s}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.foc-hero{
+  padding:88px 0 62px;
+  position:relative;
+}
+
+.foc-hero::before{
+  content:"";
+  position:absolute;
+  width:480px;
+  height:480px;
+  right:-120px;
+  top:-180px;
+  border-radius:50%;
+  background:radial-gradient(
+    circle,
+    rgba(185,156,255,.13),
+    transparent 68%
+  );
+  pointer-events:none;
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:70px;
+  align-items:center;
+}
+
+.hero-code{
+  margin-bottom:25px;
+  color:#746582;
+  font:700 9px "Space Mono",monospace;
+  letter-spacing:.14em;
+}
+
+.hero-title span{
+  display:block;
+  margin-top:9px;
+  color:var(--lav);
+}
+
+.hero-description{
+  max-width:760px;
+  margin-top:25px;
+  color:#c9c0d7;
+  font-size:16px;
+  line-height:1.8;
+}
+
+.hero-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:27px;
+}
+
+.meta-chip{
+  padding:8px 11px;
+  border:1px solid var(--line);
+  background:rgba(185,156,255,.035);
+  color:#cfc5dc;
+  font:700 9px "Space Mono",monospace;
+  letter-spacing:.1em;
+}
+
+/* =========================================================
+   HERO GRAPHIC
+   ========================================================= */
+
+.hero-console{
+  position:relative;
+  min-height:430px;
+  border:1px solid var(--line-strong);
+  background:
+    radial-gradient(circle at 50% 50%,rgba(118,230,255,.09),transparent 25%),
+    linear-gradient(145deg,rgba(29,16,49,.82),rgba(10,5,18,.94));
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+
+.hero-console::before{
+  content:"";
+  position:absolute;
+  inset:12px;
+  border:1px solid rgba(185,156,255,.08);
+  pointer-events:none;
+}
+
+.console-grid{
+  position:absolute;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(185,156,255,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(185,156,255,.06) 1px,transparent 1px);
+  background-size:36px 36px;
+  mask-image:radial-gradient(circle at center,#000 20%,transparent 88%);
+}
+
+.console-label{
+  position:absolute;
+  color:#7e7191;
+  font:700 8px "Space Mono",monospace;
+  letter-spacing:.12em;
+}
+
+.cl-tl{left:20px;top:18px}
+.cl-tr{right:20px;top:18px}
+.cl-bl{left:20px;bottom:18px}
+.cl-br{right:20px;bottom:18px}
+
+.console-earth{
+  position:absolute;
+  left:50%;
+  top:52%;
+  width:180px;
+  height:180px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:
+    linear-gradient(
+      115deg,
+      rgba(255,255,255,.05),
+      transparent 40%
+    ),
+    url("assets/textures/earth-nasa.jpg") center/cover no-repeat;
+  border:1px solid rgba(185,156,255,.35);
+  box-shadow:
+    0 0 35px rgba(118,230,255,.12),
+    0 0 100px rgba(126,88,190,.16);
+  filter:saturate(.72) brightness(.66);
+}
+
+.console-orbit{
+  position:absolute;
+  left:50%;
+  top:52%;
+  width:390px;
+  height:190px;
+  transform:translate(-50%,-50%) rotate(-17deg);
+  border:1px solid rgba(118,230,255,.34);
+  border-radius:50%;
+}
+
+.console-orbit.o2{
+  width:470px;
+  height:240px;
+  transform:translate(-50%,-50%) rotate(18deg);
+  border-color:rgba(185,156,255,.20);
+  border-style:dashed;
+}
+
+.console-orbit.o3{
+  width:540px;
+  height:290px;
+  transform:translate(-50%,-50%) rotate(-7deg);
+  border-color:rgba(118,230,255,.10);
+}
+
+.console-sat{
+  position:absolute;
+  left:28%;
+  top:42%;
+  width:27px;
+  height:19px;
+  border:1px solid var(--cyan);
+  background:rgba(118,230,255,.09);
+  transform:rotate(-18deg);
+  box-shadow:0 0 25px rgba(118,230,255,.45);
+}
+
+.console-sat::before,
+.console-sat::after{
+  content:"";
+  position:absolute;
+  top:5px;
+  width:13px;
+  height:8px;
+  border:1px solid rgba(118,230,255,.6);
+}
+
+.console-sat::before{right:25px}
+.console-sat::after{left:25px}
+
+.console-target{
+  position:absolute;
+  right:23%;
+  top:30%;
+  width:22px;
+  height:22px;
+  border:1px solid var(--red);
+  box-shadow:0 0 26px rgba(255,110,131,.7);
+}
+
+.console-target::before,
+.console-target::after{
+  content:"";
+  position:absolute;
+  background:var(--red);
+}
+
+.console-target::before{
+  width:52px;
+  height:1px;
+  left:-16px;
+  top:10px;
+}
+
+.console-target::after{
+  width:1px;
+  height:52px;
+  left:10px;
+  top:-16px;
+}
+
+.console-vector{
+  position:absolute;
+  left:31%;
+  top:46%;
+  width:280px;
+  height:1px;
+  background:linear-gradient(
+    90deg,
+    var(--cyan),
+    rgba(118,230,255,.1)
+  );
+  transform:rotate(-24deg);
+  transform-origin:left;
+  opacity:.65;
+}
+
+.console-vector::after{
+  content:"";
+  position:absolute;
+  right:0;
+  top:-3px;
+  width:7px;
+  height:7px;
+  border-right:1px solid var(--cyan);
+  border-top:1px solid var(--cyan);
+  transform:rotate(45deg);
+}
+
+.console-hud{
+  position:absolute;
+  min-width:115px;
+  padding:10px 12px;
+  border:1px solid rgba(185,156,255,.18);
+  background:rgba(8,4,15,.70);
+  backdrop-filter:blur(7px);
+}
+
+.console-hud small{
+  display:block;
+  color:#746681;
+  font:700 7px "Space Mono",monospace;
+  letter-spacing:.12em;
+}
+
+.console-hud strong{
+  display:block;
+  margin-top:4px;
+  color:var(--white);
+  font:700 11px Orbitron,sans-serif;
+}
+
+.hud-one{left:18px;top:74px}
+.hud-two{right:18px;top:74px}
+.hud-three{left:18px;bottom:65px}
+.hud-four{right:18px;bottom:65px}
+
+/* =========================================================
+   MISSION CLOCK / STATUS STRIP
+   ========================================================= */
+
+.status-ribbon{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  background:rgba(9,5,17,.36);
+}
+
+.status-cell{
+  min-height:82px;
+  padding:16px 18px;
+  border-right:1px solid var(--line);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.status-cell:last-child{
+  border-right:0;
+}
+
+.status-cell small{
+  color:#716580;
+  font:800 8px "Space Mono",monospace;
+  letter-spacing:.1em;
+}
+
+.status-cell strong{
+  margin-top:7px;
+  color:var(--white);
+  font:700 12px Orbitron,sans-serif;
+}
+
+.status-cell.clock strong{
+  font-size:16px;
+  color:var(--lav);
+}
+
+/* =========================================================
+   SECTION HEADER
+   ========================================================= */
+
+.section-head{
+  max-width:820px;
+  margin-bottom:45px;
+}
+
+.section-head h2{
+  margin-top:13px;
+}
+
+.section-head h2 span{
+  color:var(--lav);
+}
+
+.section-head p{
+  margin-top:18px;
+  color:#afa4bc;
+  font-size:15px;
+  line-height:1.8;
+}
+
+/* =========================================================
+   OPERATIONAL PICTURE
+   ========================================================= */
+
+.operations-layout{
+  display:grid;
+  grid-template-columns:1.35fr .65fr;
+  gap:18px;
+}
+
+.operational-map{
+  position:relative;
+  min-height:590px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:
+    radial-gradient(circle at 50% 48%,rgba(118,230,255,.07),transparent 24%),
+    linear-gradient(145deg,#1a0f2d,#0c0616);
+  box-shadow:var(--shadow);
+}
+
+.map-grid{
+  position:absolute;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(185,156,255,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(185,156,255,.055) 1px,transparent 1px);
+  background-size:42px 42px;
+}
+
+.map-scan{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:440px;
+  height:440px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  border:1px dashed rgba(118,230,255,.12);
+  animation:scanRotate 18s linear infinite;
+}
+
+.map-scan::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:1px;
+  height:50%;
+  background:linear-gradient(var(--cyan),transparent);
+  transform-origin:bottom;
+  opacity:.45;
+}
+
+@keyframes scanRotate{
+  to{transform:translate(-50%,-50%) rotate(360deg)}
+}
+
+.map-earth{
+  position:absolute;
+  left:50%;
+  top:53%;
+  width:210px;
+  height:210px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:
+    linear-gradient(120deg,rgba(255,255,255,.05),transparent 45%),
+    url("assets/textures/earth-nasa.jpg") center/cover no-repeat;
+  border:1px solid rgba(185,156,255,.34);
+  filter:saturate(.68) brightness(.62);
+  box-shadow:
+    0 0 35px rgba(118,230,255,.08),
+    0 0 100px rgba(116,76,178,.14);
+}
+
+.map-orbit{
+  position:absolute;
+  left:50%;
+  top:53%;
+  width:640px;
+  height:310px;
+  transform:translate(-50%,-50%) rotate(-17deg);
+  border:1px solid rgba(118,230,255,.28);
+  border-radius:50%;
+}
+
+.map-orbit.o2{
+  width:760px;
+  height:380px;
+  transform:translate(-50%,-50%) rotate(18deg);
+  border-color:rgba(185,156,255,.17);
+  border-style:dashed;
+}
+
+.range-ring{
+  position:absolute;
+  left:37%;
+  top:44%;
+  width:320px;
+  height:320px;
+  transform:translate(-50%,-50%);
+  border:1px dashed rgba(118,230,255,.24);
+  border-radius:50%;
+}
+
+.range-label{
+  position:absolute;
+  left:37%;
+  top:25%;
+  transform:translateX(-50%);
+  color:#6d8291;
+  font:700 8px "Space Mono",monospace;
+  letter-spacing:.1em;
+}
+
+.map-sat{
+  position:absolute;
+  left:32%;
+  top:41%;
+  width:36px;
+  height:25px;
+  border:1px solid var(--cyan);
+  background:rgba(118,230,255,.08);
+  transform:rotate(-15deg);
+  box-shadow:0 0 25px rgba(118,230,255,.35);
+}
+
+.map-sat::before,
+.map-sat::after{
+  content:"";
+  position:absolute;
+  top:6px;
+  width:18px;
+  height:10px;
+  border:1px solid rgba(118,230,255,.55);
+}
+
+.map-sat::before{right:34px}
+.map-sat::after{left:34px}
+
+.map-target{
+  position:absolute;
+  left:70%;
+  top:31%;
+  width:24px;
+  height:24px;
+  border:1px solid var(--red);
+  box-shadow:0 0 30px rgba(255,110,131,.62);
+}
+
+.map-target::before,
+.map-target::after{
+  content:"";
+  position:absolute;
+  background:var(--red);
+}
+
+.map-target::before{
+  width:58px;
+  height:1px;
+  left:-18px;
+  top:11px;
+}
+
+.map-target::after{
+  width:1px;
+  height:58px;
+  left:11px;
+  top:-18px;
+}
+
+.tracked{
+  position:absolute;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--orange);
+  box-shadow:0 0 14px rgba(255,177,94,.6);
+}
+
+.tracked.t1{left:61%;top:65%}
+.tracked.t2{left:78%;top:53%}
+.tracked.t3{left:45%;top:24%}
+.tracked.t4{left:82%;top:76%}
+.tracked.t5{left:57%;top:20%}
+.tracked.t6{left:24%;top:66%}
+
+.map-vector{
+  position:absolute;
+  left:34%;
+  top:44%;
+  width:310px;
+  height:1px;
+  transform:rotate(-25deg);
+  transform-origin:left;
+  background:linear-gradient(
+    90deg,
+    var(--cyan),
+    rgba(118,230,255,.04)
+  );
+}
+
+.map-vector::after{
+  content:"";
+  position:absolute;
+  right:0;
+  top:-3px;
+  width:7px;
+  height:7px;
+  border-right:1px solid var(--cyan);
+  border-top:1px solid var(--cyan);
+  transform:rotate(45deg);
+}
+
+.map-hud{
+  position:absolute;
+  padding:12px 14px;
+  border:1px solid rgba(185,156,255,.18);
+  background:rgba(8,4,15,.72);
+  backdrop-filter:blur(9px);
+  box-shadow:0 10px 30px rgba(0,0,0,.16);
+}
+
+.map-hud small{
+  display:block;
+  color:#746781;
+  font:700 7px "Space Mono",monospace;
+  letter-spacing:.12em;
+}
+
+.map-hud strong{
+  display:block;
+  margin-top:5px;
+  color:var(--white);
+  font:700 11px Orbitron,sans-serif;
+}
+
+.map-hud.m1{left:18px;top:18px}
+.map-hud.m2{right:18px;top:18px}
+.map-hud.m3{left:18px;bottom:18px}
+.map-hud.m4{right:18px;bottom:18px}
+
+.map-caption{
+  position:absolute;
+  left:50%;
+  bottom:22px;
+  transform:translateX(-50%);
+  color:#6d6578;
+  font:700 8px "Space Mono",monospace;
+  letter-spacing:.13em;
+  white-space:nowrap;
+}
+
+/* =========================================================
+   SIDE CONTROL STACK
+   ========================================================= */
+
+.side-stack{
+  display:grid;
+  grid-template-rows:auto auto auto;
+  gap:18px;
+}
+
+.panel{
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--line);
+  background:
+    linear-gradient(
+      150deg,
+      rgba(37,21,61,.74),
+      rgba(15,8,27,.91)
+    );
+  box-shadow:var(--shadow-soft);
+}
+
+.panel::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(
+      120deg,
+      rgba(185,156,255,.035),
+      transparent 35%,
+      rgba(118,230,255,.018)
+    );
+}
+
+.panel-inner{
+  position:relative;
+  z-index:1;
+  padding:25px;
+}
+
+.target-panel{
+  clip-path:polygon(
+    0 0,
+    calc(100% - 22px) 0,
+    100% 22px,
+    100% 100%,
+    0 100%
+  );
+}
+
+.control-panel{
+  clip-path:polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 22px),
+    calc(100% - 22px) 100%,
+    0 100%
+  );
+}
+
+.constraint-panel{
+  border-radius:0 24px 0 24px;
+}
+
+.target-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:15px;
+}
+
+.target-id{
+  margin-top:7px;
+  color:var(--white);
+  font:700 25px Orbitron,sans-serif;
+  letter-spacing:.02em;
+}
+
+.lock-state{
+  color:var(--red);
+  font:800 8px "Space Mono",monospace;
+  letter-spacing:.12em;
+}
+
+.lock-state::before{
+  content:"";
+  display:inline-block;
+  width:7px;
+  height:7px;
+  margin-right:5px;
+  border-radius:50%;
+  background:var(--red);
+  box-shadow:0 0 10px rgba(255,110,131,.8);
+}
+
+.telemetry-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:22px;
+}
+
+.telemetry-cell{
+  padding:12px;
+  border:1px solid rgba(185,156,255,.12);
+  background:rgba(185,156,255,.025);
+}
+
+.telemetry-cell small{
+  display:block;
+  color:#736780;
+  font:800 7px "Space Mono",monospace;
+  letter-spacing:.1em;
+}
+
+.telemetry-cell strong{
+  display:block;
+  margin-top:6px;
+  color:#e5ddef;
+  font:700 10px "Space Mono",monospace;
+}
+
+/* =========================================================
+   CONTROL PANEL
+   ========================================================= */
+
+.control-description{
+  margin-top:10px;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.65;
+}
+
+.command-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:17px;
+}
+
+.command-button{
+  position:relative;
+  padding:13px 10px;
+  border:1px solid var(--line);
+  background:rgba(185,156,255,.035);
+  color:var(--white);
+  cursor:pointer;
+  font:800 8px "Space Mono",monospace;
+  letter-spacing:.1em;
+  transition:.25s ease;
+}
+
+.command-button:hover{
+  transform:translateY(-2px);
+  border-color:rgba(118,230,255,.45);
+  background:rgba(118,230,255,.055);
+  box-shadow:0 12px 28px rgba(118,230,255,.06);
+}
+
+.command-button:active{
+  transform:translateY(0);
+}
+
+.command-button.danger{
+  color:#ffdbe2;
+  border-color:rgba(255,110,131,.26);
+}
+
+.command-button.danger:hover{
+  border-color:rgba(255,110,131,.62);
+  background:rgba(255,110,131,.05);
+}
+
+.command-status{
+  margin-top:14px;
+  padding:12px;
+  border:1px solid rgba(125,240,189,.18);
+  background:rgba(125,240,189,.025);
+  color:#bcebd6;
+  font:700 8px "Space Mono",monospace;
+  letter-spacing:.06em;
+}
+
+.constraint-list{
+  display:grid;
+  gap:8px;
+  margin-top:17px;
+}
+
+.constraint{
+  position:relative;
+  padding:11px 12px 11px 17px;
+  border:1px solid rgba(185,156,255,.09);
+  background:rgba(185,156,255,.025);
+  color:#aaa0b5;
+  font-size:10px;
+  line-height:1.55;
+}
+
+.constraint::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:2px;
+  background:var(--green);
+}
+
+.constraint.warn::before{
+  background:var(--orange);
+}
+
+.constraint.redline::before{
+  background:var(--red);
+}
+
+/* =========================================================
+   SYSTEM HEALTH
+   ========================================================= */
+
+.health-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+
+.health-card{
+  position:relative;
+  padding:22px;
+  min-height:190px;
+  border:1px solid var(--line);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(33,18,54,.70),
+      rgba(14,8,25,.84)
+    );
+  overflow:hidden;
+  transition:.35s ease;
+}
+
+.health-card:nth-child(1){
+  border-radius:28px 4px 4px 4px;
+}
+
+.health-card:nth-child(2){
+  border-radius:4px 28px 4px 4px;
+}
+
+.health-card:nth-child(3){
+  border-radius:4px 4px 28px 4px;
+}
+
+.health-card:nth-child(4){
+  border-radius:4px 4px 4px 28px;
+}
+
+.health-card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(185,156,255,.35);
+  box-shadow:0 25px 60px rgba(0,0,0,.25);
+}
+
+.health-number{
+  position:absolute;
+  right:16px;
+  top:13px;
+  color:rgba(185,156,255,.12);
+  font:800 36px Orbitron,sans-serif;
+}
+
+.health-card h3{
+  position:relative;
+  z-index:1;
+  margin-top:14px;
+  font-size:13px;
+}
+
+.health-state{
+  margin-top:10px;
+  color:var(--green);
+  font:800 8px "Space Mono",monospace;
+  letter-spacing:.12em;
+}
+
+.health-line{
+  height:3px;
+  margin-top:18px;
+  overflow:hidden;
+  background:rgba(185,156,255,.08);
+}
+
+.health-line span{
+  display:block;
+  width:var(--value);
+  height:100%;
+  background:linear-gradient(90deg,var(--lav),var(--cyan));
+  box-shadow:0 0 12px rgba(118,230,255,.25);
+}
+
+.health-info{
+  display:flex;
+  justify-content:space-between;
+  margin-top:8px;
+  color:#82758f;
+  font:700 8px "Space Mono",monospace;
+}
+
+/* =========================================================
+   TELEMETRY MATRIX
+   ========================================================= */
+
+.telemetry-layout{
+  display:grid;
+  grid-template-columns:1.25fr .75fr;
+  gap:18px;
+}
+
+.matrix{
+  padding:27px;
+}
+
+.matrix-header{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  align-items:flex-start;
+}
+
+.matrix-title{
+  margin-top:9px;
+}
+
+.matrix-title h3{
+  font-size:16px;
+}
+
+.live-indicator{
+  padding:8px 10px;
+  border:1px solid rgba(125,240,189,.18);
+  background:rgba(125,240,189,.025);
+  color:var(--green);
+  font:700 8px "Space Mono",monospace;
+  letter-spacing:.08em;
+}
+
+.telemetry-table{
+  width:100%;
+  margin-top:24px;
+  border-collapse:collapse;
+}
+
+.telemetry-table th{
+  padding:10px 8px;
+  text-align:left;
+  color:#71647e;
+  border-bottom:1px solid var(--line);
+  font:800 7px "Space Mono",monospace;
+  letter-spacing:.1em;
+}
+
+.telemetry-table td{
+  padding:13px 8px;
+  border-bottom:1px solid rgba(185,156,255,.07);
+  color:#bcb2c6;
+  font:700 9px "Space Mono",monospace;
+}
+
+.telemetry-table tr:last-child td{
+  border-bottom:0;
+}
+
+.value-good{
+  color:var(--green)!important;
+}
+
+.value-cyan{
+  color:var(--cyan)!important;
+}
+
+.value-warn{
+  color:var(--orange)!important;
+}
+
+.telemetry-note{
+  margin-top:17px;
+  color:#71667d;
+  font-size:10px;
+  line-height:1.6;
+}
+
+/* =========================================================
+   ATTITUDE / VECTOR GRAPHIC
+   ========================================================= */
+
+.vector-panel{
+  position:relative;
+  min-height:410px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  background:
+    radial-gradient(circle at center,rgba(118,230,255,.065),transparent 31%),
+    linear-gradient(145deg,#1a0f2d,#0c0616);
+}
+
+.vector-grid{
+  position:absolute;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(185,156,255,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(185,156,255,.055) 1px,transparent 1px);
+  background-size:34px 34px;
+}
+
+.vector-axis{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:240px;
+  height:1px;
+  background:rgba(118,230,255,.35);
+  transform:translate(-50%,-50%);
+}
+
+.vector-axis.y{
+  transform:translate(-50%,-50%) rotate(90deg);
+}
+
+.vector-axis.z{
+  width:170px;
+  background:rgba(185,156,255,.28);
+  transform:translate(-50%,-50%) rotate(38deg);
+}
+
+.spacecraft{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:72px;
+  height:52px;
+  transform:translate(-50%,-50%) rotate(-13deg);
+  border:1px solid var(--cyan);
+  background:rgba(118,230,255,.06);
+  box-shadow:0 0 30px rgba(118,230,255,.15);
+}
+
+.spacecraft::before,
+.spacecraft::after{
+  content:"";
+  position:absolute;
+  top:11px;
+  width:40px;
+  height:28px;
+  border:1px solid rgba(118,230,255,.46);
+}
+
+.spacecraft::before{right:70px}
+.spacecraft::after{left:70px}
+
+.attitude-ring{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:210px;
+  height:210px;
+  transform:translate(-50%,-50%);
+  border:1px dashed rgba(185,156,255,.24);
+  border-radius:50%;
+}
+
+.attitude-ring.r2{
+  width:310px;
+  height:310px;
+  border-color:rgba(118,230,255,.12);
+}
+
+.axis-label{
+  position:absolute;
+  color:#70818b;
+  font:700 8px "Space Mono",monospace;
+}
+
+.axis-x{right:14%;top:47%}
+.axis-y{left:49%;top:15%}
+.axis-z{left:22%;top:25%}
+
+.vector-hud{
+  position:absolute;
+  left:18px;
+  bottom:18px;
+  padding:13px;
+  border:1px solid var(--line);
+  background:rgba(8,4,15,.74);
+}
+
+.vector-hud small{
+  display:block;
+  color:#71647e;
+  font:700 7px "Space Mono",monospace;
+}
+
+.vector-hud strong{
+  display:block;
+  margin-top:6px;
+  color:var(--white);
+  font:700 12px Orbitron,sans-serif;
+}
+
+.vector-right{
+  position:absolute;
+  right:18px;
+  top:18px;
+  text-align:right;
+}
+
+.vector-right span{
+  display:block;
+  margin-top:5px;
+  color:#a99fb3;
+  font:700 8px "Space Mono",monospace;
+}
+
+/* =========================================================
+   TIMELINE
+   ========================================================= */
+
+.timeline-layout{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+.timeline-panel,
+.log-panel{
+  padding:27px;
+}
+
+.timeline-list{
+  margin-top:23px;
+}
+
+.timeline-row{
+  display:grid;
+  grid-template-columns:75px 145px 1fr;
+  gap:12px;
+  padding:14px 0;
+  border-bottom:1px solid rgba(185,156,255,.09);
+  font-size:10px;
+}
+
+.timeline-row:last-child{
+  border-bottom:0;
+}
+
+.timeline-row time{
+  color:var(--cyan);
+  font:700 9px "Space Mono",monospace;
+}
+
+.timeline-row b{
+  color:var(--white);
+  font:700 8px "Space Mono",monospace;
+  letter-spacing:.06em;
+}
+
+.timeline-row span{
+  color:#9d92a9;
+}
+
+.log-box{
+  min-height:270px;
+  margin-top:23px;
+  padding:17px;
+  border:1px solid rgba(185,156,255,.11);
+  background:#09050f;
+  overflow:auto;
+}
+
+.log-box pre{
+  margin:0;
+  white-space:pre-wrap;
+  color:#a99db4;
+  font:10px/1.9 "Space Mono",monospace;
+}
+
+.log-box .good{
+  color:var(--green);
+}
+
+.log-box .cmd{
+  color:var(--cyan);
+}
+
+/* =========================================================
+   DECISION AUTHORITY
+   ========================================================= */
+
+.authority{
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  gap:18px;
+}
+
+.authority-intro{
+  padding:30px;
+  border:1px solid var(--line);
+  background:
+    radial-gradient(circle at 80% 20%,rgba(185,156,255,.11),transparent 35%),
+    linear-gradient(145deg,rgba(36,20,59,.72),rgba(13,7,23,.9));
+  clip-path:polygon(
+    0 0,
+    94% 0,
+    100% 10%,
+    100% 100%,
+    6% 100%,
+    0 90%
+  );
+}
+
+.authority-intro h3{
+  margin-top:11px;
+  font-size:19px;
+}
+
+.authority-intro p{
+  margin-top:15px;
+  color:#a89dac;
+  font-size:12px;
+  line-height:1.75;
+}
+
+.authority-equation{
+  margin-top:25px;
+  padding:17px;
+  border-left:2px solid var(--lav);
+  background:rgba(185,156,255,.035);
+  color:#d8cff0;
+  font:700 10px/1.8 "Space Mono",monospace;
+}
+
+.authority-table-wrap{
+  border:1px solid var(--line);
+  overflow:hidden;
+  background:rgba(17,9,29,.65);
+}
+
+.authority-table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+.authority-table th{
+  padding:14px 15px;
+  text-align:left;
+  color:#766981;
+  background:rgba(185,156,255,.035);
+  border-bottom:1px solid var(--line);
+  font:800 7px "Space Mono",monospace;
+  letter-spacing:.1em;
+}
+
+.authority-table td{
+  padding:14px 15px;
+  border-bottom:1px solid rgba(185,156,255,.07);
+  color:#aaa0b1;
+  font-size:10px;
+}
+
+.authority-table tr:last-child td{
+  border-bottom:0;
+}
+
+.decision{
+  font:800 8px "Space Mono",monospace!important;
+  letter-spacing:.08em;
+}
+
+.decision.hold{color:var(--orange)}
+.decision.abort{color:var(--red)}
+.decision.proceed{color:var(--green)}
+.decision.assess{color:var(--cyan)}
+
+/* =========================================================
+   MODEL BOUNDARY
+   ========================================================= */
+
+.boundary{
+  padding:30px;
+  border:1px solid var(--line);
+  background:
+    linear-gradient(
+      90deg,
+      rgba(185,156,255,.045),
+      rgba(118,230,255,.025),
+      rgba(185,156,255,.045)
+    );
+}
+
+.boundary-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:18px;
+  margin-top:27px;
+}
+
+.boundary-box{
+  padding:20px;
+  border:1px solid rgba(185,156,255,.12);
+  background:rgba(8,4,15,.24);
+}
+
+.boundary-box:nth-child(1){
+  border-radius:20px 0 20px 0;
+}
+
+.boundary-box:nth-child(2){
+  border-radius:0 20px 0 20px;
+}
+
+.boundary-box:nth-child(3){
+  border-radius:20px 0 20px 0;
+}
+
+.boundary-box h4{
+  font-size:11px;
+  color:var(--white);
+}
+
+.boundary-box p{
+  margin-top:10px;
+  color:#9f94aa;
+  font-size:10px;
+  line-height:1.7;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.site-footer{
+  padding:72px 0 40px;
+  border-top:1px solid var(--line);
+  background:rgba(7,4,14,.42);
+}
+
+.footer-grid{
+  display:grid;
+  grid-template-columns:1.4fr .6fr;
+  gap:50px;
+}
+
+.footer-title{
+  color:var(--white);
+  font:800 13px Orbitron,sans-serif;
+  letter-spacing:.08em;
+}
+
+.footer-copy,
+.source-note{
+  margin-top:9px;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.7;
+}
+
+.footer-right{
+  text-align:right;
+  color:#766a82;
+  font:700 8px/1.9 "Space Mono",monospace;
+  letter-spacing:.12em;
+}
+
+
+/* =========================================================
+   CORRECTED DATA / HARDWARE BRIDGE
+   ========================================================= */
+
+.prediction-record{
+  position:relative;
+  overflow:hidden;
+}
+
+.prediction-source-bar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  padding-bottom:20px;
+  border-bottom:1px solid var(--line);
+}
+
+.prediction-source-bar strong{
+  display:block;
+  margin-top:8px;
+  color:var(--white);
+  font:700 11px "Space Mono",monospace;
+  word-break:break-all;
+}
+
+.prediction-badge{
+  padding:9px 12px;
+  border:1px solid rgba(244,229,141,.28);
+  background:rgba(244,229,141,.045);
+  color:var(--yellow);
+  font:800 8px "Space Mono",monospace;
+  letter-spacing:.1em;
+}
+
+.prediction-record-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-top:20px;
+}
+
+.prediction-record-grid .boundary-box{
+  min-height:175px;
+}
+
+.prediction-record-grid strong{
+  color:var(--lav-soft);
+  font-family:"Space Mono",monospace;
+  font-size:9px;
+}
+
+.prediction-disclaimer{
+  margin-top:18px;
+  padding:15px 17px;
+  border-left:2px solid var(--cyan);
+  background:rgba(118,230,255,.025);
+  color:#a89dac;
+  font-size:10px;
+  line-height:1.7;
+}
+
+.prediction-disclaimer strong{
+  color:var(--cyan);
+  font:800 8px "Space Mono",monospace;
+  letter-spacing:.08em;
+}
+
+.hardware-bridge{
+  display:flex;
+  align-items:stretch;
+  gap:8px;
+  overflow-x:auto;
+  padding:24px;
+  border:1px solid var(--line-strong);
+  background:
+    radial-gradient(circle at 50% 50%,rgba(118,230,255,.055),transparent 40%),
+    linear-gradient(145deg,rgba(31,17,51,.72),rgba(10,5,18,.9));
+  box-shadow:var(--shadow-soft);
+}
+
+.bridge-node{
+  min-width:150px;
+  min-height:118px;
+  padding:17px;
+  border:1px solid rgba(185,156,255,.18);
+  background:rgba(8,4,15,.48);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,0 100%);
+}
+
+.bridge-node span{
+  color:var(--cyan);
+  font:800 8px "Space Mono",monospace;
+}
+
+.bridge-node b{
+  margin-top:10px;
+  color:var(--white);
+  font:800 11px Orbitron,sans-serif;
+}
+
+.bridge-node small{
+  margin-top:7px;
+  color:#8f839d;
+  font:700 8px/1.5 "Space Mono",monospace;
+}
+
+.bridge-arrow{
+  display:grid;
+  place-items:center;
+  min-width:22px;
+  color:var(--lav);
+  font:700 20px "Space Mono",monospace;
+}
+
+.hardware-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-top:14px;
+}
+
+.hardware-grid .boundary-box{
+  min-height:165px;
+}
+
+@media(max-width:1000px){
+  .prediction-record-grid{
+    grid-template-columns:1fr 1fr;
+  }
+  .hardware-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:650px){
+  .prediction-source-bar{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  .prediction-record-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:1180px){
+
+  .primary-nav{
+    display:none;
+  }
+
+  .menu-button{
+    display:block;
+  }
+
+  .nav-state{
+    display:none;
+  }
+
+  .hero-grid{
+    grid-template-columns:1fr;
+  }
+
+  .hero-console{
+    min-height:390px;
+  }
+
+  .status-ribbon{
+    grid-template-columns:repeat(4,1fr);
+  }
+
+  .status-cell:nth-child(4){
+    border-right:0;
+  }
+
+  .operations-layout{
+    grid-template-columns:1fr;
+  }
+
+  .telemetry-layout{
+    grid-template-columns:1fr;
+  }
+
+  .authority{
+    grid-template-columns:1fr;
+  }
+
+  .health-grid{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:800px){
+
+  .container,
+  .nav-shell,
+  .mobile-nav{
+    width:min(100% - 28px,var(--max));
+  }
+
+  .section{
+    padding:82px 0;
+  }
+
+  .foc-hero{
+    padding:65px 0 48px;
+  }
+
+  .status-ribbon{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .status-cell{
+    border-right:0;
+    border-bottom:1px solid var(--line);
+  }
+
+  .status-cell:last-child{
+    border-bottom:0;
+  }
+
+  .health-grid{
+    grid-template-columns:1fr;
+  }
+
+  .timeline-layout{
+    grid-template-columns:1fr;
+  }
+
+  .boundary-grid{
+    grid-template-columns:1fr;
+  }
+
+  .footer-grid{
+    grid-template-columns:1fr;
+  }
+
+  .footer-right{
+    text-align:left;
+  }
+}
+
+@media(max-width:600px){
+
+  h1{
+    font-size:clamp(35px,11vw,55px);
+  }
+
+  h2{
+    font-size:32px;
+  }
+
+  .hero-description{
+    font-size:14px;
+  }
+
+  .hero-console{
+    min-height:330px;
+  }
+
+  .console-earth,
+  .map-earth{
+    width:135px;
+    height:135px;
+  }
+
+  .console-orbit{
+    width:310px;
+    height:150px;
+  }
+
+  .console-orbit.o2{
+    width:390px;
+    height:190px;
+  }
+
+  .console-orbit.o3{
+    width:430px;
+    height:220px;
+  }
+
+  .console-vector{
+    width:210px;
+  }
+
+  .operational-map{
+    min-height:470px;
+  }
+
+  .map-orbit{
+    width:500px;
+    height:245px;
+  }
+
+  .map-orbit.o2{
+    width:590px;
+    height:300px;
+  }
+
+  .range-ring{
+    width:240px;
+    height:240px;
+  }
+
+  .map-caption{
+    font-size:7px;
+  }
+
+  .telemetry-grid{
+    grid-template-columns:1fr;
+  }
+
+  .command-grid{
+    grid-template-columns:1fr;
+  }
+
+  .timeline-row{
+    grid-template-columns:58px 100px 1fr;
+  }
+
+  .authority-table-wrap{
+    overflow-x:auto;
+  }
+
+  .authority-table{
+    min-width:620px;
+  }
+
+  .telemetry-table{
+    min-width:620px;
+  }
+
+  .matrix{
+    overflow-x:auto;
+  }
+
+  .vector-panel{
+    min-height:350px;
+  }
+
+  .attitude-ring.r2{
+    width:250px;
+    height:250px;
+  }
+
+  .attitude-ring{
+    width:170px;
+    height:170px;
+  }
+}
+
+
+/* =========================================================
+   PROFESSIONAL OPERATIONS MODULES
+   ========================================================= */
+.ops-standard{
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:18px;
+  margin-top:28px;
+}
+.ops-standard-panel{
+  position:relative;
+  overflow:hidden;
+  padding:28px;
+  border:1px solid rgba(191,176,255,.22);
+  background:linear-gradient(145deg,rgba(38,30,63,.86),rgba(20,17,37,.78));
+  box-shadow:0 22px 70px rgba(8,5,20,.34), inset 0 1px 0 rgba(255,255,255,.04);
+  clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px));
+}
+.ops-standard-panel::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(110deg,transparent 0 42%,rgba(181,160,255,.045) 50%,transparent 58%);
+  transform:translateX(-70%);animation:opsSweep 9s linear infinite;
+}
+@keyframes opsSweep{to{transform:translateX(70%)}}
+.ops-standard-panel h3{margin:8px 0 18px;font-size:24px}
+.ops-standard-panel p{color:var(--muted);line-height:1.75}
+.ops-gate-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}
+.ops-gate{padding:14px;border:1px solid rgba(191,176,255,.15);background:rgba(255,255,255,.025)}
+.ops-gate b{display:block;font:700 11px/1.2 "Space Mono",monospace;letter-spacing:.08em}
+.ops-gate span{display:block;margin-top:7px;color:var(--muted);font-size:12px;line-height:1.45}
+.ops-gate .state{margin-top:9px;color:#bcaeff;font:700 10px "Space Mono",monospace;letter-spacing:.12em}
+.ops-gate.warn .state{color:#ffbe72}.ops-gate.safe .state{color:#8ce7c0}.ops-gate.lock .state{color:#ff8f9e}
+.ops-standard-table{width:100%;border-collapse:collapse;margin-top:10px}
+.ops-standard-table th,.ops-standard-table td{padding:12px 10px;text-align:left;border-bottom:1px solid rgba(191,176,255,.11);vertical-align:top}
+.ops-standard-table th{font:700 9px "Space Mono",monospace;letter-spacing:.12em;color:#a99bce}
+.ops-standard-table td{font-size:12px;line-height:1.55;color:#ded7ee}.ops-standard-table td:first-child{color:#fff;font-weight:700}
+.ops-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;margin-top:20px;background:rgba(191,176,255,.14);border:1px solid rgba(191,176,255,.14)}
+.ops-strip-item{padding:18px;background:rgba(25,21,44,.92);min-height:94px}
+.ops-strip-item small{display:block;color:#8f83b1;font:700 8px "Space Mono",monospace;letter-spacing:.14em}
+.ops-strip-item strong{display:block;margin-top:9px;font:700 13px "Space Mono",monospace;color:#f3efff}
+.ops-strip-item em{display:block;margin-top:7px;color:#aaa0bf;font-style:normal;font-size:10px}
+.ops-standard-full{margin-top:18px}
+.ops-data-line{display:flex;justify-content:space-between;gap:20px;padding:10px 0;border-bottom:1px solid rgba(191,176,255,.1);font-size:12px}
+.ops-data-line span:first-child{color:#8f83b1;font:700 9px "Space Mono",monospace;letter-spacing:.1em}.ops-data-line span:last-child{text-align:right;color:#eee9f7}
+.trace-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
+.trace-step{position:relative;padding:18px 16px;border:1px solid rgba(191,176,255,.15);background:rgba(255,255,255,.025)}
+.trace-step .n{font:700 9px "Space Mono",monospace;color:#a89bc8}.trace-step h4{margin:9px 0 7px;font-size:14px}.trace-step p{margin:0;color:#a9a1b8;font-size:11px;line-height:1.55}
+.trace-step::after{content:"";position:absolute;right:-7px;top:50%;width:12px;height:1px;background:#8f7acb}.trace-step:last-child::after{display:none}
+@media(max-width:980px){.ops-standard{grid-template-columns:1fr}.ops-strip{grid-template-columns:repeat(2,1fr)}.trace-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.ops-standard-panel{padding:20px}.ops-gate-grid,.ops-strip,.trace-grid{grid-template-columns:1fr}.ops-standard-table{min-width:650px}.ops-standard-panel{overflow-x:auto}.ops-standard-panel::before{display:none}.trace-step::after{display:none}}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+  html{
+    scroll-behavior:auto;
+  }
+
+  *,
+  *::before,
+  *::after{
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.001ms!important;
+  }
+
+  .reveal{
+    opacity:1!important;
+    transform:none!important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page-entry" id="pageEntry"></div>
+
+<a class="skip" href="#main-content">Skip to main content</a>
+
+<!-- =========================================================
+     HEADER
+     ========================================================= -->
+
+<header class="site-header">
+
+  <div class="nav-shell">
+
+    <a class="brand" href="index.html" aria-label="ADCS Home">
+
+      <span class="brand-mark">
+        <span>A1</span>
+      </span>
+
+      <span class="brand-copy">
+        <strong>ADCS</strong>
+        <small>AUTONOMOUS ORBITAL OPERATIONS</small>
+      </span>
+
+    </a>
+
+    <nav class="primary-nav" aria-label="Primary navigation">
+
+      <a data-nav="index.html" href="index.html">
+        Home
+      </a>
+
+      <a data-nav="system_operation.html" href="system_operation.html">
+        Mission Dossier
+      </a>
+
+      <a data-nav="foc.html" href="foc.html">
+        Flight Operations Centre
+      </a>
+
+      <a data-nav="orbitview.html" href="orbitview.html">
+        OrbitView
+      </a>
+
+      <a class="live-link" data-nav="simulation.html" href="simulation.html">
+        <span class="live-dot"></span>
+        Live Simulation
+      </a>
+
+    </nav>
+
+    <div class="nav-state">
+      MODEL / DATA LINK
+    </div>
+
+    <button
+      class="menu-button"
+      id="menuButton"
+      type="button"
+      aria-controls="mobileNav"
+      aria-expanded="false">
+      MENU
+    </button>
+
+  </div>
+
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+
+    <a href="index.html">Home</a>
+    <a href="system_operation.html">Mission Dossier</a>
+    <a href="foc.html">Flight Operations Centre</a>
+    <a href="orbitview.html">OrbitView</a>
+    <a href="simulation.html">Live Simulation</a>
+
+  </nav>
+
+</header>
+
+
+<main id="main-content">
+
+<!-- =========================================================
+     01 / FOC HERO
+     ========================================================= -->
+
+<section class="foc-hero">
+
+  <div class="container">
+
+    <div class="hero-grid">
+
+      <div class="reveal from-left">
+
+        <div class="hero-code">
+          03 / FLIGHT OPERATIONS CENTRE / ADCS-01
+        </div>
+
+        <h1>
+          Flight Operations
+          <span>Centre</span>
+        </h1>
+
+        <p class="hero-description">
+          A command-oriented operational interface for the
+          <strong>Autonomous Space Debris Monitoring &amp; Capture System</strong>.
+          The FOC presents the current simulated mission state, active target,
+          relative navigation context, subsystem condition, decision authority,
+          telemetry and operational event history.
+        </p>
+
+        <div class="hero-meta">
+
+          <span class="meta-chip">LEO OPERATIONS</span>
+          <span class="meta-chip">ADCS-01</span>
+          <span class="meta-chip">SINGLE-TARGET AUTHORITY</span>
+          <span class="meta-chip">SIMULATION MODEL</span>
+
+        </div>
+
+      </div>
+
+
+      <!-- HERO OPERATIONAL GRAPHIC -->
+
+      <div class="hero-console reveal from-right">
+
+        <div class="console-grid"></div>
+
+        <div class="console-label cl-tl">
+          FOC / OPERATIONAL PICTURE
+        </div>
+
+        <div class="console-label cl-tr">
+          FRAME / LEO
+        </div>
+
+        <div class="console-label cl-bl">
+          VECTOR / RELATIVE
+        </div>
+
+        <div class="console-label cl-br">
+          LINK / NOMINAL
+        </div>
+
+        <div class="console-orbit"></div>
+        <div class="console-orbit o2"></div>
+        <div class="console-orbit o3"></div>
+
+        <div class="console-earth"></div>
+
+        <div class="console-sat"></div>
+
+        <div class="console-target"></div>
+
+        <div class="console-vector"></div>
+
+        <div class="console-hud hud-one">
+          <small>SERVICER</small>
+          <strong>ADCS-01</strong>
+        </div>
+
+        <div class="console-hud hud-two">
+          <small>ACTIVE TARGET</small>
+          <strong>THORAD AGENA D DEB</strong>
+        </div>
+
+        <div class="console-hud hud-three">
+          <small>MISSION STATE</small>
+          <strong id="heroMissionState">HOLD</strong>
+        </div>
+
+        <div class="console-hud hud-four">
+          <small>COMMAND LINK</small>
+          <strong id="heroCommandLink">MODEL</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     02 / STATUS RIBBON
+     ========================================================= -->
+
+<section class="status-ribbon">
+
+  <div class="status-cell">
+    <small>PLATFORM</small>
+    <strong>ADCS-01</strong>
+  </div>
+
+  <div class="status-cell">
+    <small>ORBITAL REGIME</small>
+    <strong>LOW EARTH ORBIT</strong>
+  </div>
+
+  <div class="status-cell">
+    <small>MISSION STATE</small>
+    <strong class="green" id="missionState">SURVEILLANCE</strong>
+  </div>
+
+  <div class="status-cell">
+    <small>TRACKED IN RANGE</small>
+    <strong class="orange">15</strong>
+  </div>
+
+  <div class="status-cell">
+    <small>ACTIVE TARGET</small>
+    <strong class="red">TRK_4211</strong>
+  </div>
+
+  <div class="status-cell">
+    <small>SURVEILLANCE RANGE</small>
+    <strong>100 KM</strong>
+  </div>
+
+  <div class="status-cell clock">
+    <small>MISSION ELAPSED</small>
+    <strong id="missionClock">T+ 00:00:00</strong>
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     03 / OPERATIONAL PICTURE
+     ========================================================= -->
+
+<section class="section">
+
+  <div class="container">
+
+    <div class="section-head reveal from-left">
+
+      <div class="eyebrow">
+        03 · CURRENT OPERATIONAL PICTURE
+      </div>
+
+      <h2>
+        Observe the mission
+        <span>before authorizing action.</span>
+      </h2>
+
+      <p>
+        The Flight Operations Centre separates observation from command.
+        Orbital context, target state, navigation information and constraint
+        status are presented before a demonstration command can change the
+        simulated mission state.
+      </p>
+
+    </div>
+
+
+    <div class="operations-layout">
+
+      <!-- ORBITAL MAP -->
+
+      <section class="operational-map reveal from-left"
+               aria-label="Simulated operational orbital picture">
+
+        <div class="map-grid"></div>
+
+        <div class="map-scan"></div>
+
+        <div class="map-orbit"></div>
+        <div class="map-orbit o2"></div>
+
+        <div class="range-ring"></div>
+
+        <div class="range-label">
+          100 KM SURVEILLANCE FIELD
+        </div>
+
+        <div class="map-earth"></div>
+
+        <div class="map-sat"></div>
+
+        <div class="map-target"></div>
+
+        <span class="tracked t1"></span>
+        <span class="tracked t2"></span>
+        <span class="tracked t3"></span>
+        <span class="tracked t4"></span>
+        <span class="tracked t5"></span>
+        <span class="tracked t6"></span>
+
+        <div class="map-vector"></div>
+
+
+        <div class="map-hud m1">
+          <small>SERVICER POSITION</small>
+          <strong>ADCS-01</strong>
+        </div>
+
+        <div class="map-hud m2">
+          <small>SELECTED TARGET</small>
+          <strong>THORAD AGENA D DEB</strong>
+        </div>
+
+        <div class="map-hud m3">
+          <small>RELATIVE MODE</small>
+          <strong id="relativeMode">MONITOR</strong>
+        </div>
+
+        <div class="map-hud m4">
+          <small>COMMAND LINK</small>
+          <strong id="mapCommandLink">MODEL</strong>
+        </div>
+
+        <div class="map-caption">
+          CONCEPTUAL EARTH-CENTRED OPERATIONAL VISUALIZATION
+        </div>
+
+      </section>
+
+
+      <!-- RIGHT STACK -->
+
+      <div class="side-stack">
+
+
+        <!-- ACTIVE TARGET -->
+
+        <section class="panel target-panel reveal from-right">
+
+          <div class="panel-inner">
+
+            <div class="target-top">
+
+              <div>
+
+                <div class="eyebrow">
+                  ACTIVE TARGET
+                </div>
+
+                <div class="target-id">
+                  THORAD AGENA D DEB
+                </div>
+
+              </div>
+
+              <div class="lock-state">
+                LOCKED
+              </div>
+
+            </div>
+
+
+            <div class="telemetry-grid">
+
+              <div class="telemetry-cell">
+                <small>RANGE</small>
+                <strong id="rangeValue">47.745 km</strong>
+              </div>
+
+              <div class="telemetry-cell">
+                <small>RELATIVE SPEED</small>
+                <strong id="speedValue">14.11301 km/s</strong>
+              </div>
+
+              <div class="telemetry-cell">
+                <small>RISK STATUS</small>
+                <strong class="green">WITHIN LIMIT</strong>
+              </div>
+
+              <div class="telemetry-cell">
+                <small>CAPTURE MODE</small>
+                <strong id="captureMode">ROBOTIC NET</strong>
+              </div>
+
+              <div class="telemetry-cell">
+                <small>ATTITUDE</small>
+                <strong>CONTROLLED</strong>
+              </div>
+
+              <div class="telemetry-cell">
+                <small>STORAGE MODEL</small>
+                <strong>MODEL CAPACITY · 60 KG</strong>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- COMMAND AUTHORITY -->
+
+        <section class="panel control-panel reveal from-right delay-1">
+
+          <div class="panel-inner">
+
+            <div class="eyebrow">
+              COMMAND AUTHORITY
+            </div>
+
+            <h3 style="margin-top:10px">
+              Mission control actions
+            </h3>
+
+            <p class="control-description">
+              These controls demonstrate mission-state transitions inside the
+              website model. They do not issue commands to a real spacecraft.
+            </p>
+
+            <div class="command-grid">
+
+              <button class="command-button" id="holdCommand">
+                HOLD
+              </button>
+
+              <button class="command-button" id="proceedCommand">
+                PROCEED
+              </button>
+
+              <button class="command-button" id="reacquireCommand">
+                REACQUIRE
+              </button>
+
+              <button class="command-button danger" id="abortCommand">
+                ABORT APPROACH
+              </button>
+
+            </div>
+
+            <div class="command-status" id="commandStatus">
+              COMMAND STATUS · NOMINAL / AWAITING OPERATOR INPUT
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- CONSTRAINT MONITOR -->
+
+        <section class="panel constraint-panel reveal from-right delay-2">
+
+          <div class="panel-inner">
+
+            <div class="eyebrow">
+              CONSTRAINT MONITOR
+            </div>
+
+            <div class="constraint-list">
+
+              <div class="constraint">
+                Navigation solution valid within the configured simulation
+                model boundary.
+              </div>
+
+              <div class="constraint">
+                Relative closing rate remains continuously monitored during
+                approach.
+              </div>
+
+              <div class="constraint warn">
+                Capture remains inhibited until proximity and mechanism
+                authorization conditions are satisfied.
+              </div>
+
+              <div class="constraint redline">
+                Loss of valid target state requires a return to assessment
+                or surveillance logic.
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     04 / SYSTEM HEALTH
+     ========================================================= -->
+
+<section class="section">
+
+  <div class="container">
+
+    <div class="section-head reveal from-scale">
+
+      <div class="eyebrow">
+        04 · SUBSYSTEM CONDITION
+      </div>
+
+      <h2>
+        Mission readiness is a
+        <span>distributed state.</span>
+      </h2>
+
+      <p>
+        The FOC summarizes the simulated condition of the major operational
+        functions. The indicators are interface-level model values rather
+        than measurements from an actual spacecraft.
+      </p>
+
+    </div>
+
+
+    <div class="health-grid">
+
+      <article class="health-card reveal from-left">
+
+        <span class="health-number">01</span>
+
+        <div class="eyebrow">SUBSYSTEM</div>
+
+        <h3>Navigation</h3>
+
+        <div class="health-state">
+          ● NOMINAL
+        </div>
+
+        <div class="health-line">
+          <span style="--value:91%"></span>
+        </div>
+
+        <div class="health-info">
+          <span>STATE SOLUTION</span>
+          <span>91%</span>
+        </div>
+
+      </article>
+
+
+      <article class="health-card reveal from-scale delay-1">
+
+        <span class="health-number">02</span>
+
+        <div class="eyebrow">SUBSYSTEM</div>
+
+        <h3>Guidance &amp; Control</h3>
+
+        <div class="health-state">
+          ● NOMINAL
+        </div>
+
+        <div class="health-line">
+          <span style="--value:87%"></span>
+        </div>
+
+        <div class="health-info">
+          <span>CONTROL AUTHORITY</span>
+          <span>87%</span>
+        </div>
+
+      </article>
+
+
+      <article class="health-card reveal from-scale delay-2">
+
+        <span class="health-number">03</span>
+
+        <div class="eyebrow">SUBSYSTEM</div>
+
+        <h3>Capture Mechanism</h3>
+
+        <div class="health-state">
+          ● STANDBY
+        </div>
+
+        <div class="health-line">
+          <span style="--value:78%"></span>
+        </div>
+
+        <div class="health-info">
+          <span>MECHANISM READY</span>
+          <span>78%</span>
+        </div>
+
+      </article>
+
+
+      <article class="health-card reveal from-right">
+
+        <span class="health-number">04</span>
+
+        <div class="eyebrow">SUBSYSTEM</div>
+
+        <h3>Power &amp; Storage</h3>
+
+        <div class="health-state">
+          ● NOMINAL
+        </div>
+
+        <div class="health-line">
+          <span style="--value:84%"></span>
+        </div>
+
+        <div class="health-info">
+          <span>RESOURCE MARGIN</span>
+          <span>84%</span>
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     05 / TELEMETRY MATRIX
+     ========================================================= -->
+
+<section class="section">
+
+  <div class="container">
+
+    <div class="section-head reveal from-left">
+
+      <div class="eyebrow">
+        05 · TELEMETRY MATRIX
+      </div>
+
+      <h2>
+        State vectors,
+        <span>constraints &amp; resources.</span>
+      </h2>
+
+      <p>
+        The telemetry matrix provides a compact operational record of the
+        values used by the conceptual mission interface.
+      </p>
+
+    </div>
+
+
+    <div class="telemetry-layout">
+
+
+      <section class="panel matrix reveal from-left">
+
+        <div class="matrix-header">
+
+          <div class="matrix-title">
+
+            <div class="eyebrow">
+              TARGET TELEMETRY
+            </div>
+
+            <h3>
+              THORAD AGENA D DEB / Relative state
+            </h3>
+
+          </div>
+
+          <div class="live-indicator">
+            ● SIMULATED
+          </div>
+
+        </div>
+
+
+        <table class="telemetry-table">
+
+          <thead>
+
+            <tr>
+              <th>PARAMETER</th>
+              <th>VALUE</th>
+              <th>STATUS</th>
+              <th>FRAME</th>
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            <tr>
+              <td>Range</td>
+              <td id="tableRange">47.745 km</td>
+              <td class="value-good">VALID</td>
+              <td>RELATIVE</td>
+            </tr>
+
+            <tr>
+              <td>Relative velocity</td>
+              <td id="tableSpeed">14.11301 km/s</td>
+              <td class="value-good">WITHIN LIMIT</td>
+              <td>RELATIVE</td>
+            </tr>
+
+            <tr>
+              <td>Target classification</td>
+              <td>TARGET ASSESSED</td>
+              <td class="value-cyan">ASSESSED</td>
+              <td>MISSION</td>
+            </tr>
+
+            <tr>
+              <td>Attitude state</td>
+              <td>CONTROLLED</td>
+              <td class="value-good">NOMINAL</td>
+              <td>BODY</td>
+            </tr>
+
+            <tr>
+              <td>Capture configuration</td>
+              <td>ROBOTIC NET</td>
+              <td class="value-cyan">STANDBY</td>
+              <td>MECHANISM</td>
+            </tr>
+
+            <tr>
+              <td>Storage mass</td>
+              <td>MODEL CAPACITY · 60 kg</td>
+              <td class="value-good">MARGIN</td>
+              <td>SPACECRAFT</td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+
+        <p class="telemetry-note">
+          Interface values are conceptual model values used to maintain
+          consistency between the FOC, Mission Dossier and system overview.
+          They should not be interpreted as live orbital telemetry.
+        </p>
+
+      </section>
+
+
+      
+<!-- =========================================================
+     05A / PREDICTION RECORD
+     ========================================================= -->
+
+<section class="section">
+
+  <div class="container">
+
+    <div class="section-head reveal from-left">
+      <div class="eyebrow">05A · PREDICTION RECORD</div>
+      <h2>
+        One source of truth for the
+        <span>current mission assessment.</span>
+      </h2>
+      <p>
+        This panel is populated from the project's prediction visualization
+        record. Values are displayed as supplied by the upstream prediction
+        and mission-decision pipeline; unavailable fields are not fabricated.
+      </p>
+    </div>
+
+    <section class="boundary prediction-record reveal from-scale">
+
+      <div class="prediction-source-bar">
+        <div>
+          <span class="eyebrow">UPSTREAM RECORD</span>
+          <strong id="predictionSource">../SIMULATION/prediction_viz.json</strong>
+        </div>
+        <div class="prediction-badge" id="predictionBadge">LOADING</div>
+      </div>
+
+      <div class="prediction-record-grid">
+
+        <article class="boundary-box">
+          <h4>MISSION IDENTITY</h4>
+          <p>
+            Mission <strong id="pMissionId">—</strong><br>
+            Tracking <strong id="pTrackingId">—</strong><br>
+            Object <strong id="pObjectId">—</strong><br>
+            Target <strong id="pTargetName">—</strong>
+          </p>
+        </article>
+
+        <article class="boundary-box">
+          <h4>MISSION DECISION</h4>
+          <p>
+            Decision <strong id="pDecision">—</strong><br>
+            Reason <strong id="pReason">—</strong><br>
+            Risk <strong id="pRisk">—</strong><br>
+            Capture feasible <strong id="pFeasible">—</strong>
+          </p>
+        </article>
+
+        <article class="boundary-box">
+          <h4>PREDICTED STATE</h4>
+          <p>
+            Horizon <strong id="pHorizon">—</strong><br>
+            Position <strong id="pPosition">—</strong><br>
+            Velocity <strong id="pVelocity">—</strong>
+          </p>
+        </article>
+
+        <article class="boundary-box">
+          <h4>CAPTURE ASSESSMENT</h4>
+          <p>
+            Method <strong id="pMethod">—</strong><br>
+            Score <strong id="pScore">—</strong><br>
+            Risk score <strong id="pRiskScore">—</strong>
+          </p>
+        </article>
+
+      </div>
+
+      <div class="prediction-disclaimer">
+        <strong>DATA STATUS:</strong>
+        <span id="predictionStatusText">
+          Waiting for the local prediction record. The FOC does not label
+          demonstration values as live spacecraft telemetry.
+        </span>
+      </div>
+
+    </section>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     05B / LOCAL CAPTURE + HARDWARE BRIDGE
+     ========================================================= -->
+
+<section class="section">
+
+  <div class="container">
+
+    <div class="section-head reveal from-right">
+      <div class="eyebrow">05B · CAPTURE COORDINATE BRIDGE</div>
+      <h2>
+        Orbital state becomes a
+        <span>physical arm command.</span>
+      </h2>
+      <p>
+        The orbital prediction is not sent directly to the robotic arm.
+        A local capture coordinate is generated first, then inverse
+        kinematics produces joint angles for the prototype workspace.
+      </p>
+    </div>
+
+    <section class="hardware-bridge reveal from-scale">
+
+      <div class="bridge-node">
+        <span>01</span>
+        <b>PREDICTION</b>
+        <small>ECI / relative orbital state</small>
+      </div>
+
+      <div class="bridge-arrow">→</div>
+
+      <div class="bridge-node">
+        <span>02</span>
+        <b>LOCAL FRAME</b>
+        <small>scaled capture XYZ</small>
+      </div>
+
+      <div class="bridge-arrow">→</div>
+
+      <div class="bridge-node">
+        <span>03</span>
+        <b>IK SOLVER</b>
+        <small>joint-angle solution</small>
+      </div>
+
+      <div class="bridge-arrow">→</div>
+
+      <div class="bridge-node">
+        <span>04</span>
+        <b>SERIAL</b>
+        <small>USB command packet</small>
+      </div>
+
+      <div class="bridge-arrow">→</div>
+
+      <div class="bridge-node">
+        <span>05</span>
+        <b>ARDUINO</b>
+        <small>servo command interface</small>
+      </div>
+
+      <div class="bridge-arrow">→</div>
+
+      <div class="bridge-node">
+        <span>06</span>
+        <b>PCA9685</b>
+        <small>I²C PWM driver</small>
+      </div>
+
+      <div class="bridge-arrow">→</div>
+
+      <div class="bridge-node">
+        <span>07</span>
+        <b>ARM</b>
+        <small>prototype actuation</small>
+      </div>
+
+    </section>
+
+    <div class="hardware-grid">
+
+      <article class="boundary-box reveal from-left">
+        <h4>PROTOTYPE WORKSPACE</h4>
+        <p>
+          Example local workspace: X = 0–30 cm, Y = −20–20 cm,
+          Z = 0–25 cm. These are scaled laboratory coordinates and are not
+          orbital distances.
+        </p>
+      </article>
+
+      <article class="boundary-box reveal from-scale">
+        <h4>JOINT COMMAND MODEL</h4>
+        <p>
+          Python performs the inverse-kinematics calculation. The Arduino
+          receives joint commands rather than orbital XYZ coordinates.
+          Example packet: <strong>JOINTS,111,74,102,68</strong>.
+        </p>
+      </article>
+
+      <article class="boundary-box reveal from-right">
+        <h4>HARDWARE STATUS</h4>
+        <p>
+          Browser-side hardware connection is not claimed here. Arduino,
+          PCA9685 and servos are represented as an external prototype
+          integration layer unless a real serial connection is explicitly
+          established.
+        </p>
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ATTITUDE GRAPHIC -->
+
+      <section class="vector-panel reveal from-right">
+
+        <div class="vector-grid"></div>
+
+        <div class="attitude-ring"></div>
+        <div class="attitude-ring r2"></div>
+
+        <div class="vector-axis"></div>
+        <div class="vector-axis y"></div>
+        <div class="vector-axis z"></div>
+
+        <div class="spacecraft"></div>
+
+        <span class="axis-label axis-x">
+          +X / VELOCITY
+        </span>
+
+        <span class="axis-label axis-y">
+          +Y / RADIAL
+        </span>
+
+        <span class="axis-label axis-z">
+          +Z / NORMAL
+        </span>
+
+
+        <div class="vector-hud">
+
+          <small>ATTITUDE MODE</small>
+
+          <strong>
+            CONTROLLED
+          </strong>
+
+        </div>
+
+
+        <div class="vector-right">
+
+          <div class="eyebrow">
+            GUIDANCE FRAME
+          </div>
+
+          <span>RELATIVE LVLH CONCEPT</span>
+          <span>POINTING · CONCEPTUAL</span>
+          <span>CONTROL · SIMULATED</span>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     06 / MISSION TIMELINE
+     ========================================================= -->
+
+<section class="section">
+
+  <div class="container">
+
+    <div class="section-head reveal from-scale">
+
+      <div class="eyebrow">
+        06 · MISSION EVENT RECORD
+      </div>
+
+      <h2>
+        Every command leaves an
+        <span>operational trace.</span>
+      </h2>
+
+      <p>
+        The event timeline records the sequence of simulated state changes
+        generated by the FOC controls.
+      </p>
+
+    </div>
+
+
+    <div class="timeline-layout">
+
+
+      <section class="panel timeline-panel reveal from-left">
+
+        <div class="eyebrow">
+          MISSION TIMELINE
+        </div>
+
+        <h3 style="margin-top:10px">
+          Recent state transitions
+        </h3>
+
+        <div class="timeline-list" id="timeline">
+
+          <div class="timeline-row">
+
+            <time>00:00</time>
+
+            <b>SURVEILLANCE</b>
+
+            <span>
+              Monitoring field established
+            </span>
+
+          </div>
+
+
+          <div class="timeline-row">
+
+            <time>00:16</time>
+
+            <b>ASSESSMENT</b>
+
+            <span>
+              Target state updated
+            </span>
+
+          </div>
+
+
+          <div class="timeline-row">
+
+            <time>00:31</time>
+
+            <b>TARGET LOCK</b>
+
+            <span>
+              THORAD AGENA D DEB assigned as active target
+            </span>
+
+          </div>
+
+
+          <div class="timeline-row">
+
+            <time>00:44</time>
+
+            <b>HOLD</b>
+
+            <span>
+              Approach authorization pending
+            </span>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <section class="panel log-panel reveal from-right">
+
+        <div class="eyebrow">
+          COMMAND / TELEMETRY LOG
+        </div>
+
+        <h3 style="margin-top:10px">
+          Operational message stream
+        </h3>
+
+        <div class="log-box" id="logBox">
+
+<pre><span class="good">[T+00:00:44] TARGET RECORD LOADED</span>
+<span class="good">[T+00:00:45] PREDICTION RECORD LOADED</span>
+<span class="cmd">[T+00:00:46] CAPTURE METHOD ASSESSED: ROBOTIC NET</span>
+<span>[T+00:00:47] APPROACH AUTHORITY: HOLD</span>
+<span class="good">[T+00:00:48] FOC INTERFACE: DEMONSTRATION MODE</span></pre>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     07 / DECISION AUTHORITY
+     ========================================================= -->
+
+<section class="section">
+
+  <div class="container">
+
+    <div class="section-head reveal from-left">
+
+      <div class="eyebrow">
+        07 · DECISION AUTHORITY
+      </div>
+
+      <h2>
+        Observe → Assess →
+        <span>Authorize → Act.</span>
+      </h2>
+
+      <p>
+        The FOC does not bypass mission logic. A command is meaningful only
+        when the relevant state, target information and operational constraints
+        support the requested transition.
+      </p>
+
+    </div>
+
+
+    <div class="authority">
+
+
+      <section class="authority-intro reveal from-left">
+
+        <div class="eyebrow">
+          CONTROL PHILOSOPHY
+        </div>
+
+        <h3>
+          Command follows state.
+        </h3>
+
+        <p>
+          The operational interface is organized around a controlled
+          sequence: establish the mission state, confirm the target,
+          evaluate constraints, authorize the next action and return to
+          observation after the action.
+        </p>
+
+        <div class="authority-equation">
+          MEASUREMENT
+          → STATE ESTIMATION
+          → CONSTRAINT CHECK
+          → DECISION
+          → COMMAND
+          → RE-OBSERVATION
+        </div>
+
+      </section>
+
+
+      <div class="authority-table-wrap reveal from-right">
+
+        <table class="authority-table">
+
+          <thead>
+
+            <tr>
+              <th>COMMAND</th>
+              <th>RESULTING STATE</th>
+              <th>OPERATIONAL PURPOSE</th>
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            <tr>
+              <td class="decision hold">HOLD</td>
+              <td>HOLD</td>
+              <td>Inhibit approach while maintaining monitoring.</td>
+            </tr>
+
+            <tr>
+              <td class="decision proceed">PROCEED</td>
+              <td>APPROACH</td>
+              <td>Authorize the simulated proximity sequence.</td>
+            </tr>
+
+            <tr>
+              <td class="decision assess">REACQUIRE</td>
+              <td>ASSESSMENT</td>
+              <td>Refresh target state before continuing.</td>
+            </tr>
+
+            <tr>
+              <td class="decision abort">ABORT APPROACH</td>
+              <td>SURVEILLANCE</td>
+              <td>Terminate approach and return to monitored operation.</td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     08 / MODEL BOUNDARY
+     ========================================================= -->
+
+<section class="section">
+
+  <div class="container">
+
+    <section class="boundary reveal from-scale">
+
+      <div class="eyebrow">
+        08 · ENGINEERING MODEL BOUNDARY
+      </div>
+
+      <h2 style="margin-top:12px">
+        What this FOC represents
+        <span>— and what it does not.</span>
+      </h2>
+
+      <div class="boundary-grid">
+
+        <article class="boundary-box">
+
+          <h4>
+            REPRESENTED
+          </h4>
+
+          <p>
+            Mission state, target selection context, relative-navigation
+            visualization, command-state transitions, telemetry presentation,
+            resource indicators and operational event history.
+          </p>
+
+        </article>
+
+
+        <article class="boundary-box">
+
+          <h4>
+            SIMULATED
+          </h4>
+
+          <p>
+            Orbital relationships, target motion, mission-state behavior,
+            capture authorization and interface telemetry are represented
+            through the project's conceptual simulation model.
+          </p>
+
+        </article>
+
+
+        <article class="boundary-box">
+
+          <h4>
+            OUTSIDE SCOPE
+          </h4>
+
+          <p>
+            Real spacecraft commanding, flight-qualified navigation,
+            certified collision-avoidance performance, operational ground
+            networks and real-time mission telemetry.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     09 / OPERATIONS STANDARD
+     ========================================================= -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal from-scale">
+      <div class="eyebrow">09 · OPERATIONS STANDARD</div>
+      <h2>Operational information <span>before operational action.</span></h2>
+      <p>
+        A professional operations display separates mission authority, data provenance,
+        constraints, interfaces and verification status. This panel makes the model
+        boundary explicit so an operator can distinguish measured data, prediction
+        output, derived values and demonstration controls.
+      </p>
+    </div>
+
+    <div class="ops-strip reveal from-scale">
+      <div class="ops-strip-item"><small>MISSION AUTHORITY</small><strong>SINGLE TARGET</strong><em>One active target record at a time.</em></div>
+      <div class="ops-strip-item"><small>DECISION SOURCE</small><strong>PREDICTION RECORD</strong><em>AI Engine mission-decision output.</em></div>
+      <div class="ops-strip-item"><small>CURRENT DECISION</small><strong id="standardDecision">HOLD</strong><em id="standardDecisionReason">Capture score below operational threshold.</em></div>
+      <div class="ops-strip-item"><small>HARDWARE MODE</small><strong>NOT CONNECTED</strong><em>Browser interface does not claim serial control.</em></div>
+      <div class="ops-strip-item"><small>MODEL STATUS</small><strong>DEMONSTRATION</strong><em>University prototype / non-flight system.</em></div>
+    </div>
+
+    <div class="ops-standard">
+      <section class="ops-standard-panel reveal from-left">
+        <div class="eyebrow">09A · OPERATIONAL GATES</div>
+        <h3>Command authorization gates</h3>
+        <p>
+          The FOC presents a gate-based command philosophy. A requested action is
+          meaningful only after target identity, state information, constraints and
+          mission decision are available. A HOLD decision remains an operational
+          outcome; it is not a failed interface state.
+        </p>
+        <div class="ops-gate-grid">
+          <div class="ops-gate safe"><b>GATE 01 · DATA</b><span>Target record readable and attributable to an upstream source.</span><div class="state">REQUIRED</div></div>
+          <div class="ops-gate safe"><b>GATE 02 · IDENTITY</b><span>Tracking ID and object identity remain associated with the selected target.</span><div class="state">REQUIRED</div></div>
+          <div class="ops-gate warn"><b>GATE 03 · RISK</b><span>Risk and capture feasibility are evaluated before proximity authorization.</span><div class="state">CHECK</div></div>
+          <div class="ops-gate warn"><b>GATE 04 · DECISION</b><span>HOLD / PROCEED / ABORT outcomes determine the permitted model transition.</span><div class="state">CHECK</div></div>
+          <div class="ops-gate lock"><b>GATE 05 · HARDWARE</b><span>Physical actuation requires a separate local integration layer and verified connection.</span><div class="state">LOCKED</div></div>
+          <div class="ops-gate safe"><b>GATE 06 · RE-OBSERVE</b><span>After a simulated action, the system returns to observation and state assessment.</span><div class="state">REQUIRED</div></div>
+        </div>
+      </section>
+
+      <section class="ops-standard-panel reveal from-right">
+        <div class="eyebrow">09B · DATA PROVENANCE</div>
+        <h3>Source → transformation → display</h3>
+        <table class="ops-standard-table">
+          <thead><tr><th>DATA CLASS</th><th>FOC USE</th><th>STATUS</th></tr></thead>
+          <tbody>
+            <tr><td>Tracking record</td><td>Target identity, orbital state and relative context.</td><td>UPSTREAM RECORD</td></tr>
+            <tr><td>Prediction record</td><td>Predicted state, horizon, risk and mission decision.</td><td>LOADED IF AVAILABLE</td></tr>
+            <tr><td>Derived display</td><td>Formatted vectors, status labels and interface indicators.</td><td>DERIVED</td></tr>
+            <tr><td>Command controls</td><td>FOC demonstration of state transitions.</td><td>SIMULATED</td></tr>
+            <tr><td>Hardware bridge</td><td>Local XYZ → IK → serial → Arduino → PCA9685 → arm.</td><td>EXTERNAL LAYER</td></tr>
+          </tbody>
+        </table>
+        <div class="ops-data-line"><span>PREFERRED RECORD</span><span>../SIMULATION/prediction_viz.json</span></div>
+        <div class="ops-data-line"><span>SECONDARY RECORD</span><span>../AI_Engine/telemetry/mission_decision.json</span></div>
+        <div class="ops-data-line"><span>CAPTURE FRAME</span><span>LOCAL PROTOTYPE XYZ · CENTIMETRES</span></div>
+      </section>
+    </div>
+
+    <section class="ops-standard-panel ops-standard-full reveal from-scale">
+      <div class="eyebrow">09C · FLIGHT-RULES-STYLE CONSTRAINT MATRIX</div>
+      <h3>Operational constraints and responses</h3>
+      <table class="ops-standard-table">
+        <thead><tr><th>CONSTRAINT</th><th>OBSERVED / MODELLED CONDITION</th><th>FOC RESPONSE</th><th>AUTHORITY</th></tr></thead>
+        <tbody>
+          <tr><td>Target identity</td><td>Tracking ID must remain associated with the selected object.</td><td>Maintain single-target authority; reacquire if identity is unavailable.</td><td>MISSION LOGIC</td></tr>
+          <tr><td>Relative distance</td><td>Current prediction record reports 47.745 km.</td><td>Do not interpret this as robotic-arm workspace.</td><td>NAVIGATION MODEL</td></tr>
+          <tr><td>Relative velocity</td><td>Current prediction record reports 14.11301 km/s.</td><td>Remain in monitoring/assessment until mission logic authorizes a model transition.</td><td>DECISION LOGIC</td></tr>
+          <tr><td>Capture feasibility</td><td>Current prediction record marks the robotic-net method feasible, with decision HOLD.</td><td>Respect the decision field rather than overriding it in the interface.</td><td>PREDICTION OUTPUT</td></tr>
+          <tr><td>Physical workspace</td><td>Prototype workspace is local and scaled: X 0–30 cm, Y −20–20 cm, Z 0–25 cm.</td><td>Convert local coordinates through IK before hardware command generation.</td><td>HARDWARE LAYER</td></tr>
+          <tr><td>Hardware connection</td><td>No browser-side serial connection is claimed.</td><td>Keep actuation controls in demonstration mode unless an explicit connection exists.</td><td>SAFETY INTERLOCK</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="ops-standard-panel ops-standard-full reveal from-scale">
+      <div class="eyebrow">09D · TRACEABILITY CHAIN</div>
+      <h3>From observation to verified interface state</h3>
+      <div class="trace-grid">
+        <div class="trace-step"><span class="n">01</span><h4>OBSERVE</h4><p>Acquire or load the target record and identify its source.</p></div>
+        <div class="trace-step"><span class="n">02</span><h4>ESTIMATE</h4><p>Represent position, velocity, risk and prediction horizon.</p></div>
+        <div class="trace-step"><span class="n">03</span><h4>DECIDE</h4><p>Expose HOLD, PROCEED or ABORT without silently changing the upstream record.</p></div>
+        <div class="trace-step"><span class="n">04</span><h4>COMMAND</h4><p>Apply only a simulated FOC state transition unless hardware is separately connected.</p></div>
+        <div class="trace-step"><span class="n">05</span><h4>RE-OBSERVE</h4><p>Return to monitoring and record the resulting model state.</p></div>
+        <div class="trace-step"><span class="n">06</span><h4>VERIFY</h4><p>Check displayed state, source, constraints and interface response.</p></div>
+        <div class="trace-step"><span class="n">07</span><h4>RECORD</h4><p>Maintain a readable event and telemetry history for review.</p></div>
+        <div class="trace-step"><span class="n">08</span><h4>BOUNDARY</h4><p>Clearly distinguish simulation behaviour from flight-qualified operation.</p></div>
+      </div>
+    </section>
+  </div>
+</section>
+
+<!-- =========================================================
+     10 / INTERFACE ARCHITECTURE
+     ========================================================= -->
+
+
+<section class="section">
+
+  <div class="container">
+
+    <div class="section-head reveal from-left">
+
+      <div class="eyebrow">
+        10 · INTERFACE ARCHITECTURE
+      </div>
+
+      <h2>
+        Five views.
+        <span>One mission model.</span>
+      </h2>
+
+      <p>
+        The website is intentionally divided into complementary engineering
+        views rather than repeating the same information on every page.
+      </p>
+
+    </div>
+
+
+    <div class="health-grid">
+
+      <article class="health-card reveal from-left">
+
+        <span class="health-number">01</span>
+
+        <div class="eyebrow">SYSTEM OVERVIEW</div>
+
+        <h3>Home</h3>
+
+        <p class="muted" style="font-size:10px;margin-top:12px">
+          Mission purpose, system architecture, capabilities and model
+          boundaries.
+        </p>
+
+      </article>
+
+
+      <article class="health-card reveal from-scale delay-1">
+
+        <span class="health-number">02</span>
+
+        <div class="eyebrow">MISSION SEQUENCE</div>
+
+        <h3>Mission Dossier</h3>
+
+        <p class="muted" style="font-size:10px;margin-top:12px">
+          Fifteen-stage mission flow, decisions, states and capture sequence.
+        </p>
+
+      </article>
+
+
+      <article class="health-card reveal from-scale delay-2">
+
+        <span class="health-number">03</span>
+
+        <div class="eyebrow">OPERATIONS</div>
+
+        <h3>Flight Operations Centre</h3>
+
+        <p class="muted" style="font-size:10px;margin-top:12px">
+          Current mission state, target authority, telemetry and command
+          demonstration.
+        </p>
+
+      </article>
+
+
+      <article class="health-card reveal from-right">
+
+        <span class="health-number">04</span>
+
+        <div class="eyebrow">ORBITAL CONTEXT</div>
+
+        <h3>OrbitView</h3>
+
+        <p class="muted" style="font-size:10px;margin-top:12px">
+          Earth-centred orbital visualization and relative-space context.
+        </p>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+<footer class="site-footer">
+
+  <div class="container">
+
+    <div class="footer-grid">
+
+      <div>
+
+        <div class="footer-title">
+          AUTONOMOUS SPACE DEBRIS MONITORING &amp; CAPTURE SYSTEM
+        </div>
+
+        <div class="footer-copy">
+          ADCS-01 · Flight Operations Centre · Mission operations interface
+        </div>
+
+        <div class="source-note">
+          Earth imagery is used for visualization with appropriate attribution.
+          Public NASA systems-engineering concepts may inform terminology and
+          structure; this university project is independent and is not
+          affiliated with, endorsed by, or certified by NASA.
+        </div>
+
+      </div>
+
+
+      <div class="footer-right">
+
+        FOC / OPERATIONAL INTERFACE<br>
+        TARGET AUTHORITY / SINGLE<br>
+        COMMANDS / NON-FLIGHT<br>
+        MODEL STATE / SIMULATED<br>
+        2026
+
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>
+
+</main>
+
+
+<script>
+/* =========================================================
+   PAGE HANDOFF
+   ========================================================= */
+
+(function(){
+
+  const entry = document.getElementById("pageEntry");
+
+  const reducedMotion =
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if(sessionStorage.getItem("adcsIntroComplete") === "1"){
+
+    requestAnimationFrame(() => {
+
+      if(reducedMotion){
+        entry.classList.add("loaded");
+        return;
+      }
+
+      setTimeout(() => {
+        entry.classList.add("loaded");
+      },120);
+
+    });
+
+  }else{
+
+    entry.classList.add("loaded");
+
+  }
+
+})();
+</script>
+
+
+<script>
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+(function(){
+
+  const path =
+    location.pathname.split("/").pop() || "index.html";
+
+  document
+    .querySelectorAll("[data-nav]")
+    .forEach(link => {
+
+      if(link.getAttribute("data-nav") === path){
+        link.classList.add("active");
+      }
+
+    });
+
+
+  const menuButton =
+    document.getElementById("menuButton");
+
+  const mobileNav =
+    document.getElementById("mobileNav");
+
+
+  menuButton?.addEventListener("click",() => {
+
+    const open =
+      mobileNav.classList.toggle("open");
+
+    menuButton.setAttribute(
+      "aria-expanded",
+      open ? "true" : "false"
+    );
+
+  });
+
+})();
+</script>
+
+
+<script>
+/* =========================================================
+   SCROLL REVEAL
+   ========================================================= */
+
+(function(){
+
+  const items =
+    document.querySelectorAll(".reveal");
+
+  if(!("IntersectionObserver" in window)){
+
+    items.forEach(item => {
+      item.classList.add("visible");
+    });
+
+    return;
+
+  }
+
+  const observer =
+    new IntersectionObserver(
+      entries => {
+
+        entries.forEach(entry => {
+
+          if(entry.isIntersecting){
+
+            entry.target.classList.add("visible");
+
+            observer.unobserve(entry.target);
+
+          }
+
+        });
+
+      },
+      {
+        threshold:.12,
+        rootMargin:"0px 0px -50px 0px"
+      }
+    );
+
+
+  items.forEach(item => observer.observe(item));
+
+})();
+</script>
+
+
+<script>
+/* =========================================================
+   FOC OPERATIONAL DEMONSTRATION ENGINE
+   ========================================================= */
+(function(){
+  let elapsed=0;
+  const missionClock=document.getElementById("missionClock");
+  const missionState=document.getElementById("missionState");
+  const heroMissionState=document.getElementById("heroMissionState");
+  const commandStatus=document.getElementById("commandStatus");
+  const heroCommandLink=document.getElementById("heroCommandLink");
+  const mapCommandLink=document.getElementById("mapCommandLink");
+  const relativeMode=document.getElementById("relativeMode");
+  const timeline=document.getElementById("timeline");
+  const logBox=document.getElementById("logBox");
+  const rangeValue=document.getElementById("rangeValue");
+  const speedValue=document.getElementById("speedValue");
+  const tableRange=document.getElementById("tableRange");
+  const tableSpeed=document.getElementById("tableSpeed");
+
+  const pad=v=>String(v).padStart(2,"0");
+  const missionTime=()=>{
+    const h=Math.floor(elapsed/3600);
+    const m=Math.floor((elapsed%3600)/60);
+    const sec=elapsed%60;
+    return `T+ ${pad(h)}:${pad(m)}:${pad(sec)}`;
+  };
+
+  setInterval(()=>{
+    elapsed++;
+    if(missionClock) missionClock.textContent=missionTime();
+  },1000);
+
+  // These values are intentionally fixed to the current prediction record.
+  // No synthetic approach curve is presented as live orbital telemetry.
+  function updateTelemetry(){
+    if(rangeValue) rangeValue.textContent="47.745 km";
+    if(speedValue) speedValue.textContent="14.11301 km/s";
+    if(tableRange) tableRange.textContent="47.745 km";
+    if(tableSpeed) tableSpeed.textContent="14.11301 km/s";
+  }
+  updateTelemetry();
+
+  function addLog(message,type="normal"){
+    const pre=logBox?.querySelector("pre");
+    if(!pre) return;
+    const line=document.createElement("span");
+    if(type==="good") line.className="good";
+    if(type==="cmd") line.className="cmd";
+    line.textContent=`[${missionTime().replace("T+ ","")}] ${message}`;
+    pre.appendChild(document.createTextNode("\n"));
+    pre.appendChild(line);
+    logBox.scrollTop=logBox.scrollHeight;
+  }
+
+  function addTimeline(state,detail){
+    if(!timeline) return;
+    const row=document.createElement("div");
+    row.className="timeline-row";
+    row.innerHTML=`<time>${missionTime().replace("T+ ","")}</time><b>${state}</b><span>${detail}</span>`;
+    timeline.prepend(row);
+    const rows=timeline.querySelectorAll(".timeline-row");
+    if(rows.length>7) rows[rows.length-1].remove();
+  }
+
+  function setState(state,detail,commandName,commandType="normal"){
+    if(missionState) missionState.textContent=state;
+    if(heroMissionState) heroMissionState.textContent=state;
+    if(relativeMode) relativeMode.textContent=state==="SURVEILLANCE"?"MONITOR":state;
+    if(commandStatus) commandStatus.textContent=`SIMULATION COMMAND · ${commandName} / ${detail}`;
+    if(heroCommandLink) heroCommandLink.textContent="ACK";
+    if(mapCommandLink) mapCommandLink.textContent="ACK";
+    addTimeline(state,detail);
+    addLog(`${commandName} / ${detail}`,commandType);
+    setTimeout(()=>{
+      if(heroCommandLink) heroCommandLink.textContent="DEMO";
+      if(mapCommandLink) mapCommandLink.textContent="DEMO";
+    },1600);
+  }
+
+  document.getElementById("holdCommand")?.addEventListener("click",()=>setState(
+    "HOLD","Approach inhibited; continue target monitoring.","HOLD SIMULATED","cmd"
+  ));
+
+  document.getElementById("proceedCommand")?.addEventListener("click",()=>setState(
+    "APPROACH","Simulated proximity sequence requested; this does not command hardware.","PROCEED SIMULATED","cmd"
+  ));
+
+  document.getElementById("reacquireCommand")?.addEventListener("click",()=>setState(
+    "ASSESSMENT","Target state refresh requested from the demonstration interface.","REACQUIRE SIMULATED","cmd"
+  ));
+
+  document.getElementById("abortCommand")?.addEventListener("click",()=>setState(
+    "SURVEILLANCE","Simulated approach terminated; return to monitored operation.","ABORT SIMULATED","cmd"
+  ));
+
+  /* ---------------------------------------------------------
+     Upstream mission record loader
+     Preferred: ../SIMULATION/prediction_viz.json
+     --------------------------------------------------------- */
+  (async function loadMissionRecord(){
+    const paths=[
+      "../SIMULATION/prediction_viz.json",
+      "../AI_Engine/telemetry/mission_decision.json"
+    ];
+
+    async function readJson(path){
+      try{
+        const response=await fetch(path,{cache:"no-store"});
+        if(!response.ok) return null;
+        return await response.json();
+      }catch(error){
+        return null;
+      }
+    }
+
+    let data=null;
+    let source=null;
+    for(const path of paths){
+      data=await readJson(path);
+      if(data){source=path;break;}
+    }
+
+    const set=(id,value)=>{
+      const node=document.getElementById(id);
+      if(node) node.textContent=value ?? "NOT PROVIDED";
+    };
+
+    if(!data){
+      set("predictionBadge","RECORD UNAVAILABLE");
+      set("predictionStatusText","The prediction record could not be read in this browser context. No replacement telemetry is generated.");
+      return;
+    }
+
+    const mission=data.mission||data;
+    const prediction=data.prediction||{};
+    const assessment=data.assessment||{};
+    const decision=data.decision||{};
+
+    set("predictionSource",source);
+    set("predictionBadge","PREDICTION RECORD LOADED");
+    set("pMissionId",mission.mission_id);
+    set("pTrackingId",mission.tracking_id);
+    set("pObjectId",mission.object_id);
+    set("pTargetName",mission.target_name);
+    set("pDecision",decision.decision);
+    set("pReason",decision.reason);
+    set("pRisk",assessment.risk_level||mission.risk_level);
+    set("pFeasible",assessment.capture_feasible ?? mission.capture_feasible);
+
+    const horizon=prediction.horizon_s ?? mission.prediction_horizon_s;
+    set("pHorizon",horizon!=null?`${horizon} s`:"NOT PROVIDED");
+
+    const pos=prediction.position_km||mission.predicted_position_km;
+    const vel=prediction.velocity_kms||mission.predicted_velocity_kms;
+    set("pPosition",pos?`(${Number(pos.x).toFixed(2)}, ${Number(pos.y).toFixed(2)}, ${Number(pos.z).toFixed(2)}) km`:"NOT PROVIDED");
+    set("pVelocity",vel?`(${Number(vel.vx).toFixed(3)}, ${Number(vel.vy).toFixed(3)}, ${Number(vel.vz).toFixed(3)}) km/s`:"NOT PROVIDED");
+    set("pMethod",assessment.capture_method||mission.capture_method);
+    set("pScore",assessment.capture_score ?? mission.capture_score);
+    set("pRiskScore",assessment.risk_score ?? mission.risk_score);
+    set("standardDecision",decision.decision || "NOT PROVIDED");
+    set("standardDecisionReason",decision.reason || "No decision reason supplied.");
+    set("predictionStatusText",`Loaded from ${source}. Decision: ${decision.decision||"NOT PROVIDED"} — ${decision.reason||"No decision reason supplied."}`);
+
+    if(decision.decision==="HOLD"){
+      if(missionState) missionState.textContent="HOLD";
+      if(heroMissionState) heroMissionState.textContent="HOLD";
+      if(relativeMode) relativeMode.textContent="MONITOR";
+    }
+  })();
+})();
+</script>
+
+<script>
+/* =========================================================
+   SUBTLE TRACKED-OBJECT MOTION — VISUAL ONLY
+   ========================================================= */
+(function(){
+  const tracked=document.querySelectorAll(".tracked");
+  if(!tracked.length) return;
+  let phase=0;
+  setInterval(()=>{
+    phase+=.35;
+    tracked.forEach((node,index)=>{
+      const dx=Math.sin(phase+index)*2.5;
+      const dy=Math.cos(phase*.8+index)*2.5;
+      node.style.transform=`translate(${dx}px,${dy}px)`;
+    });
+  },180);
+})();
+</script>
+
+<script>
+/* =========================================================
+   KEYBOARD DEMONSTRATION COMMANDS
+   ========================================================= */
+(function(){
+  document.addEventListener("keydown",event=>{
+    if(event.target.tagName==="INPUT"||event.target.tagName==="TEXTAREA") return;
+    switch(event.key.toLowerCase()){
+      case "h": document.getElementById("holdCommand")?.click(); break;
+      case "p": document.getElementById("proceedCommand")?.click(); break;
+      case "r": document.getElementById("reacquireCommand")?.click(); break;
+      case "a": document.getElementById("abortCommand")?.click(); break;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

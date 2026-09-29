@@ -12,7 +12,9 @@
     position: fixed; top: 0; left: 0; right: 0; height: 56px; z-index: 15;
     display: flex; align-items: center; justify-content: space-between;
     padding: 0 22px; background: linear-gradient(to bottom, rgba(3,4,7,0.92), rgba(3,4,7,0));
+    opacity: 0; transition: opacity 1s ease;
   }
+  #hud-top.show { opacity: 1; }
   #hud-left { display: flex; align-items: center; gap: 16px; }
   #hud-left a { color: #7fc4ff; text-decoration: none; font-size: 12px; letter-spacing: 0.3px; }
   #hud-title { color: #eaf3ff; font-size: 12.5px; letter-spacing: 1.2px; font-weight: 500; }
@@ -26,15 +28,19 @@
     display: flex; align-items: center; justify-content: center; gap: 10px;
     padding: 8px 0; background: rgba(6,9,15,0.55); backdrop-filter: blur(5px);
     font-size: 12.5px; letter-spacing: 0.5px; color: #d8e6f5;
-    border-bottom: 1px solid rgba(120,180,255,0.1); transition: border-color 0.4s ease;
+    border-bottom: 1px solid rgba(120,180,255,0.1); transition: border-color 0.4s ease, opacity 1s ease;
+    opacity: 0;
   }
+  #phase-strip.show { opacity: 1; }
   #phase-strip .dot { width: 6px; height: 6px; border-radius: 50%; background: #7fc4ff; }
   #phase-strip.state-success .dot { background: #4ade80; }
   #phase-strip.state-hold .dot { background: #ffaa33; }
   #phase-strip.state-abort .dot { background: #f87171; }
+  #phase-strip.state-reentry .dot { background: #ff6b35; }
   #phase-strip.state-success { border-bottom-color: rgba(74,222,128,0.3); }
   #phase-strip.state-hold { border-bottom-color: rgba(255,170,51,0.3); }
   #phase-strip.state-abort { border-bottom-color: rgba(248,113,113,0.3); }
+  #phase-strip.state-reentry { border-bottom-color: rgba(255,107,53,0.4); }
   #phase-name { font-weight: 600; }
   #phase-detail { color: #7f92a8; }
 
@@ -43,7 +49,9 @@
     background: rgba(6, 9, 15, 0.8); border: 1px solid rgba(120, 180, 255, 0.18);
     border-radius: 10px; padding: 16px; color: #d8e6f5; backdrop-filter: blur(8px);
     max-height: calc(100vh - 200px); overflow-y: auto;
+    opacity: 0; transition: opacity 1s ease;
   }
+  #panel.show { opacity: 1; }
   #panel h2 { font-size: 11.5px; letter-spacing: 1.4px; color: #7fc4ff; text-transform: uppercase;
     margin-bottom: 10px; border-bottom: 1px solid rgba(120,180,255,0.15); padding-bottom: 8px; }
   .row { display: flex; justify-content: space-between; font-size: 12.5px; margin: 5px 0; gap: 10px; }
@@ -54,11 +62,28 @@
     border: 1px solid rgba(120,180,255,0.12); font-size: 11.5px; color: #a8bdd2; line-height: 1.55;
   }
 
+  #candidates-panel {
+    position: fixed; top: 100px; left: 16px; width: 270px;
+    background: rgba(6, 9, 15, 0.8); border: 1px solid rgba(120, 180, 255, 0.18);
+    border-radius: 10px; padding: 14px; color: #d8e6f5; backdrop-filter: blur(8px);
+    opacity: 0; transition: opacity 1s ease; max-height: 320px; overflow-y: auto;
+  }
+  #candidates-panel.show { opacity: 1; }
+  #candidates-panel h2 { font-size: 11px; letter-spacing: 1.4px; color: #7fc4ff; text-transform: uppercase;
+    margin-bottom: 8px; border-bottom: 1px solid rgba(120,180,255,0.15); padding-bottom: 6px; }
+  .legend-row { display: flex; gap: 12px; font-size: 9.5px; color: #7f92a8; margin-bottom: 8px; }
+  .legend-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 3px; }
+  .candidate-row { display: flex; justify-content: space-between; align-items: center;
+    font-size: 11px; padding: 5px 0; border-bottom: 1px solid rgba(120,180,255,0.06); }
+  .candidate-row .dot { width: 6px; height: 6px; border-radius: 50%; margin-right: 6px; display: inline-block; }
+  .candidate-selected { color: #f87171; font-weight: 700; }
+
   #storage-panel {
     position: fixed; bottom: 16px; right: 16px; background: rgba(6,9,15,0.8);
     border: 1px solid rgba(120,180,255,0.18); border-radius: 10px; padding: 11px 15px;
-    color: #d8e6f5; font-size: 12px;
+    color: #d8e6f5; font-size: 12px; opacity: 0; transition: opacity 1s ease;
   }
+  #storage-panel.show { opacity: 1; }
 
   #outcome-toast {
     position: fixed; top: 98px; left: 50%; transform: translateX(-50%) translateY(-14px);
@@ -71,59 +96,75 @@
   #outcome-toast.toast-hold { background: rgba(255,170,51,0.15); border: 1px solid rgba(255,170,51,0.5); color: #ffaa33; }
   #outcome-toast.toast-abort { background: rgba(248,113,113,0.15); border: 1px solid rgba(248,113,113,0.5); color: #f87171; }
   #outcome-toast.toast-info { background: rgba(127,196,255,0.15); border: 1px solid rgba(127,196,255,0.5); color: #7fc4ff; }
+  #outcome-toast.toast-reentry { background: rgba(255,107,53,0.18); border: 1px solid rgba(255,107,53,0.55); color: #ff6b35; }
 
   #demo-controls {
     position: fixed; bottom: 16px; left: 16px; display: flex; gap: 8px; align-items: flex-end;
     background: rgba(6,9,15,0.8); border: 1px solid rgba(120,180,255,0.18);
-    border-radius: 10px; padding: 10px; z-index: 10;
+    border-radius: 10px; padding: 10px; z-index: 10; opacity: 0; transition: opacity 1s ease;
   }
+  #demo-controls.show { opacity: 1; }
   #demo-controls .label { color: #4a5a70; font-size: 10px; letter-spacing: 1px;
     display: block; margin-bottom: 6px; text-transform: uppercase; }
   #demo-controls button {
     background: rgba(255,255,255,0.04); border: 1px solid rgba(120,180,255,0.22);
-    color: #d8e6f5; font-size: 11px; padding: 6px 10px; border-radius: 6px; cursor: pointer;
+    color: #d8e6f5; font-size: 10.5px; padding: 6px 9px; border-radius: 6px; cursor: pointer;
   }
   #demo-controls button:hover { background: rgba(120,180,255,0.15); }
-  #demo-controls button.active-proceed { border-color: #4ade80; color: #4ade80; }
-  #demo-controls button.active-hold { border-color: #ffaa33; color: #ffaa33; }
-  #demo-controls button.active-abort { border-color: #f87171; color: #f87171; }
+  #demo-controls button.active-outcome { border-color: #4ade80; color: #4ade80; }
+
+  #prediction-legend {
+    position: fixed; bottom: 88px; left: 50%; transform: translateX(-50%); z-index: 6;
+    color: rgba(170,210,235,0.68); font-size: 9px; letter-spacing: 1.2px;
+    padding: 6px 12px; border: 1px solid rgba(88,214,255,0.14); border-radius: 999px;
+    background: rgba(4,8,14,0.55); backdrop-filter: blur(7px); opacity: 0; transition: opacity .8s ease;
+  }
+  #prediction-legend.show { opacity: 1; }
+  #prediction-panel {
+    position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 12;
+    width: min(760px, calc(100vw - 32px)); padding: 12px 15px;
+    background: rgba(5,9,16,0.86); border: 1px solid rgba(88,214,255,0.20);
+    border-radius: 12px; backdrop-filter: blur(10px); color: #d8e6f5;
+    opacity: 0; transition: opacity .8s ease, border-color .3s ease; pointer-events: none;
+  }
+  #prediction-panel.show { opacity: 1; }
+  #prediction-panel.prediction-live { border-color: rgba(88,214,255,0.38); }
+  #prediction-panel.prediction-fallback { border-color: rgba(255,170,51,0.30); }
+  .prediction-head { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:8px; }
+  .prediction-title { font-size:10px; letter-spacing:1.4px; text-transform:uppercase; color:#8ce7ff; }
+  .prediction-status { font-size:9px; letter-spacing:1px; padding:4px 7px; border-radius:999px; border:1px solid rgba(88,214,255,.28); color:#8ce7ff; }
+  .prediction-fallback .prediction-status { color:#ffaa33; border-color:rgba(255,170,51,.3); }
+  .prediction-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:8px; }
+  .prediction-cell { padding:7px 9px; border:1px solid rgba(120,180,255,.09); background:rgba(255,255,255,.025); border-radius:7px; }
+  .prediction-cell .k { display:block; font-size:8px; text-transform:uppercase; letter-spacing:1px; color:#60758d; margin-bottom:3px; }
+  .prediction-cell .v { display:block; font-size:10.5px; color:#eaf3ff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  #prediction-source { margin-top:8px; font-size:9.5px; line-height:1.45; color:#73869b; }
+  #prediction-source strong { color:#a9c9dd; }
+  #prediction-details { margin-top:8px; display:grid; grid-template-columns:repeat(5, 1fr); gap:6px; }
+  .prediction-state-row { padding:6px 8px; border-left:2px solid rgba(88,214,255,.28); background:rgba(88,214,255,.035); font-size:8.5px; color:#6f8298; }
+  .prediction-state-row strong { display:block; margin-top:2px; color:#dceafa; font-size:9.5px; }
+  .prediction-state-vector { grid-column:1 / -1; padding:7px 9px; border:1px dashed rgba(88,214,255,.18); color:#6f8298; font-size:8.5px; line-height:1.55; }
+  .prediction-state-vector code { color:#b7dced; font-family:monospace; }
+  #prediction-panel .decision-hold { color:#ffaa33; }
+  #prediction-panel .decision-proceed { color:#4ade80; }
+  #prediction-panel .decision-abort { color:#f87171; }
 
   #loading { position: fixed; inset: 0; background: #030407; display: flex; flex-direction: column;
     align-items: center; justify-content: center; color: #7fc4ff; font-size: 14px; z-index: 100;
-    letter-spacing: 1px; gap: 10px; }
+    letter-spacing: 1px; gap: 10px; transition: opacity 1.2s ease; }
   #loading .sub { color: #4a5a70; font-size: 11px; }
+
+  #intro-title {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    text-align: center; z-index: 50; pointer-events: none; opacity: 0;
+    transition: opacity 1.5s ease;
+  }
+  #intro-title.show { opacity: 1; }
+  #intro-title .line1 { font-size: 13px; letter-spacing: 6px; color: #7fc4ff; margin-bottom: 10px; }
+  #intro-title .line2 { font-size: 26px; letter-spacing: 3px; color: #eaf3ff; font-weight: 200; }
 
   #copyright { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
     font-size: 9.5px; color: #2e3a4a; letter-spacing: 0.5px; z-index: 5; }
-
-  #field-panel {
-    position: fixed; left: 16px; top: 100px; width: 286px; z-index: 12;
-    background: rgba(4,7,12,0.78); border: 1px solid rgba(120,180,255,0.16);
-    border-radius: 11px; padding: 13px; backdrop-filter: blur(9px);
-    box-shadow: 0 18px 50px rgba(0,0,0,0.25);
-  }
-  .field-head { display:flex; justify-content:space-between; font-size:9.5px; letter-spacing:1.5px;
-    color:#71849a; padding-bottom:9px; border-bottom:1px solid rgba(120,180,255,0.1); }
-  #field-status { color:#4ade80; }
-  .field-metrics { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; padding:11px 0; }
-  .field-metrics div { background:rgba(255,255,255,0.025); border:1px solid rgba(120,180,255,0.08);
-    border-radius:7px; padding:7px 4px; text-align:center; }
-  .field-metrics b { display:block; color:#eaf3ff; font-size:15px; font-weight:600; }
-  .field-metrics small { display:block; color:#56677b; font-size:7.5px; letter-spacing:.8px; margin-top:3px; }
-  #target-list { max-height:190px; overflow:auto; }
-  .target-row { display:grid; grid-template-columns:20px 1fr auto; gap:7px; align-items:center;
-    padding:7px 3px; border-top:1px solid rgba(120,180,255,0.055); font-size:9.5px; }
-  .target-row .idx { color:#53677d; }
-  .target-row .name { color:#b8c8d9; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .target-row .meta { color:#73879c; text-align:right; }
-  .target-row.selected { background:rgba(74,222,128,0.06); border-radius:5px; }
-  .target-row.selected .name { color:#4ade80; }
-  .target-row.near { color:#7fc4ff; }
-  @media (max-width: 900px) {
-    #field-panel { width:235px; }
-    #panel { width:260px; }
-  }
-
 </style>
 </head>
 <body>
@@ -131,10 +172,15 @@
 <div id="loading">INITIALIZING LIVE SIMULATION<div class="sub">Loading orbital assets and mission telemetry...</div></div>
 <div id="scene-container"></div>
 
+<div id="intro-title">
+  <div class="line1">AUTONOMOUS SPACE DEBRIS MONITORING &amp; CAPTURE SYSTEM</div>
+  <div class="line2">LOW EARTH ORBIT MISSION SIMULATION</div>
+</div>
+
 <div id="hud-top">
   <div id="hud-left">
     <a href="index.html">← Home</a>
-    <a href="dashboard.html">Dashboard →</a>
+    <a href="foc.html">FOC →</a>
     <span id="hud-title">AUTONOMOUS SPACE DEBRIS MONITORING &amp; CAPTURE SYSTEM</span>
   </div>
   <div id="hud-right">
@@ -152,41 +198,56 @@
 
 <div id="outcome-toast"></div>
 
+<div id="candidates-panel">
+  <h2>Multi-Debris Tracking (100km Zone)</h2>
+  <div class="legend-row">
+    <span><span class="legend-dot" style="background:#f87171;"></span>Selected</span>
+    <span><span class="legend-dot" style="background:#ff9d3f;"></span>Tracked</span>
+    <span><span class="legend-dot" style="background:#dfe6ec;"></span>Other</span>
+  </div>
+  <div id="candidates-list"><div class="candidate-row"><span>Loading...</span></div></div>
+</div>
+
 <div id="panel">
   <h2>Active Mission Target</h2>
   <div id="target-info"><div class="row"><span class="label">Loading...</span></div></div>
   <div id="mechanism-box">Loading capture mechanism assessment...</div>
 </div>
 
-<div id="field-panel">
-  <div class="field-head">
-    <span>LOCAL DEBRIS FIELD</span>
-    <span id="field-status">SCANNING</span>
-  </div>
-  <div class="field-metrics">
-    <div><b id="field-total">0</b><small>VISIBLE</small></div>
-    <div><b id="field-tracked">0</b><small>TRACKED</small></div>
-    <div><b id="field-candidates">0</b><small>CANDIDATES</small></div>
-    <div><b id="field-selected">—</b><small>SELECTED</small></div>
-  </div>
-  <div id="target-list"></div>
-</div>
-
 <div id="storage-panel">Storage Canister: <span id="storage-count">0</span> / 3 stowed</div>
+
+<div id="prediction-legend">PREDICTION PATH · CYAN / CURRENT TARGET · RED / TRACKED OBJECTS · AMBER</div>
+
+<div id="prediction-panel">
+  <div class="prediction-head">
+    <span class="prediction-title">Prediction Feed → Simulation</span>
+    <span id="prediction-status" class="prediction-status">INITIALIZING</span>
+  </div>
+  <div class="prediction-grid">
+    <div class="prediction-cell"><span class="k">Source</span><span id="prediction-source-name" class="v">Waiting for prediction output</span></div>
+    <div class="prediction-cell"><span class="k">Horizon</span><span id="prediction-horizon" class="v">—</span></div>
+    <div class="prediction-cell"><span class="k">Predicted points</span><span id="prediction-points" class="v">—</span></div>
+    <div class="prediction-cell"><span class="k">Confidence</span><span id="prediction-confidence" class="v">—</span></div>
+  </div>
+  <div id="prediction-source">Waiting for <strong>prediction output</strong>; demonstration fallback is used only when no readable prediction file is available.</div>
+</div>
 
 <div id="demo-controls">
   <div>
-    <span class="label">Demo: Force Outcome</span>
-    <button id="btn-proceed" onclick="forceOutcome('PROCEED')">Capture</button>
-    <button id="btn-hold" onclick="forceOutcome('HOLD')">Hold</button>
-    <button id="btn-abort" onclick="forceOutcome('ABORT')">Abort</button>
+    <span class="label">Demo: Force Case</span>
+    <button id="btn-small" onclick="forceOutcome('PROCEED','ARM','small')">Capture — Small</button>
+    <button id="btn-large" onclick="forceOutcome('PROCEED','NET','large')">Capture — Large</button>
+    <button id="btn-multi" onclick="forceOutcome('PROCEED','NET','multi')">Capture — Multiple</button>
+    <button id="btn-hold" onclick="forceOutcome('HOLD','NET','small')">Hold</button>
+    <button id="btn-abort" onclick="forceOutcome('ABORT','NET','small')">Abort</button>
   </div>
 </div>
 
-<div id="copyright">© 2026 SDCS — Technology demonstrator visualization; verify asset licenses before public redistribution</div>
+<div id="copyright">© 2026 SDCS — Earth day/night/cloud textures: local project assets · imagery credits should be retained with the supplied asset sources</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 <script>
 
 const EARTH_RADIUS_SCENE = 25;
@@ -195,6 +256,20 @@ const KM_TO_SCENE = EARTH_RADIUS_SCENE / EARTH_RADIUS_KM_TRUE;
 const TEXTURE_PATH = "assets/textures/";
 const CYCLE_LENGTH_SEC = 56;
 const SATELLITE_SCALE = 4.6;
+const MAX_CANISTER_CAPACITY = 3;
+const MAX_TRACKED_CANDIDATES = 10;
+const PREDICTION_FETCH_PATHS = [
+  "../SIMULATION/prediction_viz.json",
+  "../AI_Engine/telemetry/mission_decision.json",
+  "../DATA/processed/prediction_output.json",
+  "../DATA/processed/prediction_state.json",
+  "../DATA/processed/predicted_debris.json",
+  "../DATA/processed/debris_prediction.json",
+  "../PREDICTION/outputs/prediction_output.json",
+  "../PREDICTION/prediction_output.json",
+  "../SIMULATION/prediction_output.json",
+  "prediction_output.json"
+];
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(50, innerWidth / innerHeight, 0.1, 8000);
@@ -202,22 +277,22 @@ camera.position.set(14, 42, 100);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(innerWidth, innerHeight);
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2.5));
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.05;
+renderer.toneMappingExposure = 1.0;
 document.getElementById("scene-container").appendChild(renderer.domElement);
 
 const controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true; controls.dampingFactor = 0.06;
 controls.minDistance = 20; controls.maxDistance = 500;
+controls.enabled = false;
 
 const SUN_DIR = new THREE.Vector3(0.62, 0.24, 0.75).normalize();
-const sunLight = new THREE.DirectionalLight(0xfff3dc, 3.0);
-sunLight.position.copy(SUN_DIR.clone().multiplyScalar(600));
-sunLight.castShadow = false;
+const sunLight = new THREE.DirectionalLight(0xfff1d6, 2.4);
+sunLight.position.copy(SUN_DIR.clone().multiplyScalar(300));
 scene.add(sunLight);
-scene.add(new THREE.HemisphereLight(0x9db7d8, 0x07090d, 0.12));
+scene.add(new THREE.AmbientLight(0x0a0e16, 0.10));
 
 const EARTH_MU_KM = 398600.4418;
 const SIM_TIME_SCALE = 150;
@@ -283,17 +358,33 @@ async function buildSky() {
   const milkyway = await loadTextureOrNull("stars_milky_way.jpg");
   if (milkyway) {
     scene.add(new THREE.Mesh(new THREE.SphereGeometry(3000, 60, 40), new THREE.MeshBasicMaterial({ map: milkyway, side: THREE.BackSide })));
-    return;
+  } else {
+    const geo = new THREE.BufferGeometry();
+    const count = 9000;
+    const pos = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      const r = 1200 + Math.random() * 600, th = Math.random() * Math.PI * 2, ph = Math.acos(Math.random() * 2 - 1);
+      pos[i*3] = r * Math.sin(ph) * Math.cos(th); pos[i*3+1] = r * Math.sin(ph) * Math.sin(th); pos[i*3+2] = r * Math.cos(ph);
+    }
+    geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+    scene.add(new THREE.Points(geo, new THREE.PointsMaterial({ color: 0xffffff, size: 1.15 })));
   }
-  const geo = new THREE.BufferGeometry();
-  const count = 9000;
-  const pos = new Float32Array(count * 3);
-  for (let i = 0; i < count; i++) {
-    const r = 1200 + Math.random() * 600, th = Math.random() * Math.PI * 2, ph = Math.acos(Math.random() * 2 - 1);
-    pos[i*3] = r * Math.sin(ph) * Math.cos(th); pos[i*3+1] = r * Math.sin(ph) * Math.sin(th); pos[i*3+2] = r * Math.cos(ph);
+  function buildNebula(position, color, scale) {
+    const group = new THREE.Group();
+    for (let i = 0; i < 200; i++) {
+      const p = new THREE.Mesh(
+        new THREE.SphereGeometry(0.15, 6, 6),
+        new THREE.MeshBasicMaterial({ color, transparent: true, opacity: Math.random() * 0.12 })
+      );
+      p.position.set((Math.random()-0.5)*scale, (Math.random()-0.5)*scale*0.4, (Math.random()-0.5)*scale*0.3);
+      group.add(p);
+    }
+    group.position.copy(position);
+    scene.add(group);
   }
-  geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-  scene.add(new THREE.Points(geo, new THREE.PointsMaterial({ color: 0xffffff, size: 1.15 })));
+  buildNebula(new THREE.Vector3(-900, 300, -1400), 0x3a4fb0, 300);
+  buildNebula(new THREE.Vector3(1100, -400, -1600), 0x8a3f9e, 380);
+  buildNebula(new THREE.Vector3(200, 700, -1800), 0x2f8f8a, 260);
 }
 
 async function buildSun() {
@@ -323,25 +414,30 @@ async function buildMoon() {
 
 let earthRef;
 async function buildEarth() {
-  const [dayTex, nightTex, cloudTex] = await Promise.all([
-    loadTextureOrNull("earth_day.jpg"),
-    loadTextureOrNull("earth_night.jpg"),
-    loadTextureOrNull("earth_clouds.jpg")
-  ]);
+  // IMPORTANT: do not use earth_day.jpg here. The simulation now uses
+  // the supplied day/night Earth textures and blends them by the actual
+  // sun-facing direction so the globe remains readable on both hemispheres.
+  const dayTex = await loadTextureOrNull("earth_day.jpg");
+  const nightTex = await loadTextureOrNull("earth_night.jpg");
+  const cloudTex = await loadTextureOrNull("earth_clouds.jpg");
 
-  const geo = new THREE.SphereGeometry(EARTH_RADIUS_SCENE, 192, 192);
+  const geo = new THREE.SphereGeometry(EARTH_RADIUS_SCENE, 256, 256);
+  let earth;
 
   if (dayTex && nightTex) {
-    const mat = new THREE.ShaderMaterial({
+    const material = new THREE.ShaderMaterial({
       uniforms: {
         dayMap: { value: dayTex },
         nightMap: { value: nightTex },
-        sunDirection: { value: SUN_DIR.clone().normalize() }
+        sunDirection: { value: SUN_DIR.clone().normalize() },
+        dayBoost: { value: 1.08 },
+        nightBoost: { value: 1.65 },
+        atmosphere: { value: 0.035 }
       },
       vertexShader: `
         varying vec2 vUv;
         varying vec3 vWorldNormal;
-        void main() {
+        void main(){
           vUv = uv;
           vWorldNormal = normalize(mat3(modelMatrix) * normal);
           gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
@@ -351,46 +447,85 @@ async function buildEarth() {
         uniform sampler2D dayMap;
         uniform sampler2D nightMap;
         uniform vec3 sunDirection;
+        uniform float dayBoost;
+        uniform float nightBoost;
+        uniform float atmosphere;
         varying vec2 vUv;
         varying vec3 vWorldNormal;
-        void main() {
-          float illumination = dot(normalize(vWorldNormal), normalize(sunDirection));
-          float dayFactor = smoothstep(-0.12, 0.16, illumination);
-          vec3 dayColor = texture2D(dayMap, vUv).rgb;
-          vec3 nightColor = texture2D(nightMap, vUv).rgb;
-          vec3 color = mix(nightColor * 0.95, dayColor, dayFactor);
-          float rim = pow(max(0.0, 1.0 - abs(illumination)), 3.0);
-          color += vec3(0.025,0.035,0.055) * rim;
-          gl_FragColor = vec4(color,1.0);
+        void main(){
+          vec3 n = normalize(vWorldNormal);
+          float illumination = dot(n, normalize(sunDirection));
+          float dayMix = smoothstep(-0.16, 0.20, illumination);
+          vec3 day = texture2D(dayMap, vUv).rgb * dayBoost;
+          vec3 night = texture2D(nightMap, vUv).rgb * nightBoost;
+          float rim = pow(max(0.0, 1.0 - abs(illumination)), 5.0) * atmosphere;
+          vec3 color = mix(night, day, dayMix);
+          color += vec3(0.06,0.12,0.20) * rim;
+          gl_FragColor = vec4(color, 1.0);
         }
-      `
+      `,
+      side: THREE.FrontSide
     });
-    earthRef = new THREE.Mesh(geo, mat);
+    earth = new THREE.Mesh(geo, material);
   } else {
-    const mat = new THREE.MeshStandardMaterial({
-      map: dayTex || null, roughness: 0.86, metalness: 0.0
-    });
-    earthRef = new THREE.Mesh(geo, mat);
+    const tex = dayTex || nightTex;
+    earth = new THREE.Mesh(geo, tex
+      ? new THREE.MeshPhongMaterial({ map: tex, shininess: 22, specular: new THREE.Color(0x334455) })
+      : new THREE.MeshPhongMaterial({ color: 0x1b3a6b, shininess: 22 })
+    );
   }
 
-  scene.add(earthRef);
+  scene.add(earth);
 
   if (cloudTex) {
     const clouds = new THREE.Mesh(
-      new THREE.SphereGeometry(EARTH_RADIUS_SCENE * 1.006, 192, 192),
+      new THREE.SphereGeometry(EARTH_RADIUS_SCENE * 1.014, 256, 256),
       new THREE.MeshLambertMaterial({
-        map: cloudTex, transparent:true, opacity:0.32, depthWrite:false
+        map: cloudTex,
+        transparent: true,
+        opacity: 0.30,
+        depthWrite: false,
+        blending: THREE.NormalBlending
       })
     );
     scene.add(clouds);
-    earthRef.userData.clouds = clouds;
+    earth.userData.clouds = clouds;
   }
 
-  return earthRef;
+  // Thin atmospheric rim for visual separation from deep space.
+  const atmosphereGeo = new THREE.SphereGeometry(EARTH_RADIUS_SCENE * 1.026, 128, 128);
+  const atmosphereMat = new THREE.ShaderMaterial({
+    uniforms: {},
+    vertexShader: `
+      varying vec3 vNormal;
+      void main(){
+        vNormal = normalize(normalMatrix * normal);
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      varying vec3 vNormal;
+      void main(){
+        float rim = pow(1.0 - max(0.0, vNormal.z), 3.0);
+        gl_FragColor = vec4(0.10,0.28,0.55,rim*0.12);
+      }
+    `,
+    transparent: true,
+    side: THREE.BackSide,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending
+  });
+  const atmosphere = new THREE.Mesh(atmosphereGeo, atmosphereMat);
+  scene.add(atmosphere);
+  earth.userData.atmosphere = atmosphere;
+
+  return earth;
 }
 
-function makeDebrisMesh(sizeM, riskColor, decorative) {
-  const scale = Math.max(sizeM, 0.15) * (decorative ? 1.6 : 2.2);
+const TIER_COLOR = { background: 0xdfe6ec, tracked: 0xff9d3f, selected: 0xf87171 };
+
+function makeDebrisMesh(sizeM, tier) {
+  const scale = Math.max(sizeM, 0.15) * (tier === "background" ? 1.6 : 2.2);
   const roll = Math.random();
   let geo;
   if (roll < 0.3) geo = new THREE.IcosahedronGeometry(scale * 0.5, 0);
@@ -403,13 +538,13 @@ function makeDebrisMesh(sizeM, riskColor, decorative) {
     posAttr.setXYZ(i, posAttr.getX(i)*(0.85+Math.random()*0.3), posAttr.getY(i)*(0.85+Math.random()*0.3), posAttr.getZ(i)*(0.85+Math.random()*0.3));
   }
   geo.computeVertexNormals();
-  const isFoil = Math.random() < 0.25;
-  const color = isFoil ? new THREE.Color(0.55+Math.random()*0.2, 0.42+Math.random()*0.15, 0.15) : new THREE.Color().setScalar(0.32+Math.random()*0.35);
-  const mat = new THREE.MeshStandardMaterial({ color, metalness: isFoil?0.85:0.7, roughness: isFoil?0.3:0.5, emissive: riskColor||new THREE.Color(0,0,0), emissiveIntensity: decorative?0:0.05 });
+  const baseColor = new THREE.Color(TIER_COLOR[tier]);
+  const mat = new THREE.MeshStandardMaterial({ color: baseColor, metalness: 0.55, roughness: 0.55, emissive: baseColor, emissiveIntensity: tier === "background" ? 0.03 : 0.35 });
   const mesh = new THREE.Mesh(geo, mat);
   mesh.rotation.set(Math.random()*Math.PI, Math.random()*Math.PI, Math.random()*Math.PI);
   mesh.userData.spinAxis = new THREE.Vector3(Math.random()-0.5, Math.random()-0.5, Math.random()-0.5).normalize();
   mesh.userData.spinSpeed = 0.002 + Math.random() * 0.01;
+  mesh.userData.tier = tier;
   return mesh;
 }
 
@@ -418,116 +553,294 @@ function positionFromKm(x, y, z) { return new THREE.Vector3(x * KM_TO_SCENE, z *
 let targetRef = null, targetHalo = null;
 const spinningDebris = [];
 const orbitingDebris = [];
+const candidateMeshes = [];
 let satelliteElements = null;
+let predictionData = null;
+let predictionSource = "NONE";
+let predictionLive = false;
+let predictionLine = null;
+let predictionPoints = null;
+let predictionTargetMarker = null;
+
+function pick(obj, paths, fallback=null) {
+  for (const path of paths) {
+    const parts = path.split(".");
+    let v = obj;
+    for (const part of parts) {
+      if (v == null) break;
+      v = v[part];
+    }
+    if (v !== undefined && v !== null) return v;
+  }
+  return fallback;
+}
+
+function numberOrNull(v) {
+  const n = Number(v);
+  return Number.isFinite(n) ? n : null;
+}
+
+function normalizeObject(raw, index=0) {
+  const p = raw?.position || raw?.eci || raw?.state?.position || raw?.predicted_position || {};
+  const v = raw?.velocity || raw?.state?.velocity || raw?.predicted_velocity || {};
+  const x = numberOrNull(raw?.x ?? p.x ?? p.X);
+  const y = numberOrNull(raw?.y ?? p.y ?? p.Y);
+  const z = numberOrNull(raw?.z ?? p.z ?? p.Z);
+  if (x === null || y === null || z === null) return null;
+  const vx = numberOrNull(raw?.vx ?? v.x ?? v.vx ?? v.X);
+  const vy = numberOrNull(raw?.vy ?? v.y ?? v.vy ?? v.Y);
+  const vz = numberOrNull(raw?.vz ?? v.z ?? v.vz ?? v.Z);
+  return {
+    id: raw?.id ?? raw?.object_id ?? raw?.norad_id ?? raw?.tracking_id ?? `PRED-${index+1}`,
+    name: raw?.name ?? raw?.object_name ?? raw?.objectName ?? `Predicted object ${index+1}`,
+    x, y, z, vx, vy, vz,
+    size_m: numberOrNull(raw?.size_m ?? raw?.estimated_size_m ?? raw?.size),
+    mass_kg: numberOrNull(raw?.mass_kg ?? raw?.estimated_mass_kg ?? raw?.mass),
+    altitude_km: numberOrNull(raw?.altitude_km ?? raw?.altitude),
+    relative_distance_km: numberOrNull(raw?.relative_distance_km ?? raw?.relative_distance),
+    relative_velocity_km_s: numberOrNull(raw?.relative_velocity_km_s ?? raw?.relative_velocity),
+    collision_risk: numberOrNull(raw?.collision_risk ?? raw?.risk_score ?? raw?.risk),
+    risk_level: raw?.risk_level ?? raw?.risk ?? "PREDICTED",
+    decision: raw?.decision ?? raw?.mission_decision,
+    decision_reason: raw?.decision_reason ?? raw?.reason,
+    capture_method: raw?.capture_method ?? raw?.capture_mechanism,
+    capture_score: numberOrNull(raw?.capture_score ?? raw?.score),
+    tracking_id: raw?.tracking_id ?? raw?.track_id ?? raw?.trackId,
+    orientation: raw?.orientation ?? null,
+    raw
+  };
+}
+
+function extractTrajectory(raw, targetRaw) {
+  const candidates = [
+    pick(raw, ["predicted_trajectory","prediction.trajectory","prediction.predicted_trajectory","trajectory","predictions.trajectory"]),
+    pick(targetRaw || {}, ["predicted_trajectory","trajectory","prediction.trajectory","predicted_positions","prediction.predicted_positions","future_positions"])
+  ];
+  const arr = candidates.find(Array.isArray);
+  if (!arr) return [];
+  return arr.map((item, i) => normalizeObject(item, i)).filter(Boolean);
+}
+
+function normalizeMissionDecisionPayload(raw) {
+  // Exact adapter for SIMULATION/prediction_viz.json:
+  // mission + prediction + assessment + decision.
+  if (!raw || typeof raw !== "object" || !raw.mission || !raw.prediction) return null;
+  const pos = raw.prediction.position_km || {};
+  const vel = raw.prediction.velocity_kms || {};
+  const x = numberOrNull(pos.x), y = numberOrNull(pos.y), z = numberOrNull(pos.z);
+  if (x === null || y === null || z === null) return null;
+  const target = {
+    id: raw.mission.object_id ?? raw.mission.tracking_id ?? "PREDICTED-TARGET",
+    name: raw.mission.target_name || "Unknown target",
+    x, y, z,
+    vx: numberOrNull(vel.vx),
+    vy: numberOrNull(vel.vy),
+    vz: numberOrNull(vel.vz),
+    size_m: null,
+    mass_kg: null,
+    altitude_km: numberOrNull(raw.mission.altitude_km),
+    relative_distance_km: numberOrNull((raw.mission.closest_distance_m != null) ? Number(raw.mission.closest_distance_m) / 1000 : null),
+    relative_velocity_km_s: numberOrNull(raw.mission.relative_velocity_kms),
+    collision_risk: numberOrNull(raw.assessment?.risk_score),
+    risk_level: raw.assessment?.risk_level || "UNKNOWN",
+    decision: raw.decision?.decision || "HOLD",
+    decision_reason: raw.decision?.reason || "No mission-decision reason supplied",
+    capture_method: raw.assessment?.capture_method || "",
+    capture_score: numberOrNull(raw.mission?.capture_score ?? raw.assessment?.capture_score),
+    tracking_id: raw.mission.tracking_id || null,
+    orientation: null,
+    orbit_class: raw.mission.orbit_class || "LEO",
+    raw
+  };
+  return {
+    target,
+    objects: [target],
+    trajectory: [],
+    confidence: null,
+    horizon: numberOrNull(raw.prediction.horizon_s),
+    predictedState: { x, y, z, vx: target.vx, vy: target.vy, vz: target.vz },
+    sourceFormat: "prediction_viz",
+    is_predicted_state: true,
+    raw
+  };
+}
+
+function normalizePredictionPayload(raw) {
+  if (!raw || typeof raw !== "object") return null;
+  const targetRaw = pick(raw, ["target","active_target","selected_target","prediction.target","prediction.active_target"], null);
+  const rawObjects = pick(raw, ["debris","objects","tracks","targets","predictions","prediction.objects","prediction.tracks"], []);
+  const list = Array.isArray(rawObjects) ? rawObjects : [];
+  const objects = list.map((o,i)=>normalizeObject(o,i)).filter(Boolean);
+  const trajectoryFallback = extractTrajectory(raw, targetRaw);
+  const target = normalizeObject(targetRaw || (objects[0] || trajectoryFallback[0] || {}), 0);
+  if (!target) return null;
+  if (!target.decision) target.decision = pick(raw,["decision","mission_decision","prediction.decision"],null);
+  if (!target.decision_reason) target.decision_reason = pick(raw,["decision_reason","reason","prediction.decision_reason"],null);
+  if (!target.capture_method) target.capture_method = pick(raw,["capture_method","capture_mechanism","prediction.capture_method"],null);
+  const trajectory = trajectoryFallback.length ? trajectoryFallback : extractTrajectory(raw, targetRaw);
+  const confidence = numberOrNull(pick(raw,["confidence","prediction_confidence","prediction.confidence","target.confidence","prediction.target.confidence"],null));
+  const horizon = pick(raw,["prediction_horizon_s","horizon_s","prediction.horizon_s","horizon","prediction.horizon"],null);
+  return { target, objects, trajectory, confidence, horizon, raw };
+}
+
+const VERIFIED_PREDICTION_FALLBACK = {
+  source: "AI_Engine/telemetry/mission_decision.json",
+  mission: { mission_id: "MIS-2026-001", tracking_id: "TRK_4211", object_id: "4211", target_name: "THORAD AGENA D DEB", orbit_class: "LEO", altitude_km: 840.385, closest_distance_m: 47745.0, relative_velocity_kms: 14.11301 },
+  prediction: { horizon_s: 60, position_km: { x: -6977.379940831643, y: -435.6689126391282, z: -1923.1886986393504 }, velocity_kms: { vx: -1.6858993550453034, vy: -2.7276979598858717, vz: 6.6775318033004964 } },
+  assessment: { risk_level: "MEDIUM", risk_score: 27.16, capture_feasible: true, capture_method: "robotic_net", capture_score: 50.0 },
+  decision: { decision: "HOLD", reason: "Capture score below operational threshold" }
+};
+
+async function loadJsonFirst(paths) {
+  for (const path of paths) {
+    try {
+      const response = await fetch(path, { cache: "no-store" });
+      if (!response.ok) continue;
+      const raw = await response.json();
+      return { raw, path };
+    } catch (_) {}
+  }
+  return null;
+}
+
+function makeVizDataFromPrediction(pred) {
+  const objects = pred.objects.slice(0, Math.max(MAX_TRACKED_CANDIDATES + 1, pred.objects.length));
+  let target = pred.target;
+  const targetId = String(target.id);
+  if (!objects.some(o => String(o.id) === targetId)) objects.unshift(target);
+  const debris = objects.map(o => ({
+    ...o,
+    is_target: String(o.id) === targetId
+  }));
+  return { debris, target: { ...target } };
+}
+
+function addPredictionVisualization(points) {
+  if (predictionLine) scene.remove(predictionLine);
+  if (predictionPoints) scene.remove(predictionPoints);
+  if (predictionTargetMarker) scene.remove(predictionTargetMarker);
+  predictionLine = predictionPoints = predictionTargetMarker = null;
+  if (!points || !points.length) return;
+
+  const positions = points.map(p => positionFromKm(p.x,p.y,p.z));
+  if (positions.length >= 2) {
+    const lineGeo = new THREE.BufferGeometry().setFromPoints(positions);
+    const lineMat = new THREE.LineBasicMaterial({ color: 0x58d6ff, transparent: true, opacity: 0.78 });
+    predictionLine = new THREE.Line(lineGeo, lineMat);
+    scene.add(predictionLine);
+  }
+
+  const pts = new THREE.BufferGeometry();
+  pts.setAttribute("position", new THREE.Float32BufferAttribute(positions.flatMap(v=>[v.x,v.y,v.z]),3));
+  predictionPoints = new THREE.Points(pts, new THREE.PointsMaterial({ color:0x8ce7ff, size:0.34, transparent:true, opacity:0.88 }));
+  scene.add(predictionPoints);
+
+  const markerMat = new THREE.MeshBasicMaterial({ color:0x8ce7ff, transparent:true, opacity:0.95 });
+  predictionTargetMarker = new THREE.Mesh(new THREE.SphereGeometry(0.38,16,16), markerMat);
+  predictionTargetMarker.position.copy(positions[positions.length-1]);
+  scene.add(predictionTargetMarker);
+}
+
+function updatePredictionPanel(pred) {
+  const panel = document.getElementById("prediction-panel");
+  const status = document.getElementById("prediction-status");
+  panel.classList.add("show");
+  panel.classList.toggle("prediction-live", predictionLive);
+  panel.classList.toggle("prediction-fallback", !predictionLive);
+
+  status.textContent = predictionLive ? "OUTPUT LOADED" : "REFERENCE FALLBACK";
+  document.getElementById("prediction-source-name").textContent = predictionSource;
+  document.getElementById("prediction-horizon").textContent = pred?.horizon != null ? `${pred.horizon} s` : "—";
+  const points = pred?.trajectory?.length || (pred?.predictedState ? 1 : 0);
+  document.getElementById("prediction-points").textContent = String(points);
+  document.getElementById("prediction-confidence").textContent = pred?.confidence != null
+    ? `${pred.confidence <= 1 ? (pred.confidence*100).toFixed(1) : pred.confidence.toFixed(1)}%`
+    : "Not supplied";
+
+  const target = pred?.target || {};
+  const ps = pred?.predictedState;
+  const decision = target.decision || "HOLD";
+  const risk = target.risk_level || "UNKNOWN";
+  const score = target.capture_score != null ? target.capture_score : "N/A";
+  const distance = target.relative_distance_km != null ? target.relative_distance_km.toFixed(3) + " km" : "N/A";
+  const relVel = target.relative_velocity_km_s != null ? target.relative_velocity_km_s.toFixed(5) + " km/s" : "N/A";
+
+  document.getElementById("prediction-source").innerHTML = predictionLive
+    ? `<strong>Prediction output loaded.</strong> ${predictionSource}. The simulation uses the supplied target decision, risk assessment, and predicted state; no 60-second trajectory is invented from a single predicted point.`
+    : `<strong>Reference mode.</strong> No readable prediction file was fetched. The simulator is showing the validated prediction snapshot embedded as a fallback; this is not claimed as live telemetry.`;
+
+  let details = document.getElementById("prediction-details");
+  if (!details) {
+    details = document.createElement("div");
+    details.id = "prediction-details";
+    document.getElementById("prediction-panel").appendChild(details);
+  }
+  details.innerHTML = `
+    <div class="prediction-state-row"><span>Tracking</span><strong>${target.tracking_id || "N/A"}</strong></div>
+    <div class="prediction-state-row"><span>Decision</span><strong class="decision-${String(decision).toLowerCase()}">${decision}</strong></div>
+    <div class="prediction-state-row"><span>Risk</span><strong>${risk} · score ${score}</strong></div>
+    <div class="prediction-state-row"><span>Relative range</span><strong>${distance}</strong></div>
+    <div class="prediction-state-row"><span>Relative velocity</span><strong>${relVel}</strong></div>
+    ${ps ? `<div class="prediction-state-vector"><span>Predicted state @ ${pred.horizon ?? "—"} s</span><br><code>X ${ps.x.toFixed(3)} · Y ${ps.y.toFixed(3)} · Z ${ps.z.toFixed(3)} km</code><br><code>Vx ${ps.vx.toFixed(6)} · Vy ${ps.vy.toFixed(6)} · Vz ${ps.vz.toFixed(6)} km/s</code></div>` : ""}
+  `;
+
+  document.getElementById("prediction-legend").classList.add("show");
+}
 
 async function buildTrackedDebrisField(vizData) {
   const group = new THREE.Group();
-  window.trackedVisualObjects = [];
-  const visibleDebris = Array.isArray(vizData.debris) ? vizData.debris : [];
+  const nonTarget = vizData.debris.filter(d => !d.is_target && d.x != null);
+  nonTarget.sort((a, b) => (b.collision_risk || 0) - (a.collision_risk || 0));
+  const topCandidateIds = new Set(nonTarget.slice(0, MAX_TRACKED_CANDIDATES).map(d => d.id));
 
-  visibleDebris.forEach((d) => {
-    if (d.x == null || d.y == null || d.z == null) return;
-
+  vizData.debris.forEach((d) => {
+    if (d.x == null) return;
     const pos = positionFromKm(d.x, d.y, d.z);
-    const risk = Number(d.collision_risk || 0);
-    const riskColor = new THREE.Color().setHSL(
-      0.33 - Math.min(risk / 100, 1) * 0.33, 0.8, 0.5
-    );
-    const hasVelocity = d.vx != null && d.vy != null && d.vz != null;
-    const elements = hasVelocity
-      ? stateToElements(d.x,d.y,d.z,d.vx,d.vy,d.vz)
-      : null;
-
-    const mesh = makeDebrisMesh(Math.max(Number(d.size_m || 0.15),0.12), riskColor, false);
-    mesh.position.copy(pos);
-    mesh.userData.id = d.id;
-    mesh.userData.name = d.name || "DEBRIS";
-    mesh.userData.sizeM = Number(d.size_m || 0.15);
-    mesh.userData.massKg = Number(d.mass_kg || 0);
-    mesh.userData.risk = risk;
-    mesh.userData.orbitalElements = elements;
-    mesh.userData.originalPos = pos.clone();
-    mesh.userData.isTarget = !!d.is_target;
 
     if (d.is_target) {
+      const mesh = makeDebrisMesh(Math.max(d.size_m || 0.3, 0.4), "selected");
+      mesh.scale.multiplyScalar(1.8);
+      mesh.position.copy(pos);
+      group.add(mesh);
       targetRef = mesh;
-      mesh.scale.multiplyScalar(1.9);
-      mesh.material.emissive = new THREE.Color(0x49e889);
-      mesh.material.emissiveIntensity = 0.65;
+      targetRef.userData.name = d.name;
+      targetRef.userData.sizeM = d.size_m;
+      targetRef.userData.isPredictedState = !!d.is_predicted_state;
+      targetRef.userData.orbitalElements = (!d.is_predicted_state && d.vx != null) ? stateToElements(d.x, d.y, d.z, d.vx, d.vy, d.vz) : null;
 
-      targetHalo = new THREE.Mesh(
-        new THREE.SphereGeometry(0.62,20,14),
-        new THREE.MeshBasicMaterial({
-          color:0x49e889, transparent:true, opacity:0.16, wireframe:true
-        })
-      );
-      targetHalo.position.copy(pos);
-      group.add(targetHalo);
+      const halo = new THREE.Mesh(new THREE.RingGeometry(2.0, 2.4, 32), new THREE.MeshBasicMaterial({ color: TIER_COLOR.selected, side: THREE.DoubleSide, transparent: true, opacity: 0.7 }));
+      halo.position.copy(pos);
+      group.add(halo);
+      targetHalo = halo;
     } else {
+      const isCandidate = topCandidateIds.has(d.id);
+      const tier = isCandidate ? "tracked" : "background";
+      const mesh = makeDebrisMesh(d.size_m || 0.2, tier);
+      if (isCandidate) {
+        mesh.userData.name = d.name;
+        mesh.userData.riskScore = d.collision_risk || 0;
+        candidateMeshes.push(mesh);
+      }
+      mesh.position.copy(pos);
+      const elements = (d.vx != null) ? stateToElements(d.x, d.y, d.z, d.vx, d.vy, d.vz) : null;
+      mesh.userData.orbitalElements = elements;
+      group.add(mesh);
       spinningDebris.push(mesh);
+      if (elements) orbitingDebris.push(mesh);
     }
-
-    if (elements) orbitingDebris.push(mesh);
-    group.add(mesh);
-
-    window.trackedVisualObjects.push(mesh);
   });
-
   scene.add(group);
-
-  const active = window.trackedVisualObjects;
-  const selected = targetRef || active[0];
-
-  if (selected && !targetRef) {
-    targetRef = selected;
-    selected.userData.isTarget = true;
-    selected.scale.multiplyScalar(1.9);
-    selected.material.emissive = new THREE.Color(0x49e889);
-    selected.material.emissiveIntensity = 0.65;
-    targetHalo = new THREE.Mesh(
-      new THREE.SphereGeometry(0.62,20,14),
-      new THREE.MeshBasicMaterial({color:0x49e889,transparent:true,opacity:0.16,wireframe:true})
-    );
-    targetHalo.position.copy(selected.position);
-    group.add(targetHalo);
-  }
-
-  renderFieldPanel();
+  updateCandidatesPanel();
 }
 
-function renderFieldPanel() {
-  const objects = window.trackedVisualObjects || [];
-  const selected = targetRef;
-  const total = objects.length;
-  const tracked = objects.length;
-  const candidates = objects.filter(o => o !== selected).length;
-
-  const totalEl = document.getElementById("field-total");
-  const trackedEl = document.getElementById("field-tracked");
-  const candEl = document.getElementById("field-candidates");
-  const selectedEl = document.getElementById("field-selected");
-
-  if (totalEl) totalEl.innerText = total;
-  if (trackedEl) trackedEl.innerText = tracked;
-  if (candEl) candEl.innerText = candidates;
-  if (selectedEl) selectedEl.innerText = selected ? (selected.userData.id || "LOCK") : "—";
-
-  const list = document.getElementById("target-list");
-  if (!list) return;
-
-  list.innerHTML = objects.slice(0,10).map((o,i) => {
-    const cls = o === selected ? "target-row selected" : "target-row";
-    const size = Number(o.userData.sizeM || 0).toFixed(2);
-    const risk = Number(o.userData.risk || 0).toFixed(0);
-    return `<div class="${cls}">
-      <span class="idx">${String(i+1).padStart(2,"0")}</span>
-      <span class="name">${o.userData.name || "DEBRIS"}</span>
-      <span class="meta">${size}m · R${risk}</span>
-    </div>`;
-  }).join("");
-
-  const status = document.getElementById("field-status");
-  if (status) status.innerText = selected ? "TARGET LOCKED" : "SCANNING";
+function updateCandidatesPanel() {
+  const listEl = document.getElementById("candidates-list");
+  let html = "";
+  if (targetRef) html += `<div class="candidate-row"><span class="candidate-selected">● ${targetRef.userData.name || "TARGET"}</span><span class="candidate-selected">CAPTURING</span></div>`;
+  candidateMeshes.slice(0, MAX_TRACKED_CANDIDATES).forEach(m => {
+    html += `<div class="candidate-row"><span><span class="dot" style="background:#ff9d3f;"></span>${m.userData.name || "candidate"}</span><span>risk ${(m.userData.riskScore||0).toFixed(0)}</span></div>`;
+  });
+  listEl.innerHTML = html || '<div class="candidate-row"><span>No candidates</span></div>';
 }
 
 function buildAmbientDebrisField(count) {
@@ -536,7 +849,7 @@ function buildAmbientDebrisField(count) {
   for (let i = 0; i < count; i++) {
     const r = EARTH_RADIUS_SCENE * (1.12 + Math.random() * 1.1);
     const th = Math.random() * Math.PI * 2, ph = Math.acos(Math.random() * 2 - 1);
-    const mesh = makeDebrisMesh(0.1 + Math.random() * 0.3, null, true);
+    const mesh = makeDebrisMesh(0.1 + Math.random() * 0.3, "background");
     mesh.position.set(r * Math.sin(ph) * Math.cos(th), r * Math.sin(ph) * Math.sin(th) * 0.5, r * Math.cos(ph));
     group.add(mesh);
     spinningDebris.push(mesh);
@@ -544,180 +857,180 @@ function buildAmbientDebrisField(count) {
   scene.add(group);
 }
 
-function buildSatellite() {
+function loadSatelliteModel() {
+  return new Promise((resolve) => {
+    const gltfLoader = new THREE.GLTFLoader();
+    gltfLoader.load("assets/models/satellite.glb", (gltf) => {
+      const model = gltf.scene;
+      const box = new THREE.Box3().setFromObject(model);
+      const size = new THREE.Vector3();
+      box.getSize(size);
+      const maxDim = Math.max(size.x, size.y, size.z) || 1;
+      const targetSize = 3.2 * SATELLITE_SCALE / 3.4;
+      const scaleFactor = targetSize / maxDim;
+      model.scale.setScalar(scaleFactor);
+      const center = new THREE.Vector3();
+      box.getCenter(center);
+      model.position.sub(center.multiplyScalar(scaleFactor));
+      const group = new THREE.Group();
+      group.add(model);
+      resolve(group);
+    }, undefined, () => resolve(null));
+  });
+}
+
+function buildSatellite(gltfBusGroup) {
   const group = new THREE.Group();
   group.scale.setScalar(SATELLITE_SCALE);
 
-  const bus = new THREE.Mesh(
-    new THREE.BoxGeometry(1.3,1.0,1.5),
-    new THREE.MeshStandardMaterial({color:0x14161c,metalness:0.55,roughness:0.5})
-  );
-  group.add(bus);
+  if (gltfBusGroup) {
+    group.add(gltfBusGroup);
+  } else {
+    const bus = new THREE.Mesh(new THREE.BoxGeometry(1.3, 1.0, 1.5), new THREE.MeshStandardMaterial({ color: 0x14161c, metalness: 0.55, roughness: 0.5 }));
+    group.add(bus);
+    const trimTop = new THREE.Mesh(new THREE.BoxGeometry(1.36, 0.1, 1.56), new THREE.MeshStandardMaterial({ color: 0x9a7a35, metalness: 0.7, roughness: 0.35 }));
+    trimTop.position.y = 0.5;
+    group.add(trimTop);
+    const panelMat = new THREE.MeshStandardMaterial({ color: 0x0c0e12, metalness: 0.4, roughness: 0.3 });
+    const panelGeo = new THREE.BoxGeometry(2.6, 0.05, 1.0);
+    const pL = new THREE.Mesh(panelGeo, panelMat); pL.position.set(-1.9, 0.15, -0.5); pL.rotation.y = 0.15; group.add(pL);
+    const pR = new THREE.Mesh(panelGeo, panelMat); pR.position.set(1.9, 0.15, -0.5); pR.rotation.y = -0.15; group.add(pR);
+  }
 
-  const trimTop = new THREE.Mesh(
-    new THREE.BoxGeometry(1.36,0.1,1.56),
-    new THREE.MeshStandardMaterial({color:0x9a7a35,metalness:0.7,roughness:0.35})
-  );
-  trimTop.position.y=0.5;
-  group.add(trimTop);
+  const satelliteLight = new THREE.PointLight(0xcfe6ff, 0.9, 12);
+  satelliteLight.position.set(0, 0.4, 0);
+  group.add(satelliteLight);
 
-  const beacon = new THREE.Mesh(
-    new THREE.SphereGeometry(0.09,12,12),
-    new THREE.MeshBasicMaterial({color:0x7fc4ff})
-  );
-  beacon.position.set(0,0.62,0);
+  const beacon = new THREE.Mesh(new THREE.SphereGeometry(0.09, 12, 12), new THREE.MeshBasicMaterial({ color: 0x7fc4ff }));
+  beacon.position.set(0, 0.62, 0);
   group.add(beacon);
-  group.userData.beacon=beacon;
+  group.userData.beacon = beacon;
 
-  const panelMat = new THREE.MeshStandardMaterial({color:0x0c0e12,metalness:0.4,roughness:0.3});
-  const panelGeo = new THREE.BoxGeometry(2.6,0.05,1.0);
-  const pL = new THREE.Mesh(panelGeo,panelMat);
-  pL.position.set(-1.9,0.15,-0.5); pL.rotation.y=0.15; group.add(pL);
-  const pR = new THREE.Mesh(panelGeo,panelMat);
-  pR.position.set(1.9,0.15,-0.5); pR.rotation.y=-0.15; group.add(pR);
-
-  const armMat = new THREE.MeshStandardMaterial({color:0xc4c4c4,metalness:0.75,roughness:0.3});
-  const jointMat = new THREE.MeshStandardMaterial({color:0x2a2a2a,metalness:0.6,roughness:0.4});
-  const captureArms=[];
-
-  [-1,1].forEach(side=>{
-    const armGroup=new THREE.Group();
-    armGroup.position.set(side*0.72,0,0.2);
-
-    const shoulder=new THREE.Mesh(new THREE.CylinderGeometry(0.07,0.075,0.55,10),armMat);
-    shoulder.rotation.z=Math.PI/2; shoulder.position.x=side*0.28; armGroup.add(shoulder);
-
-    const elbowJoint=new THREE.Mesh(new THREE.SphereGeometry(0.11,12,12),jointMat);
-    elbowJoint.position.x=side*0.56; armGroup.add(elbowJoint);
-
-    const forearmGroup=new THREE.Group();
-    forearmGroup.position.x=side*0.56;
-
-    const forearm=new THREE.Mesh(new THREE.CylinderGeometry(0.06,0.065,0.6,10),armMat);
-    forearm.rotation.z=Math.PI/2; forearm.position.x=side*0.3; forearmGroup.add(forearm);
-
-    const wristJoint=new THREE.Mesh(new THREE.SphereGeometry(0.08,10,10),jointMat);
-    wristJoint.position.x=side*0.6; forearmGroup.add(wristJoint);
-
-    const gripper=new THREE.Group();
-    gripper.position.x=side*0.6;
-    for(let p=0;p<3;p++){
-      const prong=new THREE.Mesh(new THREE.ConeGeometry(0.035,0.22,6),jointMat);
-      prong.rotation.z=side>0?-Math.PI/2:Math.PI/2;
-      prong.position.set(side*0.1,Math.sin(p*2.1)*0.08,Math.cos(p*2.1)*0.08);
+  const armMat = new THREE.MeshStandardMaterial({ color: 0xc4c4c4, metalness: 0.75, roughness: 0.3 });
+  const jointMat = new THREE.MeshStandardMaterial({ color: 0x2a2a2a, metalness: 0.6, roughness: 0.4 });
+  const captureArms = [];
+  [-1, 1].forEach((side) => {
+    const armGroup = new THREE.Group();
+    armGroup.position.set(side * 0.72, 0, 0.2);
+    const shoulder = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.075, 0.55, 10), armMat);
+    shoulder.rotation.z = Math.PI/2; shoulder.position.x = side * 0.28;
+    armGroup.add(shoulder);
+    const elbowJoint = new THREE.Mesh(new THREE.SphereGeometry(0.11, 12, 12), jointMat);
+    elbowJoint.position.x = side * 0.56;
+    armGroup.add(elbowJoint);
+    const forearmGroup = new THREE.Group();
+    forearmGroup.position.x = side * 0.56;
+    const forearm = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.065, 0.6, 10), armMat);
+    forearm.rotation.z = Math.PI/2; forearm.position.x = side * 0.3;
+    forearmGroup.add(forearm);
+    const wristJoint = new THREE.Mesh(new THREE.SphereGeometry(0.08, 10, 10), jointMat);
+    wristJoint.position.x = side * 0.6;
+    forearmGroup.add(wristJoint);
+    const gripper = new THREE.Group();
+    gripper.position.x = side * 0.6;
+    for (let p = 0; p < 3; p++) {
+      const prong = new THREE.Mesh(new THREE.ConeGeometry(0.035, 0.22, 6), jointMat);
+      prong.rotation.z = side > 0 ? -Math.PI/2 : Math.PI/2;
+      prong.position.set(side*0.1, Math.sin(p*2.1)*0.08, Math.cos(p*2.1)*0.08);
       gripper.add(prong);
     }
     forearmGroup.add(gripper);
     armGroup.add(forearmGroup);
-
-    armGroup.userData.stowedAngle=0.3*side*-1;
-    armGroup.userData.deployedAngle=1.3*side*-1;
-    armGroup.userData.forearmGroup=forearmGroup;
-    armGroup.userData.gripper=gripper;
-    armGroup.rotation.z=armGroup.userData.stowedAngle;
-
+    armGroup.userData.stowedAngle = 0.3 * side * -1;
+    armGroup.userData.deployedAngle = 1.3 * side * -1;
+    armGroup.userData.foldedAngle = 1.55 * side * -1;
+    armGroup.userData.forearmGroup = forearmGroup;
+    armGroup.rotation.z = armGroup.userData.stowedAngle;
     group.add(armGroup);
     captureArms.push(armGroup);
   });
-  group.userData.captureArms=captureArms;
+  group.userData.captureArms = captureArms;
 
-  // Central net-deployment arm. There is intentionally NO circular ring.
-  // The net is a cable-supported flexible envelope attached directly to
-  // the end-effector, which matches the updated mechanism concept.
-  const netArm=new THREE.Group();
-  netArm.position.set(0,-0.1,0.75);
+  // ---- Net-launch arm — FLAT CIRCULAR disc net (not a sphere/bowl),
+  // with tether-mass weights at the rim (not magnets). ----
+  const netArm = new THREE.Group();
+  netArm.position.set(0, -0.1, 0.75);
+  const netArmBase = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.09, 0.4, 12), armMat);
+  netArmBase.rotation.x = Math.PI/2; netArmBase.position.z = 0.2;
+  netArm.add(netArmBase);
+  const boomGroup = new THREE.Group();
+  boomGroup.position.z = 0.4;
+  const boom = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.05, 0.7, 10), armMat);
+  boom.rotation.x = Math.PI/2; boom.position.z = 0.35;
+  boomGroup.add(boom);
+  const ringFrame = new THREE.Mesh(new THREE.TorusGeometry(0.42, 0.02, 6, 24), new THREE.MeshStandardMaterial({ color: 0x8a8f96, metalness: 0.6, roughness: 0.4 }));
+  ringFrame.position.z = 0.72;
+  boomGroup.add(ringFrame);
 
-  const netArmBase=new THREE.Mesh(
-    new THREE.CylinderGeometry(0.08,0.09,0.4,12),armMat
+  // Flat circular net: CircleGeometry lies naturally in the XY plane,
+  // so with no extra rotation its face already points along the boom's
+  // +Z (forward) axis — a genuine flat disc, not a sphere/bowl.
+  const netMesh = new THREE.Mesh(
+    new THREE.CircleGeometry(0.4, 24),
+    new THREE.MeshBasicMaterial({ color: 0xe8ecf0, wireframe: true, transparent: true, opacity: 0.6, side: THREE.DoubleSide })
   );
-  netArmBase.rotation.x=Math.PI/2; netArmBase.position.z=0.2; netArm.add(netArmBase);
+  netMesh.position.z = 0.72;
+  netMesh.visible = false;
+  boomGroup.add(netMesh);
 
-  const boomGroup=new THREE.Group();
-  boomGroup.position.z=0.4;
-
-  const boom=new THREE.Mesh(
-    new THREE.CylinderGeometry(0.045,0.05,0.7,10),armMat
-  );
-  boom.rotation.x=Math.PI/2; boom.position.z=0.35; boomGroup.add(boom);
-
-  // Flexible net: cable grid, no launcher ring.
-  const netGroup=new THREE.Group();
-  netGroup.position.z=0.72;
-  const netMat=new THREE.LineBasicMaterial({
-    color:0xe8edf2,transparent:true,opacity:0.78
-  });
-
-  const netLines=[];
-  const rings=[0.16,0.34,0.55];
-  const ringZ=[0.0,0.18,0.42];
-  const segments=18;
-
-  rings.forEach((r,ri)=>{
-    const pts=[];
-    for(let j=0;j<=segments;j++){
-      const a=j/segments*Math.PI*2;
-      pts.push(new THREE.Vector3(r*Math.cos(a),r*Math.sin(a),ringZ[ri]));
-    }
-    netLines.push(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),netMat));
-  });
-
-  for(let j=0;j<segments;j+=2){
-    const a=j/segments*Math.PI*2;
-    const pts=[
-      new THREE.Vector3(0,0,0.52),
-      new THREE.Vector3(rings[1]*Math.cos(a),rings[1]*Math.sin(a),ringZ[1]),
-      new THREE.Vector3(rings[2]*Math.cos(a),rings[2]*Math.sin(a),ringZ[2])
-    ];
-    netLines.push(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),netMat));
+  const tetherMasses = [];
+  for (let i = 0; i < 8; i++) {
+    const ang = (i / 8) * Math.PI * 2;
+    const mass = new THREE.Mesh(new THREE.SphereGeometry(0.035, 8, 8), new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.7, roughness: 0.3 }));
+    mass.position.set(Math.cos(ang) * 0.4, Math.sin(ang) * 0.4, 0);
+    netMesh.add(mass);
+    tetherMasses.push(mass);
   }
-
-  netLines.forEach(l=>netGroup.add(l));
-  netGroup.visible=false;
-  netGroup.scale.setScalar(0.15);
-  boomGroup.add(netGroup);
-
   netArm.add(boomGroup);
-  netArm.userData.boomGroup=boomGroup;
-  netArm.userData.net=netGroup;
-  netArm.userData.stowedZ=0.4;
-  netArm.userData.deployedZ=1.35;
-
+  netArm.userData.boomGroup = boomGroup;
+  netArm.userData.net = netMesh;
+  netArm.userData.ringFrame = ringFrame;
+  netArm.userData.tetherMasses = tetherMasses;
+  netArm.userData.stowedZ = 0.4;
+  netArm.userData.deployedZ = 1.35;
   group.add(netArm);
-  group.userData.netArm=netArm;
+  group.userData.netArm = netArm;
 
-  const canisterGroup=new THREE.Group();
-  canisterGroup.position.set(0,-0.55,0.4);
+  // ---- Canister: TWO separate delivery paths ----
+  // (1) small funnel/flap/liner for gripper-captured small debris
+  // (2) a larger net-bay hatch for net+debris bundles (matches real
+  //     size difference — a whole expanded net doesn't fit a small funnel)
+  const canisterGroup = new THREE.Group();
+  canisterGroup.position.set(0, -0.55, 0.4);
 
-  const funnel=new THREE.Mesh(
-    new THREE.CylinderGeometry(0.55,0.24,0.5,24,1,true),
-    new THREE.MeshStandardMaterial({color:0x555c66,metalness:0.6,roughness:0.4,side:THREE.DoubleSide})
-  );
-  funnel.rotation.x=Math.PI/2; funnel.position.z=-0.25; canisterGroup.add(funnel);
+  const funnel = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.24, 0.5, 24, 1, true), new THREE.MeshStandardMaterial({ color: 0x555c66, metalness: 0.6, roughness: 0.4, side: THREE.DoubleSide }));
+  funnel.rotation.x = Math.PI/2; funnel.position.z = -0.25;
+  canisterGroup.add(funnel);
+  const flap = new THREE.Mesh(new THREE.CircleGeometry(0.23, 20), new THREE.MeshStandardMaterial({ color: 0x6a7078, metalness: 0.5, roughness: 0.35, side: THREE.DoubleSide }));
+  flap.position.z = -0.02;
+  canisterGroup.add(flap);
+  canisterGroup.userData.flap = flap;
 
-  const flap=new THREE.Mesh(
-    new THREE.CircleGeometry(0.23,20),
-    new THREE.MeshStandardMaterial({color:0x6a7078,metalness:0.5,roughness:0.35,side:THREE.DoubleSide})
-  );
-  flap.position.z=-0.02; canisterGroup.add(flap);
-  canisterGroup.userData.flap=flap;
+  const netBayHatch = new THREE.Mesh(new THREE.CircleGeometry(0.5, 24), new THREE.MeshStandardMaterial({ color: 0x6a7078, metalness: 0.5, roughness: 0.35, side: THREE.DoubleSide }));
+  netBayHatch.position.set(0.55, 0, -0.02);
+  netBayHatch.rotation.y = Math.PI / 2;
+  canisterGroup.add(netBayHatch);
+  canisterGroup.userData.netBayHatch = netBayHatch;
 
-  const cCanvas=document.createElement("canvas"); cCanvas.width=cCanvas.height=64;
-  const cctx=cCanvas.getContext("2d");
-  cctx.fillStyle="#3a3a3a"; cctx.fillRect(0,0,64,64);
-  cctx.strokeStyle="#8a8a8a"; cctx.lineWidth=3;
-  for(let i=-64;i<64;i+=10){cctx.beginPath();cctx.moveTo(i,0);cctx.lineTo(i+64,64);cctx.stroke();}
-  const cTex=new THREE.CanvasTexture(cCanvas);
-  cTex.wrapS=cTex.wrapT=THREE.RepeatWrapping; cTex.repeat.set(2,4);
-
-  const liner=new THREE.Mesh(
-    new THREE.CylinderGeometry(0.26,0.26,0.9,20),
-    new THREE.MeshStandardMaterial({map:cTex,metalness:0.5,roughness:0.55})
-  );
-  liner.rotation.x=Math.PI/2; liner.position.z=-0.65; canisterGroup.add(liner);
-  canisterGroup.userData.liner=liner;
-
+  const cCanvas = document.createElement("canvas"); cCanvas.width = cCanvas.height = 64;
+  const cctx = cCanvas.getContext("2d");
+  cctx.fillStyle = "#3a3a3a"; cctx.fillRect(0,0,64,64);
+  cctx.strokeStyle = "#8a8a8a"; cctx.lineWidth = 3;
+  for (let i = -64; i < 64; i += 10) { cctx.beginPath(); cctx.moveTo(i,0); cctx.lineTo(i+64,64); cctx.stroke(); }
+  const cTex = new THREE.CanvasTexture(cCanvas); cTex.wrapS = cTex.wrapT = THREE.RepeatWrapping; cTex.repeat.set(2,4);
+  const liner = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.26, 0.9, 20), new THREE.MeshStandardMaterial({ map: cTex, metalness: 0.5, roughness: 0.55 }));
+  liner.rotation.x = Math.PI/2; liner.position.z = -0.65;
+  canisterGroup.add(liner);
+  canisterGroup.userData.liner = liner;
   group.add(canisterGroup);
-  group.userData.canisterGroup=canisterGroup;
+  group.userData.canisterGroup = canisterGroup;
+
+  const plasmaGeo = new THREE.SphereGeometry(1.3, 24, 24);
+  const plasmaMat = new THREE.MeshBasicMaterial({ color: 0xff6b35, transparent: true, opacity: 0, blending: THREE.AdditiveBlending });
+  const plasmaShell = new THREE.Mesh(plasmaGeo, plasmaMat);
+  group.add(plasmaShell);
+  group.userData.plasmaShell = plasmaShell;
+
   return group;
 }
 
@@ -726,10 +1039,14 @@ let missionStartTime = null;
 let missionDecision = null;
 let missionReason = "";
 let mechanismType = "NET";
+let demoCase = "small";
+let multiCaptureLegIndex = 0;
 let storedCount = 0;
 let cycleCount = 1;
 let toastShownFor = null;
 let lastCycleIndex = 0;
+let inReentrySequence = false;
+let reentryStartTime = 0;
 
 let targetingLine;
 function buildTargetingLine() {
@@ -740,14 +1057,18 @@ function buildTargetingLine() {
   scene.add(targetingLine);
 }
 
-// Sensor detection-range boundary — visualizes "tracked within a certain
-// distance of the spacecraft" (matches your Detection module's
-// DETECTION_RANGE_KM filter). Only shown during active searching.
-function buildSensorRangeRing() { /* intentionally not rendered */ }
+let sensorRangeRing;
+function buildSensorRangeRing() {
+  const rangeScene = 100 * KM_TO_SCENE;
+  const geo = new THREE.SphereGeometry(rangeScene, 24, 16);
+  const mat = new THREE.MeshBasicMaterial({ color: 0xff9d3f, wireframe: true, transparent: true, opacity: 0.08 });
+  sensorRangeRing = new THREE.Mesh(geo, mat);
+  scene.add(sensorRangeRing);
+}
 
 function setPhase(name, detail, cls) {
   const strip = document.getElementById("phase-strip");
-  strip.className = cls || "";
+  strip.className = "show" + (cls ? " " + cls : "");
   document.getElementById("phase-name").innerText = name;
   document.getElementById("phase-detail").innerText = detail;
 }
@@ -773,14 +1094,21 @@ function resetVisualState() {
   if (targetHalo) targetHalo.material.opacity = 0.7;
   if (satelliteRef) {
     const na = satelliteRef.userData.netArm;
-    na.userData.boomGroup.position.z = 0; na.userData.net.scale.setScalar(0.15); na.userData.net.visible = false;
+    na.userData.boomGroup.position.z = 0; na.userData.net.scale.set(1,1,1); na.userData.net.visible = false; na.userData.ringFrame.scale.set(1,1,1);
     satelliteRef.userData.canisterGroup.userData.flap.rotation.y = 0;
+    satelliteRef.userData.canisterGroup.userData.netBayHatch.rotation.y = Math.PI / 2;
     satelliteRef.userData.captureArms.forEach(a => { a.rotation.z = a.userData.stowedAngle; a.userData.forearmGroup.rotation.z = 0; });
+    satelliteRef.userData.plasmaShell.material.opacity = 0;
+    satelliteRef.scale.setScalar(SATELLITE_SCALE);
   }
 }
 
-function forceOutcome(decision) {
+function forceOutcome(decision, mechanism, caseType) {
+  if (inReentrySequence) return;
   missionDecision = decision;
+  mechanismType = mechanism;
+  demoCase = caseType;
+  multiCaptureLegIndex = 0;
   missionReason = decision === "PROCEED" ? "Capture score above operational threshold"
                 : decision === "HOLD" ? "Capture score below operational threshold"
                 : "Capture not feasible — parameters exceed safety margin";
@@ -789,7 +1117,8 @@ function forceOutcome(decision) {
   lastCycleIndex = 0; cycleCount = 1;
   resetVisualState();
   document.querySelectorAll("#demo-controls button").forEach(b => b.className = "");
-  document.getElementById(decision === "PROCEED" ? "btn-proceed" : decision === "HOLD" ? "btn-hold" : "btn-abort").className = "active-" + decision.toLowerCase();
+  const btnId = caseType === "small" ? "btn-small" : caseType === "large" ? "btn-large" : caseType === "multi" ? "btn-multi" : (decision === "HOLD" ? "btn-hold" : "btn-abort");
+  document.getElementById(btnId).className = "active-outcome";
 }
 
 function updateCameraFollow(desiredFocus, lerpFactor) {
@@ -798,8 +1127,54 @@ function updateCameraFollow(desiredFocus, lerpFactor) {
   camera.position.add(delta);
 }
 
+function updateReentrySequence(elapsedReentrySec) {
+  const t = elapsedReentrySec;
+  if (t < 4) {
+    const tt = t / 4;
+    satelliteRef.userData.captureArms.forEach(a => { a.rotation.z = lerpNum(a.userData.stowedAngle, a.userData.foldedAngle, tt); });
+    setPhase("Deorbit Preparation", "Folding arms and locking canister for controlled disposal burn...", "state-reentry");
+    return;
+  }
+  if (t < 9) {
+    const tt = (t - 4) / 5;
+    const currentRadius = satelliteRef.position.length();
+    const targetRadius = EARTH_RADIUS_SCENE * 1.05;
+    const dir = satelliteRef.position.clone().normalize();
+    satelliteRef.position.copy(dir.multiplyScalar(lerpNum(currentRadius, targetRadius, tt)));
+    satelliteRef.lookAt(0, 0, 0);
+    setPhase("Deorbit Burn", "Executing controlled propulsion burn — orbit decaying along disposal trajectory...", "state-reentry");
+    showToast("reentry", "CANISTER FULL — executing controlled deorbit disposal");
+    updateCameraFollow(satelliteRef.position, 0.05);
+    return;
+  }
+  if (t < 15) {
+    const tt = (t - 9) / 6;
+    const glowIntensity = Math.sin(tt * Math.PI);
+    satelliteRef.userData.plasmaShell.material.opacity = glowIntensity * 0.6;
+    satelliteRef.userData.plasmaShell.material.color.setHSL(0.08 - tt * 0.05, 1, 0.5 + glowIntensity * 0.2);
+    satelliteRef.scale.setScalar(SATELLITE_SCALE * (1 - tt * 0.4));
+    setPhase("Atmospheric Reentry", "Plasma sheath forming — controlled disposal of captured debris in progress...", "state-reentry");
+    camera.position.lerp(satelliteRef.position.clone().add(new THREE.Vector3(4, 2, 6)), 0.03);
+    return;
+  }
+  inReentrySequence = false;
+  storedCount = 0;
+  document.getElementById("storage-count").innerText = "0";
+  resetVisualState();
+  const simDtSec = ((performance.now() - missionStartTime) / 1000) * SIM_TIME_SCALE;
+  const patrolEci = propagateECI(satelliteElements, simDtSec);
+  satelliteRef.position.copy(positionFromKm(patrolEci[0], patrolEci[1], patrolEci[2]));
+  setPhase("New Canister Online", "Disposal complete. Fresh canister ready — resuming multi-target survey.", "state-success");
+  updateCameraFollow(new THREE.Vector3(0,0,0), 0.02);
+}
+
 function updateMission(totalElapsedSec) {
   if (!targetRef || !satelliteRef) return;
+
+  if (inReentrySequence) {
+    updateReentrySequence((performance.now() - reentryStartTime) / 1000);
+    return;
+  }
 
   const cycleIndex = Math.floor(totalElapsedSec / CYCLE_LENGTH_SEC);
   if (cycleIndex !== lastCycleIndex) {
@@ -807,6 +1182,7 @@ function updateMission(totalElapsedSec) {
     document.getElementById("hud-cycle").innerText = "CYCLE " + cycleCount;
     toastShownFor = null;
     resetVisualState();
+    if (demoCase === "multi") multiCaptureLegIndex = (multiCaptureLegIndex + 1) % 2;
   }
   const t = totalElapsedSec % CYCLE_LENGTH_SEC;
 
@@ -821,23 +1197,25 @@ function updateMission(totalElapsedSec) {
   }
 
   if (t < 3) {
-    setPhase("Searching", "Scanning tracked debris field within 5,000 km sensor range...", "");
+    setPhase("Multi-Target Survey", `Scanning 100km dynamic zone — up to ${MAX_TRACKED_CANDIDATES} candidates tracked...`, "");
     satelliteRef.position.copy(patrolPos); satelliteRef.lookAt(0,0,0);
     targetingLine.visible = false;
+    if (sensorRangeRing) { sensorRangeRing.visible = true; sensorRangeRing.position.copy(patrolPos); }
     updateCameraFollow(new THREE.Vector3(0,0,0), 0.02);
     return;
   }
+  if (sensorRangeRing) sensorRangeRing.visible = false;
+
   if (t < 6) {
-    setPhase("Target Locked", targetRef.userData.name || "Candidate object identified", "");
-    satelliteRef.position.copy(patrolPos);
-    satelliteRef.lookAt(targetPos);
+    setPhase("Priority Target Selected", targetRef.userData.name || "Highest-risk candidate identified", "");
+    satelliteRef.position.copy(patrolPos); satelliteRef.lookAt(targetPos);
     targetingLine.visible = true;
-    updateCameraFollow(satelliteRef.position.clone(), 0.035);
+    updateCameraFollow(satelliteRef.position.clone(), 0.08);
     return;
   }
 
   const midpoint = satelliteRef.position.clone().add(targetPos).multiplyScalar(0.5);
-  updateCameraFollow(midpoint, 0.025);
+  updateCameraFollow(midpoint, 0.06);
   targetingLine.geometry.setFromPoints([satelliteRef.position.clone(), targetPos.clone()]);
   targetingLine.computeLineDistances();
   targetingLine.visible = true;
@@ -852,7 +1230,7 @@ function updateMission(totalElapsedSec) {
       const standoff = lerpVec(approachStart, targetPos, 0.9);
       satelliteRef.position.copy(lerpVec(approachStart, standoff, tt));
       satelliteRef.lookAt(targetPos);
-      setPhase("Approaching Target", "Executing rendezvous trajectory (Clohessy-Wiltshire relative motion)...", "");
+      setPhase("Rendezvous & Velocity Matching", "Satellite closing distance via controlled thruster pulses — target holds its natural orbit...", "");
       return;
     }
 
@@ -860,65 +1238,89 @@ function updateMission(totalElapsedSec) {
       if (t < 22) {
         const tt = (t - 19) / 3;
         satelliteRef.userData.captureArms.forEach(a => { a.rotation.z = lerpNum(a.userData.stowedAngle, a.userData.deployedAngle, tt); });
-        setPhase("Deploying Capture Arms", "Shoulder joints rotating outward — dual arms articulating toward target...", "phase-success");
+        setPhase("Dual Side-Arm Capture", "Two 6-DOF arms with grippers approaching cooperatively...", "phase-success");
         return;
       }
-      if (t < 24.5) {
-        const tt = (t - 22) / 2.5;
+      if (t < 25) {
+        const tt = (t - 22) / 3;
         satelliteRef.userData.captureArms.forEach(a => { a.userData.forearmGroup.rotation.z = lerpNum(0, -0.5, tt); });
-        setPhase("Forearm Alignment", "Wrist joints adjusting gripper alignment to target surface...", "phase-success");
+        const gripWorld = new THREE.Vector3(0, 0, 0.9);
+        satelliteRef.localToWorld(gripWorld);
+        targetRef.position.copy(lerpVec(targetRef.userData.originalPos, gripWorld, tt));
+        if (targetHalo) targetHalo.position.copy(targetRef.position);
+        setPhase("Force-Limited Grasp", "Force sensors modulating grip pressure to avoid crushing the object...", "phase-success");
         return;
       }
-      if (t < 27) {
-        const tt = (t - 24.5) / 2.5;
-        satelliteRef.userData.captureArms.forEach(a => {
-          a.userData.forearmGroup.rotation.z = lerpNum(-0.5, -0.82, tt);
-        });
-        setPhase("Grasping", "Three-finger end-effectors closing around the small rigid target...", "phase-success");
-        return;
-      }
-      if (t < 29) { setPhase("Securing", "Retracting arms — object stabilized against spacecraft body...", "phase-success"); return; }
+      if (t < 27) { setPhase("Grasp Secured", "Object secured between dual grippers.", "phase-success"); return; }
+      if (t < 29) { setPhase("Transfer Corridor", "Guiding debris through safe transfer corridor toward funnel...", "phase-success"); return; }
     } else {
       const na = satelliteRef.userData.netArm;
       if (t < 21.5) {
         const tt = (t - 19) / 2.5;
         na.userData.boomGroup.position.z = lerpNum(0, na.userData.deployedZ - na.userData.stowedZ, tt);
-        setPhase("Deploying Net Boom", "Middle-arm boom extending toward target (large/multiple object protocol)...", "phase-success");
+        setPhase("Middle-Arm Deployment", "Central arm unfolding — net launcher orienting toward target...", "phase-success");
         return;
       }
-      if (t < 24.5) {
-        const tt = (t - 21.5) / 3;
+      if (t < 25) {
+        // Flat circular net enlarging (radius grows in its own plane —
+        // scale X/Y only, never Z, so it stays a flat disc, not a bowl).
+        const tt = (t - 21.5) / 3.5;
         na.userData.net.visible = true;
-        na.userData.net.scale.setScalar(0.15 + tt * 1.85);
-        setPhase("Unfurling Net", "Flexible capture net deploying symmetrically around target(s)...", "phase-success");
+        const s = 1 + tt * 2.6;
+        na.userData.net.scale.set(s, s, 1);
+        na.userData.ringFrame.scale.set(s, s, 1);
+        const netWorld = new THREE.Vector3();
+        na.userData.net.getWorldPosition(netWorld);
+        targetRef.position.copy(lerpVec(targetRef.userData.originalPos, netWorld, tt));
+        if (targetHalo) targetHalo.position.copy(targetRef.position);
+        setPhase("Controlled Net Deployment", "Circular net enlarging — tether-mass weights spreading the perimeter symmetrically...", "phase-success");
         return;
       }
-      if (t < 27) {
-        const tt = (t - 24.5) / 2.5;
+      if (t < 27.5) {
+        const tt = (t - 25) / 2.5;
         const closeScale = lerpNum(3.6, 1.15, tt);
-        na.userData.net.scale.setScalar(closeScale / 3.6);
-        setPhase("Cinching Net Closed", "Drawing net closed around captured object(s)...", "phase-success");
+        na.userData.net.scale.set(closeScale, closeScale, 1);
+        na.userData.ringFrame.scale.set(closeScale, closeScale, 1);
+        setPhase("Net Capture & Containment", "Tether masses drawing the net closed around the debris — object fully enclosed...", "phase-success");
         return;
       }
-      if (t < 29) { setPhase("Securing", "Retracting boom — captured object drawn toward spacecraft body...", "phase-success"); return; }
+      if (t < 29) { setPhase("Net Retrieval", "Tethers pulling the net (with debris inside) back toward the arm...", "phase-success"); return; }
     }
 
     if (t < 33) {
       const tt = (t - 29) / 4;
-      targetRef.position.copy(lerpVec(targetRef.userData.originalPos, satelliteRef.position, tt * 0.6));
+      // For NET case, the whole net+debris bundle travels together as
+      // one unit toward the LARGER net-bay hatch, not the small funnel.
+      if (mechanismType === "NET") {
+        const netBayWorld = new THREE.Vector3();
+        satelliteRef.userData.canisterGroup.userData.netBayHatch.getWorldPosition(netBayWorld);
+        targetRef.position.copy(lerpVec(targetRef.userData.originalPos, netBayWorld, tt));
+      } else {
+        targetRef.position.copy(lerpVec(targetRef.userData.originalPos, satelliteRef.position, tt * 0.6));
+      }
       if (targetHalo) targetHalo.position.copy(targetRef.position);
-      setPhase("Guiding to Funnel", "Moving captured object toward canister funnel entrance...", "phase-success");
+      setPhase("Guiding to Canister", mechanismType === "NET" ? "Net+debris bundle moving toward net-bay hatch..." : "Moving captured object toward canister funnel entrance...", "phase-success");
       return;
     }
     if (t < 35.5) {
       const tt = (t - 33) / 2.5;
-      const flap = satelliteRef.userData.canisterGroup.userData.flap;
-      flap.rotation.y = Math.sin(tt * Math.PI) * (Math.PI/2 - 0.1);
-      const funnelWorld = new THREE.Vector3();
-      flap.getWorldPosition(funnelWorld);
-      targetRef.position.copy(lerpVec(targetRef.position, funnelWorld, tt));
-      targetRef.scale.setScalar(lerpNum(1.8, 0.9, tt));
-      setPhase("Entry Through One-Way Flap", "Flap opens, object passes into canister, flap closes automatically...", "phase-success");
+      if (mechanismType === "NET") {
+        const hatch = satelliteRef.userData.canisterGroup.userData.netBayHatch;
+        hatch.rotation.y = Math.PI/2 + Math.sin(tt * Math.PI) * (Math.PI/2 - 0.1);
+        const hatchWorld = new THREE.Vector3();
+        hatch.getWorldPosition(hatchWorld);
+        targetRef.position.copy(lerpVec(targetRef.position, hatchWorld, tt));
+        targetRef.scale.setScalar(lerpNum(1.8, 0.7, tt));
+        setPhase("Net-Bay Hatch Entry", "Net-bay hatch opens — net with debris dropped into canister.", "phase-success");
+      } else {
+        const flap = satelliteRef.userData.canisterGroup.userData.flap;
+        flap.rotation.y = Math.sin(tt * Math.PI) * (Math.PI/2 - 0.1);
+        const funnelWorld = new THREE.Vector3();
+        flap.getWorldPosition(funnelWorld);
+        targetRef.position.copy(lerpVec(targetRef.position, funnelWorld, tt));
+        targetRef.scale.setScalar(lerpNum(1.8, 0.9, tt));
+        setPhase("One-Way Gate Entry", "Object dropped through the gate into the canister.", "phase-success");
+      }
       return;
     }
     if (t < 38) {
@@ -926,26 +1328,41 @@ function updateMission(totalElapsedSec) {
       const linerWorld = new THREE.Vector3();
       satelliteRef.userData.canisterGroup.userData.liner.getWorldPosition(linerWorld);
       targetRef.position.copy(lerpVec(targetRef.position, linerWorld, tt));
-      targetRef.scale.setScalar(lerpNum(0.9, 0.18, tt));
+      targetRef.scale.setScalar(lerpNum(targetRef.scale.x, 0.18, tt));
       if (targetHalo) targetHalo.material.opacity = 0.7 * (1 - tt);
-      setPhase("Stored Inside Liner", "Object settled in flexible liner — canister capacity updated.", "phase-success");
+      setPhase("Internal Storage Canister", "Object settled in flexible liner — fill-level sensors updating.", "phase-success");
       return;
     }
 
     if (document.getElementById("storage-count").innerText == "0" && storedCount === 0) storedCount = 1;
-    document.getElementById("storage-count").innerText = Math.min(storedCount, 3);
-    if (storedCount >= 3) {
-      setPhase("Canister at Capacity", "Preparing full-condition detachment and controlled deorbit disposal.", "phase-success");
-      showToast("info", "CANISTER FULL — detaching for controlled deorbit disposal");
+    document.getElementById("storage-count").innerText = Math.min(storedCount, MAX_CANISTER_CAPACITY);
+
+    if (demoCase === "multi" && multiCaptureLegIndex === 0) {
+      setPhase("Multiple Capture — Leg 1 Complete", "First object stowed via net capture. Repositioning for second target...", "phase-success");
+      showToast("success", (targetRef.userData.name || "TARGET") + " CAPTURED (1 of 2 — multi-target sequence)");
+      storedCount++;
+    } else if (storedCount >= MAX_CANISTER_CAPACITY) {
+      setPhase("Storage Capacity Reached", "Computing captured mass, remaining propellant, and deorbit feasibility...", "phase-success");
+      if (!inReentrySequence) { inReentrySequence = true; reentryStartTime = performance.now(); }
+      return;
     } else {
-      setPhase("Mission Complete", "Object stowed. Resuming patrol for next candidate target.", "phase-success");
-      showToast("success", (targetRef.userData.name || "TARGET") + " SUCCESSFULLY CAPTURED & STOWED — Canister " + Math.min(storedCount,3) + "/3");
+      setPhase("Multiple Capture Operations", "Object stowed. Resuming multi-target survey for next capture.", "phase-success");
+      showToast("success", (targetRef.userData.name || "TARGET") + " CAPTURED & STOWED — Canister " + Math.min(storedCount,MAX_CANISTER_CAPACITY) + "/" + MAX_CANISTER_CAPACITY);
+      storedCount++;
     }
-    targetingLine.visible = false;
+
+    // FIX: keep the camera locked on the satellite for the ENTIRE return
+    // transit (not an immediate jump to Earth-center focus), so it never
+    // shrinks to an unnoticeable speck while crossing back to patrol orbit.
+    // Only blend toward the wide Earth-overview once it's nearly arrived.
     const t2 = Math.min((t - 38) / 14, 1);
     satelliteRef.position.copy(lerpVec(satelliteRef.position, patrolPos, t2));
     satelliteRef.lookAt(0,0,0);
-    updateCameraFollow(new THREE.Vector3(0,0,0), 0.01);
+    if (t2 < 0.85) {
+      updateCameraFollow(satelliteRef.position, 0.05);
+    } else {
+      updateCameraFollow(new THREE.Vector3(0,0,0), 0.02);
+    }
     return;
   }
 
@@ -958,7 +1375,7 @@ function updateMission(totalElapsedSec) {
       setPhase("Assessing Approach", "Evaluating capture score against operational threshold...", "");
       return;
     }
-    setPhase("Mission On Hold", missionReason, "phase-hold");
+    setPhase("Mission On Hold", missionReason, "state-hold");
     showToast("hold", "MISSION ON HOLD — " + missionReason);
     if (targetHalo) { const p = 1 + 0.12*Math.sin(t*2); targetHalo.scale.set(p,p,p); }
     satelliteRef.lookAt(targetPos);
@@ -973,7 +1390,7 @@ function updateMission(totalElapsedSec) {
     setPhase("Assessing Approach", "Verifying capture feasibility...", "");
     return;
   }
-  setPhase("Mission Aborted", missionReason, "phase-abort");
+  setPhase("Mission Aborted", missionReason, "state-abort");
   showToast("abort", "MISSION ABORTED — " + missionReason);
   if (targetHalo) { const p = 1 + 0.2*Math.sin(t*3); targetHalo.scale.set(p,p,p); }
   satelliteRef.lookAt(targetPos);
@@ -990,23 +1407,56 @@ function updatePanel(target, sizeM) {
   const decisionClass = target.decision === "PROCEED" ? "decision-proceed" : target.decision === "HOLD" ? "decision-hold" : "decision-abort";
   document.getElementById("target-info").innerHTML =
     '<div class="row"><span class="label">Target</span><span class="value">' + (target.name||"N/A") + '</span></div>' +
+    '<div class="row"><span class="label">Tracking ID</span><span class="value">' + (target.tracking_id||"N/A") + '</span></div>' +
     '<div class="row"><span class="label">Orbit Class</span><span class="value">' + (target.orbit_class||"N/A") + '</span></div>' +
     '<div class="row"><span class="label">Altitude</span><span class="value">' + (target.altitude_km!=null?target.altitude_km.toFixed(1):"N/A") + ' km</span></div>' +
     '<div class="row"><span class="label">Decision</span><span class="value ' + decisionClass + '">' + (target.decision||"N/A") + '</span></div>' +
     '<div class="row"><span class="label">Reason</span><span class="value">' + (target.decision_reason||"N/A") + '</span></div>' +
     '<div class="row"><span class="label">Risk Level</span><span class="value">' + (target.risk_level||"N/A") + '</span></div>' +
-    '<div class="row"><span class="label">Capture Score</span><span class="value">' + (target.capture_score ?? "N/A") + '</span></div>';
+    '<div class="row"><span class="label">Capture Score</span><span class="value">' + (target.capture_score ?? "N/A") + '</span></div>' +
+    '<div class="row"><span class="label">Predicted Range</span><span class="value">' + (target.relative_distance_km!=null?target.relative_distance_km.toFixed(3):"N/A") + ' km</span></div>' +
+    '<div class="row"><span class="label">Predicted Rel. Velocity</span><span class="value">' + (target.relative_velocity_km_s!=null?target.relative_velocity_km_s.toFixed(5):"N/A") + ' km/s</span></div>';
 
   const sizeClass = classifySize(sizeM);
-  const mechName = mechanismType === "NET" ? "Middle-Arm Net Launcher" : "Dual Side-Arm Grippers";
+  const mechName = mechanismType === "NET" ? "Middle-Arm Net Launcher (flat circular tether-mass net)" : "Dual Side-Arm Grippers";
   const mechWhy = mechanismType === "NET"
-    ? "Selected for large or multiple/irregular objects — the net envelops rather than requiring precise grasp points."
+    ? "Selected for large or multiple/irregular objects — a flat circular net envelops the object; weighted tether masses (not magnets) spread and close it, then the whole net+debris bundle is dropped into a dedicated net-bay hatch."
     : "Selected for small, stable single objects — direct gripper contact is reliable and lower-risk.";
   document.getElementById("mechanism-box").innerHTML =
     "<strong>Object size:</strong> " + sizeClass + (sizeM != null ? " (" + sizeM.toFixed(2) + " m)" : "") + "<br>" +
-    "<strong>Target count:</strong> Single per cycle<br>" +
     "<strong>Mechanism:</strong> " + mechName + "<br><br>" + mechWhy +
-    "<br><br>Captured objects are funneled through a one-way flap into a flexible liner inside the temporary storage canister. At full capacity (3 objects), the canister detaches for controlled deorbit disposal.";
+    "<br><br>Multiple-debris scenarios run this same net mechanism sequentially (one target at a time), matching this project's single-target-execution architecture." +
+    "<br><br>Canister capacity: " + MAX_CANISTER_CAPACITY + " objects. At full capacity the canister locks and the spacecraft executes a controlled deorbit and atmospheric disposal burn.";
+}
+
+function playCinematicIntro(onComplete) {
+  document.getElementById("intro-title").classList.add("show");
+  const startPos = new THREE.Vector3(6, 90, 220);
+  const endPos = camera.position.clone();
+  camera.position.copy(startPos);
+  camera.lookAt(0, 0, 0);
+  const duration = 4200;
+  const startTime = performance.now();
+  function step() {
+    const elapsed = performance.now() - startTime;
+    const t = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
+    camera.position.lerpVectors(startPos, endPos, eased);
+    camera.lookAt(0, 0, 0);
+    renderer.render(scene, camera);
+    if (t < 1) {
+      requestAnimationFrame(step);
+    } else {
+      document.getElementById("intro-title").classList.remove("show");
+      controls.enabled = true;
+      controls.target.set(0, 0, 0);
+      ["hud-top", "phase-strip", "panel", "candidates-panel", "storage-panel", "demo-controls"].forEach(id => {
+        document.getElementById(id).classList.add("show");
+      });
+      onComplete();
+    }
+  }
+  requestAnimationFrame(step);
 }
 
 async function init() {
@@ -1016,42 +1466,66 @@ async function init() {
   earthRef = await buildEarth();
   buildAmbientDebrisField();
   buildTargetingLine();
+  buildSensorRangeRing();
 
   const satAltitude = 800.0, satInclination = 74.0 * Math.PI/180;
   const satRadius = EARTH_RADIUS_KM_TRUE + satAltitude;
   satelliteElements = { a: satRadius, e: 0, i: satInclination, raan: 0, argp: 0, M0: 0, n: Math.sqrt(EARTH_MU_KM / (satRadius*satRadius*satRadius)) };
 
-  const res = await fetch("../SIMULATION/viz_data.json");
-  const vizData = await res.json();
+  // Prediction is now the preferred upstream source. The simulator searches
+  // several conventional output locations so the prediction module can be
+  // integrated without hard-coding one filename. If no readable prediction
+  // output exists, the old viz_data.json is used explicitly as a reference
+  // demonstration rather than being presented as live prediction telemetry.
+  const predictionFetch = await loadJsonFirst(PREDICTION_FETCH_PATHS);
+  let vizData;
+  if (predictionFetch) {
+    const normalized = normalizeMissionDecisionPayload(predictionFetch.raw) || normalizePredictionPayload(predictionFetch.raw);
+    if (normalized) {
+      predictionData = normalized;
+      predictionSource = predictionFetch.path;
+      predictionLive = true;
+      vizData = makeVizDataFromPrediction(normalized);
+    }
+  }
+
+  // When the page is opened directly with file://, browsers commonly block
+  // fetch() for local JSON files. Keep the verified snapshot as a transparent
+  // fallback so the visual simulation still starts; the panel labels it as
+  // reference data rather than pretending that it is live telemetry.
+  if (!vizData) {
+    const embedded = normalizeMissionDecisionPayload(VERIFIED_PREDICTION_FALLBACK);
+    predictionData = embedded;
+    predictionSource = "EMBEDDED VERIFIED prediction_viz snapshot";
+    predictionLive = false;
+    vizData = makeVizDataFromPrediction(embedded);
+  }
 
   await buildTrackedDebrisField(vizData);
   if (targetRef) targetRef.userData.originalPos = targetRef.position.clone();
 
-  missionDecision = vizData.target.decision;
-  missionReason = vizData.target.decision_reason;
-  {
-  const targetEntry = (vizData.debris || []).find(d => d.is_target) || {};
-  const nearbyCount = (vizData.debris || []).filter(d => {
-    if (d.x == null || targetEntry.x == null) return false;
-    const dx = d.x-targetEntry.x, dy=d.y-targetEntry.y, dz=d.z-targetEntry.z;
-    return Math.sqrt(dx*dx+dy*dy+dz*dz) < 250;
-  }).length;
-  mechanismType = (Number(targetEntry.size_m || 0) <= 0.25 && nearbyCount < 2) ? "ARM" : "NET";
-}
+  missionDecision = vizData.target?.decision || "HOLD";
+  missionReason = vizData.target?.decision_reason || "Awaiting prediction/mission decision output";
+  mechanismType = (vizData.target?.capture_method || "").toLowerCase().includes("net") ? "NET" : "ARM";
+  demoCase = mechanismType === "NET" ? "large" : "small";
 
+  if (predictionData?.trajectory?.length) addPredictionVisualization(predictionData.trajectory);
+  updatePredictionPanel(predictionData);
   updatePanel(vizData.target, targetRef ? targetRef.userData.sizeM : null);
 
-  satelliteRef = buildSatellite();
+  const gltfBus = await loadSatelliteModel();
+  satelliteRef = buildSatellite(gltfBus);
   scene.add(satelliteRef);
 
   document.querySelectorAll("#demo-controls button").forEach(b => b.className = "");
-  const activeBtn = missionDecision === "PROCEED" ? "btn-proceed" : missionDecision === "HOLD" ? "btn-hold" : "btn-abort";
-  document.getElementById(activeBtn).className = "active-" + missionDecision.toLowerCase();
 
-  document.getElementById("loading").style.display = "none";
-  missionStartTime = performance.now();
-  controls.target.set(0,0,0);
-  animate();
+  document.getElementById("loading").style.opacity = "0";
+  setTimeout(() => { document.getElementById("loading").style.display = "none"; }, 1200);
+
+  playCinematicIntro(() => {
+    missionStartTime = performance.now();
+    animate();
+  });
 }
 
 function animate() {
@@ -1064,12 +1538,13 @@ function animate() {
   if (missionStartTime) {
     const simDtSec = ((performance.now() - missionStartTime) / 1000) * SIM_TIME_SCALE;
     orbitingDebris.forEach(mesh => {
+      if (!mesh.userData.orbitalElements) return;
       const eci = propagateECI(mesh.userData.orbitalElements, simDtSec);
       mesh.position.copy(positionFromKm(eci[0], eci[1], eci[2]));
     });
     const cyclePhase = ((performance.now() - missionStartTime) / 1000) % CYCLE_LENGTH_SEC;
     const underManeuver = missionDecision === "PROCEED" && cyclePhase >= 8 && cyclePhase < 39;
-    if (targetRef && targetRef.userData.orbitalElements && !underManeuver) {
+    if (targetRef && targetRef.userData.orbitalElements && !underManeuver && !inReentrySequence) {
       const eci = propagateECI(targetRef.userData.orbitalElements, simDtSec);
       const freePos = positionFromKm(eci[0], eci[1], eci[2]);
       targetRef.position.copy(freePos);
