@@ -70,7 +70,7 @@ html{
 body{
   margin:0;
   min-height:100vh;
-  overflow-x:clip;
+  overflow-x:hidden;
   color:var(--text);
   background:
     radial-gradient(circle at 78% 7%,rgba(121,82,186,.19),transparent 28%),
@@ -568,7 +568,7 @@ p{
 
 .hero-grid{
   display:grid;
-  grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+  grid-template-columns:1.05fr .95fr;
   gap:70px;
   align-items:center;
 }
@@ -2276,7 +2276,7 @@ p{
    ========================================================= */
 .ops-standard{
   display:grid;
-  grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+  grid-template-columns:1.05fr .95fr;
   gap:18px;
   margin-top:28px;
 }
@@ -2345,14 +2345,60 @@ p{
     transform:none!important;
   }
 }
-<style>
-/* V2 viewport hardening */
-.container,.nav-shell,.hero-grid,.telemetry-layout,.authority,.hardware-grid,.trace-grid,.health-grid,.boundary-grid,.timeline-layout,.footer-grid{min-width:0;max-width:100%}.hero-grid>*{min-width:0}.hero-console,.matrix,.authority-table-wrap,.timeline-panel,.log-panel{min-width:0;max-width:100%}.section,.foc-hero{overflow:clip}@media(max-width:1180px){.hero-grid{grid-template-columns:1fr}.hero-console{width:100%;max-width:920px;margin:auto}.telemetry-layout,.authority,.timeline-layout,.hardware-grid,.trace-grid{grid-template-columns:1fr!important}}@media(max-width:800px){.container{width:min(100% - 28px,var(--max))}.footer-grid{grid-template-columns:1fr}.footer-right{text-align:left}}
+</style>
 
-/* Compact legal footer */
-.legal-mini{margin-top:13px;padding-top:10px;border-top:1px solid var(--line);color:#766b81;font:500 8px/1.65 Inter,system-ui,sans-serif;max-width:980px}.legal-mini strong{color:#9a8eaa;font-weight:700}.legal-mini a{color:#9c8bc0;text-decoration:underline;text-decoration-color:rgba(156,139,192,.35);text-underline-offset:2px}.legal-mini a:hover{color:#c9b9ee}.legal-note{display:block;margin-top:3px;color:#655b6d;font-size:7.5px}
-</style></style>
-</head>
+<style id="adcs-final-foc-layout-fix">
+/* =========================================================
+   FINAL FOC RESPONSIVE LAYOUT FIX
+   The telemetry section contains one primary matrix; the prediction
+   record intentionally begins below it rather than entering its grid.
+   ========================================================= */
+html,body{width:100%;max-width:100%;overflow-x:hidden}
+.container{width:min(1240px,calc(100% - 48px));max-width:1240px;margin-inline:auto}
+.section{width:100%;max-width:100%;overflow:visible}
+.telemetry-layout{display:block;width:100%;max-width:100%}
+.telemetry-layout>.matrix{width:100%;max-width:100%;box-sizing:border-box}
+.matrix{min-width:0;overflow:hidden}
+.telemetry-table{table-layout:fixed}
+.telemetry-table th,.telemetry-table td{overflow-wrap:anywhere}
+.prediction-record{width:100%;max-width:100%;box-sizing:border-box;overflow:hidden}
+.prediction-source-bar{min-width:0;flex-wrap:wrap}
+.prediction-source-bar>div:first-child{min-width:0;flex:1 1 420px}
+.prediction-source-bar strong{overflow-wrap:anywhere;word-break:break-word}
+.prediction-record-grid{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch}
+.prediction-record-grid .boundary-box{min-width:0;overflow-wrap:anywhere}
+.prediction-record-grid .boundary-box p{overflow-wrap:anywhere}
+.hardware-bridge{max-width:100%;box-sizing:border-box}
+.hardware-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.footer-grid{min-width:0}
+.footer-right{min-width:0;overflow-wrap:anywhere}
+@media(max-width:1050px){
+  .hero-grid{grid-template-columns:1fr;gap:34px}
+  .hero-console{min-height:390px}
+  .operations-layout{grid-template-columns:1fr}
+  .authority{grid-template-columns:1fr}
+  .hardware-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:800px){
+  .container{width:calc(100% - 34px)}
+  .prediction-record-grid{grid-template-columns:1fr 1fr}
+  .hardware-grid{grid-template-columns:1fr}
+  .telemetry-table{font-size:8px}
+  .telemetry-table th,.telemetry-table td{padding:10px 6px}
+  .hero-console{min-height:340px}
+}
+@media(max-width:560px){
+  .container{width:calc(100% - 24px)}
+  .prediction-record-grid{grid-template-columns:1fr}
+  .prediction-source-bar{align-items:flex-start}
+  .prediction-badge{width:max-content}
+  .hero-console{min-height:280px}
+  .telemetry-table{min-width:0;width:100%;display:block;overflow-x:auto;white-space:nowrap}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-right{text-align:left}
+}
+</style>
+<style id="adcs-footer-copyright-fix">.footer-copyright{margin-top:10px;color:#5f5569;font:600 7px/1.5 "Space Mono",monospace;letter-spacing:.06em;text-transform:none}</style></head>
 
 <body>
 
@@ -2989,8 +3035,8 @@ p{
       </div>
 
       <h2>
-        Mission state,
-        <span>limits and available margin.</span>
+        State vectors,
+        <span>constraints &amp; resources.</span>
       </h2>
 
       <p>
@@ -3376,8 +3422,8 @@ p{
       </div>
 
       <h2>
-        Mission actions are recorded in
-        <span>the order they occur.</span>
+        Every command leaves an
+        <span>operational trace.</span>
       </h2>
 
       <p>
@@ -3788,8 +3834,8 @@ p{
       </div>
 
       <h2>
-        Each page answers a different
-        <span>engineering question.</span>
+        Five views.
+        <span>One mission model.</span>
       </h2>
 
       <p>
@@ -3874,7 +3920,48 @@ p{
      FOOTER
      ========================================================= -->
 
-<footer class="site-footer"><div class="container"><div class="footer-grid"><div><div class="footer-title">AUTONOMOUS SPACE DEBRIS MONITORING &amp; CAPTURE SYSTEM</div><div class="footer-copy">ADCS-01 · Flight Operations Centre · Mission operations interface</div><div class="legal-mini"><strong>© 2026 ADCS 2026 Project. All rights reserved.</strong> Educational and simulation project; no flight certification, operational authorization, or deployment claim is made. Third-party materials remain subject to their applicable licences and terms. <a href="legal.html">Legal &amp; Notices</a><span class="legal-note">This website is provided for educational, research, visualization, and demonstration purposes.</span></div></div><div class="footer-right">FOC / OPERATIONAL INTERFACE<br>TARGET AUTHORITY / SINGLE<br>COMMANDS / NON-FLIGHT<br>MODEL STATE / SIMULATED<br>2026</div></div></div></footer>
+<footer class="site-footer">
+
+  <div class="container">
+
+    <div class="footer-grid">
+
+      <div>
+
+        <div class="footer-title">
+          AUTONOMOUS SPACE DEBRIS MONITORING &amp; CAPTURE SYSTEM
+        </div>
+
+        <div class="footer-copy">
+          ADCS-01 · Flight Operations Centre · Mission operations interface
+        </div>
+
+        <div class="source-note">
+          Earth imagery is used for visualization with appropriate attribution.
+          Public NASA systems-engineering concepts may inform terminology and
+          structure; this university project is independent and is not
+          affiliated with, endorsed by, or certified by NASA.
+        </div>
+
+      </div>
+
+
+      <div class="footer-right"><a href="legal.html" style="color:inherit;text-decoration:none">LEGAL / NOTICES</a><br>
+
+        FOC / OPERATIONAL INTERFACE<br>
+        TARGET AUTHORITY / SINGLE<br>
+        COMMANDS / NON-FLIGHT<br>
+        MODEL STATE / SIMULATED<br>
+        2026
+        <div class="footer-copyright">© 2026 ADCS 2026 Project. All rights reserved.</div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>
 
 </main>
 
