@@ -70,7 +70,7 @@ html{
 body{
   margin:0;
   min-height:100vh;
-  overflow-x:hidden;
+  overflow-x:clip;
   color:var(--text);
   background:
     radial-gradient(circle at 78% 7%,rgba(121,82,186,.19),transparent 28%),
@@ -568,7 +568,7 @@ p{
 
 .hero-grid{
   display:grid;
-  grid-template-columns:1.05fr .95fr;
+  grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
   gap:70px;
   align-items:center;
 }
@@ -2276,7 +2276,7 @@ p{
    ========================================================= */
 .ops-standard{
   display:grid;
-  grid-template-columns:1.05fr .95fr;
+  grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
   gap:18px;
   margin-top:28px;
 }
@@ -2345,7 +2345,13 @@ p{
     transform:none!important;
   }
 }
-</style>
+<style>
+/* V2 viewport hardening */
+.container,.nav-shell,.hero-grid,.telemetry-layout,.authority,.hardware-grid,.trace-grid,.health-grid,.boundary-grid,.timeline-layout,.footer-grid{min-width:0;max-width:100%}.hero-grid>*{min-width:0}.hero-console,.matrix,.authority-table-wrap,.timeline-panel,.log-panel{min-width:0;max-width:100%}.section,.foc-hero{overflow:clip}@media(max-width:1180px){.hero-grid{grid-template-columns:1fr}.hero-console{width:100%;max-width:920px;margin:auto}.telemetry-layout,.authority,.timeline-layout,.hardware-grid,.trace-grid{grid-template-columns:1fr!important}}@media(max-width:800px){.container{width:min(100% - 28px,var(--max))}.footer-grid{grid-template-columns:1fr}.footer-right{text-align:left}}
+
+/* Compact legal footer */
+.legal-mini{margin-top:13px;padding-top:10px;border-top:1px solid var(--line);color:#766b81;font:500 8px/1.65 Inter,system-ui,sans-serif;max-width:980px}.legal-mini strong{color:#9a8eaa;font-weight:700}.legal-mini a{color:#9c8bc0;text-decoration:underline;text-decoration-color:rgba(156,139,192,.35);text-underline-offset:2px}.legal-mini a:hover{color:#c9b9ee}.legal-note{display:block;margin-top:3px;color:#655b6d;font-size:7.5px}
+</style></style>
 </head>
 
 <body>
@@ -2983,8 +2989,8 @@ p{
       </div>
 
       <h2>
-        State vectors,
-        <span>constraints &amp; resources.</span>
+        Mission state,
+        <span>limits and available margin.</span>
       </h2>
 
       <p>
@@ -3370,8 +3376,8 @@ p{
       </div>
 
       <h2>
-        Every command leaves an
-        <span>operational trace.</span>
+        Mission actions are recorded in
+        <span>the order they occur.</span>
       </h2>
 
       <p>
@@ -3782,8 +3788,8 @@ p{
       </div>
 
       <h2>
-        Five views.
-        <span>One mission model.</span>
+        Each page answers a different
+        <span>engineering question.</span>
       </h2>
 
       <p>
@@ -3868,47 +3874,7 @@ p{
      FOOTER
      ========================================================= -->
 
-<footer class="site-footer">
-
-  <div class="container">
-
-    <div class="footer-grid">
-
-      <div>
-
-        <div class="footer-title">
-          AUTONOMOUS SPACE DEBRIS MONITORING &amp; CAPTURE SYSTEM
-        </div>
-
-        <div class="footer-copy">
-          ADCS-01 · Flight Operations Centre · Mission operations interface
-        </div>
-
-        <div class="source-note">
-          Earth imagery is used for visualization with appropriate attribution.
-          Public NASA systems-engineering concepts may inform terminology and
-          structure; this university project is independent and is not
-          affiliated with, endorsed by, or certified by NASA.
-        </div>
-
-      </div>
-
-
-      <div class="footer-right">
-
-        FOC / OPERATIONAL INTERFACE<br>
-        TARGET AUTHORITY / SINGLE<br>
-        COMMANDS / NON-FLIGHT<br>
-        MODEL STATE / SIMULATED<br>
-        2026
-
-      </div>
-
-    </div>
-
-  </div>
-
-</footer>
+<footer class="site-footer"><div class="container"><div class="footer-grid"><div><div class="footer-title">AUTONOMOUS SPACE DEBRIS MONITORING &amp; CAPTURE SYSTEM</div><div class="footer-copy">ADCS-01 · Flight Operations Centre · Mission operations interface</div><div class="legal-mini"><strong>© 2026 ADCS 2026 Project. All rights reserved.</strong> Educational and simulation project; no flight certification, operational authorization, or deployment claim is made. Third-party materials remain subject to their applicable licences and terms. <a href="legal.html">Legal &amp; Notices</a><span class="legal-note">This website is provided for educational, research, visualization, and demonstration purposes.</span></div></div><div class="footer-right">FOC / OPERATIONAL INTERFACE<br>TARGET AUTHORITY / SINGLE<br>COMMANDS / NON-FLIGHT<br>MODEL STATE / SIMULATED<br>2026</div></div></div></footer>
 
 </main>
 
