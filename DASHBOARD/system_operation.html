@@ -1,7 +1,4737 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#10081b"><meta name="description" content="Mission Dossier for the Autonomous Space Debris Monitoring & Capture System."><title>Mission Dossier | ADCS-01</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Inter:wght@400;500;600;700;800&family=Michroma&family=Orbitron:wght@500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"><style>
-:root{--bg:#10081b;--panel:#1b1030;--deep:#090511;--lav:#b99cff;--cyan:#76e6ff;--green:#7df0bd;--amber:#ffbf70;--red:#ff7187;--text:#e4ddef;--muted:#a79bb7;--line:rgba(185,156,255,.18);--max:1440px;--shadow:0 28px 80px rgba(0,0,0,.38)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(circle at 78% 3%,rgba(130,83,199,.18),transparent 30%),radial-gradient(circle at 15% 25%,rgba(91,60,145,.12),transparent 32%),linear-gradient(180deg,var(--bg),#140b22 46%,#0c0613);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.65;overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.18;background-image:radial-gradient(circle,rgba(255,255,255,.35) 1px,transparent 1px);background-size:89px 89px}a{color:inherit;text-decoration:none}button{font:inherit}.wrap{width:min(var(--max),calc(100% - 48px));margin:auto;min-width:0}.header{position:sticky;top:0;z-index:100;background:rgba(10,5,18,.84);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}.nav{min-height:82px;display:flex;align-items:center;justify-content:space-between;gap:28px;min-width:0}.brand{display:flex;align-items:center;gap:13px;min-width:220px}.mark{width:42px;height:42px;border:1px solid var(--lav);transform:rotate(45deg);display:grid;place-items:center}.mark span{transform:rotate(-45deg);font:700 10px Space Mono;color:var(--lav)}.brand strong{display:block;font:800 15px Audiowide}.brand small{display:block;margin-top:3px;color:var(--muted);font:700 8px Space Mono;letter-spacing:.1em}.links{display:flex;align-items:center;justify-content:flex-end;gap:5px;flex-wrap:wrap}.links a{padding:10px 12px;color:#bdb3ce;font:700 9px Space Mono;border:1px solid transparent}.links a:hover,.links a.active{border-color:var(--line);background:rgba(185,156,255,.06);color:#fff}.live{color:var(--green)!important}.menu{display:none;background:none;border:1px solid var(--line);color:var(--text);padding:9px 12px}.mobile{display:none}.eyebrow{color:var(--cyan);font:700 9px Space Mono;letter-spacing:.18em}.hero{padding:78px 0 55px}.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(420px,.92fr);gap:58px;align-items:center}.hero h1{margin:14px 0 22px;font:800 clamp(44px,6vw,86px)/.97 Audiowide;letter-spacing:-2px}.hero h1 span{display:block;color:var(--lav)}.lead{max-width:780px;color:#c9c0d4;font-size:17px;line-height:1.8}.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:25px}.chip{padding:8px 11px;border:1px solid var(--line);background:rgba(185,156,255,.035);font:700 8px Space Mono;color:#cfc4dc}.section{padding:74px 0}.section-head{max-width:880px;margin-bottom:30px}.section-head h2{margin:10px 0 13px;font:800 clamp(32px,4.4vw,58px)/1 Audiowide;letter-spacing:-1.5px}.section-head h2 span{color:var(--lav)}.section-head p{color:#aaa0b5;max-width:850px}.grid2{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:22px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.panel{min-width:0;background:linear-gradient(145deg,rgba(31,17,51,.9),rgba(15,8,26,.92));border:1px solid var(--line);box-shadow:var(--shadow);padding:28px;position:relative;overflow:hidden}.panel:before{content:"";position:absolute;left:0;top:0;width:42%;height:1px;background:linear-gradient(90deg,var(--cyan),transparent)}.panel h3{margin:7px 0 12px;font:800 22px Orbitron}.panel p{color:#aaa0b4}.data-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid var(--line);margin-top:18px}.cell{padding:17px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:0}.cell:nth-child(2n){border-right:0}.cell:nth-last-child(-n+2){border-bottom:0}.cell small{display:block;color:#776b83;font:700 7px Space Mono}.cell b{display:block;margin-top:7px;color:#f1eaff;font:800 13px Orbitron;overflow-wrap:anywhere}.tag{display:inline-flex;padding:5px 8px;border:1px solid var(--line);font:700 8px Space Mono;color:var(--cyan)}.hold{color:var(--amber)}.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border:1px solid var(--line)}.flow article{padding:22px 18px;border-right:1px solid var(--line);background:rgba(185,156,255,.025)}.flow article:last-child{border-right:0}.flow .n{font:700 9px Space Mono;color:var(--cyan)}.flow h4{margin:10px 0 7px;font:800 15px Orbitron}.flow p{margin:0;color:#9e94a9;font-size:12px}.callout{padding:24px;border-left:3px solid var(--cyan);background:rgba(118,230,255,.035);border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}.footer{margin-top:30px;padding:46px 0 35px;border-top:1px solid var(--line);background:rgba(6,3,12,.5)}.footer-grid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:35px}.footer-title{font:800 12px Orbitron;color:#f7f2ff}.footer-copy{margin-top:8px;color:#94889f;font-size:11px}.copyright{margin-top:15px;color:#7e7289;font-size:10px;line-height:1.7;max-width:900px}.footer-meta{text-align:right;color:#766a82;font:700 8px/1.9 Space Mono}.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}.reveal.show{opacity:1;transform:none}.left{transform:translateX(-35px)}.right{transform:translateX(35px)}.scale{transform:scale(.96)}@media(max-width:1120px){.hero-grid,.grid2{grid-template-columns:1fr}.links{display:none}.menu{display:block}.mobile.open{display:flex;flex-direction:column;gap:5px;padding:10px 24px 18px}.mobile a{padding:11px 12px;border:1px solid var(--line);font:700 9px Space Mono}.grid3{grid-template-columns:1fr 1fr}.flow{grid-template-columns:1fr 1fr}.flow article:nth-child(2){border-right:0}.flow article:nth-child(-n+3){border-bottom:1px solid var(--line)}}@media(max-width:700px){.wrap{width:min(100% - 28px,var(--max))}.brand{min-width:0}.brand small{display:none}.hero{padding-top:52px}.hero h1{font-size:44px}.lead{font-size:15px}.grid3,.data-grid{grid-template-columns:1fr}.cell,.cell:nth-child(2n){border-right:0}.cell:last-child{border-bottom:0}.flow{grid-template-columns:1fr}.flow article{border-right:0;border-bottom:1px solid var(--line)}.flow article:last-child{border-bottom:0}.panel{padding:21px}.footer-grid{grid-template-columns:1fr}.footer-meta{text-align:left}}@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
- .mission-hero{padding:78px 0 48px}.mission-hero h1{margin:12px 0 18px;font:800 clamp(44px,6vw,82px)/.98 Audiowide;letter-spacing:-2px}.mission-hero h1 span{color:var(--lav)}.chain{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border:1px solid var(--line);margin-top:30px}.chain div{padding:17px;border-right:1px solid var(--line);font:700 8px Space Mono}.chain div:last-child{border-right:0}.chain b{display:block;margin-bottom:5px;color:var(--cyan)}.stage-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.stage{border:1px solid var(--line);background:linear-gradient(145deg,rgba(30,17,51,.86),rgba(12,6,21,.94));padding:25px;min-width:0;box-shadow:0 20px 55px rgba(0,0,0,.24);overflow:hidden}.stage-top{display:flex;justify-content:space-between;gap:12px}.stage-no{font:800 28px Orbitron;color:var(--lav)}.stage h3{font:800 21px Orbitron;margin:10px 0}.objective{color:#c4bacd}.diagram{border:1px solid var(--line);background:#090511;padding:10px;margin:15px 0}.diagram svg{width:100%;display:block}.stage-data{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}.stage-data>div{padding:12px 9px;border-bottom:1px solid var(--line)}.stage-data>div:nth-child(odd){border-right:1px solid var(--line)}.stage-data small{display:block;color:#756984;font:700 7px Space Mono}.stage-data b{display:block;color:#dcd3e3;font:700 10px Inter;margin-top:4px}.boundary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.boundary{padding:23px;border:1px solid var(--line);background:rgba(185,156,255,.025)}.boundary h3{font:800 16px Orbitron;margin:8px 0}.boundary p{font-size:12px;color:#a79cad}@media(max-width:900px){.stage-grid,.boundary-grid{grid-template-columns:1fr}.chain{grid-template-columns:1fr 1fr}.chain div:nth-child(2){border-right:0}}@media(max-width:600px){.chain{grid-template-columns:1fr}.chain div{border-right:0;border-bottom:1px solid var(--line)}.chain div:last-child{border-bottom:0}.stage-data{grid-template-columns:1fr}.stage-data>div:nth-child(odd){border-right:0}}
-/* Compact legal footer */
-.legal-mini{margin-top:14px;padding-top:11px;border-top:1px solid var(--line);color:#756a80;font:500 8px/1.65 Inter,system-ui,sans-serif;max-width:980px}.legal-mini strong{color:#9a8eaa;font-weight:700}.legal-mini a{color:#9c8bc0;text-decoration:underline;text-decoration-color:rgba(156,139,192,.35);text-underline-offset:2px}.legal-mini a:hover{color:#c9b9ee}.legal-note{display:block;margin-top:3px;color:#655b6d;font-size:7.5px}
-</style></head><body><header class="header"><div class="wrap nav"><a class="brand" href="index.html"><span class="mark"><span>A1</span></span><span><strong>ADCS</strong><small>AUTONOMOUS ORBITAL OPERATIONS</small></span></a><nav class="links"><a href="index.html" data-page="index.html">Home</a><a href="system_operation.html" data-page="system_operation.html">Mission Dossier</a><a href="foc.html" data-page="foc.html">Flight Operations Centre</a><a href="orbitview.html" data-page="orbitview.html">OrbitView</a><a class="live" href="simulation.html">● Live Simulation</a></nav><button class="menu" id="menuBtn">MENU</button></div><nav class="wrap mobile" id="mobile"><a href="index.html">Home</a><a href="system_operation.html">Mission Dossier</a><a href="foc.html">Flight Operations Centre</a><a href="orbitview.html">OrbitView</a><a href="simulation.html">Live Simulation</a></nav></header><main><section class="mission-hero"><div class="wrap"><div class="eyebrow">02 / MISSION DOSSIER / ADCS-01</div><h1>One mission, <span>one traceable sequence.</span></h1><p class="lead">The mission is written as a sequence of engineering states. Each stage has a purpose, an input, an expected output and a verification point. The result is a record that can be reviewed independently of the visual animation.</p><div class="chain"><div><b>01</b>OBSERVE</div><div><b>02</b>ESTIMATE</div><div><b>03</b>DECIDE</div><div><b>04</b>ACT</div><div><b>05</b>RE-OBSERVE</div></div></div></section><section class="section"><div class="wrap"><div class="section-head"><div class="eyebrow">15 STAGES</div><h2>Mission flow from <span>search to reset.</span></h2><p>This is a conceptual mission model. It uses standard spacecraft operations terminology while keeping the boundary between simulation, laboratory prototype and flight operation explicit.</p></div><div class="stage-grid"><article class="stage reveal"><div class="stage-top"><span class="stage-no">01</span><span class="tag">SURVEILLANCE</span></div><h3>Establish the orbital picture</h3><p class="objective">Identify the monitored region and collect the current object set.</p><div class="diagram"><svg viewBox="0 0 520 170"><rect x="1" y="1" width="518" height="168" rx="4" fill="#090511" stroke="rgba(185,156,255,.12)"/><text x="20" y="28" fill="#a79bb5" font-size="11">PHASE 01 / ENGINEERING VIEW</text><path d="M55 125 C150 55 240 145 335 78 S430 82 475 50" fill="none" stroke="#76e6ff" stroke-width="3"/><circle cx="55" cy="125" r="6" fill="#76e6ff"/><circle cx="335" cy="78" r="7" fill="#76e6ff"/><circle cx="475" cy="50" r="6" fill="#ff7187"/><path d="M335 78L475 50" stroke="#b99cff" stroke-dasharray="7 7"/><text x="65" y="151" fill="#756984" font-size="9">INPUT</text><text x="315" y="104" fill="#756984" font-size="9">STATE</text><text x="445" y="35" fill="#756984" font-size="9">OUTPUT</text></svg></div><div class="stage-data"><div><small>INPUT</small><b>Catalog/state records</b></div><div><small>OUTPUT</small><b>Surveillance field</b></div><div><small>AUTHORITY</small><b>Tracking service</b></div><div><small>VERIFY</small><b>Coverage and timestamp</b></div></div></article><article class="stage reveal"><div class="stage-top"><span class="stage-no">02</span><span class="tag">DETECTION</span></div><h3>Find candidate debris</h3><p class="objective">Separate object signatures that require continued monitoring.</p><div class="diagram"><svg viewBox="0 0 520 170"><rect x="1" y="1" width="518" height="168" rx="4" fill="#090511" stroke="rgba(185,156,255,.12)"/><text x="20" y="28" fill="#a79bb5" font-size="11">PHASE 02 / ENGINEERING VIEW</text><path d="M55 125 C150 55 240 145 335 78 S430 82 475 50" fill="none" stroke="#b99cff" stroke-width="3"/><circle cx="55" cy="125" r="6" fill="#76e6ff"/><circle cx="335" cy="78" r="7" fill="#b99cff"/><circle cx="475" cy="50" r="6" fill="#ff7187"/><path d="M335 78L475 50" stroke="#b99cff" stroke-dasharray="7 7"/><text x="65" y="151" fill="#756984" font-size="9">INPUT</text><text x="315" y="104" fill="#756984" font-size="9">STATE</text><text x="445" y="35" fill="#756984" font-size="9">OUTPUT</text></svg></div><div class="stage-data"><div><small>INPUT</small><b>Position and motion observations</b></div><div><small>OUTPUT</small><b>Candidate set</b></div><div><small>AUTHORITY</small><b>Detection logic</b></div><div><small>VERIFY</small><b>False-positive screening</b></div></div></article><article class="stage reveal"><div class="stage-top"><span class="stage-no">03</span><span class="tag">TRACKING</span></div><h3>Maintain object identity</h3><p class="objective">Associate observations over time so an object is not treated as new at every update.</p><div class="diagram"><svg viewBox="0 0 520 170"><rect x="1" y="1" width="518" height="168" rx="4" fill="#090511" stroke="rgba(185,156,255,.12)"/><text x="20" y="28" fill="#a79bb5" font-size="11">PHASE 03 / ENGINEERING VIEW</text><path d="M55 125 C150 55 240 145 335 78 S430 82 475 50" fill="none" stroke="#7df0bd" stroke-width="3"/><circle cx="55" cy="125" r="6" fill="#76e6ff"/><circle cx="335" cy="78" r="7" fill="#7df0bd"/><circle cx="475" cy="50" r="6" fill="#ff7187"/><path d="M335 78L475 50" stroke="#b99cff" stroke-dasharray="7 7"/><text x="65" y="151" fill="#756984" font-size="9">INPUT</text><text x="315" y="104" fill="#756984" font-size="9">STATE</text><text x="445" y="35" fill="#756984" font-size="9">OUTPUT</text></svg></div><div class="stage-data"><div><small>INPUT</small><b>Candidate observations</b></div><div><small>OUTPUT</small><b>Track record</b></div><div><small>AUTHORITY</small><b>Multi-object tracker</b></div><div><small>VERIFY</small><b>Track continuity</b></div></div></article><article class="stage reveal"><div class="stage-top"><span class="stage-no">04</span><span class="tag">STATE ESTIMATION</span></div><h3>Build a usable state</h3><p class="objective">Produce position and velocity values in the defined orbital frame.</p><div class="diagram"><svg viewBox="0 0 520 170"><rect x="1" y="1" width="518" height="168" rx="4" fill="#090511" stroke="rgba(185,156,255,.12)"/><text x="20" y="28" fill="#a79bb5" font-size="11">PHASE 04 / ENGINEERING VIEW</text><path d="M55 125 C150 55 240 145 335 78 S430 82 475 50" fill="none" stroke="#ffbf70" stroke-width="3"/><circle cx="55" cy="125" r="6" fill="#76e6ff"/><circle cx="335" cy="78" r="7" fill="#ffbf70"/><circle cx="475" cy="50" r="6" fill="#ff7187"/><path d="M335 78L475 50" stroke="#b99cff" stroke-dasharray="7 7"/><text x="65" y="151" fill="#756984" font-size="9">INPUT</text><text x="315" y="104" fill="#756984" font-size="9">STATE</text><text x="445" y="35" fill="#756984" font-size="9">OUTPUT</text></svg></div><div class="stage-data"><div><small>INPUT</small><b>Track history</b></div><div><small>OUTPUT</small><b>State vector</b></div><div><small>AUTHORITY</small><b>Estimator</b></div><div><small>VERIFY</small><b>Frame and units</b></div></div></article><article class="stage reveal"><div class="stage-top"><span class="stage-no">05</span><span class="tag">RISK ASSESSMENT</span></div><h3>Measure the operational concern</h3><p class="objective">Evaluate separation, relative motion and mission constraints before approach.</p><div class="diagram"><svg viewBox="0 0 520 170"><rect x="1" y="1" width="518" height="168" rx="4" fill="#090511" stroke="rgba(185,156,255,.12)"/><text x="20" y="28" fill="#a79bb5" font-size="11">PHASE 05 / ENGINEERING VIEW</text><path d="M55 125 C150 55 240 145 335 78 S430 82 475 50" fill="none" stroke="#ff7187" stroke-width="3"/><circle cx="55" cy="125" r="6" fill="#76e6ff"/><circle cx="335" cy="78" r="7" fill="#ff7187"/><circle cx="475" cy="50" r="6" fill="#ff7187"/><path d="M335 78L475 50" stroke="#b99cff" stroke-dasharray="7 7"/><text x="65" y="151" fill="#756984" font-size="9">INPUT</text><text x="315" y="104" fill="#756984" font-size="9">STATE</text><text x="445" y="35" fill="#756984" font-size="9">OUTPUT</text></svg></div><div class="stage-data"><div><small>INPUT</small><b>Target state</b></div><div><small>OUTPUT</small><b>Risk record</b></div><div><small>AUTHORITY</small><b>Risk model</b></div><div><small>VERIFY</small><b>Margin and threshold</b></div></div></article><article class="stage reveal"><div class="stage-top"><span class="stage-no">06</span><span class="tag">TARGET SELECTION</span></div><h3>Choose one active target</h3><p class="objective">Select the object carried forward into the mission sequence.</p><div class="diagram"><svg viewBox="0 0 520 170"><rect x="1" y="1" width="518" height="168" rx="4" fill="#090511" stroke="rgba(185,156,255,.12)"/><text x="20" y="28" fill="#a79bb5" font-size="11">PHASE 06 / ENGINEERING VIEW</text><path d="M55 125 C150 55 240 145 335 78 S430 82 475 50" fill="none" stroke="#76e6ff" stroke-width="3"/><circle cx="55" cy="125" r="6" fill="#76e6ff"/><circle cx="335" cy="78" r="7" fill="#76e6ff"/><circle cx="475" cy="50" r="6" fill="#ff7187"/><path d="M335 78L475 50" stroke="#b99cff" stroke-dasharray="7 7"/><text x="65" y="151" fill="#756984" font-size="9">INPUT</text><text x="315" y="104" fill="#756984" font-size="9">STATE</text><text x="445" y="35" fill="#756984" font-size="9">OUTPUT</text></svg></div><div class="stage-data"><div><small>INPUT</small><b>Candidate risk records</b></div><div><small>OUTPUT</small><b>Target lock</b></div><div><small>AUTHORITY</small><b>Mission planner</b></div><div><small>VERIFY</small><b>Target identity</b></div></div></article><article class="stage reveal"><div class="stage-top"><span class="stage-no">07</span><span class="tag">DECISION</span></div><h3>Authorize or hold</h3><p class="objective">Apply the mission rule to the current target state and capture feasibility.</p><div class="diagram"><svg viewBox="0 0 520 170"><rect x="1" y="1" width="518" height="168" rx="4" fill="#090511" stroke="rgba(185,156,255,.12)"/><text x="20" y="28" fill="#a79bb5" font-size="11">PHASE 07 / ENGINEERING VIEW</text><path d="M55 125 C150 55 240 145 335 78 S430 82 475 50" fill="none" stroke="#b99cff" stroke-width="3"/><circle cx="55" cy="125" r="6" fill="#76e6ff"/><circle cx="335" cy="78" r="7" fill="#b99cff"/><circle cx="475" cy="50" r="6" fill="#ff7187"/><path d="M335 78L475 50" stroke="#b99cff" stroke-dasharray="7 7"/><text x="65" y="151" fill="#756984" font-size="9">INPUT</text><text x="315" y="104" fill="#756984" font-size="9">STATE</text><text x="445" y="35" fill="#756984" font-size="9">OUTPUT</text></svg></div><div class="stage-data"><div><small>INPUT</small><b>Risk + capture assessment</b></div><div><small>OUTPUT</small><b>HOLD / PROCEED / ABORT</b></div><div><small>AUTHORITY</small><b>Decision logic</b></div><div><small>VERIFY</small><b>Decision trace</b></div></div></article><article class="stage reveal"><div class="stage-top"><span class="stage-no">08</span><span class="tag">REORIENTATION</span></div><h3>Set the required pointing</h3><p class="objective">Place the servicer in the attitude needed for the next navigation or capture operation.</p><div class="diagram"><svg viewBox="0 0 520 170"><rect x="1" y="1" width="518" height="168" rx="4" fill="#090511" stroke="rgba(185,156,255,.12)"/><text x="20" y="28" fill="#a79bb5" font-size="11">PHASE 08 / ENGINEERING VIEW</text><path d="M55 125 C150 55 240 145 335 78 S430 82 475 50" fill="none" stroke="#7df0bd" stroke-width="3"/><circle cx="55" cy="125" r="6" fill="#76e6ff"/><circle cx="335" cy="78" r="7" fill="#7df0bd"/><circle cx="475" cy="50" r="6" fill="#ff7187"/><path d="M335 78L475 50" stroke="#b99cff" stroke-dasharray="7 7"/><text x="65" y="151" fill="#756984" font-size="9">INPUT</text><text x="315" y="104" fill="#756984" font-size="9">STATE</text><text x="445" y="35" fill="#756984" font-size="9">OUTPUT</text></svg></div><div class="stage-data"><div><small>INPUT</small><b>Target geometry</b></div><div><small>OUTPUT</small><b>Pointing state</b></div><div><small>AUTHORITY</small><b>Attitude model</b></div><div><small>VERIFY</small><b>Keep-out geometry</b></div></div></article><article class="stage reveal"><div class="stage-top"><span class="stage-no">09</span><span class="tag">RENDEZVOUS</span></div><h3>Reduce relative separation</h3><p class="objective">Plan a controlled transfer toward the target without confusing orbital coordinates with arm coordinates.</p><div class="diagram"><svg viewBox="0 0 520 170"><rect x="1" y="1" width="518" height="168" rx="4" fill="#090511" stroke="rgba(185,156,255,.12)"/><text x="20" y="28" fill="#a79bb5" font-size="11">PHASE 09 / ENGINEERING VIEW</text><path d="M55 125 C150 55 240 145 335 78 S430 82 475 50" fill="none" stroke="#ffbf70" stroke-width="3"/><circle cx="55" cy="125" r="6" fill="#76e6ff"/><circle cx="335" cy="78" r="7" fill="#ffbf70"/><circle cx="475" cy="50" r="6" fill="#ff7187"/><path d="M335 78L475 50" stroke="#b99cff" stroke-dasharray="7 7"/><text x="65" y="151" fill="#756984" font-size="9">INPUT</text><text x="315" y="104" fill="#756984" font-size="9">STATE</text><text x="445" y="35" fill="#756984" font-size="9">OUTPUT</text></svg></div><div class="stage-data"><div><small>INPUT</small><b>Relative state</b></div><div><small>OUTPUT</small><b>Rendezvous state</b></div><div><small>AUTHORITY</small><b>Guidance model</b></div><div><small>VERIFY</small><b>Relative motion</b></div></div></article><article class="stage reveal"><div class="stage-top"><span class="stage-no">10</span><span class="tag">CONTROLLED APPROACH</span></div><h3>Enter the capture region</h3><p class="objective">Reduce closing motion and maintain the defined approach envelope.</p><div class="diagram"><svg viewBox="0 0 520 170"><rect x="1" y="1" width="518" height="168" rx="4" fill="#090511" stroke="rgba(185,156,255,.12)"/><text x="20" y="28" fill="#a79bb5" font-size="11">PHASE 10 / ENGINEERING VIEW</text><path d="M55 125 C150 55 240 145 335 78 S430 82 475 50" fill="none" stroke="#ff7187" stroke-width="3"/><circle cx="55" cy="125" r="6" fill="#76e6ff"/><circle cx="335" cy="78" r="7" fill="#ff7187"/><circle cx="475" cy="50" r="6" fill="#ff7187"/><path d="M335 78L475 50" stroke="#b99cff" stroke-dasharray="7 7"/><text x="65" y="151" fill="#756984" font-size="9">INPUT</text><text x="315" y="104" fill="#756984" font-size="9">STATE</text><text x="445" y="35" fill="#756984" font-size="9">OUTPUT</text></svg></div><div class="stage-data"><div><small>INPUT</small><b>Relative position/velocity</b></div><div><small>OUTPUT</small><b>Approach state</b></div><div><small>AUTHORITY</small><b>Approach controller</b></div><div><small>VERIFY</small><b>Velocity and distance limits</b></div></div></article><article class="stage reveal"><div class="stage-top"><span class="stage-no">11</span><span class="tag">CAPTURE CONFIGURATION</span></div><h3>Prepare the mechanism</h3><p class="objective">Select the appropriate arm or net configuration and verify readiness.</p><div class="diagram"><svg viewBox="0 0 520 170"><rect x="1" y="1" width="518" height="168" rx="4" fill="#090511" stroke="rgba(185,156,255,.12)"/><text x="20" y="28" fill="#a79bb5" font-size="11">PHASE 11 / ENGINEERING VIEW</text><path d="M55 125 C150 55 240 145 335 78 S430 82 475 50" fill="none" stroke="#76e6ff" stroke-width="3"/><circle cx="55" cy="125" r="6" fill="#76e6ff"/><circle cx="335" cy="78" r="7" fill="#76e6ff"/><circle cx="475" cy="50" r="6" fill="#ff7187"/><path d="M335 78L475 50" stroke="#b99cff" stroke-dasharray="7 7"/><text x="65" y="151" fill="#756984" font-size="9">INPUT</text><text x="315" y="104" fill="#756984" font-size="9">STATE</text><text x="445" y="35" fill="#756984" font-size="9">OUTPUT</text></svg></div><div class="stage-data"><div><small>INPUT</small><b>Target geometry + mechanism status</b></div><div><small>OUTPUT</small><b>Capture-ready state</b></div><div><small>AUTHORITY</small><b>Capture manager</b></div><div><small>VERIFY</small><b>Mechanism clearance</b></div></div></article><article class="stage reveal"><div class="stage-top"><span class="stage-no">12</span><span class="tag">ROBOTIC CAPTURE</span></div><h3>Secure the object</h3><p class="objective">Execute the selected capture action and verify retention.</p><div class="diagram"><svg viewBox="0 0 520 170"><rect x="1" y="1" width="518" height="168" rx="4" fill="#090511" stroke="rgba(185,156,255,.12)"/><text x="20" y="28" fill="#a79bb5" font-size="11">PHASE 12 / ENGINEERING VIEW</text><path d="M55 125 C150 55 240 145 335 78 S430 82 475 50" fill="none" stroke="#b99cff" stroke-width="3"/><circle cx="55" cy="125" r="6" fill="#76e6ff"/><circle cx="335" cy="78" r="7" fill="#b99cff"/><circle cx="475" cy="50" r="6" fill="#ff7187"/><path d="M335 78L475 50" stroke="#b99cff" stroke-dasharray="7 7"/><text x="65" y="151" fill="#756984" font-size="9">INPUT</text><text x="315" y="104" fill="#756984" font-size="9">STATE</text><text x="445" y="35" fill="#756984" font-size="9">OUTPUT</text></svg></div><div class="stage-data"><div><small>INPUT</small><b>Capture-ready state</b></div><div><small>OUTPUT</small><b>Captured / abort</b></div><div><small>AUTHORITY</small><b>Capture controller</b></div><div><small>VERIFY</small><b>Retention check</b></div></div></article><article class="stage reveal"><div class="stage-top"><span class="stage-no">13</span><span class="tag">DEBRIS TRANSFER</span></div><h3>Move the object to containment</h3><p class="objective">Transfer the secured object through the defined local workspace.</p><div class="diagram"><svg viewBox="0 0 520 170"><rect x="1" y="1" width="518" height="168" rx="4" fill="#090511" stroke="rgba(185,156,255,.12)"/><text x="20" y="28" fill="#a79bb5" font-size="11">PHASE 13 / ENGINEERING VIEW</text><path d="M55 125 C150 55 240 145 335 78 S430 82 475 50" fill="none" stroke="#7df0bd" stroke-width="3"/><circle cx="55" cy="125" r="6" fill="#76e6ff"/><circle cx="335" cy="78" r="7" fill="#7df0bd"/><circle cx="475" cy="50" r="6" fill="#ff7187"/><path d="M335 78L475 50" stroke="#b99cff" stroke-dasharray="7 7"/><text x="65" y="151" fill="#756984" font-size="9">INPUT</text><text x="315" y="104" fill="#756984" font-size="9">STATE</text><text x="445" y="35" fill="#756984" font-size="9">OUTPUT</text></svg></div><div class="stage-data"><div><small>INPUT</small><b>Captured object state</b></div><div><small>OUTPUT</small><b>Transfer state</b></div><div><small>AUTHORITY</small><b>Arm controller</b></div><div><small>VERIFY</small><b>Workspace clearance</b></div></div></article><article class="stage reveal"><div class="stage-top"><span class="stage-no">14</span><span class="tag">STORAGE</span></div><h3>Confirm containment</h3><p class="objective">Place the object in storage and update the mass record.</p><div class="diagram"><svg viewBox="0 0 520 170"><rect x="1" y="1" width="518" height="168" rx="4" fill="#090511" stroke="rgba(185,156,255,.12)"/><text x="20" y="28" fill="#a79bb5" font-size="11">PHASE 14 / ENGINEERING VIEW</text><path d="M55 125 C150 55 240 145 335 78 S430 82 475 50" fill="none" stroke="#ffbf70" stroke-width="3"/><circle cx="55" cy="125" r="6" fill="#76e6ff"/><circle cx="335" cy="78" r="7" fill="#ffbf70"/><circle cx="475" cy="50" r="6" fill="#ff7187"/><path d="M335 78L475 50" stroke="#b99cff" stroke-dasharray="7 7"/><text x="65" y="151" fill="#756984" font-size="9">INPUT</text><text x="315" y="104" fill="#756984" font-size="9">STATE</text><text x="445" y="35" fill="#756984" font-size="9">OUTPUT</text></svg></div><div class="stage-data"><div><small>INPUT</small><b>Transfer state</b></div><div><small>OUTPUT</small><b>Stored state</b></div><div><small>AUTHORITY</small><b>Storage manager</b></div><div><small>VERIFY</small><b>Positive retention</b></div></div></article><article class="stage reveal"><div class="stage-top"><span class="stage-no">15</span><span class="tag">RESET</span></div><h3>Return to monitoring</h3><p class="objective">Close the current sequence and prepare for the next target.</p><div class="diagram"><svg viewBox="0 0 520 170"><rect x="1" y="1" width="518" height="168" rx="4" fill="#090511" stroke="rgba(185,156,255,.12)"/><text x="20" y="28" fill="#a79bb5" font-size="11">PHASE 15 / ENGINEERING VIEW</text><path d="M55 125 C150 55 240 145 335 78 S430 82 475 50" fill="none" stroke="#ff7187" stroke-width="3"/><circle cx="55" cy="125" r="6" fill="#76e6ff"/><circle cx="335" cy="78" r="7" fill="#ff7187"/><circle cx="475" cy="50" r="6" fill="#ff7187"/><path d="M335 78L475 50" stroke="#b99cff" stroke-dasharray="7 7"/><text x="65" y="151" fill="#756984" font-size="9">INPUT</text><text x="315" y="104" fill="#756984" font-size="9">STATE</text><text x="445" y="35" fill="#756984" font-size="9">OUTPUT</text></svg></div><div class="stage-data"><div><small>INPUT</small><b>Stored / aborted state</b></div><div><small>OUTPUT</small><b>Surveillance</b></div><div><small>AUTHORITY</small><b>Mission manager</b></div><div><small>VERIFY</small><b>State reset</b></div></div></article></div></div></section><section class="section"><div class="wrap"><div class="section-head"><div class="eyebrow">ENGINEERING RECORD</div><h2>State changes should leave a <span>reason behind.</span></h2></div><div class="boundary-grid"><article class="boundary"><div class="eyebrow">STATE</div><h3>What changed?</h3><p>The mission state identifies where the sequence is and prevents an action from being treated as valid simply because a button was pressed.</p></article><article class="boundary"><div class="eyebrow">DECISION</div><h3>Why continue?</h3><p>Risk, relative motion, mechanism readiness and available margin are evaluated before the sequence advances.</p></article><article class="boundary"><div class="eyebrow">VERIFICATION</div><h3>How is it checked?</h3><p>Every stage has a verification focus so the interface can be reviewed against a defined engineering record.</p></article></div></div></section></main><footer class="footer"><div class="wrap footer-grid"><div><div class="footer-title">AUTONOMOUS SPACE DEBRIS MONITORING &amp; CAPTURE SYSTEM</div><div class="footer-copy">ADCS-01 · Mission Dossier</div><div class="legal-mini"><strong>© 2026 ADCS 2026 Project. All rights reserved.</strong> Educational and simulation project; no flight certification, operational authorization, or deployment claim is made. Third-party materials remain subject to their applicable licences and terms. <a href="legal.html">Legal &amp; Notices</a><span class="legal-note">This website is provided for educational, research, visualization, and demonstration purposes.</span></div></div><div class="footer-meta">MISSION SEQUENCE / ENGINEERING RECORD<br>ACADEMIC ENGINEERING PROJECT<br>MODEL / SIMULATION CONTEXT<br>2026</div></div></footer><script>(()=>{const p=location.pathname.split('/').pop()||'index.html';document.querySelectorAll('[data-page]').forEach(a=>{if(a.dataset.page===p)a.classList.add('active')});const b=document.getElementById('menuBtn'),m=document.getElementById('mobile');b?.addEventListener('click',()=>m.classList.toggle('open'));const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll('.reveal').forEach(e=>io.observe(e));})();</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color" content="#10091c">
+<meta
+  name="description"
+  content="Mission Dossier for the Autonomous Space Debris Monitoring & Capture System."
+>
+
+<title>Mission Dossier | ADCS-01</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Audiowide&family=Inter:wght@400;500;600;700;800&family=Michroma&family=Orbitron:wght@500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap"
+  rel="stylesheet"
+>
+
+<style>
+
+/* =========================================================
+   CORE SYSTEM
+   ========================================================= */
+
+:root{
+  --bg:#0c0715;
+  --bg2:#120a20;
+  --bg3:#190d2a;
+
+  --panel:#171027;
+  --panel2:#1d1231;
+
+  --lav:#b99cff;
+  --lav2:#d1baff;
+
+  --cyan:#76e6ff;
+  --green:#7df0bd;
+  --amber:#ffbf70;
+  --red:#ff7187;
+
+  --white:#f4efff;
+  --text:#ddd4e8;
+  --muted:#aaa0b6;
+  --dim:#766b82;
+
+  --line:rgba(185,156,255,.16);
+  --line-bright:rgba(185,156,255,.30);
+
+  --max:1500px;
+
+  --shadow:
+    0 30px 90px rgba(0,0,0,.38);
+
+  --shadow-soft:
+    0 18px 55px rgba(0,0,0,.25);
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+
+  color:var(--text);
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  background:
+    radial-gradient(
+      circle at 80% 4%,
+      rgba(139,88,213,.18),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 10% 25%,
+      rgba(85,57,139,.14),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 65% 72%,
+      rgba(87,49,137,.08),
+      transparent 35%
+    ),
+    linear-gradient(
+      180deg,
+      #0c0715 0%,
+      #130a20 38%,
+      #10081a 72%,
+      #08050f 100%
+    );
+
+  overflow-x:hidden;
+}
+
+
+/* =========================================================
+   COSMIC BACKGROUND
+   ========================================================= */
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+
+  pointer-events:none;
+  z-index:-3;
+
+  opacity:.24;
+
+  background-image:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,.55) 1px,
+      transparent 1px
+    );
+
+  background-size:
+    91px 91px;
+}
+
+
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+
+  pointer-events:none;
+  z-index:-2;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0,
+      rgba(185,156,255,.025) 50%,
+      transparent 100%
+    );
+
+  background-size:240px 100%;
+}
+
+
+/* =========================================================
+   ENGINEERING GRID
+   ========================================================= */
+
+.page-grid{
+  position:fixed;
+  inset:0;
+
+  pointer-events:none;
+  z-index:-1;
+
+  opacity:.08;
+
+  background-image:
+    linear-gradient(
+      rgba(185,156,255,.15) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(185,156,255,.15) 1px,
+      transparent 1px
+    );
+
+  background-size:
+    90px 90px;
+}
+
+
+/* =========================================================
+   GENERAL
+   ========================================================= */
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+button{
+  font:inherit;
+}
+
+.container{
+  width:min(
+    var(--max),
+    calc(100% - 72px)
+  );
+
+  margin:0 auto;
+}
+
+.eyebrow{
+  color:var(--cyan);
+
+  font:
+    700 9px/1.4
+    "Space Mono",
+    monospace;
+
+  letter-spacing:.20em;
+  text-transform:uppercase;
+}
+
+.mono{
+  font-family:"Space Mono",monospace;
+}
+
+.section{
+  padding:115px 0;
+}
+
+.section-head{
+  max-width:950px;
+  margin-bottom:48px;
+}
+
+.section-head h2{
+  margin:12px 0 18px;
+
+  color:var(--white);
+
+  font:
+    800 clamp(34px,4.4vw,64px)/1.02
+    Audiowide,
+    sans-serif;
+
+  letter-spacing:-2px;
+}
+
+.section-head h2 span{
+  color:var(--lav);
+}
+
+.section-head p{
+  max-width:850px;
+
+  color:var(--muted);
+
+  font-size:15px;
+  line-height:1.8;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.site-header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+
+  background:
+    rgba(8,4,15,.86);
+
+  backdrop-filter:
+    blur(18px);
+
+  border-bottom:
+    1px solid var(--line);
+}
+
+.nav-shell{
+  width:min(
+    1580px,
+    calc(100% - 48px)
+  );
+
+  min-height:82px;
+
+  margin:auto;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  gap:30px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+
+  min-width:230px;
+}
+
+.brand-mark{
+  width:42px;
+  height:42px;
+
+  border:
+    1px solid var(--lav);
+
+  transform:rotate(45deg);
+
+  display:grid;
+  place-items:center;
+}
+
+.brand-mark span{
+  transform:rotate(-45deg);
+
+  color:var(--lav);
+
+  font:
+    700 10px
+    "Space Mono",
+    monospace;
+}
+
+.brand-copy strong{
+  display:block;
+
+  color:#f7f2ff;
+
+  font:
+    800 15px
+    Audiowide,
+    sans-serif;
+}
+
+.brand-copy small{
+  display:block;
+
+  margin-top:3px;
+
+  color:var(--dim);
+
+  font:
+    700 7px
+    "Space Mono",
+    monospace;
+
+  letter-spacing:.10em;
+}
+
+.primary-nav{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+
+  gap:4px;
+
+  flex-wrap:wrap;
+}
+
+.primary-nav a{
+  padding:11px 12px;
+
+  border:1px solid transparent;
+
+  color:#bcb2c9;
+
+  font:
+    700 8px
+    "Space Mono",
+    monospace;
+
+  text-transform:uppercase;
+
+  transition:
+    .25s ease;
+}
+
+.primary-nav a:hover,
+.primary-nav a.active{
+  color:#fff;
+
+  border-color:var(--line-bright);
+
+  background:
+    rgba(185,156,255,.06);
+}
+
+.primary-nav .live{
+  color:var(--green);
+}
+
+.live-dot{
+  display:inline-block;
+
+  width:6px;
+  height:6px;
+
+  margin-right:7px;
+
+  border-radius:50%;
+
+  background:var(--green);
+
+  box-shadow:
+    0 0 12px var(--green);
+}
+
+.nav-status{
+  color:var(--green);
+
+  font:
+    700 8px
+    "Space Mono",
+    monospace;
+
+  white-space:nowrap;
+}
+
+.menu-button{
+  display:none;
+
+  color:var(--text);
+
+  border:
+    1px solid var(--line);
+
+  background:
+    rgba(185,156,255,.04);
+
+  padding:10px 13px;
+}
+
+.mobile-nav{
+  display:none;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.dossier-hero{
+  position:relative;
+
+  min-height:720px;
+
+  display:flex;
+  align-items:center;
+
+  padding:
+    100px 0
+    90px;
+
+  overflow:hidden;
+}
+
+.hero-orbit{
+  position:absolute;
+
+  width:760px;
+  height:760px;
+
+  right:-170px;
+  top:40px;
+
+  border:
+    1px solid rgba(118,230,255,.10);
+
+  border-radius:50%;
+
+  transform:rotate(-18deg);
+
+  opacity:.7;
+}
+
+.hero-orbit::before,
+.hero-orbit::after{
+  content:"";
+
+  position:absolute;
+  inset:90px;
+
+  border:
+    1px solid rgba(185,156,255,.13);
+
+  border-radius:50%;
+}
+
+.hero-orbit::after{
+  inset:190px;
+
+  border-color:
+    rgba(125,240,189,.12);
+}
+
+.hero-satellite{
+  position:absolute;
+
+  right:335px;
+  top:255px;
+
+  width:10px;
+  height:10px;
+
+  border-radius:50%;
+
+  background:var(--cyan);
+
+  box-shadow:
+    0 0 25px
+    rgba(118,230,255,.9);
+}
+
+.hero-target{
+  position:absolute;
+
+  right:90px;
+  top:455px;
+
+  width:8px;
+  height:8px;
+
+  border-radius:50%;
+
+  background:var(--red);
+
+  box-shadow:
+    0 0 22px
+    rgba(255,113,135,.9);
+}
+
+.hero-vector{
+  position:absolute;
+
+  right:95px;
+  top:455px;
+
+  width:250px;
+
+  border-top:
+    1px dashed
+    rgba(185,156,255,.55);
+
+  transform:
+    rotate(-26deg);
+
+  transform-origin:right center;
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+
+  max-width:900px;
+}
+
+.hero-code{
+  color:var(--cyan);
+
+  font:
+    700 9px
+    "Space Mono",
+    monospace;
+
+  letter-spacing:.22em;
+}
+
+.hero-title{
+  margin:18px 0 25px;
+
+  color:var(--white);
+
+  font:
+    800 clamp(52px,7vw,102px)/.92
+    Audiowide,
+    sans-serif;
+
+  letter-spacing:-3px;
+}
+
+.hero-title span{
+  display:block;
+
+  color:var(--lav);
+}
+
+.hero-description{
+  max-width:820px;
+
+  color:#c4bacd;
+
+  font-size:17px;
+  line-height:1.85;
+}
+
+.hero-description strong{
+  color:#eee7f5;
+}
+
+.hero-tags{
+  display:flex;
+  flex-wrap:wrap;
+
+  gap:9px;
+
+  margin-top:30px;
+}
+
+.hero-tag{
+  padding:9px 12px;
+
+  border:
+    1px solid var(--line);
+
+  background:
+    rgba(185,156,255,.035);
+
+  color:#cfc5d9;
+
+  font:
+    700 8px
+    "Space Mono",
+    monospace;
+}
+
+
+/* =========================================================
+   MISSION STRIP
+   ========================================================= */
+
+.mission-strip{
+  position:relative;
+
+  border-top:
+    1px solid var(--line);
+
+  border-bottom:
+    1px solid var(--line);
+
+  background:
+    rgba(12,6,21,.65);
+}
+
+.mission-strip-inner{
+  display:grid;
+
+  grid-template-columns:
+    repeat(5,1fr);
+}
+
+.mission-step{
+  position:relative;
+
+  min-height:125px;
+
+  padding:25px 22px;
+
+  border-right:
+    1px solid var(--line);
+}
+
+.mission-step:last-child{
+  border-right:0;
+}
+
+.mission-step-number{
+  color:var(--cyan);
+
+  font:
+    700 8px
+    "Space Mono",
+    monospace;
+}
+
+.mission-step h3{
+  margin:10px 0 5px;
+
+  color:var(--white);
+
+  font:
+    800 15px
+    Orbitron,
+    sans-serif;
+}
+
+.mission-step p{
+  margin:0;
+
+  color:var(--dim);
+
+  font-size:11px;
+}
+
+
+/* =========================================================
+   MISSION ARCHITECTURE
+   ========================================================= */
+
+.architecture{
+  display:grid;
+
+  grid-template-columns:
+    1.25fr .75fr;
+
+  gap:24px;
+
+  align-items:stretch;
+}
+
+.architecture-main{
+  position:relative;
+
+  min-height:430px;
+
+  padding:40px;
+
+  border:
+    1px solid var(--line);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(28,15,47,.90),
+      rgba(10,5,18,.96)
+    );
+
+  box-shadow:var(--shadow);
+
+  overflow:hidden;
+}
+
+.architecture-main::after{
+  content:"";
+
+  position:absolute;
+
+  right:-100px;
+  bottom:-160px;
+
+  width:500px;
+  height:500px;
+
+  border:
+    1px solid rgba(118,230,255,.10);
+
+  border-radius:50%;
+}
+
+.architecture-main h3{
+  margin:10px 0 14px;
+
+  color:var(--white);
+
+  font:
+    800 25px
+    Orbitron,
+    sans-serif;
+}
+
+.architecture-main p{
+  max-width:720px;
+
+  color:var(--muted);
+
+  line-height:1.75;
+}
+
+.arch-flow{
+  position:relative;
+
+  margin-top:45px;
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:12px;
+}
+
+.arch-node{
+  position:relative;
+
+  padding:20px 15px;
+
+  min-height:125px;
+
+  border:
+    1px solid var(--line);
+
+  background:
+    rgba(185,156,255,.035);
+}
+
+.arch-node:not(:last-child)::after{
+  content:"";
+
+  position:absolute;
+
+  right:-13px;
+  top:50%;
+
+  width:13px;
+
+  border-top:
+    1px solid
+    rgba(118,230,255,.45);
+}
+
+.arch-node-number{
+  color:var(--cyan);
+
+  font:
+    700 8px
+    "Space Mono",
+    monospace;
+}
+
+.arch-node h4{
+  margin:9px 0 7px;
+
+  color:#f0eaff;
+
+  font:
+    800 13px
+    Orbitron,
+    sans-serif;
+}
+
+.arch-node p{
+  margin:0;
+
+  font-size:10px;
+
+  line-height:1.5;
+}
+
+.arch-side{
+  display:flex;
+  flex-direction:column;
+
+  gap:18px;
+}
+
+.arch-side-panel{
+  flex:1;
+
+  padding:28px;
+
+  border:
+    1px solid var(--line);
+
+  background:
+    rgba(185,156,255,.035);
+}
+
+.arch-side-panel h4{
+  margin:8px 0 10px;
+
+  color:var(--white);
+
+  font:
+    800 16px
+    Orbitron,
+    sans-serif;
+}
+
+.arch-side-panel p{
+  margin:0;
+
+  color:var(--muted);
+
+  font-size:12px;
+
+  line-height:1.7;
+}
+
+
+/* =========================================================
+   PHASE INDEX
+   ========================================================= */
+
+.phase-index{
+  border:
+    1px solid var(--line);
+
+  background:
+    rgba(185,156,255,.025);
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(5,1fr);
+}
+
+.phase-index a{
+  padding:18px 15px;
+
+  border-right:
+    1px solid var(--line);
+
+  border-bottom:
+    1px solid var(--line);
+
+  transition:
+    background .25s ease,
+    transform .25s ease;
+}
+
+.phase-index a:hover{
+  background:
+    rgba(185,156,255,.07);
+
+  transform:
+    translateY(-2px);
+}
+
+.phase-index a:nth-child(5n){
+  border-right:0;
+}
+
+.phase-index-number{
+  color:var(--lav);
+
+  font:
+    800 14px
+    Orbitron,
+    sans-serif;
+}
+
+.phase-index-name{
+  display:block;
+
+  margin-top:5px;
+
+  color:#aaa0b5;
+
+  font:
+    700 8px
+    "Space Mono",
+    monospace;
+
+  text-transform:uppercase;
+}
+
+
+/* =========================================================
+   PHASE SEQUENCE
+   ========================================================= */
+
+.phase-section{
+  position:relative;
+}
+
+.phase-list{
+  display:flex;
+  flex-direction:column;
+
+  gap:55px;
+}
+
+
+/* =========================================================
+   INDIVIDUAL PHASE
+   ========================================================= */
+
+.phase{
+  position:relative;
+
+  display:grid;
+
+  grid-template-columns:
+    minmax(0,1.08fr)
+    minmax(0,.92fr);
+
+  min-height:530px;
+
+  border:
+    1px solid var(--line);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(26,14,44,.94),
+      rgba(10,5,18,.97)
+    );
+
+  box-shadow:
+    var(--shadow-soft);
+
+  overflow:hidden;
+
+  opacity:0;
+
+  transform:
+    translateY(55px);
+
+  transition:
+    opacity .8s ease,
+    transform .8s cubic-bezier(.2,.7,.2,1);
+}
+
+.phase.visible{
+  opacity:1;
+
+  transform:none;
+}
+
+
+/* alternating structure */
+
+.phase:nth-child(even){
+  grid-template-columns:
+    minmax(0,.92fr)
+    minmax(0,1.08fr);
+}
+
+.phase:nth-child(even) .phase-image{
+  order:2;
+}
+
+.phase:nth-child(even) .phase-content{
+  order:1;
+}
+
+
+/* =========================================================
+   PHASE IMAGE
+   ========================================================= */
+
+.phase-image{
+  position:relative;
+
+  min-height:530px;
+
+  padding:18px;
+
+  background:
+    #08050f;
+
+  overflow:hidden;
+
+  border-right:
+    1px solid var(--line);
+}
+
+.phase:nth-child(even) .phase-image{
+  border-right:0;
+
+  border-left:
+    1px solid var(--line);
+}
+
+.phase-image-frame{
+  position:relative;
+
+  width:100%;
+  height:100%;
+
+  min-height:490px;
+
+  overflow:hidden;
+
+  border:
+    1px solid
+    rgba(185,156,255,.20);
+
+  background:#07040c;
+}
+
+.phase-image-frame::before{
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  z-index:2;
+
+  pointer-events:none;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(8,4,15,.02),
+      rgba(8,4,15,.22)
+    );
+}
+
+.phase-image-frame::after{
+  content:"";
+
+  position:absolute;
+
+  left:0;
+  right:0;
+
+  top:0;
+
+  height:1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--cyan),
+      transparent
+    );
+
+  opacity:.6;
+}
+
+.phase-image img{
+  display:block;
+
+  width:100%;
+  height:100%;
+
+  min-height:490px;
+
+  object-fit:cover;
+
+  object-position:center;
+
+  transition:
+    transform 1.1s cubic-bezier(.2,.7,.2,1),
+    filter .8s ease;
+}
+
+.phase:hover .phase-image img{
+  transform:scale(1.035);
+
+  filter:
+    brightness(1.08)
+    saturate(1.05);
+}
+
+.image-label{
+  position:absolute;
+
+  left:28px;
+  top:28px;
+
+  z-index:4;
+
+  padding:7px 10px;
+
+  border:
+    1px solid
+    rgba(118,230,255,.35);
+
+  background:
+    rgba(7,4,13,.72);
+
+  backdrop-filter:blur(8px);
+
+  color:var(--cyan);
+
+  font:
+    700 8px
+    "Space Mono",
+    monospace;
+
+  letter-spacing:.10em;
+}
+
+
+/* =========================================================
+   PHASE CONTENT
+   ========================================================= */
+
+.phase-content{
+  display:flex;
+  flex-direction:column;
+
+  justify-content:center;
+
+  padding:
+    50px 54px;
+}
+
+.phase-header{
+  display:flex;
+
+  align-items:flex-start;
+
+  justify-content:space-between;
+
+  gap:20px;
+
+  margin-bottom:25px;
+}
+
+.phase-number{
+  color:var(--lav);
+
+  font:
+    900 clamp(42px,5vw,72px)/.9
+    Orbitron,
+    sans-serif;
+
+  letter-spacing:-3px;
+}
+
+.phase-state{
+  padding:9px 11px;
+
+  border:
+    1px solid
+    rgba(118,230,255,.25);
+
+  color:var(--cyan);
+
+  font:
+    700 8px
+    "Space Mono",
+    monospace;
+
+  letter-spacing:.08em;
+
+  text-transform:uppercase;
+
+  white-space:nowrap;
+}
+
+.phase-content h3{
+  margin:0 0 16px;
+
+  color:var(--white);
+
+  font:
+    800 clamp(25px,3vw,39px)/1.08
+    Orbitron,
+    sans-serif;
+
+  letter-spacing:-1px;
+}
+
+.phase-intro{
+  max-width:700px;
+
+  margin:0 0 30px;
+
+  color:#bcb1c8;
+
+  font-size:14px;
+
+  line-height:1.8;
+}
+
+.phase-details{
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  border-top:
+    1px solid var(--line);
+
+  border-left:
+    1px solid var(--line);
+}
+
+.phase-detail{
+  min-height:92px;
+
+  padding:15px 17px;
+
+  border-right:
+    1px solid var(--line);
+
+  border-bottom:
+    1px solid var(--line);
+}
+
+.phase-detail small{
+  display:block;
+
+  color:var(--dim);
+
+  font:
+    700 7px
+    "Space Mono",
+    monospace;
+
+  letter-spacing:.12em;
+}
+
+.phase-detail strong{
+  display:block;
+
+  margin-top:8px;
+
+  color:#e5ddec;
+
+  font-size:11px;
+
+  line-height:1.5;
+}
+
+.phase-description{
+  margin-top:25px;
+
+  padding-left:17px;
+
+  border-left:
+    2px solid var(--cyan);
+
+  color:#94899e;
+
+  font-size:11px;
+
+  line-height:1.75;
+}
+
+
+/* =========================================================
+   PHASE-SPECIFIC ACCENTS
+   ========================================================= */
+
+.phase:nth-child(1) .phase-number,
+.phase:nth-child(1) .phase-state{
+  color:var(--cyan);
+}
+
+.phase:nth-child(2) .phase-number{
+  color:#a98dff;
+}
+
+.phase:nth-child(3) .phase-number{
+  color:var(--green);
+}
+
+.phase:nth-child(4) .phase-number{
+  color:var(--amber);
+}
+
+.phase:nth-child(5) .phase-number{
+  color:#ff8c9d;
+}
+
+.phase:nth-child(6) .phase-number{
+  color:#8fdcff;
+}
+
+.phase:nth-child(7) .phase-number{
+  color:#c6a7ff;
+}
+
+.phase:nth-child(8) .phase-number{
+  color:#80f0cf;
+}
+
+.phase:nth-child(9) .phase-number{
+  color:#ffc778;
+}
+
+.phase:nth-child(10) .phase-number{
+  color:#ff7d91;
+}
+
+.phase:nth-child(11) .phase-number{
+  color:#8fe5ff;
+}
+
+.phase:nth-child(12) .phase-number{
+  color:#c4a5ff;
+}
+
+.phase:nth-child(13) .phase-number{
+  color:#7df0bd;
+}
+
+.phase:nth-child(14) .phase-number{
+  color:#ffc878;
+}
+
+.phase:nth-child(15) .phase-number{
+  color:#d0b4ff;
+}
+
+
+/* =========================================================
+   ENGINEERING RECORD
+   ========================================================= */
+
+.record-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:18px;
+}
+
+.record-card{
+  position:relative;
+
+  min-height:245px;
+
+  padding:28px;
+
+  border:
+    1px solid var(--line);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(30,16,49,.75),
+      rgba(12,6,21,.9)
+    );
+
+  transition:
+    transform .3s ease,
+    border-color .3s ease,
+    background .3s ease;
+}
+
+.record-card:hover{
+  transform:
+    translateY(-8px);
+
+  border-color:
+    var(--line-bright);
+
+  background:
+    rgba(185,156,255,.055);
+}
+
+.record-card-number{
+  color:var(--cyan);
+
+  font:
+    700 8px
+    "Space Mono",
+    monospace;
+}
+
+.record-card h3{
+  margin:14px 0 10px;
+
+  color:var(--white);
+
+  font:
+    800 18px
+    Orbitron,
+    sans-serif;
+}
+
+.record-card p{
+  margin:0;
+
+  color:var(--muted);
+
+  font-size:12px;
+
+  line-height:1.75;
+}
+
+
+/* =========================================================
+   STATE TRANSITION
+   ========================================================= */
+
+.state-chain{
+  display:grid;
+
+  grid-template-columns:
+    repeat(9,1fr);
+
+  border:
+    1px solid var(--line);
+
+  background:
+    rgba(185,156,255,.02);
+}
+
+.state{
+  position:relative;
+
+  min-height:110px;
+
+  padding:20px 14px;
+
+  border-right:
+    1px solid var(--line);
+}
+
+.state:last-child{
+  border-right:0;
+}
+
+.state-number{
+  color:var(--dim);
+
+  font:
+    700 7px
+    "Space Mono",
+    monospace;
+}
+
+.state-name{
+  margin-top:10px;
+
+  color:#e6dff0;
+
+  font:
+    800 11px
+    Orbitron,
+    sans-serif;
+}
+
+.state::after{
+  content:"→";
+
+  position:absolute;
+
+  right:-7px;
+  top:45px;
+
+  color:var(--cyan);
+
+  background:
+    #120a20;
+
+  padding:0 2px;
+
+  z-index:3;
+}
+
+.state:last-child::after{
+  display:none;
+}
+
+
+/* =========================================================
+   MODEL BOUNDARY
+   ========================================================= */
+
+.boundary-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:18px;
+}
+
+.boundary{
+  min-height:270px;
+
+  padding:32px;
+
+  border:
+    1px solid var(--line);
+
+  background:
+    rgba(185,156,255,.025);
+}
+
+.boundary h3{
+  margin:12px 0 12px;
+
+  color:var(--white);
+
+  font:
+    800 19px
+    Orbitron,
+    sans-serif;
+}
+
+.boundary p{
+  color:var(--muted);
+
+  font-size:12px;
+
+  line-height:1.8;
+}
+
+.boundary ul{
+  margin:20px 0 0;
+  padding-left:18px;
+
+  color:#a69bac;
+
+  font-size:11px;
+
+  line-height:1.8;
+}
+
+
+/* =========================================================
+   FINAL CALLOUT
+   ========================================================= */
+
+.final-callout{
+  position:relative;
+
+  padding:55px;
+
+  border:
+    1px solid var(--line);
+
+  background:
+    linear-gradient(
+      120deg,
+      rgba(118,230,255,.045),
+      rgba(185,156,255,.055),
+      rgba(125,240,189,.025)
+    );
+
+  overflow:hidden;
+}
+
+.final-callout::before{
+  content:"";
+
+  position:absolute;
+
+  left:0;
+  top:0;
+  bottom:0;
+
+  width:3px;
+
+  background:
+    linear-gradient(
+      180deg,
+      var(--cyan),
+      var(--lav),
+      var(--green)
+    );
+}
+
+.final-callout h2{
+  margin:10px 0 15px;
+
+  color:var(--white);
+
+  font:
+    800 clamp(28px,4vw,52px)
+    Audiowide,
+    sans-serif;
+}
+
+.final-callout p{
+  max-width:900px;
+
+  margin:0;
+
+  color:#a99fb2;
+
+  font-size:13px;
+
+  line-height:1.8;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.footer{
+  margin-top:80px;
+
+  padding:
+    35px 0
+    28px;
+
+  border-top:
+    1px solid var(--line);
+
+  background:
+    rgba(5,3,10,.72);
+}
+
+.footer-grid{
+  display:grid;
+
+  grid-template-columns:
+    1fr auto;
+
+  gap:30px;
+
+  align-items:end;
+}
+
+.footer-title{
+  color:#ddd4e7;
+
+  font:
+    800 11px
+    Orbitron,
+    sans-serif;
+}
+
+.footer-copy{
+  margin-top:7px;
+
+  color:var(--dim);
+
+  font-size:10px;
+}
+
+.footer-legal{
+  margin-top:12px;
+
+  color:#71667b;
+
+  font-size:9px;
+
+  line-height:1.65;
+
+  max-width:850px;
+}
+
+.footer-legal a{
+  color:var(--lav);
+
+  text-decoration:underline;
+
+  text-underline-offset:3px;
+}
+
+.footer-meta{
+  color:#71667b;
+
+  text-align:right;
+
+  font:
+    700 7px/1.9
+    "Space Mono",
+    monospace;
+}
+
+
+/* =========================================================
+   SCROLL EFFECTS
+   ========================================================= */
+
+.reveal{
+  opacity:0;
+
+  transition:
+    opacity .8s ease,
+    transform .8s cubic-bezier(.2,.7,.2,1);
+}
+
+.reveal-up{
+  transform:
+    translateY(45px);
+}
+
+.reveal-left{
+  transform:
+    translateX(-55px);
+}
+
+.reveal-right{
+  transform:
+    translateX(55px);
+}
+
+.reveal-scale{
+  transform:
+    scale(.94);
+}
+
+.reveal.visible{
+  opacity:1;
+
+  transform:none;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:1200px){
+
+  .primary-nav{
+    display:none;
+  }
+
+  .nav-status{
+    margin-left:auto;
+  }
+
+  .menu-button{
+    display:block;
+  }
+
+  .mobile-nav{
+    padding:
+      10px 24px
+      18px;
+  }
+
+  .mobile-nav.open{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:5px;
+  }
+
+  .mobile-nav a{
+    padding:12px;
+
+    border:
+      1px solid var(--line);
+
+    color:#c9bfd0;
+
+    font:
+      700 9px
+      "Space Mono",
+      monospace;
+  }
+
+  .architecture{
+    grid-template-columns:1fr;
+  }
+
+  .record-grid,
+  .boundary-grid{
+    grid-template-columns:
+      1fr 1fr;
+  }
+
+  .state-chain{
+    grid-template-columns:
+      repeat(5,1fr);
+  }
+
+  .state:nth-child(5){
+    border-right:0;
+  }
+
+  .state:nth-child(-n+5){
+    border-bottom:1px solid var(--line);
+  }
+
+  .state:nth-child(5)::after{
+    display:none;
+  }
+
+  .state:nth-child(4)::after{
+    display:block;
+  }
+
+  .state:nth-child(9){
+    border-right:0;
+  }
+}
+
+
+@media(max-width:950px){
+
+  .container{
+    width:
+      min(
+        var(--max),
+        calc(100% - 42px)
+      );
+  }
+
+  .dossier-hero{
+    min-height:auto;
+
+    padding:
+      80px 0
+      75px;
+  }
+
+  .hero-orbit,
+  .hero-satellite,
+  .hero-target,
+  .hero-vector{
+    opacity:.25;
+  }
+
+  .mission-strip-inner{
+    grid-template-columns:
+      1fr 1fr;
+  }
+
+  .mission-step:nth-child(2){
+    border-right:0;
+  }
+
+  .mission-step:nth-child(-n+3){
+    border-bottom:
+      1px solid var(--line);
+  }
+
+  .phase{
+    grid-template-columns:
+      1fr !important;
+  }
+
+  .phase-image{
+    order:1 !important;
+
+    min-height:420px;
+
+    border:
+      0 !important;
+
+    border-bottom:
+      1px solid var(--line) !important;
+  }
+
+  .phase-image-frame{
+    min-height:390px;
+  }
+
+  .phase-image img{
+    min-height:390px;
+  }
+
+  .phase-content{
+    order:2 !important;
+
+    padding:40px;
+  }
+
+  .phase-index{
+    grid-template-columns:
+      repeat(3,1fr);
+  }
+
+  .phase-index a:nth-child(5n){
+    border-right:1px solid var(--line);
+  }
+
+  .phase-index a:nth-child(3n){
+    border-right:0;
+  }
+
+  .arch-flow{
+    grid-template-columns:
+      1fr 1fr;
+  }
+
+  .arch-node:nth-child(2)::after{
+    display:none;
+  }
+
+  .arch-node:nth-child(1),
+  .arch-node:nth-child(2){
+    border-bottom:
+      1px solid var(--line);
+  }
+
+  .state-chain{
+    grid-template-columns:
+      repeat(3,1fr);
+  }
+
+  .state{
+    border-right:
+      1px solid var(--line);
+  }
+
+  .state:nth-child(3n){
+    border-right:0;
+  }
+
+  .state:nth-child(n){
+    border-bottom:
+      1px solid var(--line);
+  }
+
+  .state:last-child{
+    border-bottom:0;
+  }
+
+  .state::after{
+    display:none;
+  }
+}
+
+
+@media(max-width:700px){
+
+  .container{
+    width:
+      calc(100% - 28px);
+  }
+
+  .nav-shell{
+    width:
+      calc(100% - 28px);
+
+    min-height:70px;
+  }
+
+  .brand{
+    min-width:0;
+  }
+
+  .brand-copy small{
+    display:none;
+  }
+
+  .nav-status{
+    display:none;
+  }
+
+  .section{
+    padding:75px 0;
+  }
+
+  .hero-title{
+    font-size:48px;
+
+    letter-spacing:-2px;
+  }
+
+  .hero-description{
+    font-size:14px;
+  }
+
+  .mission-strip-inner{
+    grid-template-columns:1fr;
+  }
+
+  .mission-step{
+    border-right:0;
+
+    border-bottom:
+      1px solid var(--line);
+  }
+
+  .mission-step:last-child{
+    border-bottom:0;
+  }
+
+  .architecture-main{
+    padding:25px;
+  }
+
+  .arch-flow{
+    grid-template-columns:1fr;
+  }
+
+  .arch-node::after{
+    display:none !important;
+  }
+
+  .phase-index{
+    grid-template-columns:
+      1fr 1fr;
+  }
+
+  .phase-index a:nth-child(3n){
+    border-right:
+      1px solid var(--line);
+  }
+
+  .phase-index a:nth-child(2n){
+    border-right:0;
+  }
+
+  .phase-image{
+    min-height:300px;
+    padding:12px;
+  }
+
+  .phase-image-frame{
+    min-height:270px;
+  }
+
+  .phase-image img{
+    min-height:270px;
+  }
+
+  .phase-content{
+    padding:30px 23px;
+  }
+
+  .phase-header{
+    flex-direction:column;
+  }
+
+  .phase-number{
+    font-size:50px;
+  }
+
+  .phase-content h3{
+    font-size:26px;
+  }
+
+  .phase-details{
+    grid-template-columns:1fr;
+  }
+
+  .record-grid,
+  .boundary-grid{
+    grid-template-columns:1fr;
+  }
+
+  .state-chain{
+    grid-template-columns:
+      1fr 1fr;
+  }
+
+  .state:nth-child(3n){
+    border-right:
+      1px solid var(--line);
+  }
+
+  .state:nth-child(2n){
+    border-right:0;
+  }
+
+  .final-callout{
+    padding:35px 27px;
+  }
+
+  .footer-grid{
+    grid-template-columns:1fr;
+  }
+
+  .footer-meta{
+    text-align:left;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+  html{
+    scroll-behavior:auto;
+  }
+
+  *,
+  *::before,
+  *::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+
+  .reveal,
+  .phase{
+    opacity:1 !important;
+    transform:none !important;
+  }
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="page-grid"></div>
+
+
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
+
+<header class="site-header">
+
+  <div class="nav-shell">
+
+    <a class="brand" href="index.html">
+
+      <span class="brand-mark">
+        <span>A1</span>
+      </span>
+
+      <span class="brand-copy">
+        <strong>ADCS</strong>
+        <small>AUTONOMOUS ORBITAL OPERATIONS</small>
+      </span>
+
+    </a>
+
+
+    <nav class="primary-nav">
+
+      <a href="index.html">
+        Home
+      </a>
+
+      <a
+        class="active"
+        href="system_operation.html"
+      >
+        Mission Dossier
+      </a>
+
+      <a href="foc.html">
+        Flight Operations Centre
+      </a>
+
+      <a href="orbitview.html">
+        OrbitView
+      </a>
+
+      <a
+        class="live"
+        href="simulation.html"
+      >
+        <span class="live-dot"></span>
+        Live Simulation
+      </a>
+
+    </nav>
+
+
+    <div class="nav-status">
+      SYSTEM NOMINAL
+    </div>
+
+
+    <button
+      class="menu-button"
+      id="menuButton"
+      type="button"
+    >
+      MENU
+    </button>
+
+  </div>
+
+
+  <nav
+    class="mobile-nav"
+    id="mobileNav"
+  >
+
+    <a href="index.html">
+      Home
+    </a>
+
+    <a href="system_operation.html">
+      Mission Dossier
+    </a>
+
+    <a href="foc.html">
+      Flight Operations Centre
+    </a>
+
+    <a href="orbitview.html">
+      OrbitView
+    </a>
+
+    <a href="simulation.html">
+      Live Simulation
+    </a>
+
+  </nav>
+
+</header>
+
+
+
+<main>
+
+
+<!-- =====================================================
+     HERO
+     ===================================================== -->
+
+<section class="dossier-hero">
+
+  <div class="hero-orbit"></div>
+
+  <div class="hero-satellite"></div>
+
+  <div class="hero-target"></div>
+
+  <div class="hero-vector"></div>
+
+
+  <div class="container">
+
+    <div class="hero-content reveal reveal-left">
+
+      <div class="hero-code">
+        02 / MISSION DOSSIER / ADCS-01
+      </div>
+
+      <h1 class="hero-title">
+        Mission
+        <span>Dossier</span>
+      </h1>
+
+      <p class="hero-description">
+
+        The mission sequence defines how the
+        Autonomous Space Debris Monitoring &amp;
+        Capture System moves from orbital
+        surveillance to target assessment,
+        rendezvous, controlled capture and
+        post-capture containment.
+
+        <br><br>
+
+        Each phase identifies the engineering
+        purpose, required information, decision
+        point and expected state transition.
+
+      </p>
+
+
+      <div class="hero-tags">
+
+        <span class="hero-tag">
+          ADCS-01
+        </span>
+
+        <span class="hero-tag">
+          LEO
+        </span>
+
+        <span class="hero-tag">
+          15-PHASE MISSION MODEL
+        </span>
+
+        <span class="hero-tag">
+          SIMULATION / PROTOTYPE
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     MISSION LOGIC STRIP
+     ===================================================== -->
+
+<section class="mission-strip">
+
+  <div class="container mission-strip-inner">
+
+    <div class="mission-step reveal reveal-up">
+      <div class="mission-step-number">
+        01
+      </div>
+
+      <h3>OBSERVE</h3>
+
+      <p>
+        Establish the monitored orbital picture.
+      </p>
+    </div>
+
+
+    <div class="mission-step reveal reveal-up">
+      <div class="mission-step-number">
+        02
+      </div>
+
+      <h3>ESTIMATE</h3>
+
+      <p>
+        Determine object identity and state.
+      </p>
+    </div>
+
+
+    <div class="mission-step reveal reveal-up">
+      <div class="mission-step-number">
+        03
+      </div>
+
+      <h3>DECIDE</h3>
+
+      <p>
+        Evaluate risk and capture feasibility.
+      </p>
+    </div>
+
+
+    <div class="mission-step reveal reveal-up">
+      <div class="mission-step-number">
+        04
+      </div>
+
+      <h3>ACT</h3>
+
+      <p>
+        Execute rendezvous and capture operations.
+      </p>
+    </div>
+
+
+    <div class="mission-step reveal reveal-up">
+      <div class="mission-step-number">
+        05
+      </div>
+
+      <h3>VERIFY</h3>
+
+      <p>
+        Confirm the resulting state before reset.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     MISSION ARCHITECTURE
+     ===================================================== -->
+
+<section class="section">
+
+  <div class="container">
+
+    <div class="section-head reveal reveal-up">
+
+      <div class="eyebrow">
+        MISSION ARCHITECTURE
+      </div>
+
+      <h2>
+        From orbital observation
+        <span>to controlled capture.</span>
+      </h2>
+
+      <p>
+        The mission is treated as a closed engineering
+        sequence. Information produced by one stage
+        becomes the input to the next stage, allowing
+        the system to maintain a traceable operational
+        state throughout the mission.
+      </p>
+
+    </div>
+
+
+    <div class="architecture">
+
+
+      <article class="architecture-main reveal reveal-left">
+
+        <div class="eyebrow">
+          PRIMARY MISSION CHAIN
+        </div>
+
+        <h3>
+          Observe → Assess → Approach → Capture
+        </h3>
+
+        <p>
+          The sequence begins with an orbital object
+          picture and progressively narrows the problem
+          toward one target. Relative state estimation,
+          risk assessment and capture feasibility are
+          used to control the transition into the
+          rendezvous and capture portion of the mission.
+        </p>
+
+
+        <div class="arch-flow">
+
+          <div class="arch-node">
+
+            <div class="arch-node-number">
+              01
+            </div>
+
+            <h4>
+              SURVEILLANCE
+            </h4>
+
+            <p>
+              Establish the monitored object population.
+            </p>
+
+          </div>
+
+
+          <div class="arch-node">
+
+            <div class="arch-node-number">
+              02
+            </div>
+
+            <h4>
+              ASSESSMENT
+            </h4>
+
+            <p>
+              Detect, track and estimate target state.
+            </p>
+
+          </div>
+
+
+          <div class="arch-node">
+
+            <div class="arch-node-number">
+              03
+            </div>
+
+            <h4>
+              RENDEZVOUS
+            </h4>
+
+            <p>
+              Reduce relative separation under constraints.
+            </p>
+
+          </div>
+
+
+          <div class="arch-node">
+
+            <div class="arch-node-number">
+              04
+            </div>
+
+            <h4>
+              CAPTURE
+            </h4>
+
+            <p>
+              Secure, transfer and contain the object.
+            </p>
+
+          </div>
+
+        </div>
+
+      </article>
+
+
+      <div class="arch-side">
+
+        <article class="arch-side-panel reveal reveal-right">
+
+          <div class="eyebrow">
+            CONTROL PRINCIPLE
+          </div>
+
+          <h4>
+            State before action
+          </h4>
+
+          <p>
+            A capture action is not treated as valid
+            simply because the sequence has reached a
+            capture stage. The target state, relative
+            motion, mechanism condition and mission
+            constraints must remain consistent.
+          </p>
+
+        </article>
+
+
+        <article class="arch-side-panel reveal reveal-right">
+
+          <div class="eyebrow">
+            RECORD PRINCIPLE
+          </div>
+
+          <h4>
+            Every transition leaves a record
+          </h4>
+
+          <p>
+            Each phase defines its primary input,
+            processing function, expected output and
+            verification focus so that the mission
+            sequence remains reviewable.
+          </p>
+
+        </article>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PHASE INDEX
+     ===================================================== -->
+
+<section class="section" style="padding-top:35px;">
+
+  <div class="container">
+
+    <div class="section-head reveal reveal-up">
+
+      <div class="eyebrow">
+        15-PHASE INDEX
+      </div>
+
+      <h2>
+        Mission sequence
+        <span>at a glance.</span>
+      </h2>
+
+      <p>
+        Select a phase to move directly to its
+        engineering description.
+      </p>
+
+    </div>
+
+
+    <nav class="phase-index">
+
+      <a href="#phase-01">
+        <span class="phase-index-number">01</span>
+        <span class="phase-index-name">Surveillance</span>
+      </a>
+
+      <a href="#phase-02">
+        <span class="phase-index-number">02</span>
+        <span class="phase-index-name">Detection</span>
+      </a>
+
+      <a href="#phase-03">
+        <span class="phase-index-number">03</span>
+        <span class="phase-index-name">Tracking</span>
+      </a>
+
+      <a href="#phase-04">
+        <span class="phase-index-number">04</span>
+        <span class="phase-index-name">State estimation</span>
+      </a>
+
+      <a href="#phase-05">
+        <span class="phase-index-number">05</span>
+        <span class="phase-index-name">Risk assessment</span>
+      </a>
+
+      <a href="#phase-06">
+        <span class="phase-index-number">06</span>
+        <span class="phase-index-name">Target selection</span>
+      </a>
+
+      <a href="#phase-07">
+        <span class="phase-index-number">07</span>
+        <span class="phase-index-name">Decision</span>
+      </a>
+
+      <a href="#phase-08">
+        <span class="phase-index-number">08</span>
+        <span class="phase-index-name">Reorientation</span>
+      </a>
+
+      <a href="#phase-09">
+        <span class="phase-index-number">09</span>
+        <span class="phase-index-name">Rendezvous</span>
+      </a>
+
+      <a href="#phase-10">
+        <span class="phase-index-number">10</span>
+        <span class="phase-index-name">Controlled approach</span>
+      </a>
+
+      <a href="#phase-11">
+        <span class="phase-index-number">11</span>
+        <span class="phase-index-name">Capture configuration</span>
+      </a>
+
+      <a href="#phase-12">
+        <span class="phase-index-number">12</span>
+        <span class="phase-index-name">Robotic capture</span>
+      </a>
+
+      <a href="#phase-13">
+        <span class="phase-index-number">13</span>
+        <span class="phase-index-name">Transfer</span>
+      </a>
+
+      <a href="#phase-14">
+        <span class="phase-index-number">14</span>
+        <span class="phase-index-name">Storage</span>
+      </a>
+
+      <a href="#phase-15">
+        <span class="phase-index-number">15</span>
+        <span class="phase-index-name">Reset</span>
+      </a>
+
+    </nav>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     15 PHASE MISSION SEQUENCE
+     ===================================================== -->
+
+<section class="section phase-section">
+
+  <div class="container">
+
+    <div class="section-head reveal reveal-up">
+
+      <div class="eyebrow">
+        MISSION SEQUENCE
+      </div>
+
+      <h2>
+        Fifteen phases.
+        <span>One controlled mission.</span>
+      </h2>
+
+      <p>
+        Each phase below represents a distinct
+        engineering function in the conceptual mission.
+        The supplied phase artwork is presented as the
+        primary visual for that specific operation.
+      </p>
+
+    </div>
+
+
+    <div class="phase-list">
+
+
+      <!-- =================================================
+           PHASE 01
+           ================================================= -->
+
+      <article
+        class="phase"
+        id="phase-01"
+      >
+
+        <div class="phase-image">
+
+          <div class="phase-image-frame">
+
+            <div class="image-label">
+              PHASE 01 / ORBITAL SURVEILLANCE
+            </div>
+
+            <img
+              src="assets/Phase%201.png"
+              alt="Phase 1 — Establish the orbital picture"
+              loading="lazy"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="phase-content">
+
+          <div class="phase-header">
+
+            <div class="phase-number">
+              01
+            </div>
+
+            <div class="phase-state">
+              SURVEILLANCE
+            </div>
+
+          </div>
+
+          <h3>
+            Establish the orbital picture
+          </h3>
+
+          <p class="phase-intro">
+            Define the monitored region and build the
+            initial object set used by the mission.
+          </p>
+
+
+          <div class="phase-details">
+
+            <div class="phase-detail">
+              <small>PRIMARY INPUT</small>
+              <strong>
+                Catalog / state records
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>PROCESSING</small>
+              <strong>
+                Surveillance field
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>OUTPUT</small>
+              <strong>
+                Monitored object set
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>VERIFICATION</small>
+              <strong>
+                Coverage and timestamp
+              </strong>
+            </div>
+
+          </div>
+
+
+          <p class="phase-description">
+            The mission begins with an orbital picture
+            rather than a single target. The monitored
+            population establishes the reference from
+            which candidate objects can be identified.
+          </p>
+
+        </div>
+
+      </article>
+
+
+
+      <!-- =================================================
+           PHASE 02
+           ================================================= -->
+
+      <article
+        class="phase"
+        id="phase-02"
+      >
+
+        <div class="phase-image">
+
+          <div class="phase-image-frame">
+
+            <div class="image-label">
+              PHASE 02 / OBJECT DETECTION
+            </div>
+
+            <img
+              src="assets/Phase%202.png"
+              alt="Phase 2 — Find candidate debris"
+              loading="lazy"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="phase-content">
+
+          <div class="phase-header">
+
+            <div class="phase-number">
+              02
+            </div>
+
+            <div class="phase-state">
+              DETECTION
+            </div>
+
+          </div>
+
+          <h3>
+            Find candidate debris
+          </h3>
+
+          <p class="phase-intro">
+            Separate object signatures that require
+            continued monitoring from the surrounding
+            population.
+          </p>
+
+          <div class="phase-details">
+
+            <div class="phase-detail">
+              <small>PRIMARY INPUT</small>
+              <strong>
+                Position and motion observations
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>PROCESSING</small>
+              <strong>
+                Detection logic
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>OUTPUT</small>
+              <strong>
+                Candidate set
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>VERIFICATION</small>
+              <strong>
+                False-positive screening
+              </strong>
+            </div>
+
+          </div>
+
+          <p class="phase-description">
+            Detection reduces the broader orbital
+            population to objects that satisfy the
+            conditions for continued tracking.
+          </p>
+
+        </div>
+
+      </article>
+
+
+
+      <!-- =================================================
+           PHASE 03
+           ================================================= -->
+
+      <article
+        class="phase"
+        id="phase-03"
+      >
+
+        <div class="phase-image">
+
+          <div class="phase-image-frame">
+
+            <div class="image-label">
+              PHASE 03 / MULTI-OBJECT TRACKING
+            </div>
+
+            <img
+              src="assets/Phase%203.png"
+              alt="Phase 3 — Maintain object identity"
+              loading="lazy"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="phase-content">
+
+          <div class="phase-header">
+
+            <div class="phase-number">
+              03
+            </div>
+
+            <div class="phase-state">
+              TRACKING
+            </div>
+
+          </div>
+
+          <h3>
+            Maintain object identity
+          </h3>
+
+          <p class="phase-intro">
+            Associate observations over time so the same
+            object is not treated as a new target at every
+            update.
+          </p>
+
+          <div class="phase-details">
+
+            <div class="phase-detail">
+              <small>PRIMARY INPUT</small>
+              <strong>
+                Candidate observations
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>PROCESSING</small>
+              <strong>
+                Multi-object tracker
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>OUTPUT</small>
+              <strong>
+                Track record
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>VERIFICATION</small>
+              <strong>
+                Track continuity
+              </strong>
+            </div>
+
+          </div>
+
+          <p class="phase-description">
+            Tracking maintains continuity between
+            successive observations and provides the
+            history required for later state estimation.
+          </p>
+
+        </div>
+
+      </article>
+
+
+
+      <!-- =================================================
+           PHASE 04
+           ================================================= -->
+
+      <article
+        class="phase"
+        id="phase-04"
+      >
+
+        <div class="phase-image">
+
+          <div class="phase-image-frame">
+
+            <div class="image-label">
+              PHASE 04 / STATE ESTIMATION
+            </div>
+
+            <img
+              src="assets/Phase%204.png"
+              alt="Phase 4 — Build a usable state"
+              loading="lazy"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="phase-content">
+
+          <div class="phase-header">
+
+            <div class="phase-number">
+              04
+            </div>
+
+            <div class="phase-state">
+              STATE ESTIMATION
+            </div>
+
+          </div>
+
+          <h3>
+            Build a usable state
+          </h3>
+
+          <p class="phase-intro">
+            Produce position and velocity values in the
+            defined orbital reference frame.
+          </p>
+
+          <div class="phase-details">
+
+            <div class="phase-detail">
+              <small>PRIMARY INPUT</small>
+              <strong>
+                Track history
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>PROCESSING</small>
+              <strong>
+                State estimator
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>OUTPUT</small>
+              <strong>
+                State vector
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>VERIFICATION</small>
+              <strong>
+                Frame and units
+              </strong>
+            </div>
+
+          </div>
+
+          <p class="phase-description">
+            A consistent state representation provides
+            the numerical basis for prediction, relative
+            navigation and subsequent mission decisions.
+          </p>
+
+        </div>
+
+      </article>
+
+
+
+      <!-- =================================================
+           PHASE 05
+           ================================================= -->
+
+      <article
+        class="phase"
+        id="phase-05"
+      >
+
+        <div class="phase-image">
+
+          <div class="phase-image-frame">
+
+            <div class="image-label">
+              PHASE 05 / RISK ASSESSMENT
+            </div>
+
+            <img
+              src="assets/Phase%205.png"
+              alt="Phase 5 — Measure the operational concern"
+              loading="lazy"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="phase-content">
+
+          <div class="phase-header">
+
+            <div class="phase-number">
+              05
+            </div>
+
+            <div class="phase-state">
+              RISK ASSESSMENT
+            </div>
+
+          </div>
+
+          <h3>
+            Measure the operational concern
+          </h3>
+
+          <p class="phase-intro">
+            Evaluate separation, relative motion and
+            mission constraints before approach.
+          </p>
+
+          <div class="phase-details">
+
+            <div class="phase-detail">
+              <small>PRIMARY INPUT</small>
+              <strong>
+                Target state
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>PROCESSING</small>
+              <strong>
+                Risk model
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>OUTPUT</small>
+              <strong>
+                Risk record
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>VERIFICATION</small>
+              <strong>
+                Margin and threshold
+              </strong>
+            </div>
+
+          </div>
+
+          <p class="phase-description">
+            The target is evaluated against the mission
+            constraints before resources are committed
+            to the rendezvous sequence.
+          </p>
+
+        </div>
+
+      </article>
+
+
+
+      <!-- =================================================
+           PHASE 06
+           ================================================= -->
+
+      <article
+        class="phase"
+        id="phase-06"
+      >
+
+        <div class="phase-image">
+
+          <div class="phase-image-frame">
+
+            <div class="image-label">
+              PHASE 06 / TARGET SELECTION
+            </div>
+
+            <img
+              src="assets/Phase%206.png"
+              alt="Phase 6 — Choose one active target"
+              loading="lazy"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="phase-content">
+
+          <div class="phase-header">
+
+            <div class="phase-number">
+              06
+            </div>
+
+            <div class="phase-state">
+              TARGET SELECTION
+            </div>
+
+          </div>
+
+          <h3>
+            Choose one active target
+          </h3>
+
+          <p class="phase-intro">
+            Select the object carried forward into the
+            controlled rendezvous sequence.
+          </p>
+
+          <div class="phase-details">
+
+            <div class="phase-detail">
+              <small>PRIMARY INPUT</small>
+              <strong>
+                Candidate risk records
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>PROCESSING</small>
+              <strong>
+                Target selection logic
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>OUTPUT</small>
+              <strong>
+                Target lock
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>VERIFICATION</small>
+              <strong>
+                Target identity
+              </strong>
+            </div>
+
+          </div>
+
+          <p class="phase-description">
+            Target selection converts a multi-object
+            monitoring problem into a single controlled
+            mission sequence.
+          </p>
+
+        </div>
+
+      </article>
+
+
+
+      <!-- =================================================
+           PHASE 07
+           ================================================= -->
+
+      <article
+        class="phase"
+        id="phase-07"
+      >
+
+        <div class="phase-image">
+
+          <div class="phase-image-frame">
+
+            <div class="image-label">
+              PHASE 07 / MISSION DECISION
+            </div>
+
+            <img
+              src="assets/Phase%207.png"
+              alt="Phase 7 — Authorize or hold"
+              loading="lazy"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="phase-content">
+
+          <div class="phase-header">
+
+            <div class="phase-number">
+              07
+            </div>
+
+            <div class="phase-state">
+              DECISION
+            </div>
+
+          </div>
+
+          <h3>
+            Authorize or hold
+          </h3>
+
+          <p class="phase-intro">
+            Apply the mission rule to the current target
+            state and capture feasibility.
+          </p>
+
+          <div class="phase-details">
+
+            <div class="phase-detail">
+              <small>PRIMARY INPUT</small>
+              <strong>
+                Risk and capture assessment
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>PROCESSING</small>
+              <strong>
+                Mission decision logic
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>OUTPUT</small>
+              <strong>
+                HOLD / PROCEED / ABORT
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>VERIFICATION</small>
+              <strong>
+                Decision trace
+              </strong>
+            </div>
+
+          </div>
+
+          <p class="phase-description">
+            This is the principal mission gate. The
+            sequence advances only when the defined
+            conditions support continuation.
+          </p>
+
+        </div>
+
+      </article>
+
+
+
+      <!-- =================================================
+           PHASE 08
+           ================================================= -->
+
+      <article
+        class="phase"
+        id="phase-08"
+      >
+
+        <div class="phase-image">
+
+          <div class="phase-image-frame">
+
+            <div class="image-label">
+              PHASE 08 / ATTITUDE PREPARATION
+            </div>
+
+            <img
+              src="assets/Phase%208.jpeg"
+              alt="Phase 8 — Set the required pointing"
+              loading="lazy"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="phase-content">
+
+          <div class="phase-header">
+
+            <div class="phase-number">
+              08
+            </div>
+
+            <div class="phase-state">
+              REORIENTATION
+            </div>
+
+          </div>
+
+          <h3>
+            Set the required pointing
+          </h3>
+
+          <p class="phase-intro">
+            Place the servicer in the attitude required
+            for the next navigation or capture operation.
+          </p>
+
+          <div class="phase-details">
+
+            <div class="phase-detail">
+              <small>PRIMARY INPUT</small>
+              <strong>
+                Target geometry
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>PROCESSING</small>
+              <strong>
+                Attitude model
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>OUTPUT</small>
+              <strong>
+                Pointing state
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>VERIFICATION</small>
+              <strong>
+                Keep-out geometry
+              </strong>
+            </div>
+
+          </div>
+
+          <p class="phase-description">
+            Orientation establishes the spacecraft
+            geometry required for controlled relative
+            operations.
+          </p>
+
+        </div>
+
+      </article>
+
+
+
+      <!-- =================================================
+           PHASE 09
+           ================================================= -->
+
+      <article
+        class="phase"
+        id="phase-09"
+      >
+
+        <div class="phase-image">
+
+          <div class="phase-image-frame">
+
+            <div class="image-label">
+              PHASE 09 / RENDEZVOUS
+            </div>
+
+            <img
+              src="assets/Phase%209.jpeg"
+              alt="Phase 9 — Reduce relative separation"
+              loading="lazy"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="phase-content">
+
+          <div class="phase-header">
+
+            <div class="phase-number">
+              09
+            </div>
+
+            <div class="phase-state">
+              RENDEZVOUS
+            </div>
+
+          </div>
+
+          <h3>
+            Reduce relative separation
+          </h3>
+
+          <p class="phase-intro">
+            Plan a controlled transfer toward the target
+            while maintaining the distinction between
+            orbital coordinates and local capture
+            coordinates.
+          </p>
+
+          <div class="phase-details">
+
+            <div class="phase-detail">
+              <small>PRIMARY INPUT</small>
+              <strong>
+                Relative state
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>PROCESSING</small>
+              <strong>
+                Guidance model
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>OUTPUT</small>
+              <strong>
+                Rendezvous state
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>VERIFICATION</small>
+              <strong>
+                Relative motion
+              </strong>
+            </div>
+
+          </div>
+
+          <p class="phase-description">
+            The spacecraft is brought toward the target
+            through a controlled relative-motion sequence.
+          </p>
+
+        </div>
+
+      </article>
+
+
+
+      <!-- =================================================
+           PHASE 10
+           ================================================= -->
+
+      <article
+        class="phase"
+        id="phase-10"
+      >
+
+        <div class="phase-image">
+
+          <div class="phase-image-frame">
+
+            <div class="image-label">
+              PHASE 10 / CONTROLLED APPROACH
+            </div>
+
+            <img
+              src="assets/Phase%2010.jpeg"
+              alt="Phase 10 — Enter the capture region"
+              loading="lazy"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="phase-content">
+
+          <div class="phase-header">
+
+            <div class="phase-number">
+              10
+            </div>
+
+            <div class="phase-state">
+              CONTROLLED APPROACH
+            </div>
+
+          </div>
+
+          <h3>
+            Enter the capture region
+          </h3>
+
+          <p class="phase-intro">
+            Reduce closing motion and maintain the defined
+            approach envelope around the target.
+          </p>
+
+          <div class="phase-details">
+
+            <div class="phase-detail">
+              <small>PRIMARY INPUT</small>
+              <strong>
+                Relative position and velocity
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>PROCESSING</small>
+              <strong>
+                Approach controller
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>OUTPUT</small>
+              <strong>
+                Approach state
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>VERIFICATION</small>
+              <strong>
+                Velocity and distance limits
+              </strong>
+            </div>
+
+          </div>
+
+          <p class="phase-description">
+            The objective is to establish a controlled
+            relative geometry suitable for the selected
+            capture mechanism.
+          </p>
+
+        </div>
+
+      </article>
+
+
+
+      <!-- =================================================
+           PHASE 11
+           ================================================= -->
+
+      <article
+        class="phase"
+        id="phase-11"
+      >
+
+        <div class="phase-image">
+
+          <div class="phase-image-frame">
+
+            <div class="image-label">
+              PHASE 11 / CAPTURE CONFIGURATION
+            </div>
+
+            <img
+              src="assets/Phase%2011.jpeg"
+              alt="Phase 11 — Prepare the capture mechanism"
+              loading="lazy"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="phase-content">
+
+          <div class="phase-header">
+
+            <div class="phase-number">
+              11
+            </div>
+
+            <div class="phase-state">
+              CAPTURE CONFIGURATION
+            </div>
+
+          </div>
+
+          <h3>
+            Prepare the mechanism
+          </h3>
+
+          <p class="phase-intro">
+            Select the appropriate arm or net
+            configuration and verify readiness.
+          </p>
+
+          <div class="phase-details">
+
+            <div class="phase-detail">
+              <small>PRIMARY INPUT</small>
+              <strong>
+                Target geometry and mechanism status
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>PROCESSING</small>
+              <strong>
+                Capture configuration logic
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>OUTPUT</small>
+              <strong>
+                Capture-ready state
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>VERIFICATION</small>
+              <strong>
+                Mechanism clearance
+              </strong>
+            </div>
+
+          </div>
+
+          <p class="phase-description">
+            The spacecraft configuration is prepared
+            before the capture command is permitted.
+          </p>
+
+        </div>
+
+      </article>
+
+
+
+      <!-- =================================================
+           PHASE 12
+           ================================================= -->
+
+      <article
+        class="phase"
+        id="phase-12"
+      >
+
+        <div class="phase-image">
+
+          <div class="phase-image-frame">
+
+            <div class="image-label">
+              PHASE 12 / ROBOTIC CAPTURE
+            </div>
+
+            <img
+              src="assets/Phase%2012.jpeg"
+              alt="Phase 12 — Secure the object"
+              loading="lazy"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="phase-content">
+
+          <div class="phase-header">
+
+            <div class="phase-number">
+              12
+            </div>
+
+            <div class="phase-state">
+              ROBOTIC CAPTURE
+            </div>
+
+          </div>
+
+          <h3>
+            Secure the object
+          </h3>
+
+          <p class="phase-intro">
+            Execute the selected capture action and
+            verify that the target has been retained.
+          </p>
+
+          <div class="phase-details">
+
+            <div class="phase-detail">
+              <small>PRIMARY INPUT</small>
+              <strong>
+                Capture-ready state
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>PROCESSING</small>
+              <strong>
+                Capture controller
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>OUTPUT</small>
+              <strong>
+                Captured / abort
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>VERIFICATION</small>
+              <strong>
+                Retention check
+              </strong>
+            </div>
+
+          </div>
+
+          <p class="phase-description">
+            Capture is treated as a controlled transition
+            requiring positive confirmation of retention
+            before transfer begins.
+          </p>
+
+        </div>
+
+      </article>
+
+
+
+      <!-- =================================================
+           PHASE 13
+           ================================================= -->
+
+      <article
+        class="phase"
+        id="phase-13"
+      >
+
+        <div class="phase-image">
+
+          <div class="phase-image-frame">
+
+            <div class="image-label">
+              PHASE 13 / DEBRIS TRANSFER
+            </div>
+
+            <img
+              src="assets/Phase%2013.jpeg"
+              alt="Phase 13 — Move the object to containment"
+              loading="lazy"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="phase-content">
+
+          <div class="phase-header">
+
+            <div class="phase-number">
+              13
+            </div>
+
+            <div class="phase-state">
+              TRANSFER
+            </div>
+
+          </div>
+
+          <h3>
+            Move the object to containment
+          </h3>
+
+          <p class="phase-intro">
+            Transfer the secured object through the
+            defined local workspace.
+          </p>
+
+          <div class="phase-details">
+
+            <div class="phase-detail">
+              <small>PRIMARY INPUT</small>
+              <strong>
+                Captured object state
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>PROCESSING</small>
+              <strong>
+                Arm controller
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>OUTPUT</small>
+              <strong>
+                Transfer state
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>VERIFICATION</small>
+              <strong>
+                Workspace clearance
+              </strong>
+            </div>
+
+          </div>
+
+          <p class="phase-description">
+            The orbital target state is translated into
+            the local capture workspace used by the
+            robotic mechanism.
+          </p>
+
+        </div>
+
+      </article>
+
+
+
+      <!-- =================================================
+           PHASE 14
+           ================================================= -->
+
+      <article
+        class="phase"
+        id="phase-14"
+      >
+
+        <div class="phase-image">
+
+          <div class="phase-image-frame">
+
+            <div class="image-label">
+              PHASE 14 / STORAGE &amp; CONTAINMENT
+            </div>
+
+            <img
+              src="assets/Phase%2014.jpeg"
+              alt="Phase 14 — Confirm containment"
+              loading="lazy"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="phase-content">
+
+          <div class="phase-header">
+
+            <div class="phase-number">
+              14
+            </div>
+
+            <div class="phase-state">
+              STORAGE
+            </div>
+
+          </div>
+
+          <h3>
+            Confirm containment
+          </h3>
+
+          <p class="phase-intro">
+            Place the object in storage and update the
+            mission mass record.
+          </p>
+
+          <div class="phase-details">
+
+            <div class="phase-detail">
+              <small>PRIMARY INPUT</small>
+              <strong>
+                Transfer state
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>PROCESSING</small>
+              <strong>
+                Storage manager
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>OUTPUT</small>
+              <strong>
+                Stored state
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>VERIFICATION</small>
+              <strong>
+                Positive retention
+              </strong>
+            </div>
+
+          </div>
+
+          <p class="phase-description">
+            Successful containment closes the physical
+            capture sequence and updates the spacecraft's
+            modeled storage condition.
+          </p>
+
+        </div>
+
+      </article>
+
+
+
+      <!-- =================================================
+           PHASE 15
+           ================================================= -->
+
+      <article
+        class="phase"
+        id="phase-15"
+      >
+
+        <div class="phase-image">
+
+          <div class="phase-image-frame">
+
+            <div class="image-label">
+              PHASE 15 / MISSION RESET
+            </div>
+
+            <img
+              src="assets/Phase%2015.jpeg"
+              alt="Phase 15 — Return to monitoring"
+              loading="lazy"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="phase-content">
+
+          <div class="phase-header">
+
+            <div class="phase-number">
+              15
+            </div>
+
+            <div class="phase-state">
+              RESET
+            </div>
+
+          </div>
+
+          <h3>
+            Return to monitoring
+          </h3>
+
+          <p class="phase-intro">
+            Close the current sequence and prepare the
+            system for the next target.
+          </p>
+
+          <div class="phase-details">
+
+            <div class="phase-detail">
+              <small>PRIMARY INPUT</small>
+              <strong>
+                Stored or aborted state
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>PROCESSING</small>
+              <strong>
+                Mission manager
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>OUTPUT</small>
+              <strong>
+                Surveillance
+              </strong>
+            </div>
+
+            <div class="phase-detail">
+              <small>VERIFICATION</small>
+              <strong>
+                State reset
+              </strong>
+            </div>
+
+          </div>
+
+          <p class="phase-description">
+            The mission returns to surveillance so that
+            another object can be evaluated without
+            carrying an incomplete state from the previous
+            sequence.
+          </p>
+
+        </div>
+
+      </article>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     ENGINEERING RECORD
+     ===================================================== -->
+
+<section class="section">
+
+  <div class="container">
+
+    <div class="section-head reveal reveal-up">
+
+      <div class="eyebrow">
+        ENGINEERING CONTROL RECORD
+      </div>
+
+      <h2>
+        State changes must leave
+        <span>a reason behind.</span>
+      </h2>
+
+      <p>
+        The mission sequence is organized around
+        explicit state changes. This keeps the system
+        understandable during simulation and provides
+        a clear boundary between observation, decision
+        and physical action.
+      </p>
+
+    </div>
+
+
+    <div class="state-chain">
+
+      <div class="state">
+        <div class="state-number">01</div>
+        <div class="state-name">SEARCH</div>
+      </div>
+
+      <div class="state">
+        <div class="state-number">02</div>
+        <div class="state-name">TRACK</div>
+      </div>
+
+      <div class="state">
+        <div class="state-number">03</div>
+        <div class="state-name">APPROACH</div>
+      </div>
+
+      <div class="state">
+        <div class="state-number">04</div>
+        <div class="state-name">ALIGN</div>
+      </div>
+
+      <div class="state">
+        <div class="state-number">05</div>
+        <div class="state-name">CAPTURE</div>
+      </div>
+
+      <div class="state">
+        <div class="state-number">06</div>
+        <div class="state-name">VERIFY</div>
+      </div>
+
+      <div class="state">
+        <div class="state-number">07</div>
+        <div class="state-name">STORE</div>
+      </div>
+
+      <div class="state">
+        <div class="state-number">08</div>
+        <div class="state-name">STABILIZE</div>
+      </div>
+
+      <div class="state">
+        <div class="state-number">09</div>
+        <div class="state-name">SEARCH</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     ENGINEERING PRINCIPLES
+     ===================================================== -->
+
+<section class="section">
+
+  <div class="container">
+
+    <div class="section-head reveal reveal-up">
+
+      <div class="eyebrow">
+        ENGINEERING RECORD
+      </div>
+
+      <h2>
+        Three questions govern
+        <span>every transition.</span>
+      </h2>
+
+    </div>
+
+
+    <div class="record-grid">
+
+      <article class="record-card reveal reveal-up">
+
+        <div class="record-card-number">
+          01 / STATE
+        </div>
+
+        <h3>
+          What changed?
+        </h3>
+
+        <p>
+          The mission state identifies where the
+          sequence currently stands and prevents
+          actions from being treated as valid simply
+          because an interface control was activated.
+        </p>
+
+      </article>
+
+
+      <article class="record-card reveal reveal-up">
+
+        <div class="record-card-number">
+          02 / DECISION
+        </div>
+
+        <h3>
+          Why continue?
+        </h3>
+
+        <p>
+          Relative motion, target condition,
+          mechanism readiness and mission constraints
+          determine whether the sequence can advance.
+        </p>
+
+      </article>
+
+
+      <article class="record-card reveal reveal-up">
+
+        <div class="record-card-number">
+          03 / VERIFICATION
+        </div>
+
+        <h3>
+          How is it checked?
+        </h3>
+
+        <p>
+          Each phase defines a verification focus so
+          the resulting state can be reviewed against
+          the expected engineering condition.
+        </p>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     MODEL BOUNDARY
+     ===================================================== -->
+
+<section class="section">
+
+  <div class="container">
+
+    <div class="section-head reveal reveal-up">
+
+      <div class="eyebrow">
+        MODEL BOUNDARY
+      </div>
+
+      <h2>
+        Simulation, prototype and
+        <span>flight operation are different boundaries.</span>
+      </h2>
+
+      <p>
+        The website presents a conceptual engineering
+        system. Its mission logic and visualizations
+        should not be interpreted as evidence of
+        flight qualification or deployment.
+      </p>
+
+    </div>
+
+
+    <div class="boundary-grid">
+
+      <article class="boundary reveal reveal-left">
+
+        <div class="eyebrow">
+          01 / SIMULATION
+        </div>
+
+        <h3>
+          Computational model
+        </h3>
+
+        <p>
+          Orbital motion, target assessment,
+          prediction, mission-state transitions and
+          capture logic can be represented using
+          software models.
+        </p>
+
+        <ul>
+          <li>Orbital state representation</li>
+          <li>Target tracking</li>
+          <li>Mission decision logic</li>
+          <li>Capture-state simulation</li>
+        </ul>
+
+      </article>
+
+
+      <article class="boundary reveal reveal-up">
+
+        <div class="eyebrow">
+          02 / PROTOTYPE
+        </div>
+
+        <h3>
+          Laboratory hardware
+        </h3>
+
+        <p>
+          The robotic mechanism can be demonstrated
+          using local coordinates, inverse kinematics,
+          servo control and a laboratory capture
+          workspace.
+        </p>
+
+        <ul>
+          <li>Local capture coordinates</li>
+          <li>Inverse kinematics</li>
+          <li>Servo commands</li>
+          <li>Robotic arm control</li>
+        </ul>
+
+      </article>
+
+
+      <article class="boundary reveal reveal-right">
+
+        <div class="eyebrow">
+          03 / FLIGHT BOUNDARY
+        </div>
+
+        <h3>
+          Operational spacecraft
+        </h3>
+
+        <p>
+          Actual orbital deployment would require
+          substantially broader verification,
+          validation, safety analysis, hardware
+          qualification and mission authorization.
+        </p>
+
+        <ul>
+          <li>Flight-qualified hardware</li>
+          <li>Validated navigation</li>
+          <li>Safety and collision analysis</li>
+          <li>Mission authorization</li>
+        </ul>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FINAL MISSION STATEMENT
+     ===================================================== -->
+
+<section class="section">
+
+  <div class="container">
+
+    <div class="final-callout reveal reveal-scale">
+
+      <div class="eyebrow">
+        MISSION RECORD / ADCS-01
+      </div>
+
+      <h2>
+        Observe. Assess. Approach.
+        Capture. Verify. Reset.
+      </h2>
+
+      <p>
+        The Mission Dossier provides the engineering
+        sequence behind the visual dashboard. The
+        objective is not simply to show a capture
+        animation, but to make the chain of decisions,
+        states and verification points understandable
+        from the initial orbital picture through the
+        completion of the mission cycle.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
+
+<footer class="footer">
+
+  <div class="container footer-grid">
+
+    <div>
+
+      <div class="footer-title">
+        AUTONOMOUS SPACE DEBRIS MONITORING &amp; CAPTURE SYSTEM
+      </div>
+
+      <div class="footer-copy">
+        ADCS-01 · Mission Dossier
+      </div>
+
+      <div class="footer-legal">
+
+        © 2026 ADCS 2026 Project. All rights reserved.
+        Educational and simulation project.
+        This website and its original project materials
+        are presented for academic and demonstration
+        purposes.
+
+        <br>
+
+        <a href="legal.html">
+          Legal &amp; Notices
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <div class="footer-meta">
+
+      MISSION DOSSIER<br>
+      ENGINEERING SEQUENCE<br>
+      SIMULATION / PROTOTYPE CONTEXT<br>
+      2026
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+
+<script>
+
+/* =========================================================
+   MOBILE NAVIGATION
+   ========================================================= */
+
+const menuButton =
+  document.getElementById("menuButton");
+
+const mobileNav =
+  document.getElementById("mobileNav");
+
+
+if(menuButton && mobileNav){
+
+  menuButton.addEventListener(
+    "click",
+    () => {
+
+      mobileNav.classList.toggle("open");
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   SCROLL REVEAL
+   ========================================================= */
+
+const revealElements =
+  document.querySelectorAll(
+    ".reveal, .phase"
+  );
+
+
+const revealObserver =
+  new IntersectionObserver(
+    (entries) => {
+
+      entries.forEach(
+        (entry) => {
+
+          if(entry.isIntersecting){
+
+            entry.target.classList.add(
+              "visible"
+            );
+
+            revealObserver.unobserve(
+              entry.target
+            );
+
+          }
+
+        }
+      );
+
+    },
+    {
+      threshold:.12,
+      rootMargin:"0px 0px -40px 0px"
+    }
+  );
+
+
+revealElements.forEach(
+  element => {
+
+    revealObserver.observe(
+      element
+    );
+
+  }
+);
+
+
+/* =========================================================
+   PHASE IMAGE FALLBACK
+   ========================================================= */
+
+document
+  .querySelectorAll(".phase-image img")
+  .forEach(
+    image => {
+
+      image.addEventListener(
+        "error",
+        () => {
+
+          image.parentElement.style.background =
+            "linear-gradient(135deg,#090511,#170b27)";
+
+          image.style.opacity = "0";
+
+          const notice =
+            document.createElement("div");
+
+          notice.style.position =
+            "absolute";
+
+          notice.style.inset = "0";
+
+          notice.style.display =
+            "grid";
+
+          notice.style.placeItems =
+            "center";
+
+          notice.style.color =
+            "#ff7187";
+
+          notice.style.font =
+            "700 10px 'Space Mono', monospace";
+
+          notice.style.letterSpacing =
+            ".12em";
+
+          notice.textContent =
+            "PHASE VISUAL UNAVAILABLE";
+
+          image.parentElement.appendChild(
+            notice
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+/* =========================================================
+   CLOSE MOBILE NAV AFTER LINK
+   ========================================================= */
+
+document
+  .querySelectorAll(".mobile-nav a")
+  .forEach(
+    link => {
+
+      link.addEventListener(
+        "click",
+        () => {
+
+          mobileNav.classList.remove(
+            "open"
+          );
+
+        }
+      );
+
+    }
+  );
+
+</script>
+
+</body>
+</html>
