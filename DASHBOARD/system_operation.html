@@ -1,113 +1,2641 @@
-<script>
-/* =========================================================
-   MISSION DOSSIER — PHASE IMAGE REGISTRY
-   Images are stored inside:
-   DASHBOARD/assets/
-   ========================================================= */
 
-const PHASE_IMAGES = {
-    1:  "assets/Phase 1.png",
-    2:  "assets/Phase 2.png",
-    3:  "assets/Phase 3.png",
-    4:  "assets/Phase 4.png",
-    5:  "assets/Phase 5.png",
-    6:  "assets/Phase 6.png",
-    7:  "assets/Phase 7.png",
-    8:  "assets/Phase 8.jpeg",
-    9:  "assets/Phase 9.jpeg",
-    10: "assets/Phase 10.jpeg",
-    11: "assets/Phase 11.jpeg",
-    12: "assets/Phase 12.jpeg",
-    13: "assets/Phase 13.jpeg",
-    14: "assets/Phase 14.jpeg",
-    15: "assets/Phase 15.jpeg"
-};
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <meta
+    name="description"
+    content="Mission dossier for the Autonomous Space Debris Monitoring and Capture System (ADCS), covering mission objectives, autonomous guidance, target assessment, robotic capture, containment, and disposal."
+  >
 
-/* =========================================================
-   LOAD A PHASE IMAGE
-   ========================================================= */
+  <meta name="theme-color" content="#101a30">
+  <title>Mission Dossier | ADCS</title>
 
-function loadPhaseImage(phaseNumber, container) {
+  <link rel="stylesheet" href="assets/site.css">
 
-    if (!container) return;
+  <style>
+    /* =========================================================
+       ADCS MISSION DOSSIER
+       Page-specific styling. Shared site.css remains untouched.
+       ========================================================= */
 
-    const imagePath = PHASE_IMAGES[phaseNumber];
-
-    if (!imagePath) {
-        container.innerHTML = `
-            <div class="phase-image-error">
-                PHASE IMAGE UNAVAILABLE
-            </div>
-        `;
-        return;
+    :root {
+      --md-bg: #0a1325;
+      --md-panel: rgba(18, 32, 55, 0.78);
+      --md-panel-strong: rgba(22, 39, 65, 0.94);
+      --md-border: rgba(157, 190, 232, 0.17);
+      --md-text: #edf4ff;
+      --md-muted: #a8b9d2;
+      --md-cyan: #70ddf4;
+      --md-blue: #8dafff;
+      --md-violet: #c0a9ff;
+      --md-green: #8fe4c1;
+      --md-amber: #ffd18a;
+      --md-radius: 22px;
+      --md-width: 1220px;
+      --md-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
     }
 
-    const img = new Image();
+    .md-page {
+      min-height: 100vh;
+      color: var(--md-text);
+      background:
+        radial-gradient(ellipse at 12% 9%, rgba(67, 115, 186, 0.17), transparent 36%),
+        radial-gradient(ellipse at 89% 28%, rgba(103, 84, 179, 0.12), transparent 34%),
+        linear-gradient(145deg, #0b1426 0%, #101c32 46%, #0a1427 100%);
+      overflow: clip;
+    }
 
-    img.className = "phase-image";
+    .md-page *,
+    .md-page *::before,
+    .md-page *::after {
+      box-sizing: border-box;
+    }
 
-    img.alt =
-        `Mission Dossier Phase ${String(phaseNumber).padStart(2, "0")} engineering visualization`;
+    .md-container {
+      width: min(var(--md-width), calc(100% - 44px));
+      margin-inline: auto;
+    }
 
-    /*
-       encodeURI converts spaces in filenames such as:
+    .md-section {
+      position: relative;
+      padding: 82px 0;
+      scroll-margin-top: 100px;
+    }
 
-       Phase 1.png
+    .md-section + .md-section {
+      border-top: 1px solid rgba(171, 199, 234, 0.07);
+    }
 
-       into:
+    .md-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--md-cyan);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
 
-       Phase%201.png
+    .md-eyebrow::before {
+      content: "";
+      width: 24px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--md-cyan), transparent);
+    }
 
-       without changing the actual filename.
-    */
-    img.src = encodeURI(imagePath);
+    .md-heading {
+      max-width: 800px;
+      margin: 16px 0 18px;
+      font-size: clamp(2rem, 4.4vw, 3.55rem);
+      line-height: 1.08;
+      letter-spacing: -0.045em;
+      font-weight: 760;
+    }
 
-    img.onload = function () {
+    .md-heading span {
+      color: var(--md-cyan);
+    }
 
-        container.innerHTML = "";
+    .md-lead {
+      max-width: 760px;
+      margin: 0;
+      color: var(--md-muted);
+      font-size: 1.02rem;
+      line-height: 1.85;
+    }
 
-        container.appendChild(img);
+    .md-section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 30px;
+      margin-bottom: 34px;
+    }
 
-        container.classList.add("image-loaded");
-    };
+    .md-section-head .md-lead {
+      max-width: 470px;
+      font-size: 0.94rem;
+    }
 
-    img.onerror = function () {
+    .md-card {
+      min-width: 0;
+      border: 1px solid var(--md-border);
+      border-radius: var(--md-radius);
+      background: linear-gradient(
+        145deg,
+        rgba(28, 47, 75, 0.76),
+        rgba(13, 25, 44, 0.84)
+      );
+      box-shadow: var(--md-shadow);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
 
-        console.error(
-            `Mission Dossier: unable to load phase image ${phaseNumber}`,
-            imagePath
+    .md-card-pad {
+      padding: 25px;
+    }
+
+    .md-small-label {
+      color: var(--md-muted);
+      font-size: 0.73rem;
+      font-weight: 750;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .md-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      width: fit-content;
+      padding: 7px 11px;
+      border: 1px solid rgba(112, 221, 244, 0.24);
+      border-radius: 999px;
+      background: rgba(112, 221, 244, 0.075);
+      color: #c9f5ff;
+      font-size: 0.72rem;
+      font-weight: 750;
+      letter-spacing: 0.045em;
+    }
+
+    .md-chip-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--md-cyan);
+      box-shadow: 0 0 12px rgba(112, 221, 244, 0.7);
+    }
+
+    /* HERO */
+
+    .md-hero {
+      position: relative;
+      display: grid;
+      align-items: center;
+      min-height: 580px;
+      padding: 88px 0 72px;
+      isolation: isolate;
+    }
+
+    .md-hero::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 72% 43%, rgba(65, 133, 206, 0.21), transparent 34%),
+        radial-gradient(ellipse at 90% 65%, rgba(116, 94, 191, 0.17), transparent 30%);
+      pointer-events: none;
+    }
+
+    .md-hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(270px, 0.75fr);
+      gap: 46px;
+      align-items: center;
+    }
+
+    .md-hero h1 {
+      max-width: 790px;
+      margin: 23px 0;
+      font-size: clamp(2.55rem, 5.5vw, 5.05rem);
+      line-height: 1.02;
+      letter-spacing: -0.058em;
+      font-weight: 800;
+    }
+
+    .md-hero h1 span {
+      display: block;
+      margin-top: 10px;
+      color: var(--md-cyan);
+    }
+
+    .md-hero-copy {
+      max-width: 700px;
+      color: #b7c8df;
+      font-size: 1.04rem;
+      line-height: 1.9;
+    }
+
+    .md-hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .md-button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 9px;
+      min-height: 47px;
+      padding: 12px 19px;
+      border: 1px solid rgba(144, 191, 236, 0.25);
+      border-radius: 12px;
+      background: rgba(25, 44, 72, 0.72);
+      color: var(--md-text);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 750;
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+    }
+
+    .md-button:hover {
+      transform: translateY(-3px);
+      border-color: rgba(112, 221, 244, 0.6);
+      background: rgba(39, 69, 105, 0.92);
+    }
+
+    .md-button-primary {
+      color: #081827;
+      border-color: transparent;
+      background: linear-gradient(110deg, #85e8f4, #9ebaff);
+    }
+
+    .md-button-primary:hover {
+      background: linear-gradient(110deg, #a0f1fb, #b4c8ff);
+    }
+
+    .md-hero-visual {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 350px;
+      border: 1px solid rgba(145, 188, 230, 0.17);
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at 50% 48%, rgba(74, 147, 211, 0.19), transparent 52%),
+        linear-gradient(150deg, rgba(24, 45, 73, 0.72), rgba(11, 22, 40, 0.62));
+      box-shadow: var(--md-shadow);
+      overflow: hidden;
+    }
+
+    .md-orbit {
+      position: absolute;
+      width: 83%;
+      aspect-ratio: 1;
+      border: 1px solid rgba(112, 221, 244, 0.29);
+      border-radius: 50%;
+      transform: rotateX(62deg) rotateZ(-22deg);
+    }
+
+    .md-orbit-two {
+      width: 65%;
+      border-color: rgba(192, 169, 255, 0.3);
+      transform: rotateX(64deg) rotateZ(43deg);
+    }
+
+    .md-orbit-three {
+      width: 96%;
+      border-color: rgba(141, 175, 255, 0.14);
+      transform: rotateX(65deg) rotateZ(8deg);
+    }
+
+    .md-core {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: 125px;
+      aspect-ratio: 1;
+      border: 1px solid rgba(145, 232, 249, 0.58);
+      border-radius: 30px;
+      background: linear-gradient(145deg, #315e82, #162e50 65%, #111f3a);
+      box-shadow: 0 0 65px rgba(80, 178, 230, 0.25), inset 0 0 26px rgba(141, 219, 244, 0.12);
+      transform: rotate(12deg);
+    }
+
+    .md-core-inner {
+      display: grid;
+      place-items: center;
+      width: 74px;
+      aspect-ratio: 1;
+      border: 1px solid rgba(199, 243, 255, 0.6);
+      border-radius: 18px;
+      color: #d9f9ff;
+      font-size: 1.5rem;
+      font-weight: 850;
+      transform: rotate(-12deg);
+    }
+
+    .md-orbit-point {
+      position: absolute;
+      z-index: 2;
+      width: 11px;
+      height: 11px;
+      border: 2px solid #d5faff;
+      border-radius: 50%;
+      background: var(--md-cyan);
+      box-shadow: 0 0 22px rgba(112, 221, 244, 0.9);
+    }
+
+    .md-point-a { top: 20%; left: 28%; }
+    .md-point-b { right: 15%; top: 44%; background: var(--md-violet); }
+    .md-point-c { left: 22%; bottom: 22%; background: var(--md-amber); }
+
+    .md-visual-caption {
+      position: absolute;
+      bottom: 18px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      color: #b4c9e3;
+      font-size: 0.73rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .md-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: -12px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .md-metric {
+      padding: 21px 22px;
+      border: 1px solid var(--md-border);
+      border-radius: 17px;
+      background: rgba(16, 31, 52, 0.88);
+    }
+
+    .md-metric strong {
+      display: block;
+      margin: 7px 0;
+      font-size: clamp(1.2rem, 2vw, 1.75rem);
+      letter-spacing: -0.035em;
+    }
+
+    .md-metric p {
+      margin: 0;
+      color: var(--md-muted);
+      font-size: 0.82rem;
+      line-height: 1.6;
+    }
+
+    /* QUICK NAVIGATION */
+
+    .md-quicknav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 26px;
+    }
+
+    .md-quicknav a {
+      padding: 10px 13px;
+      border: 1px solid rgba(158, 190, 230, 0.15);
+      border-radius: 999px;
+      background: rgba(17, 32, 53, 0.6);
+      color: #c4d5ea;
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: border-color 160ms ease, color 160ms ease;
+    }
+
+    .md-quicknav a:hover {
+      color: var(--md-cyan);
+      border-color: rgba(112, 221, 244, 0.48);
+    }
+
+    /* PROBLEM AND OBJECTIVES */
+
+    .md-two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 20px;
+    }
+
+    .md-problem-card {
+      padding: 30px;
+      border-top: 3px solid rgba(255, 209, 138, 0.7);
+    }
+
+    .md-objective-card {
+      padding: 30px;
+      border-top: 3px solid rgba(112, 221, 244, 0.7);
+    }
+
+    .md-card h3 {
+      margin: 13px 0 12px;
+      font-size: 1.28rem;
+      letter-spacing: -0.02em;
+    }
+
+    .md-card p {
+      color: var(--md-muted);
+      line-height: 1.8;
+      font-size: 0.92rem;
+    }
+
+    .md-list {
+      display: grid;
+      gap: 12px;
+      margin: 20px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .md-list li {
+      position: relative;
+      padding-left: 25px;
+      color: #c8d7e9;
+      line-height: 1.7;
+      font-size: 0.9rem;
+    }
+
+    .md-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 1px;
+      color: var(--md-green);
+      font-weight: 900;
+    }
+
+    /* ARCHITECTURE */
+
+    .md-architecture {
+      padding: 30px;
+    }
+
+    .md-architecture-intro {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    .md-architecture-flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 11px;
+      align-items: stretch;
+    }
+
+    .md-arch-step {
+      position: relative;
+      padding: 18px 15px;
+      border: 1px solid rgba(153, 187, 227, 0.18);
+      border-radius: 15px;
+      background: rgba(9, 21, 38, 0.62);
+    }
+
+    .md-arch-step:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      top: 50%;
+      right: -12px;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #142b47;
+      color: var(--md-cyan);
+      font-weight: 900;
+      transform: translateY(-50%);
+    }
+
+    .md-step-no {
+      color: var(--md-cyan);
+      font-size: 0.72rem;
+      font-weight: 850;
+      letter-spacing: 0.12em;
+    }
+
+    .md-arch-step h4 {
+      margin: 12px 0 8px;
+      font-size: 0.93rem;
+    }
+
+    .md-arch-step p {
+      margin: 0;
+      font-size: 0.8rem;
+      line-height: 1.65;
+    }
+
+    .md-architecture-note {
+      margin-top: 19px;
+      padding: 14px 16px;
+      border-left: 3px solid var(--md-blue);
+      border-radius: 0 10px 10px 0;
+      background: rgba(141, 175, 255, 0.07);
+      color: #c4d5ec;
+      font-size: 0.86rem;
+      line-height: 1.75;
+    }
+
+    /* SUBSYSTEMS */
+
+    .md-subsystem-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 15px;
+    }
+
+    .md-subsystem {
+      padding: 23px;
+      transition: transform 180ms ease, border-color 180ms ease;
+    }
+
+    .md-subsystem:hover {
+      transform: translateY(-5px);
+      border-color: rgba(112, 221, 244, 0.35);
+    }
+
+    .md-sub-icon {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(112, 221, 244, 0.23);
+      border-radius: 14px;
+      background: rgba(112, 221, 244, 0.08);
+      color: var(--md-cyan);
+      font-size: 1.2rem;
+    }
+
+    .md-subsystem h3 {
+      margin-top: 20px;
+      font-size: 1.03rem;
+    }
+
+    .md-subsystem p {
+      font-size: 0.85rem;
+    }
+
+    /* CAPTURE ARCHITECTURE */
+
+    .md-capture-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .md-capture-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 27px;
+      overflow: hidden;
+    }
+
+    .md-capture-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--md-cyan), transparent);
+    }
+
+    .md-capture-card:nth-child(2)::before {
+      background: linear-gradient(90deg, var(--md-violet), transparent);
+    }
+
+    .md-capture-card:nth-child(3)::before {
+      background: linear-gradient(90deg, var(--md-green), transparent);
+    }
+
+    .md-capture-number {
+      color: rgba(196, 220, 250, 0.55);
+      font-size: 0.75rem;
+      font-weight: 850;
+      letter-spacing: 0.15em;
+    }
+
+    .md-capture-title {
+      margin: 14px 0 9px;
+      font-size: 1.22rem;
+    }
+
+    .md-capture-tag {
+      align-self: flex-start;
+      margin: 2px 0 12px;
+      padding: 6px 9px;
+      border-radius: 8px;
+      background: rgba(112, 221, 244, 0.08);
+      color: #bceef8;
+      font-size: 0.73rem;
+      font-weight: 750;
+    }
+
+    .md-capture-card:nth-child(2) .md-capture-tag {
+      color: #d7caff;
+      background: rgba(192, 169, 255, 0.1);
+    }
+
+    .md-capture-card:nth-child(3) .md-capture-tag {
+      color: #baf4d9;
+      background: rgba(143, 228, 193, 0.1);
+    }
+
+    .md-capture-card .md-list {
+      margin-top: 12px;
+    }
+
+    .md-capture-card .md-list li {
+      font-size: 0.84rem;
+    }
+
+    .md-capture-caution {
+      margin-top: 20px;
+      padding: 18px 20px;
+      border: 1px solid rgba(255, 209, 138, 0.2);
+      border-radius: 14px;
+      background: rgba(255, 209, 138, 0.055);
+      color: #e6d4b8;
+      font-size: 0.86rem;
+      line-height: 1.8;
+    }
+
+    /* CENTRAL NET SEQUENCE */
+
+    .md-net-flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 27px;
+    }
+
+    .md-net-step {
+      position: relative;
+      padding: 18px;
+      border: 1px solid rgba(192, 169, 255, 0.18);
+      border-radius: 14px;
+      background: rgba(21, 30, 55, 0.7);
+    }
+
+    .md-net-step strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #e0d7ff;
+      font-size: 0.88rem;
+    }
+
+    .md-net-step span {
+      display: block;
+      color: var(--md-muted);
+      font-size: 0.8rem;
+      line-height: 1.7;
+    }
+
+    /* GNC */
+
+    .md-gnc-flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .md-gnc-item {
+      position: relative;
+      padding: 21px 17px;
+      border: 1px solid rgba(112, 221, 244, 0.18);
+      border-radius: 15px;
+      background: linear-gradient(150deg, rgba(26, 48, 75, 0.76), rgba(12, 26, 45, 0.82));
+    }
+
+    .md-gnc-item .md-step-no {
+      display: block;
+      margin-bottom: 13px;
+    }
+
+    .md-gnc-item h3 {
+      margin: 0 0 9px;
+      font-size: 0.98rem;
+    }
+
+    .md-gnc-item p {
+      margin: 0;
+      font-size: 0.81rem;
+      line-height: 1.7;
+    }
+
+    .md-gnc-detail {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+      margin-top: 18px;
+    }
+
+    .md-gnc-detail > div {
+      padding: 21px;
+      border: 1px solid var(--md-border);
+      border-radius: 15px;
+      background: rgba(14, 27, 46, 0.65);
+    }
+
+    .md-gnc-detail h4 {
+      margin: 0 0 8px;
+      color: #d6e8ff;
+      font-size: 0.93rem;
+    }
+
+    .md-gnc-detail p {
+      margin: 0;
+      font-size: 0.84rem;
+    }
+
+    /* MISSION PHASES */
+
+    .md-phase-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 22px;
+    }
+
+    .md-phase-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .md-filter-btn {
+      padding: 9px 12px;
+      border: 1px solid rgba(150, 187, 228, 0.18);
+      border-radius: 10px;
+      background: rgba(15, 29, 49, 0.8);
+      color: #b7c9df;
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.79rem;
+      transition: background 160ms ease, border-color 160ms ease;
+    }
+
+    .md-filter-btn:hover,
+    .md-filter-btn.is-active {
+      border-color: rgba(112, 221, 244, 0.45);
+      background: rgba(112, 221, 244, 0.1);
+      color: #d8f9ff;
+    }
+
+    .md-phase-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .md-phase-card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--md-border);
+      border-radius: 18px;
+      background: rgba(14, 27, 46, 0.86);
+      transition: transform 200ms ease, border-color 200ms ease;
+    }
+
+    .md-phase-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(112, 221, 244, 0.36);
+    }
+
+    .md-phase-card[hidden] {
+      display: none !important;
+    }
+
+    .md-phase-image-wrap {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: linear-gradient(135deg, #172b47, #0a1527);
+    }
+
+    .md-phase-image-wrap img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 350ms ease;
+    }
+
+    .md-phase-card:hover .md-phase-image-wrap img {
+      transform: scale(1.035);
+    }
+
+    .md-phase-image-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 45% 0 0;
+      background: linear-gradient(transparent, rgba(5, 12, 24, 0.45));
+      pointer-events: none;
+    }
+
+    .md-phase-index {
+      position: absolute;
+      top: 13px;
+      left: 13px;
+      z-index: 1;
+      padding: 7px 10px;
+      border: 1px solid rgba(219, 239, 255, 0.18);
+      border-radius: 8px;
+      background: rgba(7, 17, 31, 0.78);
+      color: #e8f8ff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      backdrop-filter: blur(8px);
+    }
+
+    .md-phase-content {
+      padding: 20px;
+    }
+
+    .md-phase-category {
+      color: var(--md-cyan);
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .md-phase-content h3 {
+      margin: 9px 0 8px;
+      font-size: 1.04rem;
+    }
+
+    .md-phase-content p {
+      margin: 0;
+      font-size: 0.84rem;
+      line-height: 1.75;
+    }
+
+    .md-phase-outcome {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 15px;
+      padding-top: 13px;
+      border-top: 1px solid rgba(157, 190, 232, 0.11);
+      color: #b8d4e8;
+      font-size: 0.77rem;
+      line-height: 1.65;
+    }
+
+    .md-phase-outcome span {
+      color: var(--md-green);
+      font-weight: 900;
+    }
+
+    .md-phase-note {
+      margin-top: 23px;
+      padding: 17px 19px;
+      border: 1px solid rgba(141, 175, 255, 0.2);
+      border-radius: 14px;
+      background: rgba(141, 175, 255, 0.06);
+      color: #c7d8ef;
+      font-size: 0.84rem;
+      line-height: 1.8;
+    }
+
+    /* DATA AND UNCERTAINTY */
+
+    .md-data-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .md-data-card {
+      padding: 27px;
+    }
+
+    .md-data-card h3 {
+      margin-top: 0;
+    }
+
+    .md-data-tag {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--md-green);
+      font-size: 0.71rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .md-data-card:nth-child(2) .md-data-tag {
+      color: var(--md-amber);
+    }
+
+    .md-data-callout {
+      margin-top: 17px;
+      padding: 15px;
+      border-radius: 12px;
+      background: rgba(9, 20, 35, 0.7);
+      color: #c0d2e8;
+      font-size: 0.84rem;
+      line-height: 1.8;
+    }
+
+    /* REVIEW CHECKLIST */
+
+    .md-review-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+    }
+
+    .md-review-item {
+      padding: 23px;
+    }
+
+    .md-review-item .md-small-label {
+      color: var(--md-cyan);
+    }
+
+    .md-review-item h3 {
+      margin: 12px 0 8px;
+      font-size: 1.02rem;
+    }
+
+    .md-review-item p {
+      margin-bottom: 0;
+      font-size: 0.85rem;
+    }
+
+    .md-status-note {
+      margin-top: 20px;
+      padding: 17px 19px;
+      border: 1px solid rgba(255, 209, 138, 0.22);
+      border-radius: 13px;
+      background: rgba(255, 209, 138, 0.055);
+      color: #e5d5bd;
+      font-size: 0.84rem;
+      line-height: 1.8;
+    }
+
+    /* FOOTER */
+
+    .md-footer {
+      padding: 30px 0 34px;
+      border-top: 1px solid rgba(171, 199, 234, 0.12);
+      background: rgba(5, 12, 23, 0.5);
+    }
+
+    .md-footer-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      align-items: flex-start;
+    }
+
+    .md-footer-title {
+      margin: 0 0 9px;
+      font-size: 0.93rem;
+    }
+
+    .md-footer p {
+      max-width: 790px;
+      margin: 0;
+      color: #9fb2cb;
+      font-size: 0.79rem;
+      line-height: 1.8;
+    }
+
+    .md-footer a {
+      color: var(--md-cyan);
+      text-decoration: none;
+    }
+
+    .md-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .md-footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 0.8rem;
+    }
+
+    .md-footer-bottom {
+      margin-top: 23px;
+      padding-top: 17px;
+      border-top: 1px solid rgba(171, 199, 234, 0.08);
+      color: #7f93ad;
+      font-size: 0.72rem;
+      line-height: 1.7;
+    }
+
+    /* SCROLL REVEAL */
+
+    .md-reveal {
+      opacity: 1;
+      transform: none;
+    }
+
+    .md-motion-ready .md-reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 650ms ease, transform 650ms ease;
+    }
+
+    .md-motion-ready .md-reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .md-motion-ready .md-reveal,
+      .md-motion-ready .md-reveal.is-visible,
+      .md-phase-card,
+      .md-phase-image-wrap img,
+      .md-button,
+      .md-subsystem {
+        transition: none !important;
+        transform: none !important;
+      }
+
+      html {
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 1000px) {
+      .md-hero-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(230px, 0.7fr);
+        gap: 25px;
+      }
+
+      .md-subsystem-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .md-architecture-flow {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .md-arch-step::after {
+        display: none !important;
+      }
+
+      .md-phase-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .md-net-flow {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .md-metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .md-container {
+        width: min(100% - 30px, var(--md-width));
+      }
+
+      .md-section {
+        padding: 61px 0;
+      }
+
+      .md-section-head {
+        display: block;
+      }
+
+      .md-section-head .md-lead {
+        margin-top: 15px;
+      }
+
+      .md-hero {
+        min-height: auto;
+        padding: 68px 0 50px;
+      }
+
+      .md-hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .md-hero-visual {
+        min-height: 285px;
+      }
+
+      .md-hero h1 {
+        font-size: clamp(2.35rem, 10vw, 3.5rem);
+      }
+
+      .md-two-col,
+      .md-capture-grid,
+      .md-data-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .md-architecture-intro {
+        grid-template-columns: 1fr;
+      }
+
+      .md-architecture-flow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .md-gnc-flow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .md-gnc-detail {
+        grid-template-columns: 1fr;
+      }
+
+      .md-net-flow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .md-review-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .md-footer-top {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .md-metrics {
+        grid-template-columns: 1fr 1fr;
+        gap: 9px;
+      }
+
+      .md-metric {
+        padding: 16px;
+      }
+
+      .md-phase-grid,
+      .md-subsystem-grid,
+      .md-architecture-flow,
+      .md-gnc-flow,
+      .md-net-flow {
+        grid-template-columns: 1fr;
+      }
+
+      .md-card-pad,
+      .md-architecture,
+      .md-data-card,
+      .md-problem-card,
+      .md-objective-card {
+        padding: 21px;
+      }
+
+      .md-phase-toolbar {
+        align-items: flex-start;
+      }
+
+      .md-hero-actions .md-button {
+        width: 100%;
+      }
+
+      .md-visual-caption {
+        font-size: 0.64rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="md-page" id="top">
+
+    <!-- =======================================================
+         SITE NAVIGATION
+         Keep the navigation consistent across all ADCS pages.
+         ======================================================= -->
+    <header>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a class="site-brand" href="index.html" aria-label="ADCS Home">
+          <span class="site-brand-mark" aria-hidden="true">A</span>
+          <span class="site-brand-text">
+            <strong>ADCS</strong>
+            <small>MISSION SYSTEMS</small>
+          </span>
+        </a>
+
+        <button
+          class="site-menu-toggle"
+          type="button"
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+          aria-controls="site-navigation"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <div class="site-nav-links" id="site-navigation">
+          <a href="index.html">HOME</a>
+          <a href="system_operation.html" aria-current="page" class="active">MISSION DOSSIER</a>
+          <a href="foc.html">FOC</a>
+          <a href="simulation.html">SIMULATION</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+
+      <!-- =======================================================
+           01 — HERO
+           ======================================================= -->
+      <section class="md-hero">
+        <div class="md-container md-hero-grid">
+
+          <div class="md-reveal">
+            <span class="md-chip">
+              <span class="md-chip-dot"></span>
+              MISSION DOSSIER · ADCS-01
+            </span>
+
+            <h1>
+              Autonomous Space Debris
+              <span>Monitoring and Capture System</span>
+            </h1>
+
+            <p class="md-hero-copy">
+              A conceptual autonomous orbital-servicing system for detecting,
+              assessing, approaching, capturing, containing, and managing
+              selected space debris in low Earth orbit. This dossier describes
+              the proposed mission workflow, sensing and guidance architecture,
+              capture mechanisms, and onboard decision sequence.
+            </p>
+
+            <div class="md-hero-actions">
+              <a class="md-button md-button-primary" href="#mission-lifecycle">
+                Explore Mission Phases <span aria-hidden="true">↘</span>
+              </a>
+              <a class="md-button" href="#capture-architecture">
+                View Capture Architecture
+              </a>
+            </div>
+
+            <nav class="md-quicknav" aria-label="Mission dossier sections">
+              <a href="#mission-objective">Mission objective</a>
+              <a href="#system-architecture">System architecture</a>
+              <a href="#capture-architecture">Capture systems</a>
+              <a href="#guidance-control">Guidance and control</a>
+              <a href="#mission-lifecycle">15 mission phases</a>
+            </nav>
+          </div>
+
+          <div class="md-hero-visual md-reveal" role="img" aria-label="Abstract orbital mission illustration showing a central servicing spacecraft and orbital paths">
+            <div class="md-orbit md-orbit-three"></div>
+            <div class="md-orbit"></div>
+            <div class="md-orbit md-orbit-two"></div>
+            <span class="md-orbit-point md-point-a"></span>
+            <span class="md-orbit-point md-point-b"></span>
+            <span class="md-orbit-point md-point-c"></span>
+            <div class="md-core">
+              <div class="md-core-inner">ADCS</div>
+            </div>
+            <div class="md-visual-caption">
+              <span>Autonomous servicing</span>
+              <span>LEO concept</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =======================================================
+           MISSION SUMMARY METRICS
+           ======================================================= -->
+      <div class="md-container">
+        <div class="md-metrics md-reveal">
+          <article class="md-metric">
+            <span class="md-small-label">Mission class</span>
+            <strong>ADR</strong>
+            <p>Active debris removal concept</p>
+          </article>
+
+          <article class="md-metric">
+            <span class="md-small-label">Operating domain</span>
+            <strong>LEO</strong>
+            <p>Low Earth orbit; target orbit is configurable</p>
+          </article>
+
+          <article class="md-metric">
+            <span class="md-small-label">Capture methods</span>
+            <strong>3 modes</strong>
+            <p>Single-arm, cooperative, and ring-net concepts</p>
+          </article>
+
+          <article class="md-metric">
+            <span class="md-small-label">Mission sequence</span>
+            <strong>15 phases</strong>
+            <p>From search and assessment to secure disposal planning</p>
+          </article>
+        </div>
+      </div>
+
+      <!-- =======================================================
+           02 — MISSION OBJECTIVE
+           ======================================================= -->
+      <section class="md-section" id="mission-objective">
+        <div class="md-container">
+
+          <div class="md-section-head md-reveal">
+            <div>
+              <span class="md-eyebrow">01 / Mission definition</span>
+              <h2 class="md-heading">From orbital uncertainty to <span>controlled action</span></h2>
+            </div>
+            <p class="md-lead">
+              The system combines orbital data, onboard observations,
+              relative-motion estimation, target assessment, and a
+              capture-and-containment sequence within one coordinated workflow.
+            </p>
+          </div>
+
+          <div class="md-two-col">
+            <article class="md-card md-problem-card md-reveal">
+              <span class="md-small-label">The challenge</span>
+              <h3>Uncooperative objects are difficult to approach safely</h3>
+              <p>
+                Space debris may have uncertain geometry, incomplete physical
+                information, unknown rotational motion, and limited or no
+                communication capability. A safe rendezvous therefore requires
+                more than identifying an object's approximate orbit.
+              </p>
+              <ul class="md-list">
+                <li>Orbital position and velocity estimates can contain uncertainty.</li>
+                <li>Visual observations may be needed to estimate shape and rotation.</li>
+                <li>Relative motion must be monitored during close approach.</li>
+                <li>Capture selection must account for object geometry and motion.</li>
+                <li>Containment and post-capture stability must be assessed.</li>
+              </ul>
+            </article>
+
+            <article class="md-card md-objective-card md-reveal">
+              <span class="md-small-label">The proposed approach</span>
+              <h3>A coordinated autonomous servicing sequence</h3>
+              <p>
+                ADCS is designed as a conceptual framework in which sensing,
+                state estimation, guidance, control, capture selection, and
+                storage management work together to support a simulated debris
+                removal mission.
+              </p>
+              <ul class="md-list">
+                <li>Build and update a representation of the target's motion.</li>
+                <li>Determine whether the target is suitable for an approach.</li>
+                <li>Choose a capture method based on estimated target properties.</li>
+                <li>Coordinate the robotic mechanisms with relative motion.</li>
+                <li>Verify containment before initiating the transfer sequence.</li>
+              </ul>
+            </article>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =======================================================
+           03 — SYSTEM ARCHITECTURE
+           ======================================================= -->
+      <section class="md-section" id="system-architecture">
+        <div class="md-container">
+
+          <div class="md-section-head md-reveal">
+            <div>
+              <span class="md-eyebrow">02 / Functional architecture</span>
+              <h2 class="md-heading">The mission's <span>decision chain</span></h2>
+            </div>
+            <p class="md-lead">
+              Each stage produces information or a decision used by the next
+              stage. The implementation is a proposed architecture, not a
+              verified flight-software design.
+            </p>
+          </div>
+
+          <article class="md-card md-architecture md-reveal">
+            <div class="md-architecture-intro">
+              <div>
+                <h3>End-to-end functional flow</h3>
+                <p>
+                  A layered model separates data acquisition, estimation,
+                  autonomous decisions, physical actions, and mission
+                  verification.
+                </p>
+              </div>
+              <span class="md-chip">Conceptual system flow</span>
+            </div>
+
+            <div class="md-architecture-flow">
+              <div class="md-arch-step">
+                <span class="md-step-no">STAGE 01</span>
+                <h4>Data acquisition</h4>
+                <p>Orbital catalogues, optical observations, range measurements, and onboard sensors.</p>
+              </div>
+
+              <div class="md-arch-step">
+                <span class="md-step-no">STAGE 02</span>
+                <h4>State estimation</h4>
+                <p>Estimate position, velocity, relative range, attitude cues, and angular motion.</p>
+              </div>
+
+              <div class="md-arch-step">
+                <span class="md-step-no">STAGE 03</span>
+                <h4>Decision layer</h4>
+                <p>Assess risk, target suitability, approach conditions, and capture options.</p>
+              </div>
+
+              <div class="md-arch-step">
+                <span class="md-step-no">STAGE 04</span>
+                <h4>Guidance and action</h4>
+                <p>Generate approach commands and coordinate spacecraft and robotic mechanisms.</p>
+              </div>
+
+              <div class="md-arch-step">
+                <span class="md-step-no">STAGE 05</span>
+                <h4>Verification</h4>
+                <p>Check capture status, target motion, containment, and mission-state transitions.</p>
+              </div>
+            </div>
+
+            <div class="md-architecture-note">
+              <strong>Feedback principle:</strong> The process is not purely
+              linear. New measurements and mechanism feedback update the state
+              estimate and can cause the controller to hold, retry, retreat,
+              or abort an operation.
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- =======================================================
+           04 — SUBSYSTEMS
+           ======================================================= -->
+      <section class="md-section" id="subsystems">
+        <div class="md-container">
+
+          <div class="md-section-head md-reveal">
+            <div>
+              <span class="md-eyebrow">03 / Subsystem responsibilities</span>
+              <h2 class="md-heading">Four coordinated <span>system domains</span></h2>
+            </div>
+            <p class="md-lead">
+              The proposed system is divided into functional domains to make
+              implementation, testing, and future upgrades easier to manage.
+            </p>
+          </div>
+
+          <div class="md-subsystem-grid">
+
+            <article class="md-card md-subsystem md-reveal">
+              <div class="md-sub-icon" aria-hidden="true">⌖</div>
+              <h3>Orbital Data &amp; Motion</h3>
+              <p>
+                Ingest orbital catalogue data, propagate object trajectories,
+                compare candidate targets, and combine external orbit estimates
+                with simulated onboard observations.
+              </p>
+              <ul class="md-list">
+                <li>Catalogue ingestion</li>
+                <li>Orbit propagation</li>
+                <li>Relative-state estimation</li>
+              </ul>
+            </article>
+
+            <article class="md-card md-subsystem md-reveal">
+              <div class="md-sub-icon" aria-hidden="true">◇</div>
+              <h3>Autonomy &amp; Decision Logic</h3>
+              <p>
+                Evaluate mission conditions, select a suitable action, manage
+                operating modes, and provide explicit hold, retry, and abort
+                decisions when conditions are unsuitable.
+              </p>
+              <ul class="md-list">
+                <li>Target assessment</li>
+                <li>Mode selection</li>
+                <li>Rule-based safety checks</li>
+              </ul>
+            </article>
+
+            <article class="md-card md-subsystem md-reveal">
+              <div class="md-sub-icon" aria-hidden="true">✣</div>
+              <h3>Capture &amp; Containment</h3>
+              <p>
+                Coordinate the two side manipulators and central ring-net
+                mechanism, assess contact conditions, and route captured
+                material toward the fixed storage system.
+              </p>
+              <ul class="md-list">
+                <li>Robotic coordination</li>
+                <li>Capture verification</li>
+                <li>Storage transfer</li>
+              </ul>
+            </article>
+
+            <article class="md-card md-subsystem md-reveal">
+              <div class="md-sub-icon" aria-hidden="true">▦</div>
+              <h3>Mission Operations &amp; Visualization</h3>
+              <p>
+                Present mission state, telemetry, target information, capture
+                status, and simulation events through the dashboard and
+                interactive visualization.
+              </p>
+              <ul class="md-list">
+                <li>Mission-state display</li>
+                <li>Telemetry visualization</li>
+                <li>Event and status reporting</li>
+              </ul>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- =======================================================
+           05 — CAPTURE ARCHITECTURE
+           ======================================================= -->
+      <section class="md-section" id="capture-architecture">
+        <div class="md-container">
+
+          <div class="md-section-head md-reveal">
+            <div>
+              <span class="md-eyebrow">04 / Capture subsystem</span>
+              <h2 class="md-heading">Three coordinated arms. <span>Three capture roles.</span></h2>
+            </div>
+            <p class="md-lead">
+              The selected concept uses two cooperative side arms with
+              two-finger grippers and one central arm carrying a controlled
+              circular ring-net deployment mechanism.
+            </p>
+          </div>
+
+          <div class="md-capture-grid">
+
+            <article class="md-card md-capture-card md-reveal">
+              <span class="md-capture-number">CAPTURE MODE 01</span>
+              <h3 class="md-capture-title">Single-side-arm grasp</h3>
+              <span class="md-capture-tag">Small, accessible targets</span>
+              <p>
+                One six-degree-of-freedom side manipulator approaches a suitable
+                grasp region and closes its two-finger gripper after alignment
+                and relative-motion checks.
+              </p>
+              <ul class="md-list">
+                <li>Estimate a suitable grasp location.</li>
+                <li>Align the gripper with the target.</li>
+                <li>Close and verify the grasp.</li>
+                <li>Monitor load and target movement.</li>
+              </ul>
+            </article>
+
+            <article class="md-card md-capture-card md-reveal">
+              <span class="md-capture-number">CAPTURE MODE 02</span>
+              <h3 class="md-capture-title">Cooperative dual-arm grasp</h3>
+              <span class="md-capture-tag">Suitable larger targets</span>
+              <p>
+                Both side arms coordinate their motion to approach separate
+                suitable grasp regions. The manoeuvre requires coordinated
+                geometry, relative-motion estimates, and load-aware control.
+              </p>
+              <ul class="md-list">
+                <li>Plan compatible grasp locations.</li>
+                <li>Coordinate both six-degree-of-freedom arms.</li>
+                <li>Synchronize contact and grasp confirmation.</li>
+                <li>Check stability before transfer.</li>
+              </ul>
+            </article>
+
+            <article class="md-card md-capture-card md-reveal">
+              <span class="md-capture-number">CAPTURE MODE 03</span>
+              <h3 class="md-capture-title">Central circular ring-net</h3>
+              <span class="md-capture-tag">Larger or irregular targets</span>
+              <p>
+                The central six-degree-of-freedom arm positions a controlled
+                circular deployment frame. A net is deployed around a suitable
+                target, with containment checked before retraction and transfer.
+              </p>
+              <ul class="md-list">
+                <li>Approach a safe deployment geometry.</li>
+                <li>Open the ring or deployment frame.</li>
+                <li>Deploy the net around the target.</li>
+                <li>Manage tethers and confirm containment.</li>
+              </ul>
+            </article>
+
+          </div>
+
+          <div class="md-capture-caution md-reveal">
+            <strong>Capture decision:</strong> The mechanism is selected from
+            estimated object size, shape, accessible grasp regions, motion,
+            uncertainty, and the capability limits of the servicer. The labels
+            “small,” “larger,” and “irregular” are qualitative categories; exact
+            selection thresholds must be defined and validated for the
+            simulation and physical prototype.
+          </div>
+
+          <div class="md-card md-card-pad md-reveal" style="margin-top: 22px;">
+            <span class="md-eyebrow">Central arm / ring-net sequence</span>
+            <h3 style="margin-top: 15px;">From deployment to secure containment</h3>
+            <p>
+              The following sequence represents the proposed ring-net operation.
+              The actual mechanism timing, tether behaviour, and contact dynamics
+              must be implemented and tested separately.
+            </p>
+
+            <div class="md-net-flow">
+              <div class="md-net-step">
+                <strong>01 · Stowed</strong>
+                <span>Net and deployment frame remain secured during approach.</span>
+              </div>
+              <div class="md-net-step">
+                <strong>02 · Position</strong>
+                <span>Central arm aligns the mechanism with the selected target.</span>
+              </div>
+              <div class="md-net-step">
+                <strong>03 · Deploy</strong>
+                <span>Ring frame opens and the net is released around the target.</span>
+              </div>
+              <div class="md-net-step">
+                <strong>04 · Contain</strong>
+                <span>Net and tether behaviour are checked for successful enclosure.</span>
+              </div>
+              <div class="md-net-step">
+                <strong>05 · Transfer</strong>
+                <span>Arm retracts and guides the contained object toward the inlet.</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =======================================================
+           06 — STORAGE AND CONTAINMENT
+           ======================================================= -->
+      <section class="md-section" id="storage">
+        <div class="md-container">
+
+          <div class="md-section-head md-reveal">
+            <div>
+              <span class="md-eyebrow">05 / Post-capture handling</span>
+              <h2 class="md-heading">A fixed, <span>controlled storage path</span></h2>
+            </div>
+            <p class="md-lead">
+              Capture is not considered complete merely because a target is
+              contacted. The object must be checked, transferred, and retained
+              within the proposed containment system.
+            </p>
+          </div>
+
+          <article class="md-card md-architecture md-reveal">
+            <div class="md-architecture-flow">
+              <div class="md-arch-step">
+                <span class="md-step-no">01</span>
+                <h4>Capture confirmation</h4>
+                <p>Check grasp, net enclosure, residual motion, and mechanism status.</p>
+              </div>
+              <div class="md-arch-step">
+                <span class="md-step-no">02</span>
+                <h4>Arm retraction</h4>
+                <p>Move the captured object toward the transfer region under controlled motion.</p>
+              </div>
+              <div class="md-arch-step">
+                <span class="md-step-no">03</span>
+                <h4>Funnel alignment</h4>
+                <p>Guide the object toward a fixed inlet and alignment collar.</p>
+              </div>
+              <div class="md-arch-step">
+                <span class="md-step-no">04</span>
+                <h4>Controlled insertion</h4>
+                <p>A pusher advances the object through the inlet when conditions permit.</p>
+              </div>
+              <div class="md-arch-step">
+                <span class="md-step-no">05</span>
+                <h4>Retention check</h4>
+                <p>A one-way gate and storage-state checks support object retention.</p>
+              </div>
+            </div>
+
+            <div class="md-architecture-note">
+              <strong>Storage arrangement:</strong> The canister remains fixed to
+              the spacecraft structure. The concept uses a guided funnel,
+              alignment features, a controlled pusher, and a one-way retention
+              gate. The storage design must account for object dimensions,
+              collision risk, cumulative mass, centre-of-mass changes, and
+              available volume.
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- =======================================================
+           07 — GNC
+           ======================================================= -->
+      <section class="md-section" id="guidance-control">
+        <div class="md-container">
+
+          <div class="md-section-head md-reveal">
+            <div>
+              <span class="md-eyebrow">06 / Navigation and control</span>
+              <h2 class="md-heading">Sense. Estimate. <span>Guide. Control.</span></h2>
+            </div>
+            <p class="md-lead">
+              The GNC concept converts sensor and orbital information into
+              motion estimates, approach trajectories, attitude corrections,
+              and coordinated capture commands.
+            </p>
+          </div>
+
+          <div class="md-gnc-flow md-reveal">
+            <article class="md-gnc-item">
+              <span class="md-step-no">01 / SENSE</span>
+              <h3>Sensor inputs</h3>
+              <p>Camera, range sensor, inertial measurements, attitude sensors, and orbital data.</p>
+            </article>
+
+            <article class="md-gnc-item">
+              <span class="md-step-no">02 / ESTIMATE</span>
+              <h3>State estimation</h3>
+              <p>Estimate relative position, relative velocity, range, and observable rotational motion.</p>
+            </article>
+
+            <article class="md-gnc-item">
+              <span class="md-step-no">03 / GUIDE</span>
+              <h3>Trajectory planning</h3>
+              <p>Generate approach geometry, hold points, safe separation, and retreat options.</p>
+            </article>
+
+            <article class="md-gnc-item">
+              <span class="md-step-no">04 / CONTROL</span>
+              <h3>Motion correction</h3>
+              <p>Coordinate translational and attitude commands with manipulator motion.</p>
+            </article>
+
+            <article class="md-gnc-item">
+              <span class="md-step-no">05 / VERIFY</span>
+              <h3>Feedback and checks</h3>
+              <p>Compare observed and expected motion; hold, retry, retreat, or abort if needed.</p>
+            </article>
+          </div>
+
+          <div class="md-gnc-detail">
+            <article class="md-gnc-detail md-reveal">
+              <div>
+                <h4>Guidance</h4>
+                <p>
+                  Defines the intended path, relative approach speed, hold
+                  points, capture geometry, and available retreat trajectories.
+                </p>
+              </div>
+            </article>
+
+            <article class="md-gnc-detail md-reveal">
+              <div>
+                <h4>Navigation</h4>
+                <p>
+                  Combines observations and motion models to estimate the
+                  spacecraft's state and the target's relative state.
+                </p>
+              </div>
+            </article>
+
+            <article class="md-gnc-detail md-reveal">
+              <div>
+                <h4>Control</h4>
+                <p>
+                  Produces attitude and translational corrections while
+                  coordinating arm trajectories and monitoring limits.
+                </p>
+              </div>
+            </article>
+          </div>
+
+          <div class="md-card md-card-pad md-reveal" style="margin-top: 20px;">
+            <h3 style="margin-top: 0;">State information used during approach</h3>
+            <div class="md-subsystem-grid">
+              <div>
+                <span class="md-small-label">Relative position</span>
+                <p>Estimated target location with respect to the servicing spacecraft.</p>
+              </div>
+              <div>
+                <span class="md-small-label">Relative velocity</span>
+                <p>Closing rate and direction of motion between the two objects.</p>
+              </div>
+              <div>
+                <span class="md-small-label">Orientation cues</span>
+                <p>Observable body orientation and rotational motion, with uncertainty.</p>
+              </div>
+              <div>
+                <span class="md-small-label">Confidence</span>
+                <p>Measurement quality, estimation uncertainty, and data freshness.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =======================================================
+           08 — 15 MISSION PHASES
+           ======================================================= -->
+      <section class="md-section" id="mission-lifecycle">
+        <div class="md-container">
+
+          <div class="md-section-head md-reveal">
+            <div>
+              <span class="md-eyebrow">07 / Mission lifecycle</span>
+              <h2 class="md-heading">The 15-phase <span>mission sequence</span></h2>
+            </div>
+            <p class="md-lead">
+              The phase gallery presents the intended operational flow, from
+              target search and assessment through capture, storage, and
+              end-of-mission planning. Each image is paired with a concise
+              explanation of its role.
+            </p>
+          </div>
+
+          <div class="md-phase-toolbar md-reveal">
+            <span class="md-small-label">Browse mission stages</span>
+            <div class="md-phase-filter" role="group" aria-label="Filter mission phases">
+              <button type="button" class="md-filter-btn is-active" data-phase-filter="all" aria-pressed="true">All phases</button>
+              <button type="button" class="md-filter-btn" data-phase-filter="assessment" aria-pressed="false">Search &amp; assess</button>
+              <button type="button" class="md-filter-btn" data-phase-filter="approach" aria-pressed="false">Approach</button>
+              <button type="button" class="md-filter-btn" data-phase-filter="capture" aria-pressed="false">Capture</button>
+              <button type="button" class="md-filter-btn" data-phase-filter="handling" aria-pressed="false">Handling &amp; disposal</button>
+            </div>
+          </div>
+
+          <div class="md-phase-grid" id="md-phase-grid">
+
+            <!-- PHASE 01 -->
+            <article class="md-phase-card md-reveal" data-phase-category="assessment">
+              <div class="md-phase-image-wrap">
+                <img src="assets/Phase%201.png" alt="Mission phase 1 illustration" loading="lazy">
+                <span class="md-phase-index">PHASE 01</span>
+              </div>
+              <div class="md-phase-content">
+                <span class="md-phase-category">Search and awareness</span>
+                <h3>Target Search</h3>
+                <p>
+                  Gather available orbital catalogue information and identify
+                  debris objects that may be relevant to the mission.
+                </p>
+                <div class="md-phase-outcome"><span>✓</span> Candidate targets are assembled for further assessment.</div>
+              </div>
+            </article>
+
+            <!-- PHASE 02 -->
+            <article class="md-phase-card md-reveal" data-phase-category="assessment">
+              <div class="md-phase-image-wrap">
+                <img src="assets/Phase%202.png" alt="Mission phase 2 illustration" loading="lazy">
+                <span class="md-phase-index">PHASE 02</span>
+              </div>
+              <div class="md-phase-content">
+                <span class="md-phase-category">Detection</span>
+                <h3>Target Detection</h3>
+                <p>
+                  Identify the selected object in available observations and
+                  associate the observation with the candidate target.
+                </p>
+                <div class="md-phase-outcome"><span>✓</span> Target identity and detection confidence are evaluated.</div>
+              </div>
+            </article>
+
+            <!-- PHASE 03 -->
+            <article class="md-phase-card md-reveal" data-phase-category="assessment">
+              <div class="md-phase-image-wrap">
+                <img src="assets/Phase%203.png" alt="Mission phase 3 illustration" loading="lazy">
+                <span class="md-phase-index">PHASE 03</span>
+              </div>
+              <div class="md-phase-content">
+                <span class="md-phase-category">Motion assessment</span>
+                <h3>Tracking and State Estimation</h3>
+                <p>
+                  Estimate target position, velocity, relative range, and
+                  observable rotational behaviour using the available data.
+                </p>
+                <div class="md-phase-outcome"><span>✓</span> An updated target-state estimate is produced.</div>
+              </div>
+            </article>
+
+            <!-- PHASE 04 -->
+            <article class="md-phase-card md-reveal" data-phase-category="assessment">
+              <div class="md-phase-image-wrap">
+                <img src="assets/Phase%204.png" alt="Mission phase 4 illustration" loading="lazy">
+                <span class="md-phase-index">PHASE 04</span>
+              </div>
+              <div class="md-phase-content">
+                <span class="md-phase-category">Decision</span>
+                <h3>Target Selection</h3>
+                <p>
+                  Compare candidates using orbit accessibility, estimated
+                  object characteristics, mission priorities, and risk factors.
+                </p>
+                <div class="md-phase-outcome"><span>✓</span> A candidate is selected or the mission remains on hold.</div>
+              </div>
+            </article>
+
+            <!-- PHASE 05 -->
+            <article class="md-phase-card md-reveal" data-phase-category="approach">
+              <div class="md-phase-image-wrap">
+                <img src="assets/Phase%205.png" alt="Mission phase 5 illustration" loading="lazy">
+                <span class="md-phase-index">PHASE 05</span>
+              </div>
+              <div class="md-phase-content">
+                <span class="md-phase-category">Orbital manoeuvre</span>
+                <h3>Rendezvous Planning</h3>
+                <p>
+                  Plan the transfer and relative approach while considering
+                  orbital motion, available manoeuvre capability, and uncertainty.
+                </p>
+                <div class="md-phase-outcome"><span>✓</span> A candidate rendezvous plan is prepared for evaluation.</div>
+              </div>
+            </article>
+
+            <!-- PHASE 06 -->
+            <article class="md-phase-card md-reveal" data-phase-category="approach">
+              <div class="md-phase-image-wrap">
+                <img src="assets/Phase%206.png" alt="Mission phase 6 illustration" loading="lazy">
+                <span class="md-phase-index">PHASE 06</span>
+              </div>
+              <div class="md-phase-content">
+                <span class="md-phase-category">Proximity operations</span>
+                <h3>Safe Approach</h3>
+                <p>
+                  Move toward the target through defined approach stages while
+                  monitoring range, closing rate, and keep-out constraints.
+                </p>
+                <div class="md-phase-outcome"><span>✓</span> The system reaches a permitted inspection or hold region.</div>
+              </div>
+            </article>
+
+            <!-- PHASE 07 -->
+            <article class="md-phase-card md-reveal" data-phase-category="approach">
+              <div class="md-phase-image-wrap">
+                <img src="assets/Phase%207.png" alt="Mission phase 7 illustration" loading="lazy">
+                <span class="md-phase-index">PHASE 07</span>
+              </div>
+              <div class="md-phase-content">
+                <span class="md-phase-category">Relative motion</span>
+                <h3>Motion and Geometry Assessment</h3>
+                <p>
+                  Refine estimates of target motion, accessible surfaces, and
+                  capture geometry before committing to a mechanism.
+                </p>
+                <div class="md-phase-outcome"><span>✓</span> Capture suitability and uncertainty are reassessed.</div>
+              </div>
+            </article>
+
+            <!-- PHASE 08 -->
+            <article class="md-phase-card md-reveal" data-phase-category="approach">
+              <div class="md-phase-image-wrap">
+                <img src="assets/Phase%208.jpeg" alt="Mission phase 8 illustration" loading="lazy">
+                <span class="md-phase-index">PHASE 08</span>
+              </div>
+              <div class="md-phase-content">
+                <span class="md-phase-category">Alignment</span>
+                <h3>Capture Alignment</h3>
+                <p>
+                  Position the spacecraft and selected manipulator to achieve
+                  the required relative geometry for the planned capture method.
+                </p>
+                <div class="md-phase-outcome"><span>✓</span> Alignment conditions are checked before capture.</div>
+              </div>
+            </article>
+
+            <!-- PHASE 09 -->
+            <article class="md-phase-card md-reveal" data-phase-category="capture">
+              <div class="md-phase-image-wrap">
+                <img src="assets/Phase%209.jpeg" alt="Mission phase 9 illustration" loading="lazy">
+                <span class="md-phase-index">PHASE 09</span>
+              </div>
+              <div class="md-phase-content">
+                <span class="md-phase-category">Method selection</span>
+                <h3>Capture Method Selection</h3>
+                <p>
+                  Choose a single-arm grasp, cooperative dual-arm grasp, or
+                  central ring-net approach according to target properties
+                  and mechanism limits.
+                </p>
+                <div class="md-phase-outcome"><span>✓</span> The selected mode and its conditions are recorded.</div>
+              </div>
+            </article>
+
+            <!-- PHASE 10 -->
+            <article class="md-phase-card md-reveal" data-phase-category="capture">
+              <div class="md-phase-image-wrap">
+                <img src="assets/Phase%2010.jpeg" alt="Mission phase 10 illustration" loading="lazy">
+                <span class="md-phase-index">PHASE 10</span>
+              </div>
+              <div class="md-phase-content">
+                <span class="md-phase-category">Capture execution</span>
+                <h3>Target Capture</h3>
+                <p>
+                  Execute the selected grasp or net-deployment sequence while
+                  monitoring the relative state and mechanism feedback.
+                </p>
+                <div class="md-phase-outcome"><span>✓</span> Capture success is assessed from defined feedback signals.</div>
+              </div>
+            </article>
+
+            <!-- PHASE 11 -->
+            <article class="md-phase-card md-reveal" data-phase-category="capture">
+              <div class="md-phase-image-wrap">
+                <img src="assets/Phase%2011.jpeg" alt="Mission phase 11 illustration" loading="lazy">
+                <span class="md-phase-index">PHASE 11</span>
+              </div>
+              <div class="md-phase-content">
+                <span class="md-phase-category">Post-capture check</span>
+                <h3>Stabilization and Verification</h3>
+                <p>
+                  Evaluate residual motion, grasp or enclosure state, and
+                  spacecraft response before initiating object transfer.
+                </p>
+                <div class="md-phase-outcome"><span>✓</span> Transfer proceeds only after the required checks pass.</div>
+              </div>
+            </article>
+
+            <!-- PHASE 12 -->
+            <article class="md-phase-card md-reveal" data-phase-category="handling">
+              <div class="md-phase-image-wrap">
+                <img src="assets/Phase%2012.jpeg" alt="Mission phase 12 illustration" loading="lazy">
+                <span class="md-phase-index">PHASE 12</span>
+              </div>
+              <div class="md-phase-content">
+                <span class="md-phase-category">Transfer</span>
+                <h3>Guided Storage Transfer</h3>
+                <p>
+                  Retract the capture mechanism and guide the contained target
+                  toward the fixed storage inlet using the planned transfer path.
+                </p>
+                <div class="md-phase-outcome"><span>✓</span> The object reaches the storage interface under control.</div>
+              </div>
+            </article>
+
+            <!-- PHASE 13 -->
+            <article class="md-phase-card md-reveal" data-phase-category="handling">
+              <div class="md-phase-image-wrap">
+                <img src="assets/Phase%2013.jpeg" alt="Mission phase 13 illustration" loading="lazy">
+                <span class="md-phase-index">PHASE 13</span>
+              </div>
+              <div class="md-phase-content">
+                <span class="md-phase-category">Containment</span>
+                <h3>Storage and Retention</h3>
+                <p>
+                  Use the proposed funnel, alignment collar, controlled pusher,
+                  and one-way gate to place and retain the captured object.
+                </p>
+                <div class="md-phase-outcome"><span>✓</span> Storage status and retention are checked.</div>
+              </div>
+            </article>
+
+            <!-- PHASE 14 -->
+            <article class="md-phase-card md-reveal" data-phase-category="handling">
+              <div class="md-phase-image-wrap">
+                <img src="assets/Phase%2014.jpeg" alt="Mission phase 14 illustration" loading="lazy">
+                <span class="md-phase-index">PHASE 14</span>
+              </div>
+              <div class="md-phase-content">
+                <span class="md-phase-category">Mission reassessment</span>
+                <h3>Post-Capture Evaluation</h3>
+                <p>
+                  Update stored-object records and reassess available mass,
+                  volume, spacecraft condition, and the feasibility of another target.
+                </p>
+                <div class="md-phase-outcome"><span>✓</span> Continue, hold, or terminate the campaign based on constraints.</div>
+              </div>
+            </article>
+
+            <!-- PHASE 15 -->
+            <article class="md-phase-card md-reveal" data-phase-category="handling">
+              <div class="md-phase-image-wrap">
+                <img src="assets/Phase%2015.jpeg" alt="Mission phase 15 illustration" loading="lazy">
+                <span class="md-phase-index">PHASE 15</span>
+              </div>
+              <div class="md-phase-content">
+                <span class="md-phase-category">End-of-mission planning</span>
+                <h3>Disposal and Deorbit Planning</h3>
+                <p>
+                  Evaluate the planned end-of-mission path, including disposal
+                  or deorbit considerations, within the concept's propulsion
+                  and mission constraints.
+                </p>
+                <div class="md-phase-outcome"><span>✓</span> The disposal option is documented for further analysis.</div>
+              </div>
+            </article>
+
+          </div>
+
+          <div class="md-phase-note md-reveal">
+            <strong>Phase-gallery note:</strong> The phase titles and
+            explanations form the proposed 15-stage mission workflow. They are
+            not claims that every phase is already implemented in the
+            simulation. Image filenames are linked to the supplied assets;
+            if your original images depict a different phase order, update the
+            individual captions to match those images.
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =======================================================
+           09 — ORBITAL DATA AND ORIENTATION
+           ======================================================= -->
+      <section class="md-section" id="orbital-data">
+        <div class="md-container">
+
+          <div class="md-section-head md-reveal">
+            <div>
+              <span class="md-eyebrow">08 / Data quality</span>
+              <h2 class="md-heading">Separate orbital motion from <span>physical orientation</span></h2>
+            </div>
+            <p class="md-lead">
+              Reliable mission decisions require clarity about which
+              properties come from orbital data and which must be estimated
+              from observation.
+            </p>
+          </div>
+
+          <div class="md-data-grid">
+
+            <article class="md-card md-data-card md-reveal">
+              <span class="md-data-tag">Orbit information</span>
+              <h3>Where is the object going?</h3>
+              <p>
+                Orbital elements or state vectors can support trajectory
+                propagation and predictions of an object's position and
+                velocity, subject to data quality, epoch, and model limitations.
+              </p>
+              <ul class="md-list">
+                <li>Position and velocity at a stated epoch.</li>
+                <li>Predicted orbital motion over a selected interval.</li>
+                <li>Relative geometry between the servicer and target.</li>
+                <li>Data age and propagation uncertainty.</li>
+              </ul>
+              <div class="md-data-callout">
+                TLE or OMM catalogue data may be propagated with an appropriate
+                orbit model such as SGP4. Predictions are not exact
+                measurements of a target's current state.
+              </div>
+            </article>
+
+            <article class="md-card md-data-card md-reveal">
+              <span class="md-data-tag">Physical orientation</span>
+              <h3>How is the object rotating?</h3>
+              <p>
+                An object's physical attitude and tumble rate are different
+                from its orbital trajectory. These properties generally
+                require suitable observations, a motion-estimation method, and
+                explicit uncertainty handling.
+              </p>
+              <ul class="md-list">
+                <li>Image-based shape and orientation cues.</li>
+                <li>Changes in visible features across observations.</li>
+                <li>Estimated angular motion where observable.</li>
+                <li>Confidence limits and fallback behaviour.</li>
+              </ul>
+              <div class="md-data-callout">
+                Do not treat orbital elements alone as a direct source of
+                precise debris yaw, pitch, roll, or tumble rate. If the
+                physical attitude is unknown, preserve that uncertainty in the
+                capture decision.
+              </div>
+            </article>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =======================================================
+           10 — HOME CONTROL LOOP IMAGE
+           ======================================================= -->
+      <section class="md-section" id="control-loop">
+        <div class="md-container">
+
+          <div class="md-section-head md-reveal">
+            <div>
+              <span class="md-eyebrow">09 / Closed-loop operation</span>
+              <h2 class="md-heading">A mission that <span>observes and responds</span></h2>
+            </div>
+            <p class="md-lead">
+              The control loop links target observations to estimates,
+              decisions, commanded actions, and subsequent verification.
+              Each new observation can change the next action.
+            </p>
+          </div>
+
+          <article class="md-card md-card-pad md-reveal">
+            <figure style="margin: 0;">
+              <div style="padding: 10px; border-radius: 17px; background: rgba(5, 15, 29, 0.72); border: 1px solid rgba(157, 190, 232, 0.14);">
+                <img
+                  src="assets/home-control-loop.png"
+                  alt="ADCS closed-loop control concept connecting sensing, state estimation, guidance, control, and feedback"
+                  loading="lazy"
+                  style="display: block; width: 100%; height: auto; max-height: 640px; object-fit: contain; border-radius: 10px;"
+                >
+              </div>
+              <figcaption style="margin-top: 13px; color: var(--md-muted); font-size: 0.8rem; line-height: 1.7;">
+                Conceptual control-loop illustration. The exact interfaces and
+                signals depend on the implementation of the sensing, guidance,
+                control, and mission-state modules.
+              </figcaption>
+            </figure>
+
+            <div class="md-architecture-note" style="margin-top: 22px;">
+              <strong>Operating principle:</strong> The spacecraft should not
+              continue an approach simply because a timer has elapsed.
+              Decisions should depend on estimated state, valid measurements,
+              separation, relative velocity, mechanism state, and defined
+              transition conditions.
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- =======================================================
+           11 — MISSION MODES
+           ======================================================= -->
+      <section class="md-section" id="mission-modes">
+        <div class="md-container">
+
+          <div class="md-section-head md-reveal">
+            <div>
+              <span class="md-eyebrow">10 / Mission-state management</span>
+              <h2 class="md-heading">Three operating <span>decision paths</span></h2>
+            </div>
+            <p class="md-lead">
+              Mission cases determine whether the system attempts a capture,
+              maintains a safe relative configuration, or terminates the
+              current operation.
+            </p>
+          </div>
+
+          <div class="md-capture-grid">
+
+            <article class="md-card md-capture-card md-reveal">
+              <span class="md-capture-number">CASE 01</span>
+              <h3 class="md-capture-title">Capture</h3>
+              <span class="md-capture-tag">Proceed when permitted</span>
+              <p>
+                The selected target meets the defined readiness checks and the
+                simulation follows the planned approach, alignment, capture,
+                and verification sequence.
+              </p>
+              <ul class="md-list">
+                <li>Valid target-state estimate.</li>
+                <li>Permitted approach conditions.</li>
+                <li>Capture mode and mechanism readiness.</li>
+              </ul>
+            </article>
+
+            <article class="md-card md-capture-card md-reveal">
+              <span class="md-capture-number">CASE 02</span>
+              <h3 class="md-capture-title">Hold</h3>
+              <span class="md-capture-tag">Maintain and reassess</span>
+              <p>
+                The system maintains or returns to a defined safe condition
+                while waiting for better observations, acceptable geometry, or
+                completion of required checks.
+              </p>
+              <ul class="md-list">
+                <li>Maintain a controlled separation.</li>
+                <li>Continue monitoring the target.</li>
+                <li>Reassess before resuming the approach.</li>
+              </ul>
+            </article>
+
+            <article class="md-card md-capture-card md-reveal">
+              <span class="md-capture-number">CASE 03</span>
+              <h3 class="md-capture-title">Abort</h3>
+              <span class="md-capture-tag">Terminate the current attempt</span>
+              <p>
+                The current capture attempt is stopped when a defined
+                constraint is violated or the system cannot establish
+                sufficient confidence to continue safely.
+              </p>
+              <ul class="md-list">
+                <li>Stop capture-related commands.</li>
+                <li>Enter the defined safe response.</li>
+                <li>Record the reason and current state.</li>
+              </ul>
+            </article>
+
+          </div>
+
+          <div class="md-phase-note md-reveal">
+            These are conceptual operating modes. Their actual transitions
+            should be implemented through explicit state-machine conditions
+            and validated in simulation. The Hold and Abort responses must not
+            be represented as safe merely because their labels appear on the
+            dashboard.
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =======================================================
+           12 — VERIFICATION
+           ======================================================= -->
+      <section class="md-section" id="verification">
+        <div class="md-container">
+
+          <div class="md-section-head md-reveal">
+            <div>
+              <span class="md-eyebrow">11 / Validation strategy</span>
+              <h2 class="md-heading">What must be <span>demonstrated</span></h2>
+            </div>
+            <p class="md-lead">
+              A credible demonstration should connect each stated capability
+              to an observable output, test scenario, and defined pass
+              condition.
+            </p>
+          </div>
+
+          <div class="md-review-grid">
+
+            <article class="md-card md-review-item md-reveal">
+              <span class="md-small-label">Test group 01</span>
+              <h3>Detection and tracking</h3>
+              <p>
+                Test target identification, state updates, missing observations,
+                stale data, and changes in target visibility.
+              </p>
+            </article>
+
+            <article class="md-card md-review-item md-reveal">
+              <span class="md-small-label">Test group 02</span>
+              <h3>Relative motion</h3>
+              <p>
+                Check separation, closing speed, trajectory updates,
+                approach-state transitions, and hold behaviour.
+              </p>
+            </article>
+
+            <article class="md-card md-review-item md-reveal">
+              <span class="md-small-label">Test group 03</span>
+              <h3>Capture selection</h3>
+              <p>
+                Confirm that the selected mechanism matches the configured
+                target characteristics and capability constraints.
+              </p>
+            </article>
+
+            <article class="md-card md-review-item md-reveal">
+              <span class="md-small-label">Test group 04</span>
+              <h3>Capture verification</h3>
+              <p>
+                Test successful and unsuccessful grasps, net containment,
+                mechanism feedback, and post-capture state transitions.
+              </p>
+            </article>
+
+            <article class="md-card md-review-item md-reveal">
+              <span class="md-small-label">Test group 05</span>
+              <h3>Storage and capacity</h3>
+              <p>
+                Verify transfer sequencing, gate state, object retention,
+                stored-object records, and configured mass or volume limits.
+              </p>
+            </article>
+
+            <article class="md-card md-review-item md-reveal">
+              <span class="md-small-label">Test group 06</span>
+              <h3>Failure response</h3>
+              <p>
+                Introduce stale data, excessive closing rate, failed alignment,
+                invalid sensor readings, and capture timeouts.
+              </p>
+            </article>
+
+          </div>
+
+          <div class="md-status-note md-reveal">
+            <strong>Implementation boundary:</strong> The presence of a
+            diagram, animation, or dashboard status does not establish that a
+            corresponding algorithm or mechanism is implemented. Record
+            completed, simulated, and planned capabilities separately, and
+            attach test evidence to each implemented function.
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =======================================================
+           13 — NEXT DESTINATIONS
+           ======================================================= -->
+      <section class="md-section" id="continue">
+        <div class="md-container">
+          <article class="md-card md-card-pad md-reveal">
+            <span class="md-eyebrow">12 / Continue exploring</span>
+            <h2 class="md-heading" style="margin-top: 17px;">Move from the dossier to <span>mission operations</span></h2>
+            <p class="md-lead">
+              Explore the dashboard for mission-state information or open the
+              simulator to examine the proposed orbital and capture sequence.
+            </p>
+
+            <div class="md-hero-actions">
+              <a href="index.html" class="md-button">← Return to Home</a>
+              <a href="foc.html" class="md-button md-button-primary">Open FOC Dashboard →</a>
+              <a href="simulation.html" class="md-button">Open Simulation →</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- =======================================================
+         LEGAL NOTICE
+         ======================================================= -->
+    <footer class="md-footer">
+      <div class="md-container">
+        <div class="md-footer-top">
+          <div>
+            <h2 class="md-footer-title">Project scope and limitations</h2>
+            <p>
+              ADCS is an academic conceptual project and simulation demonstrator.
+              It is not flight-qualified software, live mission-control
+              infrastructure, a certified collision-avoidance system, or
+              authorization to perform orbital operations. Displayed states,
+              estimates, thresholds, and outcomes may be simulated or
+              illustrative rather than live measurements. Real orbital
+              operations require independently validated models, appropriate
+              mission authorization, safety analysis, and qualified systems.
+              This project is not affiliated with or endorsed by NASA, ISRO,
+              ESA, or any other space agency.
+              <a href="legal.html">Read the full legal notice.</a>
+            </p>
+          </div>
+
+          <nav class="md-footer-links" aria-label="Footer navigation">
+            <a href="index.html">Home</a>
+            <a href="system_operation.html">Mission Dossier</a>
+            <a href="foc.html">FOC</a>
+            <a href="simulation.html">Simulation</a>
+            <a href="legal.html">Legal Notice</a>
+          </nav>
+        </div>
+
+        <div class="md-footer-bottom">
+          All mission procedures, capture mechanisms, and operational values
+          described here are conceptual unless explicitly demonstrated and
+          validated by the project implementation. Illustrations are intended
+          for explanation and simulation.
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Shared site scripts -->
+  <script src="assets/site.js"></script>
+
+  <!-- Page-specific behaviour -->
+  <script>
+    (() => {
+      "use strict";
+
+      /* -----------------------------------------------
+         Scroll reveal
+         The page remains visible if IntersectionObserver
+         is unavailable or reduced motion is requested.
+         ----------------------------------------------- */
+      const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+      const revealItems = document.querySelectorAll(".md-reveal");
+
+      if ("IntersectionObserver" in window && !reducedMotion) {
+        document.documentElement.classList.add("md-motion-ready");
+
+        const revealObserver = new IntersectionObserver(
+          (entries, observer) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            threshold: 0.08,
+            rootMargin: "0px 0px -35px 0px"
+          }
         );
 
-        container.innerHTML = `
-            <div class="phase-image-error">
-                <span>PHASE ${String(phaseNumber).padStart(2, "0")}</span>
-                <strong>IMAGE LOAD ERROR</strong>
-                <small>${imagePath}</small>
-            </div>
-        `;
-    };
-}
+        revealItems.forEach((item) => revealObserver.observe(item));
+      } else {
+        revealItems.forEach((item) => item.classList.add("is-visible"));
+      }
 
+      /* -----------------------------------------------
+         Mission phase filters
+         All 15 cards remain available through "All phases".
+         ----------------------------------------------- */
+      const filterButtons = document.querySelectorAll("[data-phase-filter]");
+      const phaseCards = document.querySelectorAll(".md-phase-card");
 
-/* =========================================================
-   INITIALISE ALL PHASE IMAGES
-   ========================================================= */
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const selectedFilter = button.dataset.phaseFilter;
 
-document.addEventListener("DOMContentLoaded", () => {
+          filterButtons.forEach((otherButton) => {
+            const active = otherButton === button;
+            otherButton.classList.toggle("is-active", active);
+            otherButton.setAttribute("aria-pressed", String(active));
+          });
 
-    document
-        .querySelectorAll("[data-phase-image]")
-        .forEach(container => {
+          phaseCards.forEach((card) => {
+            const category = card.dataset.phaseCategory;
+            const shouldShow =
+              selectedFilter === "all" || category === selectedFilter;
 
-            const phaseNumber =
-                Number(container.dataset.phaseImage);
+            card.hidden = !shouldShow;
 
-            loadPhaseImage(
-                phaseNumber,
-                container
-            );
+            if (shouldShow) {
+              card.classList.add("is-visible");
+            }
+          });
         });
+      });
 
-});
-</script>
+      /* -----------------------------------------------
+         Image fallback
+         A missing asset displays a clear placeholder
+         rather than a broken-image icon.
+         ----------------------------------------------- */
+      document.querySelectorAll(".md-phase-image-wrap img").forEach((img) => {
+        img.addEventListener("error", () => {
+          const wrapper = img.closest(".md-phase-image-wrap");
+          if (!wrapper || wrapper.dataset.fallbackShown === "true") return;
+
+          wrapper.dataset.fallbackShown = "true";
+          img.remove();
+
+          const fallback = document.createElement("div");
+          fallback.setAttribute("role", "img");
+          fallback.setAttribute(
+            "aria-label",
+            "Mission phase illustration unavailable"
+          );
+
+          fallback.style.cssText = [
+            "width:100%",
+            "height:100%",
+            "min-height:170px",
+            "display:grid",
+            "place-items:center",
+            "padding:20px",
+            "text-align:center",
+            "color:#a8b9d2",
+            "font-size:0.82rem",
+            "line-height:1.6",
+            "background:radial-gradient(circle at 50% 35%, rgba(112,221,244,.15), transparent 50%), linear-gradient(135deg,#172b47,#0a1527)"
+          ].join(";");
+
+          fallback.textContent =
+            "Phase image unavailable — check the filename in the assets folder.";
+
+          wrapper.appendChild(fallback);
+        });
+      });
+
+      /* -----------------------------------------------
+         Local anchor scrolling
+         ----------------------------------------------- */
+      document.querySelectorAll('.md-page a[href^="#"]').forEach((link) => {
+        link.addEventListener("click", (event) => {
+          const targetId = link.getAttribute("href");
+          if (!targetId || targetId === "#") return;
+
+          const target = document.querySelector(targetId);
+          if (!target) return;
+
+          event.preventDefault();
+          target.scrollIntoView({
+            behavior: reducedMotion ? "auto" : "smooth",
+            block: "start"
+          });
+
+          if (history.replaceState) {
+            history.replaceState(null, "", targetId);
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

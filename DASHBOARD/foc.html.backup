@@ -1,0 +1,5077 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0b18">
+<meta name="description" content="Flight Operations Center for the Autonomous Space Debris Monitoring and Capture System.">
+<title>Flight Operations Center | ADCS</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   AUTONOMOUS SPACE DEBRIS MONITORING AND CAPTURE SYSTEM
+   FLIGHT OPERATIONS CENTER
+   FOC interface | ADCS
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   01. DESIGN TOKENS
+   ------------------------------------------------------------ */
+
+:root {
+  color-scheme: dark;
+
+  --bg: #080b16;
+  --bg-raised: #0d1222;
+  --bg-elevated: #121a2d;
+  --bg-hover: #17223a;
+
+  --panel: rgba(13, 19, 35, 0.91);
+  --panel-light: rgba(19, 28, 48, 0.87);
+
+  --text: #e9f0ff;
+  --text-soft: #c1cce0;
+  --muted: #8595b0;
+  --muted-dark: #64738e;
+
+  --cyan: #75dfff;
+  --blue: #6d9eff;
+  --purple: #b6a1ff;
+  --green: #6ce6b3;
+  --amber: #ffc66e;
+  --red: #ff7185;
+
+  --border: rgba(153, 184, 236, 0.14);
+  --border-strong: rgba(153, 184, 236, 0.26);
+
+  --cyan-glow: rgba(80, 202, 255, 0.13);
+  --green-glow: rgba(108, 230, 179, 0.12);
+  --red-glow: rgba(255, 113, 133, 0.12);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 17px;
+
+  --shadow: 0 18px 55px rgba(0, 0, 0, 0.25);
+  --max-width: 1600px;
+
+  --font-body: Inter, system-ui, sans-serif;
+  --font-display: Orbitron, Inter, sans-serif;
+  --font-mono: "Space Mono", monospace;
+}
+
+/* ------------------------------------------------------------
+   02. RESET AND DOCUMENT BASE
+   ------------------------------------------------------------ */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 105px;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  color: var(--text);
+  background: var(--bg);
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.55;
+  overflow-x: hidden;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button,
+select {
+  color: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+svg {
+  display: block;
+}
+
+::selection {
+  color: #fff;
+  background: rgba(109, 158, 255, 0.35);
+}
+
+/* ------------------------------------------------------------
+   03. AMBIENT SPACE BACKGROUND
+   ------------------------------------------------------------ */
+
+.space-background {
+  position: fixed;
+  inset: 0;
+  z-index: -4;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse at 15% 8%,
+      rgba(40, 82, 151, 0.18),
+      transparent 35%
+    ),
+    radial-gradient(
+      ellipse at 88% 32%,
+      rgba(95, 58, 158, 0.13),
+      transparent 33%
+    ),
+    radial-gradient(
+      ellipse at 50% 100%,
+      rgba(22, 83, 119, 0.11),
+      transparent 38%
+    ),
+    linear-gradient(
+      160deg,
+      #080b16 0%,
+      #0a1020 48%,
+      #080b16 100%
+    );
+}
+
+.space-background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.2;
+  background-image:
+    radial-gradient(circle, #dceaff 0 1px, transparent 1.4px),
+    radial-gradient(circle, #80a9ff 0 1px, transparent 1.4px);
+  background-size: 103px 103px, 157px 157px;
+  background-position: 11px 18px, 71px 49px;
+  mask-image: linear-gradient(
+    to bottom,
+    black,
+    transparent 115%
+  );
+}
+
+.space-background::after {
+  content: "";
+  position: absolute;
+  width: 60vw;
+  height: 60vw;
+  right: -30vw;
+  top: 10vh;
+  border-radius: 50%;
+  border: 1px solid rgba(107, 160, 255, 0.035);
+  box-shadow:
+    0 0 0 65px rgba(107, 160, 255, 0.012),
+    0 0 0 130px rgba(107, 160, 255, 0.009);
+}
+
+.ambient-orb {
+  position: fixed;
+  z-index: -3;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(100px);
+  opacity: 0.08;
+}
+
+.ambient-orb.one {
+  top: 20%;
+  left: -280px;
+  background: #4389ff;
+}
+
+.ambient-orb.two {
+  right: -300px;
+  bottom: 2%;
+  background: #7f61ed;
+}
+
+/* ------------------------------------------------------------
+   04. APPLICATION SHELL
+   ------------------------------------------------------------ */
+
+.app-shell {
+  position: relative;
+  width: min(100%, var(--max-width));
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 0 25px 28px;
+}
+
+/* ------------------------------------------------------------
+   05. TOP HEADER
+   ------------------------------------------------------------ */
+
+.top-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 76px;
+  margin: 0 -25px;
+  padding: 13px 25px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(8, 11, 22, 0.89);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+.brand-block {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+}
+
+.brand-symbol {
+  position: relative;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  place-items: center;
+  border: 1px solid rgba(117, 223, 255, 0.4);
+  border-radius: 12px;
+  background: linear-gradient(
+    145deg,
+    rgba(117, 223, 255, 0.15),
+    rgba(109, 158, 255, 0.04)
+  );
+  color: var(--cyan);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+  box-shadow: 0 0 25px rgba(80, 202, 255, 0.07);
+}
+
+.brand-symbol::after {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  right: 5px;
+  top: 5px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+}
+
+.brand-name {
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.brand-subtitle {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.55px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 17px;
+}
+
+.environment-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-soft);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.9px;
+  white-space: nowrap;
+}
+
+.environment-indicator {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 11px rgba(108, 230, 179, 0.6);
+}
+
+.header-clock {
+  color: var(--cyan);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.menu-toggle {
+  display: none;
+  width: 37px;
+  height: 37px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--panel);
+  cursor: pointer;
+}
+
+/* ------------------------------------------------------------
+   06. MAIN NAVIGATION
+   ------------------------------------------------------------ */
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 19px 0 22px;
+  padding: 5px;
+  width: fit-content;
+  max-width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(13, 19, 35, 0.68);
+}
+
+.nav-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--text);
+  background: rgba(117, 223, 255, 0.055);
+}
+
+.nav-link.active {
+  color: var(--cyan);
+  background: rgba(117, 223, 255, 0.1);
+}
+
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 25%;
+  width: 50%;
+  height: 2px;
+  border-radius: 5px;
+  background: var(--cyan);
+  box-shadow: 0 0 9px rgba(117, 223, 255, 0.5);
+}
+
+/* ------------------------------------------------------------
+   07. PAGE HEADING
+   ------------------------------------------------------------ */
+
+.page-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 22px;
+}
+
+.heading-copy {
+  max-width: 800px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 8px;
+  color: var(--cyan);
+  font-family: var(--font-display);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 23px;
+  height: 1px;
+  background: var(--cyan);
+  box-shadow: 0 0 8px rgba(117, 223, 255, 0.6);
+}
+
+.page-title {
+  margin: 0;
+  color: #f1f5ff;
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 34px);
+  font-weight: 700;
+  letter-spacing: -0.7px;
+  line-height: 1.25;
+}
+
+.page-description {
+  max-width: 750px;
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.75;
+}
+
+.heading-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: rgba(20, 31, 53, 0.75);
+  color: var(--text-soft);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.25px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(117, 223, 255, 0.45);
+  background: rgba(117, 223, 255, 0.08);
+}
+
+.button.primary {
+  border-color: rgba(117, 223, 255, 0.38);
+  background: rgba(117, 223, 255, 0.1);
+  color: var(--cyan);
+}
+
+.button.danger {
+  border-color: rgba(255, 113, 133, 0.35);
+  background: rgba(255, 113, 133, 0.08);
+  color: #ff9ba9;
+}
+
+.button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ------------------------------------------------------------
+   08. STATUS BADGES
+   ------------------------------------------------------------ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--text-soft);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.65px;
+  white-space: nowrap;
+}
+
+.badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.badge.green {
+  border-color: rgba(108, 230, 179, 0.2);
+  background: rgba(108, 230, 179, 0.06);
+  color: var(--green);
+}
+
+.badge.cyan {
+  border-color: rgba(117, 223, 255, 0.2);
+  background: rgba(117, 223, 255, 0.06);
+  color: var(--cyan);
+}
+
+.badge.amber {
+  border-color: rgba(255, 198, 110, 0.2);
+  background: rgba(255, 198, 110, 0.06);
+  color: var(--amber);
+}
+
+.badge.red {
+  border-color: rgba(255, 113, 133, 0.22);
+  background: rgba(255, 113, 133, 0.06);
+  color: var(--red);
+}
+
+.badge.neutral {
+  color: var(--muted);
+}
+
+/* ------------------------------------------------------------
+   09. REUSABLE PANEL COMPONENT
+   ------------------------------------------------------------ */
+
+.panel {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(18, 27, 47, 0.9),
+      rgba(11, 17, 31, 0.94)
+    );
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 51px;
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.panel-heading {
+  min-width: 0;
+}
+
+.panel-title {
+  margin: 0;
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+}
+
+.panel-subtitle {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.panel-body {
+  padding: 15px;
+}
+
+.panel-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 15px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 9px;
+}
+
+/* ------------------------------------------------------------
+   10. OVERVIEW METRICS
+   ------------------------------------------------------------ */
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 13px;
+  margin-bottom: 16px;
+}
+
+.metric-card {
+  position: relative;
+  min-width: 0;
+  min-height: 125px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--panel);
+  overflow: hidden;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+}
+
+.metric-card::after {
+  content: "";
+  position: absolute;
+  width: 95px;
+  height: 95px;
+  right: -42px;
+  bottom: -53px;
+  border-radius: 50%;
+  background: var(--metric-glow, var(--cyan-glow));
+  filter: blur(8px);
+}
+
+.metric-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.metric-label {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.75px;
+  text-transform: uppercase;
+}
+
+.metric-icon {
+  display: grid;
+  width: 29px;
+  height: 29px;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--metric-color, var(--cyan));
+}
+
+.metric-icon svg {
+  width: 15px;
+  height: 15px;
+}
+
+.metric-value {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  margin-top: 12px;
+  color: #f3f6ff;
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2vw, 27px);
+  font-weight: 700;
+  letter-spacing: -0.7px;
+  font-variant-numeric: tabular-nums;
+}
+
+.metric-unit {
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.metric-description {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.metric-description strong {
+  color: var(--text-soft);
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------
+   11. PRIMARY GRID
+   ------------------------------------------------------------ */
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(310px, 0.85fr);
+  align-items: start;
+  gap: 16px;
+}
+
+.column-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.two-column {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 28px 0 13px;
+}
+
+.section-heading h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+
+.section-heading p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+/* ------------------------------------------------------------
+   12. MISSION STATUS
+   ------------------------------------------------------------ */
+
+.mission-status-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 150px;
+  gap: 18px;
+  align-items: center;
+}
+
+.mission-status-main {
+  min-width: 0;
+}
+
+.mission-status-title {
+  margin: 0;
+  color: #f0f5ff;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.mission-status-text {
+  margin: 8px 0 13px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.mission-status-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.status-gauge {
+  position: relative;
+  display: grid;
+  width: 132px;
+  height: 132px;
+  margin: auto;
+  place-items: center;
+}
+
+.status-gauge svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.gauge-track {
+  fill: none;
+  stroke: rgba(153, 184, 236, 0.12);
+  stroke-width: 7;
+}
+
+.gauge-progress {
+  fill: none;
+  stroke: var(--cyan);
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-dasharray: 314;
+  stroke-dashoffset: 204;
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+.gauge-content {
+  text-align: center;
+}
+
+.gauge-number {
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.gauge-caption {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 8px;
+  letter-spacing: 0.8px;
+}
+
+/* ------------------------------------------------------------
+   13. MISSION CASE CONTROL
+   ------------------------------------------------------------ */
+
+.case-selector {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.case-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  min-height: 88px;
+  padding: 11px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.018);
+  color: var(--muted);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.case-option:hover {
+  border-color: var(--border-strong);
+  background: rgba(117, 223, 255, 0.04);
+}
+
+.case-option[aria-pressed="true"][data-case="CAPTURE"] {
+  border-color: rgba(108, 230, 179, 0.55);
+  background: rgba(108, 230, 179, 0.075);
+  color: var(--green);
+}
+
+.case-option[aria-pressed="true"][data-case="HOLD"] {
+  border-color: rgba(255, 198, 110, 0.55);
+  background: rgba(255, 198, 110, 0.075);
+  color: var(--amber);
+}
+
+.case-option[aria-pressed="true"][data-case="ABORT"] {
+  border-color: rgba(255, 113, 133, 0.55);
+  background: rgba(255, 113, 133, 0.075);
+  color: var(--red);
+}
+
+.case-code {
+  font-family: var(--font-display);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+}
+
+.case-name {
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.case-summary {
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.case-detail {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.case-detail-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.case-detail-title {
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.case-detail-description {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.7;
+}
+
+.case-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+/* ------------------------------------------------------------
+   14. MISSION SEQUENCE TIMELINE
+   ------------------------------------------------------------ */
+
+.sequence-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sequence-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 10px;
+  min-height: 53px;
+  padding: 9px 0;
+}
+
+.sequence-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  top: 33px;
+  bottom: -9px;
+  width: 1px;
+  background: var(--border-strong);
+}
+
+.sequence-marker {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 25px;
+  height: 25px;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--bg-raised);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 9px;
+}
+
+.sequence-step.complete .sequence-marker {
+  border-color: rgba(108, 230, 179, 0.45);
+  background: rgba(108, 230, 179, 0.1);
+  color: var(--green);
+}
+
+.sequence-step.current .sequence-marker {
+  border-color: rgba(117, 223, 255, 0.65);
+  background: rgba(117, 223, 255, 0.12);
+  color: var(--cyan);
+  box-shadow: 0 0 14px rgba(117, 223, 255, 0.1);
+}
+
+.sequence-step.blocked .sequence-marker {
+  border-color: rgba(255, 113, 133, 0.4);
+  color: var(--red);
+}
+
+.sequence-copy {
+  min-width: 0;
+}
+
+.sequence-name {
+  color: var(--text-soft);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.sequence-step.current .sequence-name {
+  color: var(--cyan);
+}
+
+.sequence-description {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.sequence-state {
+  margin-top: 4px;
+  color: var(--muted-dark);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-align: right;
+}
+
+/* ------------------------------------------------------------
+   15. TARGET TRACKING TABLE
+   ------------------------------------------------------------ */
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.data-table th {
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--border-strong);
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+
+.data-table td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(153, 184, 236, 0.075);
+  color: var(--text-soft);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.data-table tbody tr {
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.data-table tbody tr:hover {
+  background: rgba(117, 223, 255, 0.04);
+}
+
+.data-table tbody tr.selected {
+  background: rgba(255, 113, 133, 0.055);
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.object-id {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+  font-weight: 800;
+}
+
+.object-dot {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  background: #d6e3fa;
+}
+
+.object-dot.target {
+  background: var(--red);
+  box-shadow: 0 0 8px rgba(255, 113, 133, 0.5);
+}
+
+.table-muted {
+  color: var(--muted);
+}
+
+.table-target-label {
+  color: var(--red);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+/* ------------------------------------------------------------
+   16. GRAPHS
+   ------------------------------------------------------------ */
+
+.graph-panel {
+  min-width: 0;
+}
+
+.graph-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.graph-range {
+  padding: 5px 8px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 9px;
+  cursor: pointer;
+}
+
+.graph-range.active {
+  border-color: var(--border);
+  background: rgba(117, 223, 255, 0.075);
+  color: var(--cyan);
+}
+
+.graph-canvas-wrap {
+  position: relative;
+  width: 100%;
+  height: 235px;
+  padding: 5px 0 0;
+}
+
+.graph-canvas-wrap canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.graph-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.legend-line {
+  width: 16px;
+  height: 2px;
+  border-radius: 3px;
+  background: var(--legend-color, var(--cyan));
+}
+
+.graph-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.graph-summary-cell {
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.018);
+}
+
+.graph-summary-label {
+  color: var(--muted);
+  font-size: 8px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.graph-summary-value {
+  margin-top: 5px;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------
+   17. GUIDANCE, NAVIGATION AND CONTROL
+   ------------------------------------------------------------ */
+
+.gnc-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.gnc-item {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.018);
+}
+
+.gnc-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.gnc-name {
+  color: var(--text);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.gnc-description {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.6;
+}
+
+.gnc-progress-track {
+  height: 4px;
+  margin-top: 11px;
+  border-radius: 5px;
+  background: rgba(153, 184, 236, 0.1);
+  overflow: hidden;
+}
+
+.gnc-progress {
+  height: 100%;
+  width: var(--value, 65%);
+  border-radius: inherit;
+  background: var(--progress-color, var(--cyan));
+  transition: width 0.4s ease;
+}
+
+/* ------------------------------------------------------------
+   18. TELEMETRY VALUES
+   ------------------------------------------------------------ */
+
+.telemetry-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.telemetry-item {
+  padding: 11px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.017);
+}
+
+.telemetry-label {
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.telemetry-value {
+  margin-top: 6px;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.telemetry-unit {
+  margin-left: 3px;
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 400;
+}
+
+.telemetry-footnote {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.65;
+}
+
+/* ------------------------------------------------------------
+   19. EVENT LOG
+   ------------------------------------------------------------ */
+
+.event-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.event-row {
+  display: grid;
+  grid-template-columns: 65px 8px minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(153, 184, 236, 0.075);
+}
+
+.event-row:last-child {
+  border-bottom: 0;
+}
+
+.event-time {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-variant-numeric: tabular-nums;
+}
+
+.event-marker {
+  width: 7px;
+  height: 7px;
+  margin-top: 5px;
+  border-radius: 50%;
+  background: var(--event-color, var(--cyan));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--event-color, var(--cyan)) 40%, transparent);
+}
+
+.event-message {
+  color: var(--text-soft);
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.event-message strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.event-level {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 8px;
+  letter-spacing: 0.6px;
+}
+
+/* ------------------------------------------------------------
+   20. SYSTEM HEALTH
+   ------------------------------------------------------------ */
+
+.health-list {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.health-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 45px;
+  gap: 12px;
+  align-items: center;
+}
+
+.health-info {
+  min-width: 0;
+}
+
+.health-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.health-name {
+  color: var(--text-soft);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.health-state {
+  color: var(--green);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+}
+
+.health-track {
+  height: 5px;
+  margin-top: 7px;
+  border-radius: 5px;
+  background: rgba(153, 184, 236, 0.1);
+  overflow: hidden;
+}
+
+.health-fill {
+  width: var(--health, 80%);
+  height: 100%;
+  border-radius: inherit;
+  background: var(--health-color, var(--green));
+}
+
+.health-value {
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-align: right;
+}
+
+/* ------------------------------------------------------------
+   21. MISSION FLOW
+   ------------------------------------------------------------ */
+
+.flow-panel {
+  padding: 16px;
+}
+
+.flow-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(100px, 1fr));
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+}
+
+.flow-node {
+  position: relative;
+  min-height: 91px;
+  padding: 12px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.018);
+}
+
+.flow-node:not(:last-child)::after {
+  content: "›";
+  position: absolute;
+  top: 30px;
+  right: -9px;
+  z-index: 2;
+  color: var(--muted-dark);
+  font-size: 17px;
+}
+
+.flow-node.active {
+  border-color: rgba(117, 223, 255, 0.42);
+  background: rgba(117, 223, 255, 0.055);
+}
+
+.flow-node.complete {
+  border-color: rgba(108, 230, 179, 0.27);
+  background: rgba(108, 230, 179, 0.035);
+}
+
+.flow-number {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 9px;
+}
+
+.flow-name {
+  margin-top: 10px;
+  color: var(--text-soft);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.flow-status {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 8px;
+}
+
+/* ------------------------------------------------------------
+   22. EMPTY AND ERROR STATES
+   ------------------------------------------------------------ */
+
+.empty-state {
+  padding: 26px 15px;
+  color: var(--muted);
+  font-size: 10px;
+  text-align: center;
+}
+
+.error-note {
+  display: none;
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid rgba(255, 198, 110, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 198, 110, 0.045);
+  color: var(--amber);
+  font-size: 9px;
+  line-height: 1.6;
+}
+
+.error-note.visible {
+  display: block;
+}
+
+/* ------------------------------------------------------------
+   23. FOOTER
+   ------------------------------------------------------------ */
+
+.page-footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 25px;
+  padding: 16px 0 0;
+  border-top: 1px solid var(--border);
+  color: var(--muted-dark);
+  font-size: 9px;
+  line-height: 1.7;
+}
+
+.footer-title {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.footer-right {
+  max-width: 620px;
+  text-align: right;
+}
+
+/* ------------------------------------------------------------
+   24. ANIMATION
+   ------------------------------------------------------------ */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation: fadeInUp 0.42s ease both;
+}
+
+.metric-card:nth-child(2) {
+  animation-delay: 0.04s;
+}
+
+.metric-card:nth-child(3) {
+  animation-delay: 0.08s;
+}
+
+.metric-card:nth-child(4) {
+  animation-delay: 0.12s;
+}
+
+@keyframes pulseDot {
+  0%, 100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.42;
+  }
+}
+
+.pulse-dot {
+  animation: pulseDot 1.8s ease-in-out infinite;
+}
+
+/* ------------------------------------------------------------
+   25. RESPONSIVE LAYOUT
+   ------------------------------------------------------------ */
+
+@media (max-width: 1150px) {
+  .dashboard-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .column-stack.right-column {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .column-stack.right-column > .panel {
+    min-width: 0;
+  }
+
+  .column-stack.right-column > .panel:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .flow-grid {
+    grid-template-columns: repeat(7, minmax(110px, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
+  .app-shell {
+    padding: 0 16px 22px;
+  }
+
+  .top-header {
+    margin: 0 -16px;
+    padding: 12px 16px;
+  }
+
+  .brand-name {
+    font-size: 10px;
+    letter-spacing: 0.8px;
+  }
+
+  .brand-subtitle {
+    max-width: 310px;
+    font-size: 9px;
+  }
+
+  .environment-label {
+    display: none;
+  }
+
+  .metrics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .page-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .heading-actions {
+    justify-content: flex-start;
+  }
+
+  .column-stack.right-column {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .column-stack.right-column > .panel:last-child {
+    grid-column: auto;
+  }
+
+  .two-column {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .mission-status-layout {
+    grid-template-columns: minmax(0, 1fr) 120px;
+  }
+
+  .status-gauge {
+    width: 110px;
+    height: 110px;
+  }
+
+  .flow-grid {
+    grid-template-columns: repeat(7, minmax(125px, 1fr));
+  }
+}
+
+@media (max-width: 540px) {
+  .app-shell {
+    padding: 0 11px 18px;
+  }
+
+  .top-header {
+    min-height: 66px;
+    margin: 0 -11px;
+    padding: 10px 11px;
+    gap: 10px;
+  }
+
+  .brand-block {
+    gap: 9px;
+  }
+
+  .brand-symbol {
+    width: 35px;
+    height: 35px;
+    flex-basis: 35px;
+    font-size: 15px;
+  }
+
+  .brand-name {
+    max-width: 230px;
+    font-size: 9px;
+  }
+
+  .brand-subtitle {
+    max-width: 220px;
+    font-size: 8px;
+    line-height: 1.4;
+  }
+
+  .header-right {
+    gap: 8px;
+  }
+
+  .header-clock {
+    font-size: 9px;
+  }
+
+  .main-nav {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: 100%;
+    margin-top: 14px;
+    gap: 3px;
+  }
+
+  .nav-link {
+    padding: 9px 4px;
+    font-size: 8px;
+    letter-spacing: 0;
+  }
+
+  .page-heading {
+    margin-bottom: 16px;
+  }
+
+  .page-title {
+    font-size: 22px;
+  }
+
+  .page-description {
+    font-size: 11px;
+  }
+
+  .metrics-grid {
+    gap: 9px;
+  }
+
+  .metric-card {
+    min-height: 113px;
+    padding: 11px;
+  }
+
+  .metric-label {
+    font-size: 8px;
+  }
+
+  .metric-value {
+    font-size: 21px;
+  }
+
+  .metric-description {
+    font-size: 8px;
+  }
+
+  .panel-header {
+    padding: 11px;
+  }
+
+  .panel-body {
+    padding: 11px;
+  }
+
+  .mission-status-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .status-gauge {
+    width: 100px;
+    height: 100px;
+  }
+
+  .case-selector {
+    gap: 5px;
+  }
+
+  .case-option {
+    min-height: 79px;
+    padding: 8px;
+  }
+
+  .case-name {
+    font-size: 10px;
+  }
+
+  .case-summary {
+    font-size: 8px;
+  }
+
+  .graph-canvas-wrap {
+    height: 205px;
+  }
+
+  .graph-summary-value {
+    font-size: 12px;
+  }
+
+  .graph-summary-cell {
+    padding: 7px;
+  }
+
+  .telemetry-grid {
+    gap: 7px;
+  }
+
+  .telemetry-item {
+    padding: 9px;
+  }
+
+  .telemetry-value {
+    font-size: 11px;
+  }
+
+  .page-footer {
+    flex-direction: column;
+  }
+
+  .footer-right {
+    text-align: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Live simulation telemetry: high-priority operational summary */
+.sim-telemetry-panel{grid-column:1/-1;min-width:0;border:1px solid rgba(93,180,224,.24);border-radius:14px;background:linear-gradient(115deg,rgba(12,28,47,.96),rgba(10,20,36,.94));box-shadow:0 12px 32px rgba(0,0,0,.16);overflow:hidden;margin-bottom:2px}
+.sim-telemetry-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 18px 12px;border-bottom:1px solid rgba(135,170,207,.13)}
+.sim-telemetry-heading>div{min-width:0}.sim-telemetry-kicker{font:700 9px/1.3 "Space Mono",monospace;letter-spacing:.13em;color:var(--cyan,#67d9f4)}.sim-telemetry-heading h2{margin:5px 0 3px;font-size:17px;letter-spacing:-.02em}.sim-telemetry-heading p{margin:0;color:var(--muted,#8ea4bf);font-size:10px;line-height:1.5}
+.sim-link-badge{flex:none;padding:7px 10px;border:1px solid rgba(124,160,195,.24);border-radius:7px;color:#b7c8dc;font:700 8px "Space Mono",monospace;letter-spacing:.05em;background:rgba(14,27,44,.8)}.sim-link-badge.connected{color:#8bf0bc;border-color:rgba(94,225,166,.3);background:rgba(23,91,63,.18)}
+.sim-telemetry-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0}.sim-telemetry-grid>div{min-width:0;padding:13px 14px;border-right:1px solid rgba(135,170,207,.1)}.sim-telemetry-grid>div:last-child{border-right:0}.sim-telemetry-grid small{display:block;color:#8da4c0;font:700 8px/1.4 "Space Mono",monospace;letter-spacing:.06em;margin-bottom:6px}.sim-telemetry-grid strong{display:block;color:#e9f4ff;font:600 12px/1.45 "Space Mono",monospace;overflow-wrap:anywhere}.sim-telemetry-grid>div:nth-child(2) strong{font:600 10px/1.5 inherit}
+.sim-telemetry-foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:9px 14px;background:rgba(3,10,20,.26);border-top:1px solid rgba(135,170,207,.1);color:#7189a5;font:700 8px/1.4 "Space Mono",monospace;letter-spacing:.02em}
+@media(max-width:1000px){.sim-telemetry-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.sim-telemetry-grid>div:nth-child(3){border-right:0}.sim-telemetry-grid>div:nth-child(-n+3){border-bottom:1px solid rgba(135,170,207,.1)}}
+@media(max-width:560px){.sim-telemetry-heading{align-items:flex-start;flex-direction:column;padding:13px}.sim-telemetry-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.sim-telemetry-grid>div:nth-child(odd){border-right:1px solid rgba(135,170,207,.1)}.sim-telemetry-grid>div:nth-child(even){border-right:0}.sim-telemetry-grid>div:nth-child(3){border-right:1px solid rgba(135,170,207,.1)}.sim-telemetry-grid>div{padding:10px}.sim-telemetry-grid strong{font-size:10px}.sim-telemetry-foot{font-size:7px}}
+
+</style>
+</head>
+
+<body>
+<div class="space-background" aria-hidden="true"></div>
+<div class="ambient-orb one" aria-hidden="true"></div>
+<div class="ambient-orb two" aria-hidden="true"></div>
+
+<div class="app-shell">
+
+  <!-- ========================================================
+       HEADER
+       ======================================================== -->
+
+  <header class="top-header">
+    <a class="brand-block" href="index.html" aria-label="ADCS home">
+      <div class="brand-symbol">A</div>
+
+      <div>
+        <p class="brand-name">ADCS · FLIGHT OPERATIONS CENTER</p>
+        <div class="brand-subtitle">
+          Autonomous Space Debris Monitoring and Capture System
+        </div>
+      </div>
+    </a>
+
+    <div class="header-right">
+      <div class="environment-label">
+        <span class="environment-indicator pulse-dot"></span>
+        <span>SIMULATION ENVIRONMENT</span>
+      </div>
+
+      <div class="header-clock" id="missionClock">T+000:00</div>
+    </div>
+  </header>
+
+  <!-- ========================================================
+       NAVIGATION
+       ======================================================== -->
+
+  <nav class="main-nav" aria-label="Primary navigation">
+    <a class="nav-link" href="index.html">HOME</a>
+    <a class="nav-link" href="system_operation.html">MISSION DOSSIER</a>
+    <a class="nav-link active" href="foc.html" aria-current="page">FOC</a>
+    <a class="nav-link" href="simulation.html">ORBITVIEW</a>
+  </nav>
+
+  <!-- ========================================================
+       PAGE INTRODUCTION
+       ======================================================== -->
+
+  <section class="page-heading animate-in">
+    <div class="heading-copy">
+      <div class="eyebrow">MISSION MONITORING · ADCS-01</div>
+
+      <h1 class="page-title">Flight Operations Center</h1>
+
+      <p class="page-description">
+        Monitor spacecraft state, debris tracking, relative motion,
+        mission progression, guidance and control status, and the
+        selected mission scenario from one operational dashboard.
+      </p>
+    </div>
+
+    <div class="heading-actions">
+      <span class="badge cyan" id="dataSourceBadge">ILLUSTRATIVE TELEMETRY</span>
+      <button class="button" id="refreshButton" type="button">
+        Refresh data
+      </button>
+      <button class="button primary" id="exportButton" type="button">
+        Export snapshot
+      </button>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       TOP-LEVEL METRICS
+       ======================================================== -->
+
+  <section class="metrics-grid" aria-label="Mission summary metrics">
+
+    <article class="metric-card animate-in" style="--metric-color:var(--cyan);--metric-glow:var(--cyan-glow)">
+      <div class="metric-top">
+        <div class="metric-label">Spacecraft altitude</div>
+        <div class="metric-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <circle cx="12" cy="12" r="8"></circle>
+            <ellipse cx="12" cy="12" rx="11" ry="4" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </div>
+      </div>
+      <div class="metric-value">
+        <span id="metricAltitude">880</span>
+        <span class="metric-unit">km</span>
+      </div>
+      <div class="metric-description">Reference operating altitude</div>
+    </article>
+
+    <article class="metric-card animate-in" style="--metric-color:var(--red);--metric-glow:var(--red-glow)">
+      <div class="metric-top">
+        <div class="metric-label">Tracked debris</div>
+        <div class="metric-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <circle cx="12" cy="12" r="3"></circle>
+            <circle cx="12" cy="12" r="8"></circle>
+            <path d="M12 1v3M12 20v3M1 12h3M20 12h3"></path>
+          </svg>
+        </div>
+      </div>
+      <div class="metric-value">
+        <span id="metricTracked">08</span>
+        <span class="metric-unit">objects</span>
+      </div>
+      <div class="metric-description">Objects in the current model</div>
+    </article>
+
+    <article class="metric-card animate-in" style="--metric-color:var(--green);--metric-glow:var(--green-glow)">
+      <div class="metric-top">
+        <div class="metric-label">Selected target range</div>
+        <div class="metric-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M4 19 19 4M7 4h12v12"></path>
+            <circle cx="5" cy="19" r="2"></circle>
+          </svg>
+        </div>
+      </div>
+      <div class="metric-value">
+        <span id="metricRange">42.8</span>
+        <span class="metric-unit">km</span>
+      </div>
+      <div class="metric-description">Relative separation estimate</div>
+    </article>
+
+    <article class="metric-card animate-in" style="--metric-color:var(--amber);--metric-glow:rgba(255,198,110,.12)">
+      <div class="metric-top">
+        <div class="metric-label">Mission case</div>
+        <div class="metric-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M12 3 21 8v8l-9 5-9-5V8z"></path>
+            <path d="m8 12 2.5 2.5L16 9"></path>
+          </svg>
+        </div>
+      </div>
+      <div class="metric-value" style="font-size:20px">
+        <span id="metricCase">CAPTURE</span>
+      </div>
+      <div class="metric-description" id="metricCaseDescription">
+        Controlled capture scenario
+      </div>
+    </article>
+
+  </section>
+
+  <!-- ========================================================
+       PRIMARY DASHBOARD
+       ======================================================== -->
+
+  <main class="dashboard-grid">
+
+    <section class="sim-telemetry-panel" aria-label="Live simulation telemetry">
+      <div class="sim-telemetry-heading">
+        <div><span class="sim-telemetry-kicker">ADCS · SIMULATION LINK</span><h2>Live Mission Telemetry</h2><p>Values received from the 3D simulation; not live spacecraft telemetry.</p></div>
+        <span class="sim-link-badge" id="simLinkBadge">WAITING FOR SIMULATION</span>
+      </div>
+      <div class="sim-telemetry-grid">
+        <div><small>ACTIVE CASE</small><strong id="simCaseLive">—</strong></div>
+        <div><small>MISSION STATE</small><strong id="simStateLive">Waiting for telemetry</strong></div>
+        <div><small>RELATIVE RANGE</small><strong id="simRangeLive">—</strong></div>
+        <div><small>RANGE RATE</small><strong id="simRateLive">—</strong></div>
+        <div><small>TARGET ID</small><strong id="simTargetLive">—</strong></div>
+        <div><small>STATE EPOCH · UTC</small><strong id="simEpochLive">—</strong></div>
+      </div>
+      <div class="sim-telemetry-foot"><span id="simSourceLive">Source: waiting for simulation.html</span><span id="simSampleLive">Samples received: 0</span><span>MODEL BOUNDARY: VISUALIZED SCENARIO</span></div>
+    </section>
+
+    <!-- LEFT COLUMN -->
+    <div class="column-stack">
+
+      <!-- MISSION STATUS -->
+
+      <section class="panel" id="missionStatusPanel">
+        <header class="panel-header">
+          <div class="panel-heading">
+            <h2 class="panel-title">MISSION STATUS</h2>
+            <div class="panel-subtitle">
+              Current sequence and operational decision
+            </div>
+          </div>
+
+          <span class="badge cyan" id="missionStatusBadge">INITIALIZING</span>
+        </header>
+
+        <div class="panel-body">
+          <div class="mission-status-layout">
+            <div class="mission-status-main">
+              <h3 class="mission-status-title" id="missionStatusTitle">
+                Orbital surveillance
+              </h3>
+
+              <p class="mission-status-text" id="missionStatusText">
+                The spacecraft is maintaining its orbital motion while
+                the tracking subsystem observes candidate debris objects.
+              </p>
+
+              <div class="mission-status-tags">
+                <span class="badge neutral" id="missionIdBadge">MISSION · ADCS-01</span>
+                <span class="badge neutral" id="targetIdBadge">TARGET · TRK-04</span>
+                <span class="badge green" id="operationalBadge">SYSTEM READY</span>
+              </div>
+            </div>
+
+            <div class="status-gauge" aria-label="Illustrative mission sequence progress">
+              <svg viewBox="0 0 120 120" aria-hidden="true">
+                <circle class="gauge-track" cx="60" cy="60" r="50"></circle>
+                <circle class="gauge-progress" id="missionGaugeProgress" cx="60" cy="60" r="50"></circle>
+              </svg>
+
+              <div class="gauge-content">
+                <div class="gauge-number" id="missionProgressNumber">35%</div>
+                <div class="gauge-caption">SEQUENCE</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="panel-footer">
+          <span id="missionLastUpdate">Last update: initializing</span>
+          <span>Mode: <strong id="missionModeText">CAPTURE</strong></span>
+        </footer>
+      </section>
+
+      <!-- CASE SELECTOR -->
+
+      <section class="panel" id="caseControlPanel">
+        <header class="panel-header">
+          <div class="panel-heading">
+            <h2 class="panel-title">MISSION CASE CONTROL</h2>
+            <div class="panel-subtitle">
+              Scenario selection synchronized with OrbitView
+            </div>
+          </div>
+
+          <span class="badge neutral" id="syncBadge">LOCAL STATE</span>
+        </header>
+
+        <div class="panel-body">
+
+          <div class="case-selector" role="group" aria-label="Select mission case">
+
+            <button
+              class="case-option"
+              type="button"
+              data-case="CAPTURE"
+              aria-pressed="true"
+            >
+              <span class="case-code">Case 1:</span>
+              <span class="case-name">Capture</span>
+              <span class="case-summary">Rendezvous and capture sequence</span>
+            </button>
+
+            <button
+              class="case-option"
+              type="button"
+              data-case="HOLD"
+              aria-pressed="false"
+            >
+              <span class="case-code">Case 2:</span>
+              <span class="case-name">Hold</span>
+              <span class="case-summary">Maintain safe stand-off distance</span>
+            </button>
+
+            <button
+              class="case-option"
+              type="button"
+              data-case="ABORT"
+              aria-pressed="false"
+            >
+              <span class="case-code">Case 3:</span>
+              <span class="case-name">Abort</span>
+              <span class="case-summary">Terminate proximity operations</span>
+            </button>
+
+          </div>
+
+          <div class="case-detail">
+            <div class="case-detail-top">
+              <div class="case-detail-title" id="caseDetailTitle">
+                Capture scenario selected
+              </div>
+              <span class="badge green" id="caseDetailBadge">READY</span>
+            </div>
+
+            <p class="case-detail-description" id="caseDetailDescription">
+              The illustrative sequence progresses through target selection,
+              rendezvous, safe approach, alignment, capture-mechanism
+              deployment, capture verification and transfer to storage.
+            </p>
+
+            <div class="case-detail-actions">
+              <button class="button primary" type="button" id="restartSequenceButton">
+                Restart sequence
+              </button>
+
+              <button class="button" type="button" id="openSimulationButton">
+                Open OrbitView
+              </button>
+            </div>
+          </div>
+
+          <div class="error-note" id="syncNote">
+            Cross-page synchronization is unavailable. This page will
+            continue using its local mission-case selection.
+          </div>
+
+        </div>
+      </section>
+
+      <!-- MISSION SEQUENCE -->
+
+      <section class="panel" id="sequencePanel">
+        <header class="panel-header">
+          <div class="panel-heading">
+            <h2 class="panel-title">MISSION SEQUENCE</h2>
+            <div class="panel-subtitle">
+              State progression for the selected scenario
+            </div>
+          </div>
+
+          <span class="badge cyan" id="sequenceCountBadge">01 / 14</span>
+        </header>
+
+        <div class="panel-body">
+          <div class="sequence-list" id="sequenceList">
+
+            <div class="sequence-step current">
+              <div class="sequence-marker">01</div>
+              <div class="sequence-copy">
+                <div class="sequence-name">Search and surveillance</div>
+                <div class="sequence-description">
+                  Observe the local orbital environment and maintain object catalogue.
+                </div>
+              </div>
+              <div class="sequence-state">ACTIVE</div>
+            </div>
+
+            <div class="sequence-step">
+              <div class="sequence-marker">02</div>
+              <div class="sequence-copy">
+                <div class="sequence-name">Detection and confirmation</div>
+                <div class="sequence-description">
+                  Identify a candidate object and validate its observations.
+                </div>
+              </div>
+              <div class="sequence-state">PENDING</div>
+            </div>
+
+            <div class="sequence-step">
+              <div class="sequence-marker">03</div>
+              <div class="sequence-copy">
+                <div class="sequence-name">Target selection</div>
+                <div class="sequence-description">
+                  Select the object for the current demonstration scenario.
+                </div>
+              </div>
+              <div class="sequence-state">PENDING</div>
+            </div>
+
+            <div class="sequence-step">
+              <div class="sequence-marker">04</div>
+              <div class="sequence-copy">
+                <div class="sequence-name">Rendezvous planning</div>
+                <div class="sequence-description">
+                  Evaluate relative state and define a conceptual approach.
+                </div>
+              </div>
+              <div class="sequence-state">PENDING</div>
+            </div>
+
+            <div class="sequence-step">
+              <div class="sequence-marker">05</div>
+              <div class="sequence-copy">
+                <div class="sequence-name">Safe approach</div>
+                <div class="sequence-description">
+                  Reduce relative motion and monitor the separation envelope.
+                </div>
+              </div>
+              <div class="sequence-state">PENDING</div>
+            </div>
+
+            <div class="sequence-step">
+              <div class="sequence-marker">06</div>
+              <div class="sequence-copy">
+                <div class="sequence-name">Motion assessment and alignment</div>
+                <div class="sequence-description">
+                  Estimate target motion and align the capture interface.
+                </div>
+              </div>
+              <div class="sequence-state">PENDING</div>
+            </div>
+
+            <div class="sequence-step">
+              <div class="sequence-marker">07</div>
+              <div class="sequence-copy">
+                <div class="sequence-name">Capture preparation</div>
+                <div class="sequence-description">
+                  Prepare the selected robotic or ring-net mechanism.
+                </div>
+              </div>
+              <div class="sequence-state">PENDING</div>
+            </div>
+
+            <div class="sequence-step">
+              <div class="sequence-marker">08</div>
+              <div class="sequence-copy">
+                <div class="sequence-name">Capture and verification</div>
+                <div class="sequence-description">
+                  Represent the capture attempt and evaluate its simulated outcome.
+                </div>
+              </div>
+              <div class="sequence-state">PENDING</div>
+            </div>
+
+            <div class="sequence-step">
+              <div class="sequence-marker">09</div>
+              <div class="sequence-copy">
+                <div class="sequence-name">Stabilization</div>
+                <div class="sequence-description">
+                  Represent stabilization after a successful capture event.
+                </div>
+              </div>
+              <div class="sequence-state">PENDING</div>
+            </div>
+
+            <div class="sequence-step">
+              <div class="sequence-marker">10</div>
+              <div class="sequence-copy">
+                <div class="sequence-name">Transfer to storage</div>
+                <div class="sequence-description">
+                  Move the captured-object representation to the storage interface.
+                </div>
+              </div>
+              <div class="sequence-state">PENDING</div>
+            </div>
+
+            <div class="sequence-step">
+              <div class="sequence-marker">11</div>
+              <div class="sequence-copy">
+                <div class="sequence-name">Secure and confirm</div>
+                <div class="sequence-description">
+                  Mark the object secured in the illustrative mission state.
+                </div>
+              </div>
+              <div class="sequence-state">PENDING</div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- DEBRIS TABLE -->
+
+      <section class="panel" id="debrisPanel">
+        <header class="panel-header">
+          <div class="panel-heading">
+            <h2 class="panel-title">DEBRIS TRACKING</h2>
+            <div class="panel-subtitle">
+              Multiple-object tracking overview
+            </div>
+          </div>
+
+          <span class="badge cyan" id="debrisTableCount">08 OBJECTS</span>
+        </header>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Object ID</th>
+                <th>Altitude</th>
+                <th>Size estimate</th>
+                <th>Relative range</th>
+                <th>Tracking state</th>
+              </tr>
+            </thead>
+
+            <tbody id="debrisTableBody">
+              <tr class="selected" data-object-id="TRK-04">
+                <td>
+                  <div class="object-id">
+                    <span class="object-dot target"></span>
+                    TRK-04
+                  </div>
+                </td>
+                <td>885 km</td>
+                <td>1.2 m</td>
+                <td>42.8 km</td>
+                <td><span class="table-target-label">SELECTED</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <footer class="panel-footer">
+          <span>Red marker denotes the selected target.</span>
+          <span id="trackingFooterStatus">Tracking enabled</span>
+        </footer>
+      </section>
+
+      <!-- ORBITAL FLOW -->
+
+      <section class="panel" id="orbitalFlowPanel">
+        <header class="panel-header">
+          <div class="panel-heading">
+            <h2 class="panel-title">MISSION DATA FLOW</h2>
+            <div class="panel-subtitle">
+              Conceptual observation-to-action sequence
+            </div>
+          </div>
+        </header>
+
+        <div class="flow-panel">
+          <div class="flow-grid">
+
+            <div class="flow-node complete">
+              <div class="flow-number">01</div>
+              <div class="flow-name">Sensors</div>
+              <div class="flow-status">Observation input</div>
+            </div>
+
+            <div class="flow-node complete">
+              <div class="flow-number">02</div>
+              <div class="flow-name">Detection</div>
+              <div class="flow-status">Object candidate</div>
+            </div>
+
+            <div class="flow-node active">
+              <div class="flow-number">03</div>
+              <div class="flow-name">Tracking</div>
+              <div class="flow-status">State estimate</div>
+            </div>
+
+            <div class="flow-node">
+              <div class="flow-number">04</div>
+              <div class="flow-name">Guidance</div>
+              <div class="flow-status">Desired motion</div>
+            </div>
+
+            <div class="flow-node">
+              <div class="flow-number">05</div>
+              <div class="flow-name">Control</div>
+              <div class="flow-status">Command generation</div>
+            </div>
+
+            <div class="flow-node">
+              <div class="flow-number">06</div>
+              <div class="flow-name">Execution</div>
+              <div class="flow-status">Mechanism action</div>
+            </div>
+
+            <div class="flow-node">
+              <div class="flow-number">07</div>
+              <div class="flow-name">Feedback</div>
+              <div class="flow-status">State update</div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="column-stack right-column">
+
+      <!-- RELATIVE RANGE GRAPH -->
+
+      <section class="panel graph-panel">
+        <header class="panel-header">
+          <div class="panel-heading">
+            <h2 class="panel-title">TARGET RANGE HISTORY</h2>
+            <div class="panel-subtitle">
+              Relative separation against simulation time
+            </div>
+          </div>
+
+          <div class="graph-controls" role="group" aria-label="Range graph time window">
+            <button class="graph-range active" type="button" data-range="30">30 s</button>
+            <button class="graph-range" type="button" data-range="60">60 s</button>
+            <button class="graph-range" type="button" data-range="120">120 s</button>
+          </div>
+        </header>
+
+        <div class="panel-body">
+          <div class="graph-canvas-wrap">
+            <canvas id="rangeGraph" aria-label="Target range graph"></canvas>
+          </div>
+
+          <div class="graph-legend">
+            <div class="legend-item">
+              <span class="legend-line" style="--legend-color:var(--cyan)"></span>
+              Relative range
+            </div>
+
+            <div class="legend-item">
+              <span class="legend-line" style="--legend-color:var(--red)"></span>
+              Capture threshold
+            </div>
+          </div>
+
+          <div class="graph-summary">
+            <div class="graph-summary-cell">
+              <div class="graph-summary-label">Current</div>
+              <div class="graph-summary-value" id="rangeCurrent">42.8 km</div>
+            </div>
+
+            <div class="graph-summary-cell">
+              <div class="graph-summary-label">Minimum</div>
+              <div class="graph-summary-value" id="rangeMinimum">42.8 km</div>
+            </div>
+
+            <div class="graph-summary-cell">
+              <div class="graph-summary-label">Maximum</div>
+              <div class="graph-summary-value" id="rangeMaximum">42.8 km</div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="panel-footer">
+          <span>Values shown are illustrative unless connected to telemetry.</span>
+          <span>km</span>
+        </footer>
+      </section>
+
+      <!-- RELATIVE VELOCITY GRAPH -->
+
+      <section class="panel graph-panel">
+        <header class="panel-header">
+          <div class="panel-heading">
+            <h2 class="panel-title">RELATIVE VELOCITY</h2>
+            <div class="panel-subtitle">
+              Illustrative relative-speed trend
+            </div>
+          </div>
+
+          <span class="badge cyan">m/s</span>
+        </header>
+
+        <div class="panel-body">
+          <div class="graph-canvas-wrap">
+            <canvas id="velocityGraph" aria-label="Relative velocity graph"></canvas>
+          </div>
+
+          <div class="graph-legend">
+            <div class="legend-item">
+              <span class="legend-line" style="--legend-color:var(--blue)"></span>
+              Relative speed
+            </div>
+
+            <div class="legend-item">
+              <span class="legend-line" style="--legend-color:var(--amber)"></span>
+              Illustrative approach limit
+            </div>
+          </div>
+
+          <div class="graph-summary">
+            <div class="graph-summary-cell">
+              <div class="graph-summary-label">Current</div>
+              <div class="graph-summary-value" id="velocityCurrent">7.40 m/s</div>
+            </div>
+
+            <div class="graph-summary-cell">
+              <div class="graph-summary-label">Minimum</div>
+              <div class="graph-summary-value" id="velocityMinimum">7.40 m/s</div>
+            </div>
+
+            <div class="graph-summary-cell">
+              <div class="graph-summary-label">Maximum</div>
+              <div class="graph-summary-value" id="velocityMaximum">7.40 m/s</div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="panel-footer">
+          <span>Approach limits are demonstration parameters, not flight rules.</span>
+          <span>m/s</span>
+        </footer>
+      </section>
+
+      <!-- GNC STATUS -->
+
+      <section class="panel">
+        <header class="panel-header">
+          <div class="panel-heading">
+            <h2 class="panel-title">GUIDANCE, NAVIGATION AND CONTROL</h2>
+            <div class="panel-subtitle">
+              Functional subsystem status
+            </div>
+          </div>
+
+          <span class="badge green" id="gncOverallBadge">NOMINAL MODEL</span>
+        </header>
+
+        <div class="panel-body">
+          <div class="gnc-stack">
+
+            <div class="gnc-item">
+              <div class="gnc-top">
+                <div class="gnc-name">Navigation and state estimation</div>
+                <span class="badge cyan" id="navigationState">ACTIVE</span>
+              </div>
+
+              <div class="gnc-description">
+                Estimates spacecraft and target relative states from the
+                observations represented by this simulation.
+              </div>
+
+              <div class="gnc-progress-track">
+                <div class="gnc-progress" id="navigationProgress" style="--value:76%;--progress-color:var(--cyan)"></div>
+              </div>
+            </div>
+
+            <div class="gnc-item">
+              <div class="gnc-top">
+                <div class="gnc-name">Guidance and trajectory planning</div>
+                <span class="badge cyan" id="guidanceState">READY</span>
+              </div>
+
+              <div class="gnc-description">
+                Defines a conceptual approach or stand-off objective
+                according to the selected mission case.
+              </div>
+
+              <div class="gnc-progress-track">
+                <div class="gnc-progress" id="guidanceProgress" style="--value:64%;--progress-color:var(--blue)"></div>
+              </div>
+            </div>
+
+            <div class="gnc-item">
+              <div class="gnc-top">
+                <div class="gnc-name">Control and attitude response</div>
+                <span class="badge cyan" id="controlState">ACTIVE</span>
+              </div>
+
+              <div class="gnc-description">
+                Represents response to guidance commands and attitude
+                objectives in the demonstration environment.
+              </div>
+
+              <div class="gnc-progress-track">
+                <div class="gnc-progress" id="controlProgress" style="--value:71%;--progress-color:var(--purple)"></div>
+              </div>
+            </div>
+
+            <div class="gnc-item">
+              <div class="gnc-top">
+                <div class="gnc-name">Capture mechanism</div>
+                <span class="badge neutral" id="mechanismState">STOWED</span>
+              </div>
+
+              <div class="gnc-description" id="mechanismDescription">
+                Robotic arms and central circular ring-net mechanism remain
+                in their stowed state until the selected sequence reaches
+                capture preparation.
+              </div>
+
+              <div class="gnc-progress-track">
+                <div class="gnc-progress" id="mechanismProgress" style="--value:8%;--progress-color:var(--green)"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- SPACECRAFT TELEMETRY -->
+
+      <section class="panel">
+        <header class="panel-header">
+          <div class="panel-heading">
+            <h2 class="panel-title">SPACECRAFT TELEMETRY</h2>
+            <div class="panel-subtitle">
+              State variables represented in the model
+            </div>
+          </div>
+
+          <span class="badge neutral">SIMULATED</span>
+        </header>
+
+        <div class="panel-body">
+          <div class="telemetry-grid">
+
+            <div class="telemetry-item">
+              <div class="telemetry-label">Position X</div>
+              <div class="telemetry-value" id="positionX">7000.00<span class="telemetry-unit">km</span></div>
+            </div>
+
+            <div class="telemetry-item">
+              <div class="telemetry-label">Position Y</div>
+              <div class="telemetry-value" id="positionY">0.00<span class="telemetry-unit">km</span></div>
+            </div>
+
+            <div class="telemetry-item">
+              <div class="telemetry-label">Position Z</div>
+              <div class="telemetry-value" id="positionZ">0.00<span class="telemetry-unit">km</span></div>
+            </div>
+
+            <div class="telemetry-item">
+              <div class="telemetry-label">Orbital speed</div>
+              <div class="telemetry-value" id="orbitalSpeed">7.50<span class="telemetry-unit">km/s</span></div>
+            </div>
+
+            <div class="telemetry-item">
+              <div class="telemetry-label">Target altitude</div>
+              <div class="telemetry-value" id="targetAltitude">885<span class="telemetry-unit">km</span></div>
+            </div>
+
+            <div class="telemetry-item">
+              <div class="telemetry-label">Relative speed</div>
+              <div class="telemetry-value" id="relativeSpeed">7.40<span class="telemetry-unit">m/s</span></div>
+            </div>
+
+          </div>
+
+          <p class="telemetry-footnote">
+            These fields are illustrative dashboard values. They are not
+            measurements from an operating spacecraft. The displayed
+            coordinate frame and units must be matched to the connected
+            simulation source before using imported telemetry.
+          </p>
+        </div>
+      </section>
+
+      <!-- SYSTEM HEALTH -->
+
+      <section class="panel">
+        <header class="panel-header">
+          <div class="panel-heading">
+            <h2 class="panel-title">SUBSYSTEM STATUS</h2>
+            <div class="panel-subtitle">
+              Availability indicators for the demonstration
+            </div>
+          </div>
+
+          <span class="badge green">MODEL READY</span>
+        </header>
+
+        <div class="panel-body">
+          <div class="health-list">
+
+            <div class="health-row">
+              <div class="health-info">
+                <div class="health-name-row">
+                  <span class="health-name">Object detection</span>
+                  <span class="health-state">READY</span>
+                </div>
+                <div class="health-track">
+                  <div class="health-fill" style="--health:92%;--health-color:var(--green)"></div>
+                </div>
+              </div>
+              <div class="health-value">92%</div>
+            </div>
+
+            <div class="health-row">
+              <div class="health-info">
+                <div class="health-name-row">
+                  <span class="health-name">Relative-state estimation</span>
+                  <span class="health-state">READY</span>
+                </div>
+                <div class="health-track">
+                  <div class="health-fill" style="--health:84%;--health-color:var(--cyan)"></div>
+                </div>
+              </div>
+              <div class="health-value">84%</div>
+            </div>
+
+            <div class="health-row">
+              <div class="health-info">
+                <div class="health-name-row">
+                  <span class="health-name">Guidance module</span>
+                  <span class="health-state">READY</span>
+                </div>
+                <div class="health-track">
+                  <div class="health-fill" style="--health:87%;--health-color:var(--blue)"></div>
+                </div>
+              </div>
+              <div class="health-value">87%</div>
+            </div>
+
+            <div class="health-row">
+              <div class="health-info">
+                <div class="health-name-row">
+                  <span class="health-name">Control module</span>
+                  <span class="health-state">READY</span>
+                </div>
+                <div class="health-track">
+                  <div class="health-fill" style="--health:89%;--health-color:var(--purple)"></div>
+                </div>
+              </div>
+              <div class="health-value">89%</div>
+            </div>
+
+            <div class="health-row">
+              <div class="health-info">
+                <div class="health-name-row">
+                  <span class="health-name">Mechanism model</span>
+                  <span class="health-state" id="mechanismHealthState">STOWED</span>
+                </div>
+                <div class="health-track">
+                  <div class="health-fill" id="mechanismHealthFill" style="--health:100%;--health-color:var(--green)"></div>
+                </div>
+              </div>
+              <div class="health-value" id="mechanismHealthValue">100%</div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- EVENT LOG -->
+
+      <section class="panel">
+        <header class="panel-header">
+          <div class="panel-heading">
+            <h2 class="panel-title">MISSION EVENT LOG</h2>
+            <div class="panel-subtitle">
+              Recent state transitions and operator actions
+            </div>
+          </div>
+
+          <button class="button" type="button" id="clearEventsButton">
+            Clear log
+          </button>
+        </header>
+
+        <div class="panel-body">
+          <div class="event-list" id="eventList" aria-live="polite">
+
+            <div class="event-row">
+              <div class="event-time">00:00:00</div>
+              <div class="event-marker" style="--event-color:var(--cyan)"></div>
+              <div class="event-message">
+                <strong>FOC initialized.</strong>
+                Demonstration telemetry has been loaded.
+                <span class="event-level">INFO</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ========================================================
+       FOOTER
+       ======================================================== -->
+
+  <footer class="page-footer">
+    <div>
+      <div class="footer-title">
+        ADCS · Flight Operations Center
+      </div>
+      <div>
+        Autonomous Space Debris Monitoring and Capture System
+      </div>
+    </div>
+
+    <div class="footer-right">
+      Academic visual simulation only. This interface is not
+      flight-qualified, is not live mission control, and is not
+      affiliated with or endorsed by NASA, ISRO, ESA, or any
+      other space agency. Values may be illustrative.
+    </div>
+  </footer>
+
+</div>
+
+<script>
+"use strict";
+
+/* ============================================================
+   26. APPLICATION CONFIGURATION
+   ============================================================ */
+
+const FOC_CONFIG = Object.freeze({
+  missionId: "ADCS-01",
+  defaultTargetId: "TRK-04",
+  defaultCase: "CAPTURE",
+  defaultAltitudeKm: 880,
+  defaultRangeKm: 42.8,
+  defaultRelativeSpeedMps: 7.4,
+  updateIntervalMs: 1000,
+  maxEventRows: 30,
+  caseStorageKeys: [
+    "adcsMissionCase",
+    "ADCS_MISSION_CASE"
+  ],
+  broadcastChannelName: "adcs-mission-sync",
+  predictionCandidates: [
+    "prediction_viz.json",
+    "AI_Engine/telemetry/prediction_viz.json",
+    "assets/prediction_viz.json",
+    "../AI_Engine/telemetry/prediction_viz.json"
+  ]
+});
+
+/* ============================================================
+   27. MISSION DATA MODEL
+   ============================================================ */
+
+const debrisCatalogue = [
+  {
+    id: "TRK-01",
+    altitudeKm: 730,
+    sizeM: 0.8,
+    rangeKm: 67.4,
+    relativeSpeedMps: 11.2,
+    orbitClass: "Lower LEO",
+    inclinationDeg: 28.5,
+    tracked: true,
+    selected: false
+  },
+  {
+    id: "TRK-02",
+    altitudeKm: 805,
+    sizeM: 1.4,
+    rangeKm: 79.2,
+    relativeSpeedMps: 9.1,
+    orbitClass: "LEO",
+    inclinationDeg: 51.6,
+    tracked: true,
+    selected: false
+  },
+  {
+    id: "TRK-03",
+    altitudeKm: 850,
+    sizeM: 0.6,
+    rangeKm: 53.6,
+    relativeSpeedMps: 8.3,
+    orbitClass: "LEO",
+    inclinationDeg: 42.0,
+    tracked: true,
+    selected: false
+  },
+  {
+    id: "TRK-04",
+    altitudeKm: 885,
+    sizeM: 1.2,
+    rangeKm: 42.8,
+    relativeSpeedMps: 7.4,
+    orbitClass: "Target orbit",
+    inclinationDeg: 35.0,
+    tracked: true,
+    selected: true
+  },
+  {
+    id: "TRK-05",
+    altitudeKm: 920,
+    sizeM: 2.1,
+    rangeKm: 86.5,
+    relativeSpeedMps: 12.6,
+    orbitClass: "Upper LEO",
+    inclinationDeg: 64.0,
+    tracked: true,
+    selected: false
+  },
+  {
+    id: "TRK-06",
+    altitudeKm: 970,
+    sizeM: 0.9,
+    rangeKm: 91.1,
+    relativeSpeedMps: 10.5,
+    orbitClass: "Upper LEO",
+    inclinationDeg: 48.0,
+    tracked: true,
+    selected: false
+  },
+  {
+    id: "TRK-07",
+    altitudeKm: 1020,
+    sizeM: 1.8,
+    rangeKm: 73.3,
+    relativeSpeedMps: 13.0,
+    orbitClass: "Upper LEO",
+    inclinationDeg: 72.0,
+    tracked: true,
+    selected: false
+  },
+  {
+    id: "TRK-08",
+    altitudeKm: 1100,
+    sizeM: 0.7,
+    rangeKm: 95.4,
+    relativeSpeedMps: 8.8,
+    orbitClass: "Upper LEO",
+    inclinationDeg: 55.0,
+    tracked: true,
+    selected: false
+  }
+];
+
+/* ============================================================
+   28. MISSION CASE DEFINITIONS
+   ============================================================ */
+
+const MISSION_CASES = {
+  CAPTURE: {
+    label: "CAPTURE",
+    title: "Capture scenario selected",
+    description:
+      "The illustrative sequence progresses through target selection, rendezvous, safe approach, alignment, capture-mechanism deployment, capture verification and transfer to storage.",
+    badge: "READY",
+    badgeClass: "green",
+    statusTitle: "Capture sequence available",
+    statusText:
+      "The selected target is monitored while the demonstration progresses through approach and capture stages. A successful capture is represented only by the scenario model.",
+    missionProgress: 35
+  },
+
+  HOLD: {
+    label: "HOLD",
+    title: "Safe hold mode selected",
+    description:
+      "Capture is inhibited. The spacecraft continues its orbital motion while maintaining the simulated stand-off distance and observing the selected debris object.",
+    badge: "HOLD MODE",
+    badgeClass: "amber",
+    statusTitle: "Safe hold mode",
+    statusText:
+      "The spacecraft remains in a non-capture scenario. Target observations continue and the capture mechanism is represented in its stowed state.",
+    missionProgress: 42
+  },
+
+  ABORT: {
+    label: "ABORT",
+    title: "Abort scenario selected",
+    description:
+      "Proximity operations are terminated in the demonstration. The capture mechanism is retracted and the scenario represents an increasing separation from the selected target.",
+    badge: "ABORT MODE",
+    badgeClass: "red",
+    statusTitle: "Proximity operations terminated",
+    statusText:
+      "The abort scenario inhibits capture and represents a controlled separation response. This is an illustrative state transition, not a flight safety procedure.",
+    missionProgress: 100
+  }
+};
+
+/* ============================================================
+   29. CAPTURE SCENARIO STAGES
+   ============================================================ */
+
+const CAPTURE_STAGES = [
+  {
+    key: "SEARCH",
+    title: "Search and surveillance",
+    description: "Observe the local orbital environment.",
+    message: "The spacecraft is surveying candidate debris objects.",
+    progress: 5,
+    elapsed: 0
+  },
+  {
+    key: "DETECT",
+    title: "Detection and confirmation",
+    description: "Confirm the selected object's observations.",
+    message: "A candidate debris object has been detected and is being confirmed.",
+    progress: 12,
+    elapsed: 4
+  },
+  {
+    key: "TRACK",
+    title: "Target tracking",
+    description: "Maintain the estimated target state.",
+    message: "Target tracking is active; relative position and motion are being updated.",
+    progress: 20,
+    elapsed: 8
+  },
+  {
+    key: "RENDEZVOUS",
+    title: "Rendezvous planning",
+    description: "Evaluate the relative approach objective.",
+    message: "Rendezvous planning is underway for the selected debris target.",
+    progress: 30,
+    elapsed: 12
+  },
+  {
+    key: "APPROACH",
+    title: "Controlled safe approach",
+    description: "Reduce the target separation in the model.",
+    message: "The spacecraft is approaching the target while monitoring relative motion.",
+    progress: 42,
+    elapsed: 17
+  },
+  {
+    key: "ALIGN",
+    title: "Target alignment",
+    description: "Estimate target motion and align the capture interface.",
+    message: "The target's apparent motion is being assessed before mechanism deployment.",
+    progress: 53,
+    elapsed: 22
+  },
+  {
+    key: "CAPTURE_READY",
+    title: "Capture preparation",
+    description: "Position the capture mechanism.",
+    message: "The central circular ring-net mechanism is being prepared for the simulated capture attempt.",
+    progress: 63,
+    elapsed: 25
+  },
+  {
+    key: "NET_DEPLOY",
+    title: "Capture mechanism deployment",
+    description: "Represent the ring-net deployment.",
+    message: "The ring-net mechanism is deploying around the selected target in the visual model.",
+    progress: 74,
+    elapsed: 29
+  },
+  {
+    key: "CAPTURED",
+    title: "Capture verification",
+    description: "Represent a successful capture state.",
+    message: "The demonstration records a successful capture state and begins the transfer sequence.",
+    progress: 85,
+    elapsed: 34
+  },
+  {
+    key: "STABILIZE",
+    title: "Captured-object stabilization",
+    description: "Represent post-capture stabilization.",
+    message: "The captured-object representation is being stabilized before transfer.",
+    progress: 91,
+    elapsed: 38
+  },
+  {
+    key: "SECURED",
+    title: "Target secured",
+    description: "Represent transfer into the storage interface.",
+    message: "The target has been marked secured in the illustrative mission model.",
+    progress: 100,
+    elapsed: 43
+  }
+];
+
+/* ============================================================
+   30. APPLICATION STATE
+   ============================================================ */
+
+const focState = {
+  missionCase: FOC_CONFIG.defaultCase,
+  selectedTargetId: FOC_CONFIG.defaultTargetId,
+  startedAt: performance.now(),
+  elapsedSeconds: 0,
+  sequenceElapsed: 0,
+  sequenceIndex: 0,
+  stage: "SEARCH",
+  isPaused: false,
+  captured: false,
+  telemetrySource: "ILLUSTRATIVE",
+  telemetryAvailable: false,
+  dataLoaded: false,
+  lastUpdate: new Date(),
+  graphWindowSeconds: 30,
+  rangeHistory: [],
+  velocityHistory: [],
+  eventHistory: [],
+  rangeCurrent: FOC_CONFIG.defaultRangeKm,
+  velocityCurrent: FOC_CONFIG.defaultRelativeSpeedMps,
+  orbitPhase: 0,
+  targetPhase: 0,
+  lastStorageValue: null,
+  simulationTelemetry: null,
+  simulationTelemetryCount: 0,
+  simulationTelemetryAt: 0
+};
+
+/* ============================================================
+   31. DOM UTILITIES
+   ============================================================ */
+
+function getElement(id) {
+  return document.getElementById(id);
+}
+
+function setText(id, value) {
+  const element = getElement(id);
+
+  if (element) {
+    element.textContent = String(value);
+  }
+}
+
+function setHTML(id, value) {
+  const element = getElement(id);
+
+  if (element) {
+    element.innerHTML = value;
+  }
+}
+
+function setVisible(id, visible) {
+  const element = getElement(id);
+
+  if (element) {
+    element.style.display = visible ? "" : "none";
+  }
+}
+
+function setBadge(id, label, type) {
+  const element = getElement(id);
+
+  if (!element) {
+    return;
+  }
+
+  element.textContent = label;
+  element.className = "badge " + (type || "neutral");
+}
+
+function formatNumber(value, digits = 1) {
+  const n = Number(value);
+
+  if (!Number.isFinite(n)) {
+    return "—";
+  }
+
+  return n.toFixed(digits);
+}
+
+function formatClock(seconds) {
+  const value = Math.max(0, Math.floor(seconds));
+  const hours = Math.floor(value / 3600);
+  const minutes = Math.floor((value % 3600) / 60);
+  const secs = value % 60;
+
+  return (
+    "T+" +
+    String(hours).padStart(3, "0") +
+    ":" +
+    String(minutes).padStart(2, "0") +
+    ":" +
+    String(secs).padStart(2, "0")
+  );
+}
+
+function formatEventTime(seconds) {
+  const value = Math.max(0, Math.floor(seconds));
+  const hours = Math.floor(value / 3600);
+  const minutes = Math.floor((value % 3600) / 60);
+  const secs = value % 60;
+
+  return [
+    String(hours).padStart(2, "0"),
+    String(minutes).padStart(2, "0"),
+    String(secs).padStart(2, "0")
+  ].join(":");
+}
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function smoothStep(value) {
+  const x = clamp(value, 0, 1);
+  return x * x * (3 - 2 * x);
+}
+
+/* ============================================================
+   32. DATA MODEL HELPERS
+   ============================================================ */
+
+function getSelectedTarget() {
+  return debrisCatalogue.find(
+    item => item.id === focState.selectedTargetId
+  ) || debrisCatalogue[3];
+}
+
+function getTrackedCount() {
+  return debrisCatalogue.filter(item => item.tracked).length;
+}
+
+function getCaptureStage() {
+  if (focState.missionCase !== "CAPTURE") {
+    return null;
+  }
+
+  const elapsed = focState.sequenceElapsed;
+  let selected = CAPTURE_STAGES[0];
+
+  for (const stage of CAPTURE_STAGES) {
+    if (elapsed >= stage.elapsed) {
+      selected = stage;
+    } else {
+      break;
+    }
+  }
+
+  return selected;
+}
+
+function getScenarioRange() {
+  const target = getSelectedTarget();
+  const elapsed = focState.sequenceElapsed;
+
+  if (focState.missionCase === "HOLD") {
+    return 58.4 + Math.sin(focState.elapsedSeconds * 0.08) * 0.4;
+  }
+
+  if (focState.missionCase === "ABORT") {
+    return Math.min(100, 42.8 + Math.max(0, elapsed) * 1.5);
+  }
+
+  if (focState.captured || focState.stage === "SECURED") {
+    return 0;
+  }
+
+  if (elapsed < 8) {
+    return target.rangeKm + Math.sin(focState.elapsedSeconds * 0.4) * 0.12;
+  }
+
+  const approachProgress = smoothStep((elapsed - 8) / 28);
+  return Math.max(0.035, target.rangeKm * (1 - approachProgress));
+}
+
+function getScenarioVelocity() {
+  const target = getSelectedTarget();
+  const elapsed = focState.sequenceElapsed;
+
+  if (focState.missionCase === "HOLD") {
+    return 0.18 + Math.abs(Math.sin(focState.elapsedSeconds * 0.11)) * 0.04;
+  }
+
+  if (focState.missionCase === "ABORT") {
+    return Math.min(12, 1 + elapsed * 0.5);
+  }
+
+  if (focState.captured || focState.stage === "SECURED") {
+    return 0;
+  }
+
+  if (elapsed < 8) {
+    return target.relativeSpeedMps;
+  }
+
+  const approachProgress = smoothStep((elapsed - 8) / 28);
+  return Math.max(0.04, target.relativeSpeedMps * (1 - approachProgress));
+}
+
+/* ============================================================
+   33. EVENT LOGGING
+   ============================================================ */
+
+function addEvent(message, level = "INFO", color = "var(--cyan)") {
+  const event = {
+    time: focState.elapsedSeconds,
+    message,
+    level,
+    color,
+    timestamp: new Date().toISOString()
+  };
+
+  focState.eventHistory.unshift(event);
+
+  if (focState.eventHistory.length > FOC_CONFIG.maxEventRows) {
+    focState.eventHistory.length = FOC_CONFIG.maxEventRows;
+  }
+
+  renderEventLog();
+}
+
+function renderEventLog() {
+  const container = getElement("eventList");
+
+  if (!container) {
+    return;
+  }
+
+  if (focState.eventHistory.length === 0) {
+    container.innerHTML =
+      '<div class="empty-state">No mission events recorded.</div>';
+    return;
+  }
+
+  container.innerHTML = focState.eventHistory.map(event => {
+    const safeMessage = escapeHTML(event.message);
+    const safeLevel = escapeHTML(event.level);
+
+    return `
+      <div class="event-row">
+        <div class="event-time">${formatEventTime(event.time)}</div>
+        <div class="event-marker" style="--event-color:${event.color}"></div>
+        <div class="event-message">
+          ${safeMessage}
+          <span class="event-level">${safeLevel}</span>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function escapeHTML(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+/* ============================================================
+   34. CASE SYNCHRONIZATION
+   ============================================================ */
+
+function validCase(value) {
+  return ["CAPTURE", "HOLD", "ABORT"].includes(value);
+}
+
+function readStoredCase() {
+  try {
+    for (const key of FOC_CONFIG.caseStorageKeys) {
+      const value = localStorage.getItem(key);
+
+      if (validCase(value)) {
+        return value;
+      }
+    }
+  } catch (error) {
+    console.warn("Mission-case storage is unavailable.", error);
+  }
+
+  return null;
+}
+
+function writeStoredCase(value) {
+  try {
+    for (const key of FOC_CONFIG.caseStorageKeys) {
+      localStorage.setItem(key, value);
+    }
+
+    setBadge("syncBadge", "LOCAL STORAGE", "green");
+    setVisible("syncNote", false);
+  } catch (error) {
+    setBadge("syncBadge", "LOCAL ONLY", "amber");
+    setVisible("syncNote", true);
+  }
+}
+
+function broadcastCase(value) {
+  try {
+    if ("BroadcastChannel" in window) {
+      const channel = new BroadcastChannel(
+        FOC_CONFIG.broadcastChannelName
+      );
+
+      channel.postMessage({
+        case: value,
+        missionCase: value,
+        source: "foc",
+        timestamp: Date.now()
+      });
+
+      channel.close();
+    }
+  } catch (error) {
+    console.warn("Broadcast synchronization is unavailable.", error);
+  }
+}
+
+function synchronizeCase(value) {
+  if (!validCase(value)) {
+    return;
+  }
+
+  writeStoredCase(value);
+  broadcastCase(value);
+}
+
+/* ============================================================
+   35. MISSION CASE TRANSITIONS
+   ============================================================ */
+
+function selectMissionCase(value, options = {}) {
+  if (!validCase(value)) {
+    return;
+  }
+
+  const previous = focState.missionCase;
+  const shouldRestart = options.restart !== false;
+
+  focState.missionCase = value;
+
+  if (shouldRestart || previous !== value) {
+    focState.sequenceElapsed = 0;
+    focState.sequenceIndex = 0;
+    focState.captured = false;
+    focState.stage = value === "CAPTURE" ? "SEARCH" : value;
+  }
+
+  if (value === "CAPTURE") {
+    focState.rangeCurrent = getSelectedTarget().rangeKm;
+    focState.velocityCurrent = getSelectedTarget().relativeSpeedMps;
+  } else if (value === "HOLD") {
+    focState.rangeCurrent = 58.4;
+    focState.velocityCurrent = 0.18;
+  } else {
+    focState.rangeCurrent = 42.8;
+    focState.velocityCurrent = 1;
+  }
+
+  renderCaseControls();
+  renderCaseDetails();
+  renderMissionStatus();
+  renderSequence();
+  renderGNC();
+  renderTelemetry();
+  renderMetrics();
+  renderMissionFlow();
+
+  if (options.silent !== true) {
+    const description = MISSION_CASES[value].title;
+
+    addEvent(
+      "Mission case changed to " + value + ". " + description + ".",
+      "OPERATOR",
+      value === "CAPTURE"
+        ? "var(--green)"
+        : value === "HOLD"
+          ? "var(--amber)"
+          : "var(--red)"
+    );
+  }
+
+  if (options.broadcast !== false) {
+    synchronizeCase(value);
+  }
+}
+
+function renderCaseControls() {
+  document.querySelectorAll(".case-option").forEach(button => {
+    const selected = button.dataset.case === focState.missionCase;
+    button.setAttribute("aria-pressed", selected ? "true" : "false");
+  });
+
+  setText("metricCase", focState.missionCase);
+  setText("missionModeText", focState.missionCase);
+}
+
+function renderCaseDetails() {
+  const definition = MISSION_CASES[focState.missionCase];
+
+  if (!definition) {
+    return;
+  }
+
+  setText("caseDetailTitle", definition.title);
+  setText("caseDetailDescription", definition.description);
+  setBadge("caseDetailBadge", definition.badge, definition.badgeClass);
+  setText("metricCaseDescription", definition.label + " scenario");
+}
+
+/* ============================================================
+   36. MISSION STATUS RENDERING
+   ============================================================ */
+
+function renderMissionStatus() {
+  const scenario = MISSION_CASES[focState.missionCase];
+  const stage = getCaptureStage();
+
+  let title = scenario.statusTitle;
+  let description = scenario.statusText;
+  let progress = scenario.missionProgress;
+  let status = scenario.badge;
+  let badgeClass = scenario.badgeClass;
+
+  if (focState.missionCase === "CAPTURE" && stage) {
+    title = stage.title;
+    description = stage.message;
+    progress = stage.progress;
+    status = stage.key.replaceAll("_", " ");
+    badgeClass =
+      stage.key === "SECURED" || stage.key === "CAPTURED"
+        ? "green"
+        : "cyan";
+  }
+
+  if (focState.missionCase === "HOLD") {
+    title = "Safe hold mode";
+    description =
+      "Capture remains inhibited. The spacecraft continues the hold scenario while target observations and relative-state estimates are maintained.";
+  }
+
+  if (focState.missionCase === "ABORT") {
+    title = "Proximity operations terminated";
+    description =
+      "The capture sequence has been inhibited. The scenario represents mechanism retraction and increasing target separation.";
+  }
+
+  setText("missionStatusTitle", title);
+  setText("missionStatusText", description);
+  setBadge("missionStatusBadge", status, badgeClass);
+  setText("missionProgressNumber", progress + "%");
+  setText("missionLastUpdate", "Last update: " + new Date().toLocaleTimeString());
+
+  const gauge = getElement("missionGaugeProgress");
+
+  if (gauge) {
+    const circumference = 2 * Math.PI * 50;
+    gauge.style.strokeDasharray = String(circumference);
+    gauge.style.strokeDashoffset = String(
+      circumference * (1 - progress / 100)
+    );
+
+    gauge.style.stroke =
+      focState.missionCase === "ABORT"
+        ? "var(--red)"
+        : focState.missionCase === "HOLD"
+          ? "var(--amber)"
+          : "var(--cyan)";
+  }
+
+  setText("operationalBadgeText", "SYSTEM READY");
+}
+
+/* ============================================================
+   37. SEQUENCE RENDERING
+   ============================================================ */
+
+function buildScenarioSteps() {
+  if (focState.missionCase === "CAPTURE") {
+    return CAPTURE_STAGES.map((stage, index) => ({
+      number: index + 1,
+      name: stage.title,
+      description: stage.description,
+      key: stage.key,
+      elapsed: stage.elapsed
+    }));
+  }
+
+  if (focState.missionCase === "HOLD") {
+    return [
+      {
+        number: 1,
+        name: "Target observation",
+        description: "Maintain observations of the selected object.",
+        key: "OBSERVE"
+      },
+      {
+        number: 2,
+        name: "Safe stand-off",
+        description: "Maintain the illustrative separation objective.",
+        key: "STANDOFF"
+      },
+      {
+        number: 3,
+        name: "Capture inhibition",
+        description: "Keep the capture mechanism in the stowed state.",
+        key: "INHIBIT"
+      },
+      {
+        number: 4,
+        name: "Relative-state monitoring",
+        description: "Continue updating the relative-motion representation.",
+        key: "MONITOR"
+      },
+      {
+        number: 5,
+        name: "Hold continuation",
+        description: "Remain in the non-capture scenario.",
+        key: "HOLD"
+      }
+    ];
+  }
+
+  return [
+    {
+      number: 1,
+      name: "Abort initiation",
+      description: "Terminate the current proximity-operation sequence.",
+      key: "ABORT_START"
+    },
+    {
+      number: 2,
+      name: "Capture inhibition",
+      description: "Prevent additional capture actions in the scenario.",
+      key: "INHIBIT"
+    },
+    {
+      number: 3,
+      name: "Mechanism retraction",
+      description: "Represent the mechanism returning to its stowed state.",
+      key: "RETRACT"
+    },
+    {
+      number: 4,
+      name: "Separation response",
+      description: "Represent an increasing separation from the target.",
+      key: "SEPARATE"
+    },
+    {
+      number: 5,
+      name: "Abort state maintained",
+      description: "Keep capture disabled until a new case is selected.",
+      key: "ABORTED"
+    }
+  ];
+}
+
+function getSequenceIndex(steps) {
+  if (focState.missionCase === "CAPTURE") {
+    let index = 0;
+
+    for (let i = 0; i < steps.length; i++) {
+      if (focState.sequenceElapsed >= steps[i].elapsed) {
+        index = i;
+      }
+    }
+
+    return index;
+  }
+
+  if (focState.missionCase === "HOLD") {
+    return Math.min(
+      4,
+      Math.floor(focState.sequenceElapsed / 5)
+    );
+  }
+
+  return Math.min(
+    4,
+    Math.floor(focState.sequenceElapsed / 2)
+  );
+}
+
+function renderSequence() {
+  const container = getElement("sequenceList");
+
+  if (!container) {
+    return;
+  }
+
+  const steps = buildScenarioSteps();
+  const currentIndex = getSequenceIndex(steps);
+
+  focState.sequenceIndex = currentIndex;
+
+  container.innerHTML = steps.map((step, index) => {
+    const complete = index < currentIndex;
+    const current = index === currentIndex;
+    const classNames = [
+      "sequence-step",
+      complete ? "complete" : "",
+      current ? "current" : ""
+    ].filter(Boolean).join(" ");
+
+    const stateLabel = complete
+      ? "COMPLETE"
+      : current
+        ? "ACTIVE"
+        : "PENDING";
+
+    const marker = complete
+      ? "✓"
+      : String(step.number).padStart(2, "0");
+
+    return `
+      <div class="${classNames}">
+        <div class="sequence-marker">${marker}</div>
+        <div class="sequence-copy">
+          <div class="sequence-name">${escapeHTML(step.name)}</div>
+          <div class="sequence-description">${escapeHTML(step.description)}</div>
+        </div>
+        <div class="sequence-state">${stateLabel}</div>
+      </div>
+    `;
+  }).join("");
+
+  setText(
+    "sequenceCountBadge",
+    String(currentIndex + 1).padStart(2, "0") +
+    " / " +
+    String(steps.length).padStart(2, "0")
+  );
+}
+
+/* ============================================================
+   38. METRIC RENDERING
+   ============================================================ */
+
+function renderMetrics() {
+  const target = getSelectedTarget();
+
+  setText("metricAltitude", FOC_CONFIG.defaultAltitudeKm);
+  setText("metricTracked", String(getTrackedCount()).padStart(2, "0"));
+  setText("metricRange", formatNumber(focState.rangeCurrent, 2));
+  setText("metricCase", focState.missionCase);
+
+  setText(
+    "metricCaseDescription",
+    focState.missionCase === "CAPTURE"
+      ? "Controlled capture scenario"
+      : focState.missionCase === "HOLD"
+        ? "Safe stand-off scenario"
+        : "Proximity operations terminated"
+  );
+
+  setText("targetIdBadge", "TARGET · " + target.id);
+}
+
+/* ============================================================
+   39. DEBRIS TABLE RENDERING
+   ============================================================ */
+
+function renderDebrisTable() {
+  const body = getElement("debrisTableBody");
+
+  if (!body) {
+    return;
+  }
+
+  body.innerHTML = debrisCatalogue.map(item => {
+    const selected = item.id === focState.selectedTargetId;
+    const range = selected
+      ? focState.rangeCurrent
+      : item.rangeKm;
+
+    const rowClass = selected ? "selected" : "";
+    const dotClass = selected ? "object-dot target" : "object-dot";
+
+    const stateLabel = selected
+      ? focState.captured
+        ? "SECURED"
+        : "SELECTED"
+      : item.tracked
+        ? "TRACKED"
+        : "UNTRACKED";
+
+    return `
+      <tr class="${rowClass}" data-object-id="${escapeHTML(item.id)}">
+        <td>
+          <div class="object-id">
+            <span class="${dotClass}"></span>
+            ${escapeHTML(item.id)}
+          </div>
+        </td>
+        <td>${formatNumber(item.altitudeKm, 0)} km</td>
+        <td>${formatNumber(item.sizeM, 1)} m</td>
+        <td>${formatNumber(range, 2)} km</td>
+        <td>
+          <span class="${selected ? "table-target-label" : "table-muted"}">
+            ${stateLabel}
+          </span>
+        </td>
+      </tr>
+    `;
+  }).join("");
+
+  setText(
+    "debrisTableCount",
+    String(getTrackedCount()).padStart(2, "0") + " OBJECTS"
+  );
+
+  setText(
+    "trackingFooterStatus",
+    focState.captured ? "Target secured" : "Tracking enabled"
+  );
+}
+
+function selectTarget(targetId) {
+  const target = debrisCatalogue.find(item => item.id === targetId);
+
+  if (!target) {
+    return;
+  }
+
+  if (focState.captured) {
+    addEvent(
+      "Target selection ignored because the current demonstration has reached the secured state. Restart the scenario first.",
+      "NOTICE",
+      "var(--amber)"
+    );
+    return;
+  }
+
+  focState.selectedTargetId = targetId;
+  target.selected = true;
+
+  debrisCatalogue.forEach(item => {
+    item.selected = item.id === targetId;
+  });
+
+  if (focState.missionCase === "CAPTURE") {
+    focState.sequenceElapsed = 0;
+    focState.stage = "SEARCH";
+  }
+
+  focState.rangeCurrent = target.rangeKm;
+  focState.velocityCurrent = target.relativeSpeedMps;
+
+  renderDebrisTable();
+  renderMetrics();
+  renderTelemetry();
+  renderGraphs();
+  renderMissionStatus();
+  renderSequence();
+
+  addEvent(
+    "Target " + targetId + " selected for the current demonstration.",
+    "OPERATOR",
+    "var(--red)"
+  );
+}
+
+/* ============================================================
+   40. GNC STATUS RENDERING
+   ============================================================ */
+
+function renderGNC() {
+  const mode = focState.missionCase;
+  const elapsed = focState.sequenceElapsed;
+
+  let navWidth = 76;
+  let guidanceWidth = 64;
+  let controlWidth = 71;
+  let mechanismWidth = 8;
+
+  let navState = "ACTIVE";
+  let guidanceState = "READY";
+  let controlState = "ACTIVE";
+  let mechanismState = "STOWED";
+  let mechanismDescription =
+    "Robotic arms and central circular ring-net mechanism remain in their stowed state.";
+
+  if (mode === "CAPTURE") {
+    const stage = getCaptureStage();
+
+    if (stage) {
+      if (stage.key === "SEARCH" || stage.key === "DETECT") {
+        navWidth = 35;
+        guidanceWidth = 15;
+        controlWidth = 22;
+      } else if (stage.key === "TRACK" || stage.key === "RENDEZVOUS") {
+        navWidth = 70;
+        guidanceWidth = 52;
+        controlWidth = 55;
+      } else if (stage.key === "APPROACH" || stage.key === "ALIGN") {
+        navWidth = 88;
+        guidanceWidth = 82;
+        controlWidth = 84;
+      } else if (stage.key === "CAPTURE_READY") {
+        navWidth = 91;
+        guidanceWidth = 90;
+        controlWidth = 91;
+        mechanismWidth = 65;
+        mechanismState = "ARMED";
+        mechanismDescription =
+          "The central ring-net is represented as prepared for the capture sequence.";
+      } else if (stage.key === "NET_DEPLOY") {
+        navWidth = 93;
+        guidanceWidth = 94;
+        controlWidth = 95;
+        mechanismWidth = 90;
+        mechanismState = "DEPLOYING";
+        mechanismDescription =
+          "The ring-net deployment stage is active in the illustrative scenario.";
+      } else if (
+        stage.key === "CAPTURED" ||
+        stage.key === "STABILIZE" ||
+        stage.key === "SECURED"
+      ) {
+        navWidth = 96;
+        guidanceWidth = 96;
+        controlWidth = 96;
+        mechanismWidth = 100;
+        mechanismState =
+          stage.key === "SECURED" ? "SECURED" : "CAPTURED";
+        mechanismDescription =
+          "The scenario records the target capture and transfer state.";
+      }
+    }
+  }
+
+  if (mode === "HOLD") {
+    navWidth = 70;
+    guidanceWidth = 55;
+    controlWidth = 62;
+    mechanismWidth = 5;
+    navState = "MONITORING";
+    guidanceState = "HOLD";
+    controlState = "STAND-OFF";
+    mechanismState = "INHIBITED";
+    mechanismDescription =
+      "Capture is inhibited; the arms and ring-net remain stowed.";
+  }
+
+  if (mode === "ABORT") {
+    navWidth = 65;
+    guidanceWidth = 100;
+    controlWidth = 100;
+    mechanismWidth = 0;
+    navState = "MONITORING";
+    guidanceState = "SEPARATION";
+    controlState = "ABORT RESPONSE";
+    mechanismState = "RETRACTED";
+    mechanismDescription =
+      "Capture is inhibited and the mechanism is represented as retracted.";
+  }
+
+  setText("navigationState", navState);
+  setText("guidanceState", guidanceState);
+  setText("controlState", controlState);
+  setText("mechanismState", mechanismState);
+  setText("mechanismDescription", mechanismDescription);
+
+  setBadge(
+    "gncOverallBadge",
+    mode === "ABORT" ? "ABORT SCENARIO" : "MODEL ACTIVE",
+    mode === "ABORT" ? "red" : "green"
+  );
+
+  getElement("navigationProgress").style.setProperty("--value", navWidth + "%");
+  getElement("guidanceProgress").style.setProperty("--value", guidanceWidth + "%");
+  getElement("controlProgress").style.setProperty("--value", controlWidth + "%");
+  getElement("mechanismProgress").style.setProperty("--value", mechanismWidth + "%");
+
+  setText("mechanismHealthState", mechanismState);
+  setText("mechanismHealthValue", mechanismWidth + "%");
+
+  getElement("mechanismHealthFill").style.setProperty(
+    "--health",
+    mechanismWidth + "%"
+  );
+}
+
+/* ============================================================
+   41. TELEMETRY RENDERING
+   ============================================================ */
+
+function renderTelemetry() {
+  const target = getSelectedTarget();
+  const range = focState.rangeCurrent;
+  const speed = focState.velocityCurrent;
+
+  const phase = focState.orbitPhase;
+  const radiusKm = 6371 + FOC_CONFIG.defaultAltitudeKm;
+
+  const x = radiusKm * Math.cos(phase);
+  const y = radiusKm * Math.sin(phase);
+  const z = radiusKm * Math.sin(phase * 0.45) * 0.15;
+
+  const orbitalSpeed = 7.5;
+
+  setText("positionX", formatNumber(x, 2) + " km");
+  setText("positionY", formatNumber(y, 2) + " km");
+  setText("positionZ", formatNumber(z, 2) + " km");
+  setText("orbitalSpeed", formatNumber(orbitalSpeed, 2) + " km/s");
+
+  setText(
+    "targetAltitude",
+    focState.captured ? "SECURED" : formatNumber(target.altitudeKm, 0) + " km"
+  );
+
+  setText("relativeSpeed", formatNumber(speed, 2) + " m/s");
+  setText("metricRange", formatNumber(range, 2));
+
+  setText(
+    "missionClock",
+    formatClock(focState.elapsedSeconds)
+  );
+
+  setText(
+    "missionLastUpdate",
+    "Last update: " + new Date().toLocaleTimeString()
+  );
+}
+
+/* ============================================================
+   42. GRAPH HISTORY
+   ============================================================ */
+
+function appendHistory() {
+  const range = focState.rangeCurrent;
+  const velocity = focState.velocityCurrent;
+  const time = focState.elapsedSeconds;
+
+  focState.rangeHistory.push({
+    time,
+    value: range
+  });
+
+  focState.velocityHistory.push({
+    time,
+    value: velocity
+  });
+
+  const cutoff = time - 300;
+
+  focState.rangeHistory = focState.rangeHistory.filter(
+    point => point.time >= cutoff
+  );
+
+  focState.velocityHistory = focState.velocityHistory.filter(
+    point => point.time >= cutoff
+  );
+}
+
+function visibleHistory(history) {
+  const cutoff = focState.elapsedSeconds - focState.graphWindowSeconds;
+
+  const visible = history.filter(
+    point => point.time >= cutoff
+  );
+
+  if (visible.length < 2 && history.length > 1) {
+    return history.slice(-2);
+  }
+
+  return visible;
+}
+
+/* ============================================================
+   43. CANVAS GRAPH ENGINE
+   ============================================================ */
+
+function drawGraph(canvas, options) {
+  if (!canvas) {
+    return;
+  }
+
+  const rect = canvas.getBoundingClientRect();
+
+  if (rect.width < 1 || rect.height < 1) {
+    return;
+  }
+
+  const ratio = Math.min(window.devicePixelRatio || 1, 2);
+  const width = Math.round(rect.width * ratio);
+  const height = Math.round(rect.height * ratio);
+
+  if (canvas.width !== width || canvas.height !== height) {
+    canvas.width = width;
+    canvas.height = height;
+  }
+
+  const context = canvas.getContext("2d");
+
+  if (!context) {
+    return;
+  }
+
+  context.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+  const w = rect.width;
+  const h = rect.height;
+
+  context.clearRect(0, 0, w, h);
+
+  const margin = {
+    left: 44,
+    right: 13,
+    top: 14,
+    bottom: 29
+  };
+
+  const plotWidth = w - margin.left - margin.right;
+  const plotHeight = h - margin.top - margin.bottom;
+
+  if (plotWidth <= 0 || plotHeight <= 0) {
+    return;
+  }
+
+  const values = options.series.map(point => point.value);
+  let minimum = options.min ?? Math.min(...values, options.threshold ?? 0);
+  let maximum = options.max ?? Math.max(...values, options.threshold ?? 0);
+
+  if (!Number.isFinite(minimum)) minimum = 0;
+  if (!Number.isFinite(maximum)) maximum = 1;
+
+  if (maximum <= minimum) {
+    maximum = minimum + 1;
+  }
+
+  const padding = (maximum - minimum) * 0.12;
+
+  if (options.min === undefined) {
+    minimum = Math.max(0, minimum - padding);
+  }
+
+  if (options.max === undefined) {
+    maximum += padding;
+  }
+
+  const xAt = index => {
+    const denominator = Math.max(1, options.series.length - 1);
+    return margin.left + (index / denominator) * plotWidth;
+  };
+
+  const yAt = value => {
+    return margin.top +
+      (1 - (value - minimum) / (maximum - minimum)) * plotHeight;
+  };
+
+  /* Horizontal grid lines and numeric scale labels. */
+
+  context.lineWidth = 1;
+  context.font = "9px Inter, sans-serif";
+  context.textAlign = "right";
+  context.textBaseline = "middle";
+
+  const gridCount = 4;
+
+  for (let i = 0; i <= gridCount; i++) {
+    const y = margin.top + (i / gridCount) * plotHeight;
+    const value = maximum - (i / gridCount) * (maximum - minimum);
+
+    context.strokeStyle = "rgba(153,184,236,0.105)";
+    context.beginPath();
+    context.moveTo(margin.left, y);
+    context.lineTo(w - margin.right, y);
+    context.stroke();
+
+    context.fillStyle = "#8595b0";
+    context.fillText(
+      value.toFixed(options.digits ?? 1),
+      margin.left - 8,
+      y
+    );
+  }
+
+  /* Vertical time markers. */
+
+  context.textAlign = "center";
+  context.textBaseline = "top";
+
+  const timeCount = 4;
+
+  for (let i = 0; i <= timeCount; i++) {
+    const x = margin.left + (i / timeCount) * plotWidth;
+
+    context.strokeStyle = "rgba(153,184,236,0.07)";
+    context.beginPath();
+    context.moveTo(x, margin.top);
+    context.lineTo(x, margin.top + plotHeight);
+    context.stroke();
+
+    const elapsed = focState.elapsedSeconds;
+    const windowSeconds = focState.graphWindowSeconds;
+    const tickTime = elapsed - windowSeconds +
+      (i / timeCount) * windowSeconds;
+
+    context.fillStyle = "#8595b0";
+    context.fillText(
+      Math.max(0, tickTime).toFixed(0) + "s",
+      x,
+      margin.top + plotHeight + 9
+    );
+  }
+
+  /* Optional operational reference line. */
+
+  if (Number.isFinite(options.threshold)) {
+    const y = yAt(options.threshold);
+
+    if (y >= margin.top && y <= margin.top + plotHeight) {
+      context.save();
+      context.strokeStyle = options.thresholdColor || "#ff7185";
+      context.lineWidth = 1.1;
+      context.setLineDash([4, 4]);
+      context.beginPath();
+      context.moveTo(margin.left, y);
+      context.lineTo(w - margin.right, y);
+      context.stroke();
+      context.restore();
+    }
+  }
+
+  /* Draw the plotted time series. */
+
+  const series = options.series;
+
+  if (series.length > 0) {
+    context.save();
+    context.beginPath();
+
+    series.forEach((point, index) => {
+      const x = xAt(index);
+      const y = yAt(point.value);
+
+      if (index === 0) {
+        context.moveTo(x, y);
+      } else {
+        context.lineTo(x, y);
+      }
+    });
+
+    context.lineWidth = 2;
+    context.lineJoin = "round";
+    context.lineCap = "round";
+    context.strokeStyle = options.color;
+    context.shadowColor = options.color;
+    context.shadowBlur = 7;
+    context.stroke();
+    context.restore();
+
+    /* Subtle area fill under the curve. */
+
+    const gradient = context.createLinearGradient(
+      0,
+      margin.top,
+      0,
+      margin.top + plotHeight
+    );
+
+    gradient.addColorStop(0, options.fillColor || "rgba(117,223,255,0.15)");
+    gradient.addColorStop(1, "rgba(117,223,255,0)");
+
+    context.beginPath();
+
+    series.forEach((point, index) => {
+      const x = xAt(index);
+      const y = yAt(point.value);
+
+      if (index === 0) {
+        context.moveTo(x, y);
+      } else {
+        context.lineTo(x, y);
+      }
+    });
+
+    context.lineTo(xAt(series.length - 1), margin.top + plotHeight);
+    context.lineTo(xAt(0), margin.top + plotHeight);
+    context.closePath();
+
+    context.fillStyle = gradient;
+    context.fill();
+
+    /* Draw a marker for the latest value. */
+
+    const last = series[series.length - 1];
+    const lastX = xAt(series.length - 1);
+    const lastY = yAt(last.value);
+
+    context.beginPath();
+    context.arc(lastX, lastY, 3.2, 0, Math.PI * 2);
+    context.fillStyle = options.color;
+    context.fill();
+
+    context.beginPath();
+    context.arc(lastX, lastY, 6, 0, Math.PI * 2);
+    context.strokeStyle = options.color;
+    context.globalAlpha = 0.3;
+    context.stroke();
+    context.globalAlpha = 1;
+  }
+
+  /* Axis captions. */
+
+  context.fillStyle = "#64738e";
+  context.font = "8px Inter, sans-serif";
+  context.textAlign = "left";
+  context.textBaseline = "top";
+  context.fillText(options.unitLabel || "", margin.left, 1);
+}
+
+function renderGraphs() {
+  const rangeData = visibleHistory(focState.rangeHistory);
+  const velocityData = visibleHistory(focState.velocityHistory);
+
+  drawGraph(getElement("rangeGraph"), {
+    series: rangeData,
+    color: "#75dfff",
+    fillColor: "rgba(117,223,255,0.14)",
+    threshold: 0.05,
+    thresholdColor: "#ff7185",
+    digits: 1,
+    unitLabel: "km"
+  });
+
+  drawGraph(getElement("velocityGraph"), {
+    series: velocityData,
+    color: "#6d9eff",
+    fillColor: "rgba(109,158,255,0.14)",
+    threshold: 0.5,
+    thresholdColor: "#ffc66e",
+    digits: 2,
+    unitLabel: "m/s"
+  });
+
+  const rangeValues = rangeData.map(point => point.value);
+  const velocityValues = velocityData.map(point => point.value);
+
+  setText("rangeCurrent", formatNumber(focState.rangeCurrent, 2) + " km");
+  setText(
+    "rangeMinimum",
+    formatNumber(Math.min(...rangeValues, focState.rangeCurrent), 2) + " km"
+  );
+  setText(
+    "rangeMaximum",
+    formatNumber(Math.max(...rangeValues, focState.rangeCurrent), 2) + " km"
+  );
+
+  setText(
+    "velocityCurrent",
+    formatNumber(focState.velocityCurrent, 2) + " m/s"
+  );
+  setText(
+    "velocityMinimum",
+    formatNumber(Math.min(...velocityValues, focState.velocityCurrent), 2) + " m/s"
+  );
+  setText(
+    "velocityMaximum",
+    formatNumber(Math.max(...velocityValues, focState.velocityCurrent), 2) + " m/s"
+  );
+}
+
+/* ============================================================
+   44. MISSION FLOW STATE
+   ============================================================ */
+
+function renderMissionFlow() {
+  const nodes = document.querySelectorAll(".flow-node");
+
+  let activeIndex = 2;
+
+  if (focState.missionCase === "CAPTURE") {
+    const stage = getCaptureStage();
+
+    if (stage) {
+      if (stage.key === "SEARCH" || stage.key === "DETECT") activeIndex = 1;
+      else if (stage.key === "TRACK") activeIndex = 2;
+      else if (stage.key === "RENDEZVOUS" || stage.key === "APPROACH") activeIndex = 3;
+      else if (stage.key === "ALIGN" || stage.key === "CAPTURE_READY") activeIndex = 4;
+      else if (stage.key === "NET_DEPLOY") activeIndex = 5;
+      else activeIndex = 6;
+    }
+  }
+
+  if (focState.missionCase === "HOLD") {
+    activeIndex = 2;
+  }
+
+  if (focState.missionCase === "ABORT") {
+    activeIndex = 4;
+  }
+
+  nodes.forEach((node, index) => {
+    node.classList.toggle("active", index === activeIndex);
+    node.classList.toggle("complete", index < activeIndex);
+  });
+}
+
+/* ============================================================
+   45. FULL DASHBOARD REFRESH
+   ============================================================ */
+
+function renderDashboard() {
+  renderCaseControls();
+  renderCaseDetails();
+  renderMissionStatus();
+  renderSequence();
+  renderMetrics();
+  renderDebrisTable();
+  renderGNC();
+  renderTelemetry();
+  renderGraphs();
+  renderMissionFlow();
+}
+
+/* ============================================================
+   46. SIMULATION TICK
+   ============================================================ */
+
+function advanceSimulation(deltaSeconds) {
+  if (focState.isPaused) {
+    return;
+  }
+
+  focState.elapsedSeconds += deltaSeconds;
+  focState.sequenceElapsed += deltaSeconds;
+
+  focState.orbitPhase += deltaSeconds * 0.0011;
+  focState.targetPhase += deltaSeconds * 0.0014;
+
+  const liveFeedFresh = focState.simulationTelemetry &&
+    (Date.now() - focState.simulationTelemetryAt) < 3000;
+  const range = liveFeedFresh ? focState.rangeCurrent : getScenarioRange();
+  const velocity = liveFeedFresh ? focState.velocityCurrent : getScenarioVelocity();
+
+  focState.rangeCurrent = range;
+  focState.velocityCurrent = velocity;
+
+  if (focState.missionCase === "CAPTURE") {
+    const stage = getCaptureStage();
+
+    if (stage && stage.key !== focState.stage) {
+      focState.stage = stage.key;
+
+      addEvent(
+        "Mission stage transition: " + stage.title + ".",
+        "STATE",
+        stage.key === "SECURED"
+          ? "var(--green)"
+          : "var(--cyan)"
+      );
+
+      if (stage.key === "CAPTURED") {
+        focState.captured = true;
+
+        addEvent(
+          "Capture represented as successful in the demonstration model.",
+          "SIMULATION",
+          "var(--green)"
+        );
+      }
+
+      if (stage.key === "SECURED") {
+        addEvent(
+          "Target marked secured in the illustrative storage state.",
+          "SIMULATION",
+          "var(--green)"
+        );
+      }
+    }
+  } else if (focState.missionCase === "HOLD") {
+    const holdStage = Math.min(
+      4,
+      Math.floor(focState.sequenceElapsed / 5)
+    );
+
+    focState.stage = "HOLD_" + holdStage;
+  } else {
+    const abortStage = Math.min(
+      4,
+      Math.floor(focState.sequenceElapsed / 2)
+    );
+
+    focState.stage = "ABORT_" + abortStage;
+  }
+
+  appendHistory();
+  renderDashboard();
+}
+
+/* ============================================================
+   47. CASE BUTTON EVENTS
+   ============================================================ */
+
+document.querySelectorAll(".case-option").forEach(button => {
+  button.addEventListener("click", () => {
+    selectMissionCase(button.dataset.case);
+  });
+});
+
+getElement("restartSequenceButton").addEventListener("click", () => {
+  selectMissionCase(focState.missionCase);
+
+  addEvent(
+    "The " + focState.missionCase.toLowerCase() +
+    " scenario sequence has been restarted.",
+    "OPERATOR",
+    "var(--cyan)"
+  );
+});
+
+getElement("openSimulationButton").addEventListener("click", () => {
+  synchronizeCase(focState.missionCase);
+  window.location.href = "simulation.html";
+});
+
+/* ============================================================
+   48. DEBRIS TABLE EVENTS
+   ============================================================ */
+
+getElement("debrisTableBody").addEventListener("click", event => {
+  const row = event.target.closest("tr[data-object-id]");
+
+  if (!row) {
+    return;
+  }
+
+  selectTarget(row.dataset.objectId);
+});
+
+/* ============================================================
+   49. GRAPH WINDOW BUTTONS
+   ============================================================ */
+
+document.querySelectorAll(".graph-range").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".graph-range").forEach(item => {
+      item.classList.toggle("active", item === button);
+    });
+
+    focState.graphWindowSeconds = Number(button.dataset.range) || 30;
+
+    renderGraphs();
+  });
+});
+
+/* ============================================================
+   50. CROSS-PAGE STORAGE LISTENER
+   ============================================================ */
+
+window.addEventListener("storage", event => {
+  if (!FOC_CONFIG.caseStorageKeys.includes(event.key)) {
+    return;
+  }
+
+  if (!validCase(event.newValue)) {
+    return;
+  }
+
+  if (event.newValue === focState.missionCase) {
+    return;
+  }
+
+  selectMissionCase(event.newValue, {
+    broadcast: false,
+    silent: false
+  });
+
+  setBadge("syncBadge", "SYNCHRONIZED", "green");
+});
+
+/* ============================================================
+   51. BROADCAST CHANNEL LISTENER
+   ============================================================ */
+
+function applySimulationTelemetry(packet) {
+  if (!packet || packet.type !== "ADCS_SIM_TELEMETRY" || packet.source !== "simulation") return;
+  focState.simulationTelemetry = packet;
+  focState.simulationTelemetryAt = Date.now();
+  focState.simulationTelemetryCount += 1;
+  focState.telemetryAvailable = true;
+  focState.telemetrySource = "SIMULATION LINK";
+  if (Number.isFinite(Number(packet.rangeKm))) focState.rangeCurrent = Number(packet.rangeKm);
+  if (Number.isFinite(Number(packet.relativeSpeedMps))) focState.velocityCurrent = Number(packet.relativeSpeedMps);
+  if (validCase(packet.missionCase) && packet.missionCase !== focState.missionCase) {
+    selectMissionCase(packet.missionCase, {broadcast:false, silent:true});
+  }
+  const time = Number(packet.simulationTime) || focState.elapsedSeconds;
+  focState.rangeHistory.push({time, value:focState.rangeCurrent});
+  focState.velocityHistory.push({time, value:focState.velocityCurrent});
+  const cutoff = time - Math.max(FOC_CONFIG.updateIntervalMs/1000, focState.graphWindowSeconds);
+  focState.rangeHistory = focState.rangeHistory.filter(point => point.time >= cutoff).slice(-180);
+  focState.velocityHistory = focState.velocityHistory.filter(point => point.time >= cutoff).slice(-180);
+  const set = (id, value) => { const el=getElement(id); if(el) el.textContent=String(value); };
+  set("simCaseLive", `Case ${packet.missionCase === "CAPTURE" ? "1: Capture" : packet.missionCase === "HOLD" ? "2: Hold" : "3: Abort"}`);
+  set("simStateLive", packet.missionState || "State received");
+  set("simRangeLive", `${focState.rangeCurrent.toFixed(3)} km`);
+  set("simRateLive", `${Number(packet.rangeRateKmS || 0).toFixed(5)} km/s`);
+  set("simTargetLive", packet.targetId || "Not supplied");
+  set("simEpochLive", packet.timestamp ? new Date(packet.timestamp).toISOString().replace("T"," ").replace("Z","Z") : "Not supplied");
+  set("simSourceLive", `Source: simulation.html · ${packet.modelBoundary || "scenario model"}`);
+  set("simSampleLive", `Samples received: ${focState.simulationTelemetryCount}`);
+  const badge = getElement("simLinkBadge");
+  if (badge) { badge.textContent = "SIMULATION LINK ACTIVE"; badge.classList.add("connected"); }
+  setBadge("syncBadge", "SIM LINK ACTIVE", "green");
+  renderDashboard();
+}
+
+function recoverSimulationTelemetry() {
+  try {
+    const raw = localStorage.getItem("adcsSimulationTelemetry");
+    if (raw) applySimulationTelemetry(JSON.parse(raw));
+  } catch (error) { console.warn("Stored simulation telemetry could not be recovered.", error); }
+}
+
+let focBroadcastChannel = null;
+
+try {
+  if ("BroadcastChannel" in window) {
+    focBroadcastChannel = new BroadcastChannel(
+      FOC_CONFIG.broadcastChannelName
+    );
+
+    focBroadcastChannel.addEventListener("message", event => {
+      const message = event.data || {};
+      if (message.type === "ADCS_SIM_TELEMETRY") {
+        applySimulationTelemetry(message);
+        return;
+      }
+      const value = message.case || message.missionCase;
+
+      if (!validCase(value)) {
+        return;
+      }
+
+      if (message.source === "foc") {
+        return;
+      }
+
+      if (value === focState.missionCase) {
+        return;
+      }
+
+      selectMissionCase(value, {
+        broadcast: false,
+        silent: false
+      });
+
+      setBadge("syncBadge", "SYNCHRONIZED", "green");
+    });
+  }
+} catch (error) {
+  setBadge("syncBadge", "LOCAL ONLY", "amber");
+  setVisible("syncNote", true);
+}
+
+/* ============================================================
+   52. INITIAL CASE RECOVERY
+   ============================================================ */
+
+function initializeMissionCase() {
+  const storedCase = readStoredCase();
+
+  if (storedCase && validCase(storedCase)) {
+    focState.missionCase = storedCase;
+  } else {
+    focState.missionCase = FOC_CONFIG.defaultCase;
+  }
+
+  selectMissionCase(focState.missionCase, {
+    broadcast: false,
+    silent: true
+  });
+}
+
+/* ============================================================
+   53. REFRESH BUTTON
+   ============================================================ */
+
+getElement("refreshButton").addEventListener("click", () => {
+  focState.lastUpdate = new Date();
+
+  renderDashboard();
+
+  addEvent(
+    "Dashboard values refreshed from the current local simulation state.",
+    "INFO",
+    "var(--cyan)"
+  );
+});
+
+/* ============================================================
+   54. CLEAR EVENT LOG
+   ============================================================ */
+
+getElement("clearEventsButton").addEventListener("click", () => {
+  focState.eventHistory = [];
+  renderEventLog();
+
+  addEvent(
+    "Event log cleared by the operator.",
+    "OPERATOR",
+    "var(--amber)"
+  );
+});
+
+/* ============================================================
+   55. EXPORT SNAPSHOT
+   ============================================================ */
+
+function createSnapshot() {
+  return {
+    system: "ADCS",
+    page: "Flight Operations Center",
+    mission_id: FOC_CONFIG.missionId,
+    timestamp: new Date().toISOString(),
+    telemetry_source: focState.telemetrySource,
+    illustrative_data: !focState.telemetryAvailable,
+    mission_case: focState.missionCase,
+    mission_elapsed_seconds: focState.elapsedSeconds,
+    sequence_elapsed_seconds: focState.sequenceElapsed,
+    stage: focState.stage,
+    selected_target: getSelectedTarget(),
+    spacecraft: {
+      altitude_km: FOC_CONFIG.defaultAltitudeKm,
+      relative_range_km: focState.rangeCurrent,
+      relative_speed_mps: focState.velocityCurrent
+    },
+    tracked_objects: debrisCatalogue,
+    range_history: focState.rangeHistory,
+    velocity_history: focState.velocityHistory,
+    events: focState.eventHistory
+  };
+}
+
+getElement("exportButton").addEventListener("click", () => {
+  const snapshot = createSnapshot();
+  const json = JSON.stringify(snapshot, null, 2);
+  const blob = new Blob([json], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download =
+    "ADCS_FOC_snapshot_" +
+    new Date().toISOString().replaceAll(":", "-") +
+    ".json";
+
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  URL.revokeObjectURL(url);
+
+  addEvent(
+    "FOC snapshot exported as a JSON file.",
+    "OPERATOR",
+    "var(--cyan)"
+  );
+});
+
+/* ============================================================
+   56. OPTIONAL PREDICTION DATA LOADING
+   ============================================================ */
+
+/*
+   The page may attempt to read a prediction JSON file from known local
+   paths. If the page is opened directly with file://, browsers may block
+   fetch requests. In that case, the dashboard keeps its illustrative
+   values and clearly labels them as such.
+
+   Expected optional fields:
+   mission.mission_id
+   mission.tracking_id
+   prediction.position_km.x / y / z
+   prediction.velocity_kms.vx / vy / vz
+   assessment.risk_level
+   assessment.risk_score
+   decision.decision
+*/
+
+async function tryLoadPredictionData() {
+  for (const path of FOC_CONFIG.predictionCandidates) {
+    try {
+      const response = await fetch(path, {
+        cache: "no-store"
+      });
+
+      if (!response.ok) {
+        continue;
+      }
+
+      const data = await response.json();
+
+      if (!data || typeof data !== "object") {
+        continue;
+      }
+
+      focState.telemetryAvailable = true;
+      focState.telemetrySource = "CONNECTED FILE";
+      focState.dataLoaded = true;
+
+      const missionId =
+        data.mission?.mission_id ||
+        FOC_CONFIG.missionId;
+
+      const targetId =
+        data.mission?.tracking_id ||
+        FOC_CONFIG.defaultTargetId;
+
+      setText("missionIdBadge", "MISSION · " + missionId);
+      setText("targetIdBadge", "TARGET · " + targetId);
+
+      setBadge("dataSourceBadge", "FILE TELEMETRY", "green");
+
+      const decision = String(
+        data.decision?.decision || ""
+      ).toUpperCase();
+
+      if (validCase(decision)) {
+        selectMissionCase(decision, {
+          broadcast: false,
+          silent: true
+        });
+      }
+
+      addEvent(
+        "Prediction data loaded from " + path + ".",
+        "DATA",
+        "var(--green)"
+      );
+
+      return data;
+    } catch (error) {
+      /*
+       * Continue to the next candidate path.
+       * A failed optional fetch is not a fatal page error.
+       */
+    }
+  }
+
+  focState.telemetryAvailable = false;
+  focState.telemetrySource = "ILLUSTRATIVE";
+
+  setBadge("dataSourceBadge", "ILLUSTRATIVE TELEMETRY", "amber");
+
+  return null;
+}
+
+/* ============================================================
+   57. RESPONSIVE GRAPH REDRAW
+   ============================================================ */
+
+let graphResizeObserver = null;
+
+if ("ResizeObserver" in window) {
+  graphResizeObserver = new ResizeObserver(() => {
+    renderGraphs();
+  });
+
+  const rangeWrap = getElement("rangeGraph")?.parentElement;
+  const velocityWrap = getElement("velocityGraph")?.parentElement;
+
+  if (rangeWrap) {
+    graphResizeObserver.observe(rangeWrap);
+  }
+
+  if (velocityWrap) {
+    graphResizeObserver.observe(velocityWrap);
+  }
+}
+
+window.addEventListener("resize", () => {
+  renderGraphs();
+});
+
+/* ============================================================
+   58. VISIBILITY HANDLING
+   ============================================================ */
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    return;
+  }
+
+  renderDashboard();
+
+  setText(
+    "missionLastUpdate",
+    "Last update: " + new Date().toLocaleTimeString()
+  );
+});
+
+/* ============================================================
+   59. INITIAL HISTORY SEED
+   ============================================================ */
+
+function seedHistory() {
+  const startTime = Math.max(
+    0,
+    focState.elapsedSeconds - focState.graphWindowSeconds
+  );
+
+  for (let i = 0; i < 30; i++) {
+    const fraction = i / 29;
+    const time = startTime + fraction * focState.graphWindowSeconds;
+
+    let range = getSelectedTarget().rangeKm;
+    let velocity = getSelectedTarget().relativeSpeedMps;
+
+    if (focState.missionCase === "HOLD") {
+      range = 58.4;
+      velocity = 0.18;
+    }
+
+    if (focState.missionCase === "ABORT") {
+      range = 42.8 + fraction * 3;
+      velocity = 1 + fraction;
+    }
+
+    focState.rangeHistory.push({
+      time,
+      value: range
+    });
+
+    focState.velocityHistory.push({
+      time,
+      value: velocity
+    });
+  }
+}
+
+/* ============================================================
+   60. MAIN UPDATE LOOP
+   ============================================================ */
+
+let previousFrameTime = performance.now();
+let lastUiUpdateTime = 0;
+
+function mainLoop(now) {
+  requestAnimationFrame(mainLoop);
+
+  const delta = Math.min(
+    1,
+    Math.max(0, (now - previousFrameTime) / 1000)
+  );
+
+  previousFrameTime = now;
+
+  if (now - lastUiUpdateTime < FOC_CONFIG.updateIntervalMs) {
+    return;
+  }
+
+  lastUiUpdateTime = now;
+
+  advanceSimulation(delta);
+}
+
+/* ============================================================
+   61. APPLICATION INITIALIZATION
+   ============================================================ */
+
+window.addEventListener("storage", event => {
+  if (event.key === "adcsSimulationTelemetry" && event.newValue) {
+    try { applySimulationTelemetry(JSON.parse(event.newValue)); } catch (error) {}
+  }
+});
+
+async function initializeFOC() {
+  recoverSimulationTelemetry();
+  debrisCatalogue.forEach(item => {
+    item.selected = item.id === focState.selectedTargetId;
+  });
+
+  initializeMissionCase();
+
+  focState.rangeCurrent = getScenarioRange();
+  focState.velocityCurrent = getScenarioVelocity();
+
+  seedHistory();
+
+  renderDashboard();
+
+  addEvent(
+    "Flight Operations Center initialized.",
+    "INFO",
+    "var(--cyan)"
+  );
+
+  addEvent(
+    "Multiple-object tracking catalogue initialized with " +
+    getTrackedCount() +
+    " illustrative objects.",
+    "INFO",
+    "var(--cyan)"
+  );
+
+  await tryLoadPredictionData();
+
+  renderDashboard();
+
+  requestAnimationFrame(mainLoop);
+}
+
+initializeFOC();
+
+/* ============================================================
+   62. CLEANUP
+   ============================================================ */
+
+window.addEventListener("beforeunload", () => {
+  if (focBroadcastChannel) {
+    focBroadcastChannel.close();
+  }
+
+  if (graphResizeObserver) {
+    graphResizeObserver.disconnect();
+  }
+});
+
+/* ============================================================
+   END OF ADCS FLIGHT OPERATIONS CENTER
+   ============================================================ */
+</script>
+</body>
+</html>

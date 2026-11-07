@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -11,102 +9,121 @@
     >
 
     <meta
-        name="theme-color"
-        content="#12091d"
+        name="description"
+        content="AUTONOMOUS SPACE DEBRIS MONITORING AND CAPTURE SYSTEM — ADCS"
     >
 
     <meta
-        name="description"
-        content="Autonomous Space Debris Monitoring & Capture System"
+        name="theme-color"
+        content="#050912"
     >
 
     <title>
-        ADCS | Autonomous Space Debris Monitoring & Capture System
+        ADCS | Autonomous Space Debris Monitoring and Capture System
     </title>
 
+    <!-- Shared Design System -->
+    <link
+        rel="stylesheet"
+        href="assets/site.css"
+    >
 
     <style>
 
-        /* =========================================================
-           ROOT
-        ========================================================= */
+        /* =====================================================
+           ADCS CINEMATIC WELCOME
+           ===================================================== */
 
         :root {
-
-            --deep-purple: #0b0612;
-            --purple: #150a21;
-            --lavender: #b993e8;
-
-            --white: #f7f3fb;
-            --soft-white: rgba(247, 243, 251, 0.78);
-            --muted: rgba(226, 214, 240, 0.55);
-
-            --cyan: #73e5ff;
-            --cyan-soft: rgba(115, 229, 255, 0.20);
-
-            --border: rgba(224, 200, 255, 0.25);
-
-            --ease:
-                cubic-bezier(0.22, 1, 0.36, 1);
+            --welcome-bg: #030711;
+            --welcome-line: rgba(180, 210, 240, 0.22);
+            --welcome-white: #f4f7fb;
+            --welcome-soft: rgba(225, 235, 248, 0.74);
+            --welcome-accent: #9fc7ef;
+            --welcome-glow: rgba(126, 181, 240, 0.18);
         }
 
 
-        /* =========================================================
-           RESET
-        ========================================================= */
-
-        *,
-        *::before,
-        *::after {
-
+        * {
             box-sizing: border-box;
-
         }
 
 
         html,
         body {
-
             width: 100%;
             height: 100%;
-
             margin: 0;
             padding: 0;
-
+            overflow: hidden;
         }
 
 
         body {
-
-            overflow: hidden;
-
-            background:
-                radial-gradient(
-                    circle at center,
-                    #261337 0%,
-                    #160a23 42%,
-                    #0b0612 100%
-                );
-
-            color: var(--white);
-
+            background: var(--welcome-bg);
+            color: var(--welcome-white);
             font-family:
                 Inter,
                 "Segoe UI",
                 Helvetica,
                 Arial,
                 sans-serif;
+        }
+
+
+        /* =====================================================
+           MAIN STAGE
+           ===================================================== */
+
+        .welcome-stage {
+
+            position: relative;
+
+            width: 100%;
+            height: 100vh;
+            height: 100svh;
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 50% 48%,
+                    rgba(60, 100, 150, 0.12),
+                    transparent 42%
+                ),
+                #030711;
+
+            isolation: isolate;
+
+            opacity: 1;
+
+            transform: scale(1);
+
+            transition:
+                opacity 1.1s cubic-bezier(.77,0,.18,1),
+                transform 1.4s cubic-bezier(.77,0,.18,1);
 
         }
 
 
-        /* =========================================================
+        .welcome-stage.is-exiting {
+
+            opacity: 0;
+
+            transform: scale(1.035);
+
+            pointer-events: none;
+
+        }
+
+
+        /* =====================================================
            VIDEO
-        ========================================================= */
+           ===================================================== */
 
-        #intro {
+        .welcome-video {
 
-            position: fixed;
+            position: absolute;
 
             inset: 0;
 
@@ -115,113 +132,134 @@
 
             object-fit: cover;
 
-            object-position: center center;
+            background: #030711;
 
-            background:
-                #10071a;
+            z-index: -5;
 
-            z-index: 1;
+            transform: scale(1.015);
 
         }
 
 
-        /* =========================================================
-           CINEMATIC VIDEO OVERLAY
-        ========================================================= */
+        /*
+         * Cinematic treatment over the original video.
+         */
 
-        .cinematic-overlay {
+        .welcome-video-treatment {
 
-            position: fixed;
+            position: absolute;
 
             inset: 0;
 
-            z-index: 2;
+            z-index: -4;
 
             pointer-events: none;
 
             background:
-
                 linear-gradient(
                     180deg,
-                    rgba(8, 4, 14, 0.40) 0%,
-                    rgba(8, 4, 14, 0.05) 27%,
-                    rgba(10, 5, 18, 0.08) 50%,
-                    rgba(8, 4, 14, 0.55) 100%
+                    rgba(1, 5, 13, 0.52) 0%,
+                    rgba(1, 5, 13, 0.08) 30%,
+                    rgba(1, 5, 13, 0.02) 55%,
+                    rgba(1, 5, 13, 0.72) 100%
                 );
 
         }
 
 
-        .cinematic-overlay::before {
-
-            content: "";
+        .welcome-vignette {
 
             position: absolute;
 
             inset: 0;
 
-            background:
+            z-index: -3;
 
+            pointer-events: none;
+
+            background:
                 radial-gradient(
                     ellipse at center,
-                    transparent 24%,
-                    rgba(7, 3, 12, 0.10) 52%,
-                    rgba(7, 3, 12, 0.62) 100%
+                    transparent 42%,
+                    rgba(0, 0, 0, 0.26) 72%,
+                    rgba(0, 0, 0, 0.68) 100%
                 );
 
         }
 
 
-        .cinematic-overlay::after {
+        /* =====================================================
+           SUBTLE TECHNICAL GRID
+           ===================================================== */
 
-            content: "";
+        .welcome-grid {
 
             position: absolute;
 
             inset: 0;
 
-            background:
+            z-index: -2;
 
+            pointer-events: none;
+
+            opacity: 0.16;
+
+            background-image:
+                linear-gradient(
+                    rgba(190, 215, 240, 0.08) 1px,
+                    transparent 1px
+                ),
                 linear-gradient(
                     90deg,
-                    rgba(9, 4, 16, 0.28),
-                    transparent 25%,
-                    transparent 75%,
-                    rgba(9, 4, 16, 0.28)
+                    rgba(190, 215, 240, 0.08) 1px,
+                    transparent 1px
+                );
+
+            background-size:
+                72px 72px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    transparent,
+                    black 18%,
+                    black 82%,
+                    transparent
                 );
 
         }
 
 
-        /* =========================================================
-           TOP IDENTIFICATION
-        ========================================================= */
+        /* =====================================================
+           TOP MISSION IDENTIFIER
+           ===================================================== */
 
-        .top-bar {
+        .welcome-topline {
 
-            position: fixed;
+            position: absolute;
 
-            top: 0;
-            left: 0;
-            right: 0;
-
-            z-index: 5;
+            top: clamp(24px, 4vh, 46px);
+            left: clamp(24px, 4vw, 64px);
+            right: clamp(24px, 4vw, 64px);
 
             display: flex;
 
             align-items: center;
             justify-content: space-between;
 
-            padding:
-                30px
-                clamp(26px, 5vw, 72px);
+            z-index: 10;
 
             pointer-events: none;
+
+            animation:
+                welcomeTopIn 1.2s
+                cubic-bezier(.22,1,.36,1)
+                both;
 
         }
 
 
-        .system-id {
+        .welcome-system-mark {
 
             display: flex;
 
@@ -230,29 +268,25 @@
             gap: 12px;
 
             color:
-                rgba(248, 243, 253, 0.90);
+                rgba(
+                    238,
+                    244,
+                    251,
+                    0.88
+                );
 
-            font-family:
-                "SFMono-Regular",
-                Consolas,
-                monospace;
-
-            font-size: 10px;
+            font-size: 11px;
 
             font-weight: 600;
 
-            letter-spacing: 0.22em;
+            letter-spacing: 0.2em;
 
             text-transform: uppercase;
-
-            text-shadow:
-                0 3px 18px
-                rgba(0, 0, 0, 0.55);
 
         }
 
 
-        .system-dot {
+        .welcome-system-dot {
 
             width: 7px;
             height: 7px;
@@ -260,54 +294,84 @@
             border-radius: 50%;
 
             background:
-                var(--cyan);
+                #b9d9f7;
 
             box-shadow:
-                0 0 9px
-                rgba(115, 229, 255, 0.90),
-
-                0 0 24px
-                rgba(115, 229, 255, 0.34);
+                0 0 16px
+                rgba(
+                    165,
+                    208,
+                    247,
+                    0.85
+                );
 
         }
 
 
-        .top-status {
+        .welcome-system-status {
 
             display: flex;
 
             align-items: center;
 
-            gap: 8px;
+            gap: 9px;
+
+            padding:
+                8px 12px;
+
+            border:
+                1px solid
+                rgba(
+                    215,
+                    230,
+                    247,
+                    0.16
+                );
+
+            background:
+                rgba(
+                    4,
+                    10,
+                    20,
+                    0.30
+                );
+
+            backdrop-filter:
+                blur(12px);
+
+            -webkit-backdrop-filter:
+                blur(12px);
 
             color:
-                rgba(238, 229, 247, 0.58);
+                rgba(
+                    224,
+                    235,
+                    247,
+                    0.68
+                );
 
-            font-family:
-                "SFMono-Regular",
-                Consolas,
-                monospace;
+            font-size: 9px;
 
-            font-size: 8px;
+            font-weight: 600;
 
-            letter-spacing: 0.18em;
+            letter-spacing: 0.16em;
 
             text-transform: uppercase;
 
         }
 
 
-        /* =========================================================
-           CENTER TITLE
-        ========================================================= */
+        /* =====================================================
+           CENTRAL CONTENT
+           ===================================================== */
 
-        .center-stage {
+        .welcome-content {
 
-            position: fixed;
+            position: absolute;
 
             inset: 0;
 
-            z-index: 4;
+            z-index: 5;
 
             display: flex;
 
@@ -315,250 +379,295 @@
             justify-content: center;
 
             padding:
-                100px 24px 130px;
-
-            pointer-events: none;
-
-        }
-
-
-        .title-block {
-
-            width: min(
-                1000px,
-                94vw
-            );
+                100px 24px 120px;
 
             text-align: center;
 
-            animation:
-                titleReveal
-                1.45s
-                var(--ease)
-                0.15s
-                both;
-
         }
 
 
-        .pre-title {
+        .welcome-content-inner {
+
+            width: min(
+                1180px,
+                94vw
+            );
 
             display: flex;
 
+            flex-direction: column;
+
             align-items: center;
-            justify-content: center;
 
-            gap: 16px;
+        }
 
-            margin-bottom: 24px;
+
+        /* =====================================================
+           PROJECT IDENTIFIER
+           ===================================================== */
+
+        .welcome-kicker {
+
+            margin: 0 0 22px;
 
             color:
-                var(--cyan);
-
-            font-family:
-                "SFMono-Regular",
-                Consolas,
-                monospace;
-
-            font-size:
-                clamp(8px, 0.8vw, 11px);
-
-            font-weight: 600;
-
-            letter-spacing: 0.26em;
-
-            line-height: 1.4;
-
-            text-transform: uppercase;
-
-            text-shadow:
-                0 0 22px
-                rgba(115, 229, 255, 0.22);
-
-        }
-
-
-        .pre-title::before,
-        .pre-title::after {
-
-            content: "";
-
-            width:
-                clamp(30px, 7vw, 90px);
-
-            height: 1px;
-
-            background:
-
-                linear-gradient(
-                    90deg,
-                    transparent,
-                    rgba(115, 229, 255, 0.60)
+                rgba(
+                    211,
+                    228,
+                    244,
+                    0.76
                 );
-
-        }
-
-
-        .pre-title::after {
-
-            background:
-
-                linear-gradient(
-                    90deg,
-                    rgba(115, 229, 255, 0.60),
-                    transparent
-                );
-
-        }
-
-
-        .project-title {
-
-            margin: 0;
-
-            color:
-                var(--white);
-
-            font-family:
-
-                "Arial Narrow",
-                "Segoe UI",
-                Arial,
-                sans-serif;
 
             font-size:
                 clamp(
-                    38px,
-                    6vw,
-                    88px
+                    9px,
+                    0.7vw,
+                    12px
                 );
 
-            font-weight: 700;
-
-            line-height: 0.94;
+            font-weight: 600;
 
             letter-spacing:
-                -0.045em;
+                clamp(
+                    0.28em,
+                    0.7vw,
+                    0.55em
+                );
 
             text-transform: uppercase;
 
-            text-shadow:
+            opacity: 0;
 
-                0 4px 28px
-                rgba(0, 0, 0, 0.60),
+            transform:
+                translateY(18px);
 
-                0 0 60px
-                rgba(126, 76, 174, 0.12);
-
-        }
-
-
-        .project-title .line-one {
-
-            display: block;
-
-            color:
-                rgba(249, 246, 253, 0.97);
+            animation:
+                welcomeKickerIn
+                1.15s
+                0.25s
+                cubic-bezier(.22,1,.36,1)
+                forwards;
 
         }
 
 
-        .project-title .line-two {
+        /* =====================================================
+           MAIN TITLE
+           ===================================================== */
 
-            display: block;
+        .welcome-title {
 
-            margin-top: 5px;
+            margin: 0;
+
+            max-width: 1120px;
 
             color:
-                rgba(231, 219, 244, 0.88);
+                #f7f9fc;
+
+            /*
+             * Elegant serif/calligraphic-style stack.
+             * No external font dependency.
+             */
+
+            font-family:
+                "Baskerville",
+                "Iowan Old Style",
+                "Palatino Linotype",
+                "Book Antiqua",
+                Georgia,
+                serif;
+
+            font-size:
+                clamp(
+                    34px,
+                    5.2vw,
+                    82px
+                );
 
             font-weight: 400;
+
+            line-height: 0.98;
 
             letter-spacing:
                 -0.035em;
 
-        }
-
-
-        .project-subtitle {
-
-            margin:
-                27px
-                auto
-                0;
-
-            max-width: 640px;
-
-            color:
-                rgba(238, 230, 247, 0.66);
-
-            font-family:
-                "Segoe UI",
-                Arial,
-                sans-serif;
-
-            font-size:
-                clamp(11px, 1vw, 14px);
-
-            font-weight: 400;
-
-            line-height: 1.65;
-
-            letter-spacing: 0.035em;
-
-            text-transform: uppercase;
+            text-wrap: balance;
 
             text-shadow:
-                0 2px 18px
-                rgba(0, 0, 0, 0.55);
+                0 2px 28px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.55
+                ),
+                0 0 60px
+                rgba(
+                    113,
+                    169,
+                    225,
+                    0.13
+                );
+
+            opacity: 0;
+
+            transform:
+                translateY(30px)
+                scale(0.985);
+
+            animation:
+                welcomeTitleIn
+                1.55s
+                0.35s
+                cubic-bezier(.16,1,.3,1)
+                forwards;
 
         }
 
 
-        /* =========================================================
-           CENTER PROJECT CODE
-        ========================================================= */
+        .welcome-title span {
 
-        .mission-code {
+            display: block;
 
-            margin-top: 25px;
+        }
+
+
+        .welcome-title .title-accent {
 
             color:
-                rgba(115, 229, 255, 0.78);
+                rgba(
+                    224,
+                    236,
+                    249,
+                    0.94
+                );
 
-            font-family:
-                "SFMono-Regular",
-                Consolas,
-                monospace;
+            font-style: italic;
 
-            font-size: 9px;
+        }
+
+
+        /* =====================================================
+           DIVIDER
+           ===================================================== */
+
+        .welcome-divider {
+
+            width:
+                clamp(
+                    90px,
+                    12vw,
+                    170px
+                );
+
+            height: 1px;
+
+            margin:
+                32px 0 22px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(
+                        205,
+                        226,
+                        247,
+                        0.76
+                    ),
+                    transparent
+                );
+
+            opacity: 0;
+
+            transform:
+                scaleX(0.4);
+
+            animation:
+                welcomeDividerIn
+                1.1s
+                0.75s
+                cubic-bezier(.22,1,.36,1)
+                forwards;
+
+        }
+
+
+        /* =====================================================
+           ABBREVIATION / SYSTEM IDENTITY
+           ===================================================== */
+
+        .welcome-subtitle {
+
+            margin: 0;
+
+            color:
+                rgba(
+                    221,
+                    232,
+                    244,
+                    0.72
+                );
+
+            font-size:
+                clamp(
+                    10px,
+                    1vw,
+                    13px
+                );
 
             font-weight: 500;
 
-            letter-spacing: 0.28em;
+            letter-spacing:
+                0.34em;
 
             text-transform: uppercase;
 
-            text-shadow:
-                0 0 20px
-                rgba(115, 229, 255, 0.18);
+            opacity: 0;
+
+            transform:
+                translateY(15px);
+
+            animation:
+                welcomeSubtitleIn
+                1.1s
+                0.9s
+                cubic-bezier(.22,1,.36,1)
+                forwards;
 
         }
 
 
-        /* =========================================================
-           BOTTOM AREA
-        ========================================================= */
+        /* =====================================================
+           BOTTOM INFORMATION RAIL
+           ===================================================== */
 
-        .bottom-bar {
+        .welcome-bottom {
 
-            position: fixed;
+            position: absolute;
 
-            left: 0;
-            right: 0;
-            bottom: 0;
+            left:
+                clamp(
+                    24px,
+                    4vw,
+                    64px
+                );
 
-            z-index: 6;
+            right:
+                clamp(
+                    24px,
+                    4vw,
+                    64px
+                );
+
+            bottom:
+                clamp(
+                    26px,
+                    4vh,
+                    48px
+                );
+
+            z-index: 10;
 
             display: flex;
 
@@ -568,921 +677,910 @@
 
             gap: 30px;
 
-            padding:
-                30px
-                clamp(26px, 5vw, 72px)
-                38px;
-
             pointer-events: none;
 
         }
 
 
-        .bottom-info {
+        .welcome-classification {
 
             display: flex;
 
-            flex-wrap: wrap;
+            flex-direction: column;
 
-            align-items: center;
+            gap: 6px;
 
-            gap:
-                9px
-                20px;
+            text-align: left;
 
-            color:
-                rgba(235, 225, 244, 0.48);
+            opacity: 0;
 
-            font-family:
-                "SFMono-Regular",
-                Consolas,
-                monospace;
-
-            font-size: 8px;
-
-            letter-spacing: 0.16em;
-
-            text-transform: uppercase;
-
-            text-shadow:
-                0 2px 15px
-                rgba(0, 0, 0, 0.55);
+            animation:
+                welcomeBottomIn
+                1s
+                1.05s
+                cubic-bezier(.22,1,.36,1)
+                forwards;
 
         }
 
 
-        .bottom-info strong {
+        .welcome-classification-label {
 
             color:
-                rgba(247, 241, 251, 0.76);
-
-            font-weight: 500;
-
-        }
-
-
-        .separator {
-
-            width: 1px;
-
-            height: 11px;
-
-            background:
-                rgba(224, 200, 255, 0.25);
-
-        }
-
-
-        /* =========================================================
-           SKIP BUTTON
-        ========================================================= */
-
-        .skip {
-
-            pointer-events: auto;
-
-            min-width: 126px;
-
-            height: 40px;
-
-            padding:
-                0 16px;
-
-            border:
-                1px solid
-                rgba(224, 200, 255, 0.30);
-
-            border-radius: 2px;
-
-            background:
-                rgba(9, 4, 16, 0.44);
-
-            color:
-                rgba(249, 245, 253, 0.90);
-
-            font-family:
-                "SFMono-Regular",
-                Consolas,
-                monospace;
+                rgba(
+                    205,
+                    220,
+                    236,
+                    0.45
+                );
 
             font-size: 8px;
 
             font-weight: 600;
 
-            letter-spacing: 0.17em;
+            letter-spacing:
+                0.2em;
 
-            text-transform: uppercase;
-
-            cursor: pointer;
-
-            backdrop-filter:
-                blur(10px);
-
-            -webkit-backdrop-filter:
-                blur(10px);
-
-            transition:
-
-                border-color 220ms ease,
-                background 220ms ease,
-                box-shadow 220ms ease,
-                transform 220ms var(--ease);
+            text-transform:
+                uppercase;
 
         }
 
 
-        .skip:hover {
+        .welcome-classification-value {
 
-            border-color:
-                rgba(115, 229, 255, 0.60);
+            color:
+                rgba(
+                    234,
+                    241,
+                    249,
+                    0.76
+                );
+
+            font-size: 10px;
+
+            font-weight: 600;
+
+            letter-spacing:
+                0.12em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        /* =====================================================
+           CONTINUE INDICATOR
+           ===================================================== */
+
+        .welcome-enter {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+            color:
+                rgba(
+                    231,
+                    240,
+                    249,
+                    0.72
+                );
+
+            font-size: 9px;
+
+            font-weight: 600;
+
+            letter-spacing:
+                0.22em;
+
+            text-transform:
+                uppercase;
+
+            opacity: 0;
+
+            animation:
+                welcomeBottomIn
+                1s
+                1.2s
+                cubic-bezier(.22,1,.36,1)
+                forwards;
+
+        }
+
+
+        .welcome-enter-line {
+
+            width:
+                clamp(
+                    44px,
+                    6vw,
+                    82px
+                );
+
+            height: 1px;
 
             background:
-                rgba(13, 7, 23, 0.66);
-
-            box-shadow:
-                0 0 25px
-                rgba(115, 229, 255, 0.08);
-
-            transform:
-                translateY(-1px);
+                rgba(
+                    218,
+                    232,
+                    246,
+                    0.45
+                );
 
         }
 
 
-        .skip:focus-visible {
-
-            outline:
-                1px solid
-                var(--cyan);
-
-            outline-offset: 4px;
-
-        }
-
-
-        /* =========================================================
+        /* =====================================================
            VIDEO PROGRESS
-        ========================================================= */
+           ===================================================== */
 
-        .progress-track {
+        .welcome-progress {
 
-            position: fixed;
+            position: absolute;
 
             left: 0;
-            right: 0;
             bottom: 0;
 
-            z-index: 8;
-
+            width: 100%;
             height: 2px;
 
+            z-index: 30;
+
             background:
-                rgba(255, 255, 255, 0.07);
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.08
+                );
 
         }
 
 
-        .progress-fill {
-
-            display: block;
+        .welcome-progress-bar {
 
             width: 0%;
 
             height: 100%;
 
             background:
-
                 linear-gradient(
                     90deg,
-                    rgba(115, 229, 255, 0.92),
-                    rgba(185, 145, 237, 0.98)
+                    rgba(
+                        153,
+                        190,
+                        225,
+                        0.2
+                    ),
+                    rgba(
+                        218,
+                        233,
+                        248,
+                        0.95
+                    )
                 );
 
             box-shadow:
-                0 0 15px
-                rgba(151, 104, 211, 0.55);
-
-            transition:
-                width 80ms linear;
-
-        }
-
-
-        /* =========================================================
-           CORNER DETAILS
-        ========================================================= */
-
-        .corner {
-
-            position: fixed;
-
-            z-index: 5;
-
-            width: 38px;
-            height: 38px;
-
-            opacity: 0.38;
-
-            pointer-events: none;
+                0 0 14px
+                rgba(
+                    171,
+                    211,
+                    244,
+                    0.45
+                );
 
         }
 
 
-        .corner::before,
-        .corner::after {
+        /* =====================================================
+           FALLBACK ENTER BUTTON
+           ===================================================== */
 
-            content: "";
+        .welcome-skip {
 
             position: absolute;
 
-            background:
-                rgba(225, 203, 251, 0.55);
+            right:
+                clamp(
+                    24px,
+                    4vw,
+                    64px
+                );
 
-        }
-
-
-        .corner::before {
-
-            width: 100%;
-            height: 1px;
-
-        }
-
-
-        .corner::after {
-
-            width: 1px;
-            height: 100%;
-
-        }
-
-
-        .corner.tl {
-
-            top: 20px;
-            left: 20px;
-
-        }
-
-
-        .corner.tr {
-
-            top: 20px;
-            right: 20px;
-
-            transform:
-                rotate(90deg);
-
-        }
-
-
-        .corner.bl {
-
-            bottom: 20px;
-            left: 20px;
-
-            transform:
-                rotate(-90deg);
-
-        }
-
-
-        .corner.br {
-
-            bottom: 20px;
-            right: 20px;
-
-            transform:
-                rotate(180deg);
-
-        }
-
-
-        /* =========================================================
-           TRANSITION
-        ========================================================= */
-
-        #transition {
-
-            position: fixed;
-
-            inset: 0;
+            bottom:
+                clamp(
+                    70px,
+                    9vh,
+                    105px
+                );
 
             z-index: 20;
 
-            pointer-events: none;
+            padding:
+                9px 14px;
+
+            border:
+                1px solid
+                rgba(
+                    215,
+                    230,
+                    247,
+                    0.14
+                );
+
+            background:
+                rgba(
+                    3,
+                    9,
+                    18,
+                    0.28
+                );
+
+            color:
+                rgba(
+                    232,
+                    241,
+                    249,
+                    0.56
+                );
+
+            font-family:
+                inherit;
+
+            font-size: 8px;
+
+            font-weight: 600;
+
+            letter-spacing:
+                0.18em;
+
+            text-transform:
+                uppercase;
+
+            cursor: pointer;
 
             opacity: 0;
 
-            background:
-
-                radial-gradient(
-                    circle at center,
-                    rgba(105, 57, 155, 0.28),
-                    rgba(42, 18, 66, 0.40) 40%,
-                    rgba(10, 4, 17, 0.96) 100%
-                );
-
-            transform:
-                scale(1.02);
+            pointer-events: none;
 
             transition:
-
-                opacity
-                420ms
-                var(--ease),
-
-                transform
-                600ms
-                var(--ease);
+                color 220ms ease,
+                border-color 220ms ease,
+                background 220ms ease;
 
         }
 
 
-        #transition.active {
+        .welcome-stage.video-ready
+        .welcome-skip {
 
             opacity: 1;
 
-            transform:
-                scale(1);
+            pointer-events: auto;
 
         }
 
 
-        /* =========================================================
-           TITLE ANIMATION
-        ========================================================= */
+        .welcome-skip:hover {
 
-        @keyframes titleReveal {
+            color:
+                #f2f7fc;
 
-            0% {
+            border-color:
+                rgba(
+                    215,
+                    230,
+                    247,
+                    0.34
+                );
 
-                opacity: 0;
+            background:
+                rgba(
+                    7,
+                    16,
+                    29,
+                    0.54
+                );
 
-                transform:
-                    translateY(24px)
-                    scale(0.985);
+        }
 
-                filter:
-                    blur(5px);
 
+        /* =====================================================
+           LOADING STATE
+           ===================================================== */
+
+        .welcome-loading {
+
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            z-index: 50;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            gap: 14px;
+
+            transform:
+                translate(
+                    -50%,
+                    -50%
+                );
+
+            transition:
+                opacity 500ms ease;
+
+        }
+
+
+        .welcome-loading.hidden {
+
+            opacity: 0;
+
+            pointer-events: none;
+
+        }
+
+
+        .welcome-loader {
+
+            width: 28px;
+            height: 28px;
+
+            border-radius: 50%;
+
+            border:
+                1px solid
+                rgba(
+                    215,
+                    230,
+                    247,
+                    0.18
+                );
+
+            border-top-color:
+                rgba(
+                    226,
+                    239,
+                    251,
+                    0.86
+                );
+
+            animation:
+                welcomeSpin
+                900ms
+                linear
+                infinite;
+
+        }
+
+
+        .welcome-loading-text {
+
+            color:
+                rgba(
+                    224,
+                    236,
+                    247,
+                    0.5
+                );
+
+            font-size: 8px;
+
+            font-weight: 600;
+
+            letter-spacing:
+                0.2em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        /* =====================================================
+           ANIMATIONS
+           ===================================================== */
+
+        @keyframes welcomeSpin {
+
+            to {
+                transform: rotate(360deg);
             }
 
+        }
 
-            100% {
 
+        @keyframes welcomeTopIn {
+
+            from {
+                opacity: 0;
+                transform:
+                    translateY(-15px);
+            }
+
+            to {
                 opacity: 1;
+                transform:
+                    translateY(0);
+            }
 
+        }
+
+
+        @keyframes welcomeKickerIn {
+
+            to {
+                opacity: 1;
+                transform:
+                    translateY(0);
+            }
+
+        }
+
+
+        @keyframes welcomeTitleIn {
+
+            to {
+                opacity: 1;
                 transform:
                     translateY(0)
                     scale(1);
-
-                filter:
-                    blur(0);
-
             }
 
         }
 
 
-        /* =========================================================
+        @keyframes welcomeDividerIn {
+
+            to {
+                opacity: 1;
+                transform:
+                    scaleX(1);
+            }
+
+        }
+
+
+        @keyframes welcomeSubtitleIn {
+
+            to {
+                opacity: 1;
+                transform:
+                    translateY(0);
+            }
+
+        }
+
+
+        @keyframes welcomeBottomIn {
+
+            to {
+                opacity: 1;
+            }
+
+        }
+
+
+        /* =====================================================
            RESPONSIVE
-        ========================================================= */
+           ===================================================== */
 
-        @media (max-width: 760px) {
+        @media (max-width: 800px) {
 
-            .top-bar {
+            .welcome-topline {
 
-                padding:
-                    22px
-                    22px;
+                top: 22px;
 
             }
 
 
-            .top-status {
+            .welcome-system-status {
 
                 display: none;
 
             }
 
 
-            .center-stage {
+            .welcome-content {
 
                 padding:
-                    90px
-                    20px
-                    130px;
+                    80px 20px 120px;
 
             }
 
 
-            .project-title {
+            .welcome-title {
 
                 font-size:
                     clamp(
-                        35px,
-                        10vw,
-                        62px
+                        34px,
+                        9vw,
+                        58px
                     );
 
-            }
-
-
-            .project-subtitle {
-
-                font-size:
-                    10px;
-
-                max-width:
-                    500px;
+                line-height: 1.02;
 
             }
 
 
-            .bottom-bar {
+            .welcome-subtitle {
 
-                padding:
-                    22px
-                    22px
-                    32px;
+                max-width: 320px;
+
+                line-height: 1.8;
+
+            }
+
+
+            .welcome-bottom {
+
+                align-items: flex-start;
+
+            }
+
+
+            .welcome-enter {
+
+                display: none;
 
             }
 
         }
 
 
-        @media (max-width: 540px) {
+        @media (max-width: 520px) {
 
-            .system-id {
+            .welcome-grid {
 
-                font-size: 8px;
+                opacity: 0.08;
 
-                letter-spacing:
-                    0.16em;
-
-            }
-
-
-            .system-id .system-dot {
-
-                width: 5px;
-                height: 5px;
+                background-size:
+                    52px 52px;
 
             }
 
 
-            .center-stage {
-
-                padding:
-                    80px
-                    18px
-                    120px;
-
-            }
-
-
-            .pre-title {
-
-                gap: 9px;
-
-                font-size: 7px;
-
-                letter-spacing:
-                    0.16em;
-
-            }
-
-
-            .pre-title::before,
-            .pre-title::after {
-
-                width: 22px;
-
-            }
-
-
-            .project-title {
+            .welcome-title {
 
                 font-size:
                     clamp(
                         31px,
-                        10.5vw,
-                        50px
+                        10vw,
+                        48px
                     );
 
-                line-height:
-                    0.98;
+            }
+
+
+            .welcome-kicker {
+
+                letter-spacing:
+                    0.22em;
 
             }
 
 
-            .project-title .line-two {
+            .welcome-divider {
 
-                margin-top: 4px;
+                margin:
+                    24px 0 18px;
 
             }
 
 
-            .project-subtitle {
+            .welcome-bottom {
 
-                margin-top: 19px;
+                bottom: 22px;
+
+            }
+
+
+            .welcome-classification-value {
 
                 font-size: 8px;
 
-                line-height: 1.6;
-
-                letter-spacing:
-                    0.025em;
-
             }
 
 
-            .mission-code {
+            .welcome-skip {
 
-                margin-top: 19px;
+                right: 20px;
 
-                font-size: 7px;
-
-                letter-spacing:
-                    0.20em;
-
-            }
-
-
-            .bottom-bar {
-
-                align-items:
-                    flex-end;
-
-                padding:
-                    18px
-                    18px
-                    28px;
-
-            }
-
-
-            .bottom-info {
-
-                gap:
-                    6px
-                    10px;
-
-                font-size: 6px;
-
-            }
-
-
-            .separator {
-
-                display: none;
-
-            }
-
-
-            .skip {
-
-                min-width:
-                    104px;
-
-                height:
-                    36px;
-
-                padding:
-                    0 12px;
-
-                font-size:
-                    7px;
-
-            }
-
-
-            .corner {
-
-                width:
-                    24px;
-
-                height:
-                    24px;
-
-            }
-
-
-            .corner.tl,
-            .corner.tr {
-
-                top:
-                    14px;
-
-            }
-
-
-            .corner.bl,
-            .corner.br {
-
-                bottom:
-                    14px;
-
-            }
-
-
-            .corner.tl,
-            .corner.bl {
-
-                left:
-                    14px;
-
-            }
-
-
-            .corner.tr,
-            .corner.br {
-
-                right:
-                    14px;
+                bottom: 66px;
 
             }
 
         }
 
 
-        /* =========================================================
+        /* =====================================================
            REDUCED MOTION
-        ========================================================= */
+           ===================================================== */
 
         @media (
             prefers-reduced-motion: reduce
         ) {
 
-            *,
-            *::before,
-            *::after {
+            .welcome-stage,
+            .welcome-title,
+            .welcome-kicker,
+            .welcome-divider,
+            .welcome-subtitle,
+            .welcome-topline,
+            .welcome-classification,
+            .welcome-enter {
 
-                animation-duration:
-                    0.001ms !important;
+                animation: none !important;
 
-                animation-iteration-count:
-                    1 !important;
+                transition: none !important;
 
-                transition-duration:
-                    0.001ms !important;
+                opacity: 1;
+
+                transform: none;
 
             }
 
         }
 
     </style>
-
 </head>
 
 
 <body>
 
+    <!-- =====================================================
+         CINEMATIC WELCOME STAGE
+         ===================================================== -->
 
-    <!-- =========================================================
-         ACTUAL USER INTRO VIDEO
-    ========================================================= -->
-
-    <video
-        id="intro"
-        autoplay
-        muted
-        playsinline
-        preload="auto"
-        disablepictureinpicture
-        aria-label="Autonomous Space Debris Monitoring and Capture System introduction"
+    <main
+        class="welcome-stage"
+        id="welcomeStage"
     >
 
-        <source
-            src="intro-video.mp4"
-            type="video/mp4"
+
+        <!-- =================================================
+             ORIGINAL USER VIDEO
+             ================================================= -->
+
+        <video
+            class="welcome-video"
+            id="introVideo"
+            autoplay
+            muted
+            playsinline
+            preload="auto"
+            aria-label="ADCS introductory mission sequence"
+        >
+            <source
+                src="intro-video.mp4"
+                type="video/mp4"
+            >
+
+            Your browser does not support HTML5 video.
+        </video>
+
+
+        <!-- Cinematic visual layers -->
+
+        <div
+            class="welcome-video-treatment"
+            aria-hidden="true"
+        ></div>
+
+
+        <div
+            class="welcome-vignette"
+            aria-hidden="true"
+        ></div>
+
+
+        <div
+            class="welcome-grid"
+            aria-hidden="true"
+        ></div>
+
+
+        <!-- =================================================
+             TOP IDENTIFICATION
+             ================================================= -->
+
+        <div
+            class="welcome-topline"
+            aria-hidden="true"
         >
 
-    </video>
+            <div class="welcome-system-mark">
 
+                <span
+                    class="welcome-system-dot"
+                ></span>
 
-    <!-- =========================================================
-         CINEMATIC OVERLAY
-    ========================================================= -->
-
-    <div
-        class="cinematic-overlay"
-        aria-hidden="true"
-    ></div>
-
-
-    <!-- =========================================================
-         CORNER MARKERS
-    ========================================================= -->
-
-    <div
-        class="corner tl"
-        aria-hidden="true"
-    ></div>
-
-    <div
-        class="corner tr"
-        aria-hidden="true"
-    ></div>
-
-    <div
-        class="corner bl"
-        aria-hidden="true"
-    ></div>
-
-    <div
-        class="corner br"
-        aria-hidden="true"
-    ></div>
-
-
-    <!-- =========================================================
-         TOP IDENTIFICATION
-    ========================================================= -->
-
-    <header class="top-bar">
-
-
-        <div class="system-id">
-
-            <span
-                class="system-dot"
-                aria-hidden="true"
-            ></span>
-
-            <span>
-                ADCS
-            </span>
-
-        </div>
-
-
-        <div class="top-status">
-
-            <span>
-                MISSION INITIALIZATION
-            </span>
-
-            <span>
-                /
-            </span>
-
-            <span>
-                SYSTEM READY
-            </span>
-
-        </div>
-
-
-    </header>
-
-
-    <!-- =========================================================
-         CENTRAL PROJECT TITLE
-    ========================================================= -->
-
-    <main class="center-stage">
-
-
-        <section class="title-block">
-
-
-            <div class="pre-title">
-
-                AUTONOMOUS ORBITAL OPERATIONS
+                <span>
+                    ADCS
+                </span>
 
             </div>
 
 
-            <h1 class="project-title">
+            <div
+                class="welcome-system-status"
+            >
 
-
-                <span class="line-one">
-
-                    AUTONOMOUS SPACE DEBRIS
-
+                <span>
+                    ACADEMIC RESEARCH SIMULATION
                 </span>
-
-
-                <span class="line-two">
-
-                    MONITORING &amp; CAPTURE SYSTEM
-
-                </span>
-
-
-            </h1>
-
-
-            <p class="project-subtitle">
-
-                Orbital surveillance · target assessment ·
-                relative navigation · controlled capture
-
-            </p>
-
-
-            <div class="mission-code">
-
-                ADCS-01 &nbsp;·&nbsp; LEO MISSION SYSTEM
 
             </div>
 
+        </div>
+
+
+        <!-- =================================================
+             CENTRAL PROJECT IDENTITY
+             ================================================= -->
+
+        <section
+            class="welcome-content"
+            aria-labelledby="welcomeTitle"
+        >
+
+            <div
+                class="welcome-content-inner"
+            >
+
+                <p
+                    class="welcome-kicker"
+                >
+                    AUTONOMOUS ORBITAL DEBRIS OPERATIONS
+                </p>
+
+
+                <h1
+                    class="welcome-title"
+                    id="welcomeTitle"
+                >
+
+                    <span>
+                        Autonomous Space Debris
+                    </span>
+
+                    <span class="title-accent">
+                        Monitoring and Capture System
+                    </span>
+
+                </h1>
+
+
+                <div
+                    class="welcome-divider"
+                    aria-hidden="true"
+                ></div>
+
+
+                <p
+                    class="welcome-subtitle"
+                >
+                    ADCS
+                </p>
+
+            </div>
 
         </section>
 
 
-    </main>
+        <!-- =================================================
+             LOWER INFORMATION RAIL
+             ================================================= -->
+
+        <div
+            class="welcome-bottom"
+            aria-hidden="true"
+        >
+
+            <div
+                class="welcome-classification"
+            >
+
+                <span
+                    class="welcome-classification-label"
+                >
+                    SYSTEM DOMAIN
+                </span>
+
+                <span
+                    class="welcome-classification-value"
+                >
+                    SPACE SITUATIONAL AWARENESS · RPO · CAPTURE
+                </span>
+
+            </div>
 
 
-    <!-- =========================================================
-         BOTTOM INFORMATION
-    ========================================================= -->
+            <div
+                class="welcome-enter"
+            >
 
-    <footer class="bottom-bar">
+                <span>
+                    INITIALIZING SYSTEM
+                </span>
 
+                <span
+                    class="welcome-enter-line"
+                ></span>
 
-        <div class="bottom-info">
-
-
-            <span>
-                MISSION
-                <strong>
-                    ADCS-01
-                </strong>
-            </span>
-
-
-            <span class="separator"></span>
-
-
-            <span>
-                DOMAIN
-                <strong>
-                    LOW EARTH ORBIT
-                </strong>
-            </span>
-
-
-            <span class="separator"></span>
-
-
-            <span>
-                MODE
-                <strong>
-                    AUTONOMOUS
-                </strong>
-            </span>
-
+            </div>
 
         </div>
 
 
-        <button
-            id="skip"
-            class="skip"
-            type="button"
+        <!-- =================================================
+             VIDEO LOADING
+             ================================================= -->
+
+        <div
+            class="welcome-loading"
+            id="welcomeLoading"
         >
 
-            SKIP INTRO
+            <div
+                class="welcome-loader"
+            ></div>
 
+            <div
+                class="welcome-loading-text"
+            >
+                Loading mission sequence
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             MANUAL ENTRY / SKIP
+             ================================================= -->
+
+        <button
+            class="welcome-skip"
+            id="welcomeSkip"
+            type="button"
+            aria-label="Enter ADCS system"
+        >
+            Enter System
         </button>
 
 
-    </footer>
+        <!-- =================================================
+             VIDEO PROGRESS
+             ================================================= -->
+
+        <div
+            class="welcome-progress"
+            aria-hidden="true"
+        >
+
+            <div
+                class="welcome-progress-bar"
+                id="welcomeProgress"
+            ></div>
+
+        </div>
+
+    </main>
 
 
-    <!-- =========================================================
-         VIDEO PROGRESS
-    ========================================================= -->
-
-    <div
-        class="progress-track"
-        aria-hidden="true"
-    >
-
-        <span
-            id="bar"
-            class="progress-fill"
-        ></span>
-
-    </div>
-
-
-    <!-- =========================================================
-         CINEMATIC PAGE TRANSITION
-    ========================================================= -->
-
-    <div
-        id="transition"
-        aria-hidden="true"
-    ></div>
-
-
-    <!-- =========================================================
-         JAVASCRIPT
-    ========================================================= -->
+    <!-- =====================================================
+         WELCOME LOGIC
+         ===================================================== -->
 
     <script>
 
@@ -1491,205 +1589,284 @@
             "use strict";
 
 
-            /* -----------------------------------------------------
-               ELEMENT REFERENCES
-            ----------------------------------------------------- */
+            /* =================================================
+               ELEMENTS
+               ================================================= */
+
+            const stage =
+                document.getElementById(
+                    "welcomeStage"
+                );
 
             const video =
                 document.getElementById(
-                    "intro"
+                    "introVideo"
                 );
 
+            const loading =
+                document.getElementById(
+                    "welcomeLoading"
+                );
+
+            const progress =
+                document.getElementById(
+                    "welcomeProgress"
+                );
 
             const skip =
                 document.getElementById(
-                    "skip"
+                    "welcomeSkip"
                 );
 
-
-            const bar =
-                document.getElementById(
-                    "bar"
-                );
-
-
-            const transition =
-                document.getElementById(
-                    "transition"
-                );
-
-
-            /* -----------------------------------------------------
-               NAVIGATION STATE
-            ----------------------------------------------------- */
 
             let leaving =
                 false;
 
 
-            /* -----------------------------------------------------
+            /* =================================================
+               HOME DESTINATION
+               ================================================= */
+
+            const HOME_PAGE =
+                "index.html";
+
+
+            /* =================================================
                ENTER HOME
-            ----------------------------------------------------- */
+               ================================================= */
 
             function enterHome() {
 
-
                 if (leaving) {
-
                     return;
-
                 }
 
-
-                leaving =
-                    true;
+                leaving = true;
 
 
-                /*
-                 * The Home page uses this flag to create a smooth
-                 * handoff from the welcome screen.
-                 */
-
-                try {
-
-                    sessionStorage.setItem(
-                        "adcsIntroComplete",
-                        "1"
-                    );
-
-                }
-
-                catch (error) {
-
-                    /*
-                     * Navigation should continue even if session
-                     * storage is unavailable.
-                     */
-
-                }
-
-
-                /*
-                 * Stop the video.
-                 */
-
-                try {
-
-                    video.pause();
-
-                }
-
-                catch (error) {
-
-                    /* Safe to ignore. */
-
-                }
-
-
-                /*
-                 * Start the purple cinematic fade.
-                 */
-
-                transition.classList.add(
-                    "active"
+                stage.classList.add(
+                    "is-exiting"
                 );
 
 
                 /*
-                 * Keep this transition short.
-                 * It should feel like a cinematic handoff,
-                 * not a loading screen.
+                 * Give the cinematic fade enough
+                 * time to complete before navigation.
                  */
 
                 window.setTimeout(
                     () => {
 
-                        window.location.replace(
-                            "index.html"
-                        );
+                        window.location.href =
+                            HOME_PAGE;
 
                     },
-                    460
+                    1050
                 );
 
             }
 
 
-            /* -----------------------------------------------------
-               VIDEO PROGRESS
-            ----------------------------------------------------- */
+            /* =================================================
+               VIDEO READY
+               ================================================= */
 
             video.addEventListener(
-                "timeupdate",
+                "loadeddata",
                 () => {
 
+                    loading.classList.add(
+                        "hidden"
+                    );
 
-                    if (
-                        Number.isFinite(
-                            video.duration
-                        ) &&
-                        video.duration > 0
-                    ) {
-
-
-                        const percentage =
-
-                            (
-                                video.currentTime /
-                                video.duration
-                            ) * 100;
-
-
-                        bar.style.width =
-
-                            Math.min(
-                                100,
-                                Math.max(
-                                    0,
-                                    percentage
-                                )
-                            ) + "%";
-
-
-                    }
+                    stage.classList.add(
+                        "video-ready"
+                    );
 
                 }
             );
 
 
-            /* -----------------------------------------------------
-               VIDEO COMPLETE
-            ----------------------------------------------------- */
+            /* =================================================
+               VIDEO CAN PLAY
+               ================================================= */
+
+            video.addEventListener(
+                "canplay",
+                () => {
+
+                    loading.classList.add(
+                        "hidden"
+                    );
+
+                    stage.classList.add(
+                        "video-ready"
+                    );
+
+                }
+            );
+
+
+            /* =================================================
+               VIDEO PROGRESS
+               ================================================= */
+
+            video.addEventListener(
+                "timeupdate",
+                () => {
+
+                    if (
+                        !video.duration ||
+                        !isFinite(video.duration)
+                    ) {
+                        return;
+                    }
+
+
+                    const percentage =
+                        (
+                            video.currentTime /
+                            video.duration
+                        ) * 100;
+
+
+                    progress.style.width =
+                        `${percentage}%`;
+
+                }
+            );
+
+
+            /* =================================================
+               VIDEO ENDED
+               ================================================= */
 
             video.addEventListener(
                 "ended",
-                enterHome
+                () => {
+
+                    progress.style.width =
+                        "100%";
+
+                    window.setTimeout(
+                        enterHome,
+                        450
+                    );
+
+                }
             );
 
 
-            /* -----------------------------------------------------
-               SKIP
-            ----------------------------------------------------- */
+            /* =================================================
+               VIDEO ERROR
+               ================================================= */
+
+            video.addEventListener(
+                "error",
+                () => {
+
+                    loading.classList.add(
+                        "hidden"
+                    );
+
+                    stage.classList.add(
+                        "video-ready"
+                    );
+
+                }
+            );
+
+
+            /* =================================================
+               MANUAL ENTRY
+               ================================================= */
 
             skip.addEventListener(
                 "click",
-                enterHome
+                () => {
+
+                    /*
+                     * Stop video before transition.
+                     */
+
+                    video.pause();
+
+                    enterHome();
+
+                }
             );
 
 
-            /* -----------------------------------------------------
-               ESCAPE
-            ----------------------------------------------------- */
+            /* =================================================
+               AUTOPLAY FALLBACK
+               ================================================= */
+
+            const playPromise =
+                video.play();
+
+
+            if (
+                playPromise !== undefined
+            ) {
+
+                playPromise.catch(
+                    () => {
+
+                        /*
+                         * Some browsers may block
+                         * autoplay. Since the video
+                         * is muted, this is uncommon,
+                         * but the page remains usable.
+                         */
+
+                        stage.classList.add(
+                            "video-ready"
+                        );
+
+                        loading.classList.add(
+                            "hidden"
+                        );
+
+                    }
+                );
+
+            }
+
+
+            /* =================================================
+               KEYBOARD ENTRY
+               ================================================= */
 
             document.addEventListener(
                 "keydown",
-                (event) => {
-
+                event => {
 
                     if (
-                        event.key === "Escape" &&
-                        !leaving
+                        event.key === "Enter" ||
+                        event.key === " "
                     ) {
+
+                        /*
+                         * Do not hijack keyboard input
+                         * while a normal interactive
+                         * element is focused.
+                         */
+
+                        const tag =
+                            document.activeElement
+                                ?.tagName
+                                ?.toLowerCase();
+
+                        if (
+                            tag === "button" ||
+                            tag === "a" ||
+                            tag === "input"
+                        ) {
+                            return;
+                        }
+
+
+                        event.preventDefault();
 
                         enterHome();
 
@@ -1699,67 +1876,35 @@
             );
 
 
-            /* -----------------------------------------------------
-               AUTOPLAY
-            ----------------------------------------------------- */
+            /* =================================================
+               SAFETY FALLBACK
+               ================================================= */
 
-            function startVideo() {
+            /*
+             * If the video metadata cannot be loaded
+             * after a reasonable period, the user can
+             * still enter the system.
+             */
 
+            window.setTimeout(
+                () => {
 
-                const promise =
-                    video.play();
-
-
-                if (
-                    promise &&
-                    typeof promise.catch ===
-                    "function"
-                ) {
-
-
-                    promise.catch(
-                        () => {
-
-                            /*
-                             * The video remains visible and the
-                             * Skip Intro button remains available.
-                             */
-
-                        }
+                    loading.classList.add(
+                        "hidden"
                     );
 
+                    stage.classList.add(
+                        "video-ready"
+                    );
 
-                }
-
-            }
-
-
-            if (
-                video.readyState >= 2
-            ) {
-
-                startVideo();
-
-            }
-
-            else {
-
-                video.addEventListener(
-                    "loadeddata",
-                    startVideo,
-                    {
-                        once: true
-                    }
-                );
-
-            }
+                },
+                5000
+            );
 
 
         })();
 
     </script>
 
-
 </body>
-
 </html>
